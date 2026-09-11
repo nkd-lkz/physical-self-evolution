@@ -57,3 +57,23 @@ They first update:
 - long-term research map.
 
 The mainline changes only when experiments or strong neighboring evidence justify it.
+
+
+## Knowledge-base architecture
+
+The live site intentionally separates:
+
+- **Project Mainline** — current phase, experiments, evidence and next actions.
+- **Frontier Knowledge Base** — papers, systems, labs, research directions, boundaries and inspiration.
+- **Historical Archive** — immutable previous Research OS snapshots.
+
+Key files:
+
+- \`data/frontier.json\` — searchable frontier-work database.
+- \`research/frontier-landscape.md\` — detailed “what others are doing” survey.
+- \`research/perspectives-and-theses.md\` — external RSI viewpoints and long-term synthesis.
+- \`research/reading-program.md\` — daily reading tracks.
+- \`research/knowledge-base-maintenance.md\` — update protocol.
+- \`archive/v0.4-original.html\` — preserved full v0.4 snapshot.
+
+The website is intended to be the project's **first research entry point and decision memory**, not the only source of truth. New public work still needs continuous search, verification and ingestion.
