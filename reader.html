@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Research Note Reader</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<style>.reader{max-width:980px;margin:0 auto;padding:36px 22px 90px}.reader-body{background:#0d1621;border:1px solid #24364b;border-radius:16px;padding:28px}.reader-body h1{font-size:32px}.reader-body h2{font-size:24px;margin-top:34px;border-top:1px solid #24364b;padding-top:22px}.reader-body h3{margin-top:24px}.reader-body p,.reader-body li{color:#c7d5e5}.reader-body code{background:#101d2a;padding:2px 5px;border-radius:5px}.reader-body pre{overflow:auto;background:#071019;padding:12px;border:1px solid #24364b;border-radius:10px}.reader-body blockquote{border-left:3px solid #76c7ff;padding-left:14px;margin-left:0;color:#dcecff}.reader-body table{display:block;overflow:auto}</style>
+</head>
+<body><main class="reader"><p><a href="index.html">← 返回 Research OS</a></p><div id="content" class="reader-body">加载中…</div></main>
+<script>
+const params=new URLSearchParams(location.search);const path=params.get('path')||'research/master-roadmap.md';
+if(!/^(research|notes)\/[a-zA-Z0-9._\/-]+\.md$/.test(path)){document.getElementById('content').textContent='非法路径';}
+else fetch(path).then(r=>r.ok?r.text():Promise.reject()).then(t=>{document.getElementById('content').innerHTML=marked.parse(t);}).catch(()=>{document.getElementById('content').textContent='读取失败：'+path;});
+</script></body></html>
