@@ -1,17 +1,22 @@
 [
   {
     "date": "2026-09-11",
-    "title": "项目主线重构",
-    "summary": "从 Physical Token-first 调整为 Physical Interaction + Self-Improvement；RLT 成为 baseline scaffold。"
+    "title": "主线进入 Phase 0",
+    "summary": "当前优先级改为 RoboTwin2 多任务 RLT benchmark；hammer 保留为 pilot/regression task。"
   },
   {
     "date": "2026-09-11",
-    "title": "Zeva 初读",
-    "summary": "加入 Context Evolution 维度：Self-Improvement 不必等于 weight update；提出 Fast Memory + Slow RL。"
+    "title": "RoboDojo B300 旁线启动",
+    "summary": "每天固定少量时间推进安装、兼容性、官方 smoke 与 Dojo-Eval，不抢 RoboTwin2 主线。"
   },
   {
     "date": "2026-09-11",
     "title": "项目状态校准",
     "summary": "π0.5 SFT 5k/10k/15k/20k 产物存在，但 Reference 仍待正式验收；RLT baseline 尚无正式结果。"
+  },
+  {
+    "date": "2026-09-11",
+    "title": "Zeva 初读",
+    "summary": "加入 Context Evolution 维度：Self-Improvement 不必等于 weight update；长期考虑 Fast Memory + Slow RL。"
   }
 ]
