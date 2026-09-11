@@ -1,0 +1,17 @@
+[
+  {
+    "date": "2026-09-11",
+    "decision": "Research story 不以 RL Token 为中心。",
+    "reason": "长期主线是 Physical Interaction + Self-Improvement；RLT 只是技术起点。"
+  },
+  {
+    "date": "2026-09-11",
+    "decision": "Baseline before novelty。",
+    "reason": "先建立多任务 RLT research bench，再用 D1–D5 定位瓶颈。"
+  },
+  {
+    "date": "2026-09-11",
+    "decision": "论文阅读不自动改主线。",
+    "reason": "论文进入知识库；只有实验或强近邻证据才改变项目决策。"
+  }
+]
