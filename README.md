@@ -1,51 +1,57 @@
 # Physical Self-Evolution
 
-Living research website for **Physical Interaction, Embodied Self-Evolution, VLA, Online RL, Memory / ICL, WAM, Failure Recovery and robot learning experiments**.
+Living research website for **Physical Interaction, Embodied Self-Evolution, VLA, Online RL, Memory / ICL, Failure Recovery and robot learning experiments**.
 
 ## Website
 
-After GitHub Pages is enabled, the site will be available at:
-
 **https://nkd-lkz.github.io/physical-self-evolution/**
+
+## Current research phase
+
+### Phase 0 — RLT Multi-task Benchmark **← current**
+Build a reproducible multi-task VLA + Online RL research bench on RoboTwin2.
+
+### Phase 1 — Failure Diagnosis
+Determine whether failures come from observability, action candidates, critic/value learning, data coverage, or execution horizon.
+
+### Phase 2 — Physical Experience Representation
+Only after diagnosis, investigate action consequence, value-oriented physics, execution history, correction benefit, etc.
+
+### Phase 3 — Self-Improvement Loop
+Study repeated Deploy → Experience → Learn → Redeploy cycles, retention, consolidation and experience reuse.
+
+## Platform split
+
+- **RoboTwin2**: main algorithm-development track.
+- **RoboDojo on B300**: daily side track for installation, compatibility, smoke test and Dojo-Eval bring-up.
 
 ## Research north star
 
 > How can a robot turn one physical experience into a better next action — and eventually accumulate, consolidate and reuse that experience across tasks and embodiments?
 
-Current project strategy:
-
-**RLT baseline → failure diagnosis → evidence-driven algorithm iteration → multi-task / OOD → self-improvement loop**
-
 ## Repository structure
 
-```
+\`\`\`
 .
 ├── index.html
 ├── reader.html
 ├── assets/
-│   ├── style.css
-│   └── app.js
 ├── data/
-│   ├── papers.json
-│   ├── experiments.json
-│   └── decisions.json
 ├── notes/
-│   ├── zeva.md
-│   ├── rlt.md
-│   └── smoothrl.md
-├── research/
-│   ├── master-roadmap.md
-│   ├── experiment-log.md
-│   └── decision-log.md
-└── .github/workflows/pages.yml
-```
+└── research/
+    ├── master-roadmap.md
+    ├── rlt-multitask-benchmark.md
+    ├── robodojo-b300-log.md
+    ├── experiment-log.md
+    └── decision-log.md
+\`\`\`
 
 ## Maintenance rule
 
-New papers do **not** automatically change the research direction.
+New papers do **not** automatically change the project mainline.
 
-They are first used to update:
-- innovation boundary,
+They first update:
+- innovation boundaries,
 - baseline / ablation choices,
 - diagnosis hypotheses,
 - long-term research map.
