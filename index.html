@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="description" content="Physical Self-Evolution — 具身智能自进化科研记录与论文知识库"/>
+  <title>Physical Self-Evolution Research OS</title>
+  <link rel="stylesheet" href="assets/style.css"/>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">Physical Self-Evolution</div>
+    <div class="sub">Embodied Self-Evolution Research OS</div>
+    <nav>
+      <a href="#home">总览</a>
+      <a href="#mainline">科研主线</a>
+      <a href="#status">当前进度</a>
+      <a href="#baseline">Baseline 契约</a>
+      <a href="#diagnosis">诊断实验</a>
+      <a href="#self-improve">自我改进协议</a>
+      <a href="#plan">近期行动</a>
+      <a href="#papers">论文阅读</a>
+      <a href="#logs">科研日志</a>
+      <a href="#archive">详细资料</a>
+    </nav>
+    <div class="side-note">
+      <b>主线守则</b><br>
+      新论文默认只进入“借鉴 / 边界 / 对照”，不会自动改变研究主线。主线只由实验结果、工程事实和强近邻证据修改。
+    </div>
+  </aside>
+
+  <main class="main">
+    <section id="home" class="hero">
+      <div class="kicker">Living Research Website · GitHub Edition</div>
+      <h1>面向物理交互的<br/>机器人自我改进</h1>
+      <p>核心问题：<b>机器人如何把一次真实物理经历，转化为下一次更好的行动，并最终形成可持续复用的经验闭环？</b></p>
+      <div class="callout">
+        当前阶段：以 RLT 为技术起点，在 RoboTwin / RoboTwin2 与 RoboDojo 上建立覆盖多种接触机制的稳定 baseline；
+        先跑通 Reference → RLT → Failure Diagnosis，再让证据决定后续做 consequence、value、history、failure recovery 还是 execution scheduling。
+      </div>
+    </section>
+
+    <section id="mainline">
+      <div class="section-head">
+        <div><h2>01 · 科研主线</h2><p class="muted">方向固定，方法开放。</p></div>
+      </div>
+      <div class="steps">
+        <div class="step"><b>① Baseline</b><span>π0.5 Reference + RLT-π0.5-adapted 多任务复现</span></div>
+        <div class="step"><b>② Diagnose</b><span>区分 representation / observability / candidate / data / execution</span></div>
+        <div class="step"><b>③ One Hypothesis</b><span>只升级 1–2 个有证据的方向</span></div>
+        <div class="step"><b>④ Self-Improvement</b><span>旧策略 → 新经验 → 更新 → 独立评估 → 多轮积累</span></div>
+      </div>
+      <div class="grid two">
+        <article class="card">
+          <h3>长期 Vision</h3>
+          <p><b>Physically Grounded Self-Improving Robot Policies</b></p>
+          <p>让机器人利用真实执行中的接触、动作后果、失败与恢复，持续获得新能力，而不是长期依赖人重新示范、重新标注、重新训练。</p>
+        </article>
+        <article class="card">
+          <h3>近期 Research Question</h3>
+          <p><b>在固定或主要固定基础 VLA 时，哪些 Physical Experience、数据选择和轻量更新机制真正改善精细操作的在线适应？</b></p>
+          <p class="muted">Physical Token、WAM、Streaming、Agent 都是候选实现，不是预设答案。</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="status">
+      <h2>02 · 当前项目进度</h2>
+      <div class="grid four metrics">
+        <article class="card"><div class="metric">50</div><div class="muted">hammer 成功示教 episodes</div></article>
+        <article class="card"><div class="metric">7,884</div><div class="muted">LeRobot transitions</div></article>
+        <article class="card"><div class="metric">7,620</div><div class="muted">记录中的有效 physics transitions</div></article>
+        <article class="card"><div class="metric">20k</div><div class="muted">π0.5 SFT 最终 checkpoint 已生成；Reference 待验收</div></article>
+      </div>
+      <div class="timeline">
+        <div><b>DONE</b><p>RoboTwin hammer 环境、三相机、14D 接口、示教采集、LeRobot 转换、norm stats、physics sidecar。</p></div>
+        <div><b>NOW</b><p>加载并评估 5k / 10k / 15k / 20k checkpoints，选择共同 Reference，形成阶段化 failure profile。</p></div>
+        <div><b>NEXT GATE</b><p>完成正式 RLT baseline：不仅是 smoke，还要有 learning curve、独立 eval、可恢复 checkpoint/config 和失败视频。</p></div>
+      </div>
+    </section>
+
+    <section id="baseline">
+      <h2>03 · Baseline 契约</h2>
+      <div class="grid two">
+        <article class="card">
+          <h3>RLT-π0.5-adapted</h3>
+          <p>目标主基线：尽量保留原论文的 compact readout、reference-conditioned actor、动作锚定 / dropout、chunk-level TD，只把 π0.6 和机器人环境适配为 π0.5 / 当前任务。</p>
+        </article>
+        <article class="card">
+          <h3>Local-Residual</h3>
+          <p>本地已有加法 residual、K=1 或特定切换逻辑可用于 bring-up / 工程对照，但必须独立命名，不能把动作参数化差异藏在“RLT”里。</p>
+        </article>
+      </div>
+      <details open>
+        <summary>Baseline 必须核查的 10 项</summary>
+        <div class="detail-body">
+          <ol>
+            <li>基础模型：π0.5 checkpoint、SFT 数据与训练量。</li>
+            <li>读出：从哪层 hidden states 取；encoder / decoder / reconstruction。</li>
+            <li>梯度：Stage 1 哪些参数更新；Online 阶段冻结哪些。</li>
+            <li>Actor：完整 chunk 还是 residual；exploration、action limit、reference dropout。</li>
+            <li>Critic：状态 / 动作输入、target network、TD backup。</li>
+            <li>时间：预测 H、实际执行 C、control Hz、policy decision Hz。</li>
+            <li>数据：demo / reference / RL rollout / intervention 如何进入 replay。</li>
+            <li>奖励：success / terminal / timeout / shaping。</li>
+            <li>阶段：全程 RL、critical phase 还是 base-prefix + RL。</li>
+            <li>验证：train/eval seeds、checkpoint selection、控制步 / 决策次数 / wall-clock / VLA 调用预算。</li>
+          </ol>
+        </div>
+      </details>
+    </section>
+
+    <section id="diagnosis">
+      <h2>04 · Baseline 后的诊断实验</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>实验</th><th>最小设计</th><th>要回答的问题</th></tr></thead>
+          <tbody>
+            <tr><td>D1 · 输入与历史</td><td>command target → + actual q → + short history</td><td>缺“物理知识”，还是没看到真实执行？</td></tr>
+            <tr><td>D2 · Candidate Headroom</td><td>同状态：不修正 + 少量合法 candidates；后续策略固定</td><td>Reference 附近到底有没有更好的 correction？</td></tr>
+            <tr><td>D3 · 监督用途</td><td>reconstruction vs future latent vs physical consequence vs correction benefit</td><td>Physics 应进入 representation、value 还是 correction？</td></tr>
+            <tr><td>D4 · 数据覆盖</td><td>同新增预算：普通 expert vs failure-recovery</td><td>改进来自算法，还是因为终于覆盖失败附近？</td></tr>
+            <tr><td>D5 · 执行长度</td><td>C=1/5/10，记录 control Hz、VLA 调用、真实执行范围</td><td>主要失败是不是 chunk 太长、反馈太慢？</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="self-improve">
+      <h2>05 · 自我改进协议</h2>
+      <div class="grid three">
+        <article class="card"><h3>Context Adaptation</h3><p>参数不变，通过 Memory / History / Context 快速适应。</p><span class="tag">Zeva-like</span></article>
+        <article class="card"><h3>Online Policy Adaptation</h3><p>更新 lightweight actor / critic / readout。</p><span class="tag">RLT-like</span></article>
+        <article class="card"><h3>Experience Consolidation</h3><p>把验证过的新经验写回基础 VLA，并检查旧能力保持。</p><span class="tag">PLD-like</span></article>
+      </div>
+      <div class="callout">
+        最小 protocol：Round 0 独立评估 → 每轮固定相同新增交互预算 → 记录 success / failure / recovery / intervention → 更新策略 → 在未参与训练的初态上评估 → 多轮重复并回测旧任务。
+      </div>
+    </section>
+
+    <section id="plan">
+      <h2>06 · 近期行动</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>优先级</th><th>行动</th><th>产物</th><th>决定什么</th></tr></thead>
+          <tbody>
+            <tr><td>P0</td><td>评估 hammer SFT checkpoints</td><td>Reference success、阶段画像、视频、选模记录</td><td>基础策略是否可用；RL 从哪里开始</td></tr>
+            <tr><td>P1</td><td>审计 RLT 与本地实现差异，完成首任务 baseline</td><td>差异表、smoke、learning curve、eval</td><td>共同 baseline 定义</td></tr>
+            <tr><td>P2</td><td>第二个 RoboTwin contact task</td><td>统一入口 / logging / metrics</td><td>方法是否绑死 hammer</td></tr>
+            <tr><td>P3</td><td>RoboDojo Dojo-Eval</td><td>obs/action contract + reference result</td><td>Precision benchmark 是否合适</td></tr>
+            <tr><td>P4</td><td>RoboDojo Dojo-RL</td><td>online learner short run + sync log</td><td>双环境 online comparison 是否成立</td></tr>
+            <tr><td>P5</td><td>从 failure profile 选择 D1–D5</td><td>实验卡 + 结果 + 决策</td><td>只推进 1–2 个主候选</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="papers">
+      <div class="section-head">
+        <div><h2>07 · 论文阅读库</h2><p class="muted">论文服务于主线：解决什么、占掉哪块创新空间、对当前项目是否需要动作。</p></div>
+        <a class="button" href="reader.html?path=research/master-roadmap.md">打开完整研究总稿</a>
+      </div>
+      <div class="filters">
+        <input id="paperSearch" type="search" placeholder="搜索论文 / 关键词…"/>
+        <select id="paperFilter">
+          <option value="all">全部</option>
+          <option value="context">Context / Memory</option>
+          <option value="policy">Policy / RL</option>
+          <option value="physical">Physical</option>
+          <option value="execution">Execution</option>
+          <option value="harness">Harness / Skill</option>
+        </select>
+      </div>
+      <div id="paperGrid" class="grid three"></div>
+    </section>
+
+    <section id="logs">
+      <h2>08 · 科研日志</h2>
+      <div id="experimentList" class="timeline"></div>
+      <p><a class="button secondary" href="reader.html?path=research/experiment-log.md">查看实验日志全文</a>
+         <a class="button secondary" href="reader.html?path=research/decision-log.md">查看科研决策日志</a></p>
+    </section>
+
+    <section id="archive">
+      <h2>09 · 详细资料</h2>
+      <div class="grid three">
+        <a class="card link-card" href="reader.html?path=research/master-roadmap.md"><h3>完整 Research Roadmap</h3><p>项目主线、平台、Baseline、诊断、Self-Improvement、远期触发条件。</p></a>
+        <a class="card link-card" href="reader.html?path=notes/zeva.md"><h3>Zeva 深入笔记</h3><p>Context Evolution / Causal Memory / Action→State Change。</p></a>
+        <a class="card link-card" href="reader.html?path=notes/rlt.md"><h3>RLT 深入笔记</h3><p>当前主 baseline：RL Token、reference action、action chunk、online RL。</p></a>
+        <a class="card link-card" href="reader.html?path=notes/smoothrl.md"><h3>SmoothRL 深入笔记</h3><p>Asynchronous execution 下的 partial chunk 与 value-gradient 对齐。</p></a>
+      </div>
+    </section>
+
+    <footer>
+      Physical Self-Evolution Research OS · maintained through GitHub · 2026
+    </footer>
+  </main>
+  <script src="assets/app.js"></script>
+</body>
+</html>
