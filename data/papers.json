@@ -1,0 +1,106 @@
+[
+  {
+    "title": "Zeva: In-Context Causal Learning for Generalizable Embodied Manipulation",
+    "year": "2026",
+    "layer": "Context Evolution",
+    "theme": "context",
+    "status": "已读 · Day 1",
+    "tags": [
+      "ICL",
+      "Causal Memory",
+      "Action-Effect"
+    ],
+    "one": "冻结 policy，把 Action → State Change 写入因果交互记忆，用 Context 让重复尝试越来越好。",
+    "project": "启发 Physical Experience 的基本单位从单帧 state 提升到 action–effect transition；长期可研究 Fast Memory + Slow RL。",
+    "note": "reader.html?path=notes/zeva.md"
+  },
+  {
+    "title": "RL Token: Bootstrapping Online RL with Vision-Language-Action Models",
+    "year": "2026",
+    "layer": "Policy Evolution",
+    "theme": "policy",
+    "status": "核心基线",
+    "tags": [
+      "Online RL",
+      "VLA",
+      "Action Chunk"
+    ],
+    "one": "冻结大 VLA，用紧凑 readout + 轻量 actor-critic 做样本高效在线适应。",
+    "project": "当前项目的技术脚手架；主线不是“改 RL Token”，而是 Physical Interaction + Self-Improvement。",
+    "note": "reader.html?path=notes/rlt.md"
+  },
+  {
+    "title": "SmoothRL: Online Reinforcement Learning During Asynchronous Execution",
+    "year": "2026",
+    "layer": "Execution-aware RL",
+    "theme": "execution",
+    "status": "已读",
+    "tags": [
+      "Async",
+      "Partial Chunk",
+      "Value Gradient"
+    ],
+    "one": "异步执行下 generated chunk ≠ executed chunk，只强化真正执行的 action region。",
+    "project": "如果后续改 async，必须先把 executed action / transition / credit assignment 定义正确。",
+    "note": "reader.html?path=notes/smoothrl.md"
+  },
+  {
+    "title": "Harness VLA: Steering Frozen VLAs into Reliable Manipulation Primitives via Memory-Guided Agents",
+    "year": "2026",
+    "layer": "Harness Evolution",
+    "theme": "harness",
+    "status": "待读",
+    "tags": [
+      "Harness",
+      "Memory",
+      "Frozen VLA"
+    ],
+    "one": "把冻结 VLA 当作可验证、可重试 primitive，由 memory-guided agent 负责 re-ground / retry / recovery。",
+    "project": "用于区分 primitive 本身失败与 orchestration 失败；近期不改变 RLT baseline 优先级。",
+    "url": "https://arxiv.org/abs/2607.08448"
+  },
+  {
+    "title": "Self-Evolving Embodied Agents via Skill-Harness Evolution",
+    "year": "2026",
+    "layer": "Skill / Harness Evolution",
+    "theme": "harness",
+    "status": "待读",
+    "tags": [
+      "Skills",
+      "Harness",
+      "Non-parametric"
+    ],
+    "one": "冻结 foundation model，通过 rollout 演化 reusable skills 与 harness。",
+    "project": "提醒我们自进化不只等于 weight update，但局部 physical control 仍需独立验证。",
+    "url": "https://arxiv.org/abs/2608.11350"
+  },
+  {
+    "title": "Zetta ζ: An Efficient Closed-Loop Embodied Harness for Self-Evolving Physical Intelligence",
+    "year": "2026",
+    "layer": "Closed-loop Harness",
+    "theme": "harness",
+    "status": "待读",
+    "tags": [
+      "Runtime Critic",
+      "Recovery",
+      "Validation Gate"
+    ],
+    "one": "用多时间尺度 harness 演化 runtime critic 和 recovery skills，并在验证后再写入 skill memory。",
+    "project": "很值得借鉴 validation-gated experience consolidation。",
+    "url": "https://arxiv.org/abs/2608.16590"
+  },
+  {
+    "title": "Pri4R: Learning World Dynamics for VLA with Privileged 4D Representation",
+    "year": "2026",
+    "layer": "Physical Representation",
+    "theme": "physical",
+    "status": "推荐",
+    "tags": [
+      "Privileged",
+      "Future Geometry"
+    ],
+    "one": "训练期用 future 3D/4D geometry 监督 VLA 表征，部署保持原输入。",
+    "project": "压缩单纯 Physical Token 的创新空间；必须证明 decision-relevant consequence 对在线适应的增量。",
+    "url": "https://arxiv.org/abs/2603.01549"
+  }
+]
