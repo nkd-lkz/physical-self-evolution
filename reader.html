@@ -1,15 +1,118 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Research Note Reader</title>
 <link rel="stylesheet" href="assets/style.css">
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<style>.reader{max-width:980px;margin:0 auto;padding:36px 22px 90px}.reader-body{background:#0d1621;border:1px solid #24364b;border-radius:16px;padding:28px}.reader-body h1{font-size:32px}.reader-body h2{font-size:24px;margin-top:34px;border-top:1px solid #24364b;padding-top:22px}.reader-body h3{margin-top:24px}.reader-body p,.reader-body li{color:#c7d5e5}.reader-body code{background:#101d2a;padding:2px 5px;border-radius:5px}.reader-body pre{overflow:auto;background:#071019;padding:12px;border:1px solid #24364b;border-radius:10px}.reader-body blockquote{border-left:3px solid #76c7ff;padding-left:14px;margin-left:0;color:#dcecff}.reader-body table{display:block;overflow:auto}</style>
 </head>
-<body><main class="reader"><p><a href="index.html">← 返回 Research OS</a></p><div id="content" class="reader-body">加载中…</div></main>
+<body class="reader-page">
+<header class="reader-topbar">
+  <a class="button secondary" href="index.html">← 返回 Research OS</a>
+  <div class="reader-tools">
+    <input id="docSearch" type="search" placeholder="搜索本文…">
+    <button class="button secondary" id="clearSearch">清除</button>
+  </div>
+</header>
+<div class="reader-shell">
+  <aside id="toc" class="reader-toc">
+    <div class="toc-title">本文目录</div>
+    <div id="tocLinks" class="toc-links"></div>
+  </aside>
+  <main class="reader-main">
+    <div id="searchInfo" class="search-info" hidden></div>
+    <article id="content" class="reader-body">加载中…</article>
+  </main>
+</div>
 <script>
-const params=new URLSearchParams(location.search);const path=params.get('path')||'research/master-roadmap.md';
-if(!/^(research|notes)\/[a-zA-Z0-9._\/-]+\.md$/.test(path)){document.getElementById('content').textContent='非法路径';}
-else fetch(path).then(r=>r.ok?r.text():Promise.reject()).then(t=>{document.getElementById('content').innerHTML=marked.parse(t);}).catch(()=>{document.getElementById('content').textContent='读取失败：'+path;});
-</script></body></html>
+marked.setOptions({gfm:true,breaks:false,headerIds:false,mangle:false});
+const params=new URLSearchParams(location.search);
+const path=params.get('path')||'research/master-roadmap.md';
+const content=document.getElementById('content');
+const tocLinks=document.getElementById('tocLinks');
+const searchInput=document.getElementById('docSearch');
+const searchInfo=document.getElementById('searchInfo');
+
+function normalizeMarkdown(md){
+  return md
+    .replace(/^\\([#>|])/gm,'$1')
+    .replace(/\\\|/g,'|')
+    .replace(/\*{4,}/g,'')
+    .replace(/^[ \t]+\|/gm,'|');
+}
+function slugify(text,index){
+  const base=text.trim().toLowerCase()
+    .replace(/<[^>]+>/g,'')
+    .replace(/[^\w\u4e00-\u9fff-]+/g,'-')
+    .replace(/^-+|-+$/g,'');
+  return (base||'section')+'-'+index;
+}
+function buildToc(){
+  tocLinks.innerHTML='';
+  const hs=[...content.querySelectorAll('h1,h2,h3')];
+  hs.forEach((h,i)=>{
+    if(!h.id) h.id=slugify(h.textContent,i);
+    const a=document.createElement('a');
+    a.href='#'+h.id;
+    a.textContent=h.textContent;
+    a.className='toc-'+h.tagName.toLowerCase();
+    tocLinks.appendChild(a);
+  });
+}
+function clearHighlights(){
+  content.querySelectorAll('mark.search-hit').forEach(mark=>{
+    const parent=mark.parentNode;
+    parent.replaceChild(document.createTextNode(mark.textContent),mark);
+    parent.normalize();
+  });
+}
+function escapeRegExp(s){ return s.replace(/[-\/\\^$*+?.()|[\]{}]/g,'\\$&'); }
+function highlight(term){
+  clearHighlights();
+  if(!term){searchInfo.hidden=true;return;}
+  const re=new RegExp(escapeRegExp(term),'gi');
+  let count=0, first=null;
+  const walker=document.createTreeWalker(content,NodeFilter.SHOW_TEXT,{
+    acceptNode(node){
+      if(!node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+      if(['SCRIPT','STYLE','CODE','PRE'].includes(node.parentElement?.tagName)) return NodeFilter.FILTER_REJECT;
+      re.lastIndex=0;
+      return re.test(node.nodeValue)?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT;
+    }
+  });
+  const nodes=[]; while(walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach(node=>{
+    re.lastIndex=0;
+    const frag=document.createDocumentFragment();
+    let last=0,m;
+    while((m=re.exec(node.nodeValue))!==null){
+      frag.appendChild(document.createTextNode(node.nodeValue.slice(last,m.index)));
+      const mark=document.createElement('mark'); mark.className='search-hit'; mark.textContent=m[0];
+      frag.appendChild(mark); if(!first) first=mark; count++; last=m.index+m[0].length;
+    }
+    frag.appendChild(document.createTextNode(node.nodeValue.slice(last)));
+    node.parentNode.replaceChild(frag,node);
+  });
+  searchInfo.hidden=false;
+  searchInfo.textContent='找到 '+count+' 处匹配';
+  if(first) first.scrollIntoView({behavior:'smooth',block:'center'});
+}
+if(!/^(research|notes)\/[a-zA-Z0-9._\/-]+\.md$/.test(path)){
+  content.textContent='非法路径';
+}else{
+  fetch(path).then(r=>r.ok?r.text():Promise.reject(new Error('HTTP '+r.status)))
+    .then(t=>{ content.innerHTML=marked.parse(normalizeMarkdown(t)); buildToc(); })
+    .catch(e=>{content.textContent='读取失败：'+path+' · '+e.message;});
+}
+let searchTimer;
+searchInput.addEventListener('input',()=>{
+  clearTimeout(searchTimer);
+  searchTimer=setTimeout(()=>highlight(searchInput.value.trim()),180);
+});
+document.getElementById('clearSearch').addEventListener('click',()=>{
+  searchInput.value=''; clearHighlights(); searchInfo.hidden=true;
+});
+</script>
+</body>
+</html>
