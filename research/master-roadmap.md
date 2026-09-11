@@ -1,157 +1,235 @@
 # 面向物理交互的机器人自我改进：研究总路线
 
 > 版本：2026-09-11  
+> 当前状态：进入 **Phase 0 — RLT Multi-task Benchmark**  
 > 用途：项目主线、实验协议、论文边界与滚动计划的统一文档。
 
-## 0. 核心结论
+---
 
-当前项目不再以“Physical Token / RL Token 改造”为上位故事，而采用：
+## 0. 最新主线
 
-**Physical Interaction + Self-Improvement**
+项目不再按“Physical Token → Streaming → WAM”这种模块堆叠路线推进。
 
-RLT 是当前最合适的轻量 Online RL baseline / scaffold，不是最终研究叙事。
+新的四阶段主线是：
 
-真正要回答的是：
+| 阶段 | 目标 | 当前状态 |
+|---|---|---|
+| Phase 0 | RLT Multi-task Benchmark | **当前主阶段** |
+| Phase 1 | Failure Diagnosis | Phase 0 稳定后启动 |
+| Phase 2 | Physical Experience Representation | 只有诊断支持后启动 |
+| Phase 3 | Self-Improvement Loop | 多任务与诊断稳定后启动 |
 
-> 在固定或主要固定基础 VLA 时，哪些 Physical Experience、数据选择和轻量更新机制，能让机器人在接触密集、精细操作和动力学变化下，用较少真实交互持续改善策略？
+核心原则：
 
-研究方法采用：
+> **先把 RLT baseline 和 benchmark 基础设施做扎实，再让失败证据决定创新方向。**
 
-**Baseline → Diagnose → Small Hypothesis Test → Multi-task / OOD → Self-Improvement Loop → Real Robot**
+RLT 是技术脚手架，不是最终研究叙事。
 
-任何候选方向只有得到上一阶段证据后才升级。
+长期 Research Vision 仍然是：
+
+**Physically Grounded Self-Improving Robot Policies**
 
 ---
 
-## 1. 当前项目状态
+## 1. Phase 0 — RLT Multi-task Benchmark
 
-### 已有工程资产
+### 1.1 为什么现在先做这个？
 
-- RoboTwin `beat_block_hammer` 基础环境已打通。
-- 三相机、14D observation/action interface 已有。
-- 50 条成功 expert episodes。
-- 7,884 LeRobot transitions。
-- physics sidecar / contact / grasp 等辅助数据已记录。
-- π0.5 SFT 5k / 10k / 15k / 20k checkpoints 已生成。
+当前最大风险不是“idea 不够多”，而是没有一个足够稳定、可重复、跨任务的 baseline bench。
 
-### 仍未完成
+如果 baseline 不清楚，后续任何收益都无法判断来自：
 
-- Reference checkpoint 的正式选择与独立评估。
-- 论文语义清晰的 RLT-π0.5-adapted baseline。
-- 多任务 RoboTwin / RoboTwin2 benchmark。
-- RoboDojo Dojo-Eval / Dojo-RL。
-- Physical Token、Streaming、WAM 等均仍是候选，不是已验证结果。
+- 更好的 foundation policy；
+- 不同 action parameterization；
+- reward / termination 变化；
+- 任务难度；
+- 数据覆盖；
+- privileged input；
+- 真的算法创新。
+
+因此 Phase 0 的任务是建立：
+
+\`\`\`
+Reference Policy
+      ↓
+RLT-π0.5-adapted
+      ↓
+Online Rollout
+      ↓
+Independent Evaluation
+      ↓
+Multi-task Comparison
+\`\`\`
 
 ---
 
-## 2. RLT 在项目中的正确定位
+### 1.2 Hammer 是否走偏？
 
-把 RLT 抽象成：
+结论：
 
-```
-Frozen Foundation Policy
-        ↓
-Compact State Interface
-        ↓
-Lightweight Actor / Critic
-        ↓
-Online Physical Experience
-        ↓
-Policy Improvement
-```
+**没有白做，也不需要推倒；但它不再承担“唯一研究任务”的角色。**
 
-我们未来可以改 State Interface、Critic、Actor、Data、Execution Schedule、Replay、Distillation，但不应把“RL Token”本身当成总故事。
+Hammer 已经提供了大量可复用资产：
 
-### 两类 baseline 必须分开
+- RoboTwin 环境 bring-up；
+- 三相机与 14D observation/action interface；
+- 50 条成功 expert trajectories；
+- LeRobot 数据转换；
+- norm stats；
+- π0.5 SFT checkpoints；
+- physics sidecar；
+- contact / grasp / geometry 等辅助信号；
+- 训练 / 评估脚本和排错经验。
 
-#### RLT-π0.5-adapted
+这些资产对 Phase 0 和 Phase 1 都有价值。
 
-尽量保留原论文：
+但 hammer 单任务有几个问题：
+
+1. success 定义未必完整刻画“高质量物理交互”；
+2. impact / tool use 只是物理交互的一种机制；
+3. 单任务容易把工程特例误当成一般结论。
+
+所以新的定位是：
+
+> **Hammer = Task 0 / Pilot / Regression Task**
+
+用于：
+- Reference checkpoint 验收；
+- RLT pipeline bring-up；
+- 每次代码重构后的 regression；
+- physics logging 验证。
+
+但论文核心结论必须来自多任务。
+
+---
+
+### 1.3 第一批多任务应覆盖什么？
+
+不追求任务数量，而追求物理机制差异。
+
+推荐最小组合：
+
+| Task | 机制 | 作用 |
+|---|---|---|
+| Hammer | tool / impact | 保留已有资产，验证 pipeline |
+| Precision contact | local alignment / point contact | 验证小误差纠正 |
+| Insertion / constrained contact | contact-rich / constraint | 验证精细约束、卡住与恢复 |
+
+Task 1 / Task 2 的具体任务名以 RoboTwin2 当前可用环境、reward 和 success 定义审计为准，不因为名字听起来“精细”就自动进入正式实验。
+
+---
+
+### 1.4 Phase 0 完成标准
+
+至少满足：
+
+1. 三类物理机制任务；
+2. 统一 task adapter；
+3. 统一 observation/action contract；
+4. 统一 reference evaluation；
+5. 统一 online RL logger；
+6. 固定 train / eval seeds；
+7. 每个任务都有 reference 与 RLT learning curve；
+8. episode-level raw metrics；
+9. 失败视频；
+10. checkpoint/config 可恢复；
+11. action timing / executed action / replay transition 无未解释差异。
+
+---
+
+## 2. RLT Baseline Contract
+
+我们使用 π0.5 与本地环境，因此必须把：
+
+- **RLT-π0.5-adapted**
+- **Local-Residual**
+
+明确分开。
+
+### RLT-π0.5-adapted
+
+目标是尽量保留原论文：
+
 - compact readout；
 - reference-conditioned actor；
-- action anchoring；
+- action anchoring / regularization；
 - reference dropout；
-- chunk-level TD。
+- chunk-level TD；
+- off-policy replay。
 
-只做基础模型和环境适配。
+只做基础模型与环境适配。
 
-#### Local-Residual
+### Local-Residual
 
-本地 residual actor、K=1、特定 switch 等工程变体。
+本地已有 residual actor、K=1 或历史切换逻辑。
 
-可用于 bring-up，但必须独立命名，不能声称是原论文忠实复现。
+它可以用于 bring-up / 实用对照，但不能无条件称作原论文 RLT。
 
----
+### 必须核查
 
-## 3. Baseline Contract
-
-任何实验前，必须记录：
-
-1. 基础模型 checkpoint 和 SFT 数据。
-2. compact readout 来自哪层。
-3. Stage 1 / Stage 2 哪些参数更新或冻结。
+1. 基础模型 checkpoint 与 SFT 数据。
+2. compact representation 从哪层取。
+3. Stage 1 / Online 阶段哪些参数更新 / 冻结。
 4. Actor 输出完整 chunk 还是 residual。
 5. Critic input / target / TD backup。
-6. VLA horizon H、execution chunk C、control frequency。
-7. replay 存计划 action 还是 executed action。
+6. 预测 H、执行 C、control frequency、policy decision frequency。
+7. replay 存计划 action 还是真实 executed action。
 8. reward / terminal / timeout。
-9. critical phase / policy switch 逻辑。
+9. policy switch / critical phase 逻辑。
 10. train/eval seeds 与预算单位。
 
-Baseline 完成不等于“程序能跑”。至少需要：
-- Reference 与 RLT 独立评估；
-- learning curve；
-- 固定 train/eval seeds；
-- checkpoint/config 可恢复；
-- episode-level raw metrics；
-- 失败视频；
-- 没有未解释的 action/timing/input 差异。
+---
+
+## 3. 当前已有资产：哪些继续用？
+
+### 3.1 直接保留
+
+- hammer environment；
+- expert collector；
+- 50 条成功 demo；
+- LeRobot 数据；
+- norm stats；
+- π0.5 SFT checkpoints；
+- physics sidecar；
+- contact / grasp / geometry labels；
+- evaluation / video / logging 脚本；
+- 当前训练环境和 server / client 接口经验。
+
+### 3.2 改造成共享基础设施
+
+过去为 hammer 写死的内容，要逐步抽成：
+
+- task adapter；
+- observation mapper；
+- action mapper；
+- reward / success wrapper；
+- episode logger；
+- video recorder；
+- seed manager；
+- checkpoint evaluator；
+- replay schema。
+
+目标是：
+
+> 新增一个 RoboTwin2 task，不再重新复制一套训练代码。
+
+### 3.3 暂时不丢，但不作为主线
+
+Physics sidecar 暂时不要删除。
+
+它在 Phase 0 只负责：
+- logging；
+- failure taxonomy；
+- representation probe；
+- 后续 D1–D5 诊断。
+
+只有 Phase 1 证明它有 decision-relevant 增量后，才进入 Phase 2 方法设计。
 
 ---
 
-## 4. 双环境定位
+## 4. Phase 1 — Failure Diagnosis
 
-### RoboTwin / RoboTwin2
-
-主要负责：
-- Online RLT 开发；
-- 大规模多 seed；
-- branch rollout；
-- privileged sidecar；
-- debugging；
-- dynamics randomization。
-
-任务按物理机制扩展：
-- hammer：tool / impact；
-- click_bell：point contact；
-- insertion：precision / constrained contact；
-- push / articulated：sustained contact。
-
-### RoboDojo
-
-拆成两层：
-
-#### Dojo-Eval
-- policy loading；
-- observation/action contract；
-- 完整 episode；
-- 可重复 evaluation。
-
-#### Dojo-RL
-- stable reset/step；
-- transition-level data；
-- reward/termination；
-- learner update；
-- policy weight sync；
-- training-time evaluation。
-
-Dojo-Eval 不是 Online RL 已接通。
-
----
-
-## 5. 诊断优先于方法
-
-Baseline 失败后先做 D1–D5。
+Multi-task RLT baseline 稳定后，先做最便宜诊断。
 
 ### D1 · Input / History
 
@@ -160,17 +238,17 @@ Baseline 失败后先做 D1–D5。
 - + actual q；
 - + short history。
 
-问：缺的是 physics，还是 observability？
+问：缺的是“物理表示”，还是缺真实执行可观测性？
 
 ### D2 · Candidate Headroom
 
-同一个 state 执行：
+同状态执行：
 - base action；
-- 少量合法 candidate correction。
+- 少量合法 correction candidates。
 
-后续 policy 固定。
+后续策略固定。
 
-问：Reference 附近到底有没有可利用的 improvement headroom？
+问：Reference 周围到底有没有可利用的改进空间？
 
 ### D3 · Supervision Purpose
 
@@ -188,52 +266,62 @@ Baseline 失败后先做 D1–D5。
 - 普通 expert；
 - failure / near-failure / recovery。
 
-问：改进来自算法，还是来自失败附近的数据覆盖？
+问：收益来自算法，还是终于覆盖了失败附近？
 
 ### D5 · Execution Horizon
 
-固定 C=1/5/10，记录：
+固定 C=1 / 5 / 10，记录：
 - control frequency；
 - VLA calls；
 - actual executed action span。
 
-问：是不是 action chunk 太长、反馈太慢？
+问：真正瓶颈是不是 feedback 太慢？
 
 ---
 
-## 6. 候选路线
+## 5. Phase 2 — Physical Experience Representation
+
+Phase 2 不是默认会发生。
+
+只有 Phase 1 证据支持后，才选择 1–2 个方向：
 
 ### R0 · Action Consequence
 
-如果 D3 显示 action-effect supervision 明显改善 decision-relevant representation，再升级。
+研究：
+
+\`\`\`
+(state, action) → decision-relevant consequence
+\`\`\`
+
+例如：
+- relative geometry change；
+- contact event；
+- object motion；
+- slip / stuck；
+- progress。
 
 ### R1 · Value-Oriented Physics
 
-如果 D2 显示 candidate set 中已有明显更优动作，研究 physics-informed critic / value teacher。
+如果 candidate set 已有明显更优动作，则把 privileged physics 用于：
+- critic teacher；
+- candidate ranking；
+- value distillation。
 
 ### R2 · Correction Benefit
 
-如果存在 correction headroom，但误介入较多，学习“是否值得纠偏 / 哪种纠偏更好”。
+如果 correction headroom 明显，但无效干预很多，则学习：
+- 是否应该纠偏；
+- 哪种 correction 值得执行。
 
 ### R3 · Execution History
 
-如果 D1 的 actual q + short history 带来主要增益，优先做 execution-aware observer / policy。
-
-### R4 · Failure Recovery Data
-
-如果 D4 显示 recovery data 是主要增益来源，转向 failure-driven experience flywheel。
-
-### R5 · Adaptive Execution
-
-如果 D5 的短 C 显著改善，优先研究 adaptive chunk / async correction。
-
-### R6–R9
-
-结构化 residual、contact-aware replay、actor/critic split、future event features，均作为二级候选。
+如果 D1 表明 actual state / history 已解释大部分收益，则优先解决 observability。
 
 ---
 
-## 7. Self-Improvement Protocol
+## 6. Phase 3 — Self-Improvement Loop
+
+先区分三种自我改进：
 
 ### Context Adaptation
 
@@ -243,92 +331,117 @@ Baseline 失败后先做 D1–D5。
 
 ### Online Policy Adaptation
 
-更新轻量 actor / critic / readout。
+更新 lightweight actor / critic / readout。
 
 代表：RLT / SmoothRL。
 
 ### Experience Consolidation
 
-把验证过的新经验写回基础 VLA，并检查旧能力保持。
+把验证过的新经验回写 foundation policy。
 
 代表：PLD。
 
 ### 最小多轮协议
 
-1. 冻结 task set、开发条件、final test 和总交互预算。
-2. Round 0 保存基础策略和独立评估。
-3. 每轮各方法获得相同新增交互预算。
-4. 记录 success / failure / recovery / human intervention。
-5. 更新后在本轮未参与训练的 initial states 上独立评估。
-6. 至少观察数轮，并每轮回测旧任务 / 旧 dynamics。
-
-核心指标：
-- 每单位新增交互收益；
-- recovery success；
-- invalid intervention；
-- old-skill retention；
-- human / data / compute cost。
+1. 冻结 task set / final test / 总交互预算。
+2. Round 0 保存 base policy 与独立评估。
+3. 每轮相同新增交互预算。
+4. 记录 success / failure / recovery / intervention。
+5. 更新后在未参与训练的 initial states 上评估。
+6. 每轮回测旧任务 / 旧 dynamics。
+7. 报告人工、数据、计算成本。
 
 ---
 
-## 8. 远期模块的触发条件
+## 7. RoboDojo：B300 每日小任务
 
-- Shared representation：至少两个任务出现同类表示增益。
-- Distill back to VLA：轻量 adaptation 已经产生稳定高质量 recovery data。
-- Strict streaming RL：replay / storage / update delay 变成真实瓶颈。
-- Full WAM：局部 consequence prediction 已证明 long-horizon prediction 必要。
-- Agent / skill evolution：失败主要来自 task decomposition / skill orchestration，而不是局部控制。
+RoboDojo 当前不抢主线资源。
+
+定位：
+
+> **每天固定少量时间推进的第二实验平台 bring-up。**
+
+### 目标顺序
+
+1. 确认 B300 上 CUDA / PyTorch / simulator / rendering 兼容。
+2. 安装官方依赖。
+3. 跑官方最小 smoke。
+4. 明确 observation / action contract。
+5. 跑 Dojo-Eval。
+6. 最后才讨论 Dojo-RL。
+
+### 每日记录
+
+每天只要求留下一个可检查产物，例如：
+- 安装到哪一步；
+- 哪个依赖不兼容；
+- 完整错误日志；
+- 修复方法；
+- 官方示例是否成功；
+- GPU / renderer / driver 状态。
+
+避免“今天折腾了一下环境”这种不可复用记录。
 
 ---
 
-## 9. 近期行动
+## 8. 近期行动顺序
 
 ### P0
-评估 hammer SFT checkpoints。
 
-产物：
-- success；
-- 阶段画像；
-- 失败视频；
-- checkpoint selection 记录。
+Hammer checkpoints：
+- 5k / 10k / 15k / 20k；
+- 同一开发 seeds；
+- success / stage profile / video；
+- 冻结共同 Reference。
+
+### P0
+
+RLT 原文 vs 本地代码差异审计。
+
+输出：
+- readout；
+- actor；
+- critic；
+- H / C；
+- replay；
+- reward；
+- switch；
+- learner / rollout timing。
 
 ### P1
-审计 RLT 与本地实现差异，完成首任务 baseline。
 
-### P2
-加入第二个 RoboTwin contact task。
+Hammer 上完成首个 RLT-π0.5-adapted baseline。
 
-### P3
-完成 RoboDojo Dojo-Eval。
+### P1
 
-### P4
-补 Dojo-RL 最小闭环。
+迁移 RoboTwin2，新增至少两个不同 contact mechanism 任务。
 
-### P5
-从 failure profile 中选择 D1–D5 的 1–2 个最便宜实验。
+### Side Track
+
+每天推进 RoboDojo on B300。
 
 ---
 
-## 10. 每日论文阅读的角色
+## 9. 每日论文阅读的角色
 
 论文不是 roadmap。
 
-每篇论文固定回答：
-1. 它解决什么问题？
-2. 核心方法是什么？
-3. 最重要证据是什么？
-4. 它占掉我们哪块创新空间？
-5. 它是否需要改变当前 baseline / 对照 / 诊断？
+每篇论文只回答：
 
-如果答案是“没有”，就归档，不改主线。
+1. 它解决什么？
+2. 它的核心方法？
+3. 最重要证据？
+4. 它占掉我们哪块创新空间？
+5. 它是否要求新增 baseline / ablation / diagnosis？
+6. 如果不影响当前 Phase 0，就归档，不改变主线。
 
 ---
 
-## 11. 长期 North Star
+## 10. 长期 North Star
 
 **Physical Experience Flywheel**
 
-```
+\`\`\`
 Deploy
   ↓
 Experience
@@ -342,6 +455,6 @@ Redeploy
 Consolidate
   ↓
 Share
-```
+\`\`\`
 
-最终目标不是单个机器人不断重新试错，而是让一个本体自主纠错产生的经验，能够被后续任务、后续本体和下一代 foundation policy 复用。
+最终目标不是单个机器人不断重复踩坑，而是让一个本体自主纠错产生的经验，被后续任务、后续本体和下一代 foundation policy 复用。
