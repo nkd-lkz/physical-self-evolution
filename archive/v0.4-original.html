@@ -1,0 +1,1056 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Embodied Self-Evolution Research OS v0.4</title>
+<style>
+:root {
+  --bg:#080d13; --panel:#0f1722; --panel2:#121d2a; --line:#25364b;
+  --text:#edf4ff; --muted:#9bb0ca; --blue:#74c7ff; --green:#8ce5bb;
+  --purple:#c8b6ff; --yellow:#f7d97c; --red:#ff9eaa; --sidebar:300px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.75 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+a{color:var(--blue);text-decoration:none} a:hover{text-decoration:underline}
+button,input,textarea,select{font:inherit}
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:var(--sidebar);overflow-y:auto;background:#090e15;border-right:1px solid var(--line);padding:24px 18px;z-index:50}
+.brand{font-weight:850;font-size:22px;line-height:1.35;margin-bottom:6px}
+.sub{font-size:12px;color:var(--muted);margin-bottom:22px}
+.nav-group{margin:18px 0 8px;color:#6f86a4;font-size:11px;text-transform:uppercase;letter-spacing:1.2px}
+.nav a{display:block;padding:8px 10px;border-radius:9px;color:#c9d7e8;font-size:14px}
+.nav a:hover,.nav a.active{background:#172336;color:white;text-decoration:none}
+.main{margin-left:var(--sidebar);min-height:100vh}
+.wrap{max-width:1320px;margin:0 auto;padding:38px 38px 90px}
+section{scroll-margin-top:24px;margin:0 0 54px}
+.hero{background:linear-gradient(135deg,rgba(116,199,255,.10),rgba(200,182,255,.07),rgba(140,229,187,.04));border:1px solid var(--line);border-radius:24px;padding:34px}
+.kicker{font-size:12px;color:var(--green);font-weight:800;letter-spacing:1.6px;text-transform:uppercase}
+h1{font-size:44px;line-height:1.14;margin:10px 0 12px;letter-spacing:-.8px}
+h2{font-size:29px;line-height:1.25;margin:0 0 8px}
+h3{font-size:18px;margin:0 0 9px}
+h4{font-size:15px;margin:16px 0 6px}
+.desc{color:var(--muted);max-width:900px}
+.callout{border:1px solid #335268;background:rgba(116,199,255,.06);padding:16px 18px;border-radius:15px;margin-top:16px}
+.callout.green{border-color:#2e5b4a;background:rgba(140,229,187,.05)}
+.callout.warn{border-color:#695b2e;background:rgba(247,217,124,.05)}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.card{min-width:0;border:1px solid var(--line);background:linear-gradient(180deg,var(--panel),#0c141e);border-radius:16px;padding:18px;overflow-wrap:anywhere}
+.metric{font-size:30px;font-weight:850}
+.small{font-size:12px;color:var(--muted)}
+.tag{display:inline-block;border:1px solid #39516e;padding:3px 8px;border-radius:999px;font-size:11px;margin:3px 4px 0 0;color:#bed3eb}
+.tag.green{border-color:#356752;color:var(--green)} .tag.purple{border-color:#564b78;color:var(--purple)} .tag.yellow{border-color:#6f6030;color:var(--yellow)} .tag.red{border-color:#70424a;color:var(--red)}
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:16px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:1px solid #375573;background:#12263a;color:#e7f5ff;padding:8px 12px;border-radius:9px;cursor:pointer;font-weight:700}
+.btn:hover{background:#193550}
+.btn.ghost{background:transparent;color:#bfd3eb}
+input[type="search"],input[type="text"],textarea,select{width:100%;background:#0b131d;color:white;border:1px solid var(--line);border-radius:10px;padding:10px 12px;outline:none}
+textarea{resize:vertical}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px}
+table{width:100%;border-collapse:collapse;min-width:760px;background:#0c141e}
+th,td{border-bottom:1px solid var(--line);padding:11px 12px;text-align:left;vertical-align:top}
+th{position:sticky;top:0;background:#111d2a;color:#dcecff;font-size:12px}
+details{border:1px solid var(--line);background:#0d1621;border-radius:14px;margin:10px 0;overflow:hidden}
+summary{cursor:pointer;padding:13px 16px;font-weight:800;background:#101b28;list-style:none}
+summary::-webkit-details-marker{display:none}
+details[open] summary{border-bottom:1px solid var(--line)}
+.details-body{padding:15px 18px}
+.timeline{border-left:2px solid #2d425a;margin:12px 0 0 8px;padding-left:22px}
+.t{position:relative;margin:0 0 18px}
+.t:before{content:"";position:absolute;left:-30px;top:8px;width:12px;height:12px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 4px #0b1119}
+.t-date{font-size:11px;color:var(--green);font-weight:800}
+.t-title{font-weight:800}
+.t-body{color:#becddd}
+.status{font-size:11px;padding:3px 7px;border-radius:999px;background:#17304a;color:var(--blue)}
+.status.todo{background:#332a13;color:var(--yellow)} .status.done{background:#123429;color:var(--green)}
+.paper-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.paper{cursor:pointer;transition:.18s transform,.18s border-color}
+.paper:hover{transform:translateY(-2px);border-color:#466887}
+.paper-title{font-weight:850;line-height:1.45;margin:5px 0 8px}
+.paper-one{color:#cbd8e7}
+.paper-rel{font-size:12px;color:#aebfd2;margin-top:10px}
+.paper-actions{display:flex;gap:8px;margin-top:12px}
+.paper-actions a,.paper-actions button{font-size:12px}
+.guardrail{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.guardrail .step{border:1px solid var(--line);border-radius:13px;padding:13px;background:#0d1621}
+.step b{color:var(--green)}
+.flowline{display:flex;align-items:stretch;gap:8px;flex-wrap:wrap}
+.flowbox{flex:1;min-width:160px;border:1px solid var(--line);border-radius:13px;padding:13px;background:#0d1621}
+.arrow{display:flex;align-items:center;color:#607c9a;font-size:22px}
+.master-doc{max-height:76vh;overflow:auto;padding:22px;background:#0b121a}
+.master-doc h1,.master-doc h2,.master-doc h3{scroll-margin-top:20px}
+.master-doc h1{font-size:30px} .master-doc h2{font-size:24px;margin-top:32px;border-top:1px solid var(--line);padding-top:24px} .master-doc h3{font-size:18px;margin-top:24px}
+.master-doc p,.master-doc li{color:#c7d4e3}
+.master-doc blockquote{border-left:3px solid var(--blue);margin-left:0;padding:4px 14px;color:#dcecff;background:#0f1a26}
+.master-doc code{background:#101d2a;padding:2px 5px;border-radius:5px}
+.master-doc pre{overflow:auto;background:#071019;border:1px solid var(--line);padding:12px;border-radius:10px}
+.master-doc table{min-width:680px}
+.perspective{border-left:3px solid var(--purple);padding-left:14px}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:100;align-items:flex-start;justify-content:center;padding:4vh 16px;overflow:auto}
+.modal.open{display:flex}
+.modal-card{width:min(980px,100%);background:#0c141e;border:1px solid #3a526e;border-radius:18px;box-shadow:0 30px 90px rgba(0,0,0,.5);overflow:hidden}
+.modal-head{display:flex;justify-content:space-between;gap:16px;padding:18px 20px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#0c141e;z-index:2}
+.modal-body{padding:22px}
+.close{background:transparent;border:0;color:#b7c7db;font-size:24px;cursor:pointer}
+.note-box{border:1px dashed #425772;border-radius:13px;padding:14px;background:#0a1119}
+.footer{border-top:1px solid var(--line);margin-top:70px;padding:24px 0;color:#8196af;font-size:12px}
+.mobilebar{display:none}
+@media(max-width:980px){
+  :root{--sidebar:0px}
+  .sidebar{display:none} .main{margin-left:0} .wrap{padding:22px 16px 60px}
+  .mobilebar{display:flex;position:sticky;top:0;z-index:40;background:rgba(8,13,19,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:10px 14px;justify-content:space-between}
+  .g4,.g3,.g2,.paper-grid,.guardrail{grid-template-columns:1fr}
+  h1{font-size:34px} .hero{padding:24px}
+}
+</style>
+</head>
+<body>
+<div class="mobilebar"><b>Self-Evolution Research OS</b><a href="#project-core">项目主线</a></div>
+<aside class="sidebar">
+  <div class="brand">Embodied Self-Evolution<br>Research OS</div>
+  <div class="sub">具身智能自进化 · Project-first · v0.4</div>
+  <nav class="nav">
+    <div class="nav-group">主线</div>
+    <a href="#home">总览</a>
+    <a href="#project-core">科研项目主线</a>
+    <a href="#state">项目状态</a>
+    <a href="#baseline">Baseline 契约</a>
+    <a href="#platforms">双环境与任务</a>
+    <a href="#diagnosis">诊断 → 决策</a>
+    <a href="#self-improve">自我改进协议</a>
+    <a href="#plan">近期行动</a>
+    <div class="nav-group">持续更新</div>
+    <a href="#experiment-log">每日实验进度</a>
+    <a href="#paper-program">论文阅读计划</a>
+    <a href="#papers">论文知识库</a>
+    <a href="#perspectives">外部观点 / RSI</a>
+    <a href="#ideas">科研假设池</a>
+    <div class="nav-group">详细资料</div>
+    <a href="#master-note">完整研究总稿</a>
+    <a href="#maintenance">维护协议</a>
+  </nav>
+  <div class="note-box small" style="margin-top:20px">
+    <b>主线守则</b><br>
+    新论文默认只用于“借鉴 / 边界 / 对照”，不会自动改研究主线。只有实验或强近邻证据改变了项目判断，才更新主线。
+  </div>
+</aside>
+
+<main class="main"><div class="wrap">
+
+<section id="home" class="hero">
+  <div class="kicker">Living Research Website · v0.4 · 2026-09-11</div>
+  <h1>面向物理交互的<br>机器人自我改进</h1>
+  <p class="desc" style="font-size:17px">
+    这是这个聊天框的“科研操作系统”，不是论文收藏夹。所有论文、随想、工程进度都围绕同一条主线：
+    <b>机器人如何把一次真实物理经历，转化为下一次更好的行动，并最终形成可持续复用的经验闭环？</b>
+  </p>
+  <div class="callout green">
+    <b>当前阶段目标：</b>以 RLT 为技术起点，在 RoboTwin / RoboTwin2 与 RoboDojo 建立覆盖不同接触机制的可重复 baseline；
+    先完成 reference → RLT → failure diagnosis，再让实验决定究竟推进 consequence representation、value、history、failure recovery 还是 execution scheduling。
+  </div>
+</section>
+
+<section id="project-core">
+  <div class="section-head"><div><h2>01 · 科研项目主线</h2><div class="desc">论文阅读服务于项目，不能让“今天读到什么”把主线带偏。</div></div></div>
+
+  <div class="guardrail">
+    <div class="step"><b>① Baseline</b><br>先让 π0.5 reference + RLT-π0.5-adapted 在多任务上可重复。</div>
+    <div class="step"><b>② Diagnose</b><br>区分 representation / observability / candidate / data / execution 的真正瓶颈。</div>
+    <div class="step"><b>③ One Hypothesis</b><br>只升级 1–2 个有证据的方向，不同时堆 WAM、Streaming、Agent、Physical Token。</div>
+    <div class="step"><b>④ Self-Improvement</b><br>旧策略 → 新经验 → 更新 → 独立评估提升；再讨论多轮积累和经验回写。</div>
+  </div>
+
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card">
+      <h3>长期 Research Vision</h3>
+      <p><b>Physically Grounded Self-Improving Robot Policies</b></p>
+      <p>让机器人依靠真实执行中的接触、后果、失败与恢复，持续获得新能力，而不是长期依赖人重新示范、重新标注、重新训练。</p>
+    </div>
+    <div class="card">
+      <h3>近期可验证问题</h3>
+      <p><b>在固定或主要固定基础 VLA 时，哪些 Physical Experience、数据选择和轻量更新机制真正改善精细操作的在线适应？</b></p>
+      <p class="small">表示、critic、动作参数化、数据采集和执行时机均是候选答案，不预设 Physical Token 是答案。</p>
+    </div>
+  </div>
+
+  <div class="callout warn">
+    <b>研究叙事边界：</b>“Physical”必须落到可测行为：接触 / 几何约束、动力学变化适应、失败后基于实际后果修正。
+    “Self-Evolution”近期先写成更严格的 Self-Improvement / Online Adaptation；只有出现多轮积累、能力保持和清楚的人类投入核算后，才升级持续自进化主张。
+  </div>
+</section>
+
+<section id="state">
+  <div class="section-head"><div><h2>02 · 当前项目状态</h2><div class="desc">只写“已有产物”和“已验收事实”；训练文件存在 ≠ 策略已通过 reference 评估。</div></div></div>
+  <div class="grid g4">
+    <div class="card"><div class="metric">50</div><div class="small">hammer 成功示教 episodes</div></div>
+    <div class="card"><div class="metric">7,884</div><div class="small">LeRobot transitions</div></div>
+    <div class="card"><div class="metric">7,620</div><div class="small">记录中的有效 physics transitions</div></div>
+    <div class="card"><div class="metric">20k</div><div class="small">π0.5 SFT 最终 checkpoint 已生成；reference 待验收</div></div>
+  </div>
+
+  <div class="timeline">
+    <div class="t"><div class="t-date">DONE</div><div class="t-title">Hammer bring-up / 数据 / Physics Sidecar</div><div class="t-body">原生 RoboTwin 基础环境、三相机、14D 接口、成功示教、数据转换与物理 sidecar 已经构成第一套工程资产。</div></div>
+    <div class="t"><div class="t-date">PARTIAL</div><div class="t-title">π0.5 SFT</div><div class="t-body">5k / 10k / 15k / 20k checkpoint 与退出记录存在；下一步不是继续想新算法，而是加载并完成 full rollout reference 验收。</div></div>
+    <div class="t"><div class="t-date">NOW</div><div class="t-title">选择共同 Reference + 形成 Failure Profile</div><div class="t-body">按固定开发 seeds 比较 checkpoints，并记录抓锤、抬起、接近、接触、掉落、完成耗时和最早失败阶段。</div></div>
+    <div class="t"><div class="t-date">NEXT GATE</div><div class="t-title">RLT Baseline</div><div class="t-body">当前没有正式可引用的 RLT baseline 结果。Physical Token / streaming / WAM 仍属于研究候选，不得写成已完成收益。</div></div>
+  </div>
+</section>
+
+<section id="baseline">
+  <div class="section-head"><div><h2>03 · Baseline 契约</h2><div class="desc">以后任何算法改进都必须站在一个定义清楚、可重复、预算公平的共同基线上。</div></div></div>
+  <div class="grid g2">
+    <div class="card"><h3>RLT-π0.5-adapted <span class="status">目标主基线</span></h3><p>尽量保留 RLT 原论文读出、reference conditioning、动作锚定 / dropout 和 chunk-TD 语义，只把 π0.6 / 原机器人替换成当前 π0.5 / 目标环境。</p></div>
+    <div class="card"><h3>Local-Residual <span class="status todo">本地工程变体</span></h3><p>加法 residual、K=1 或历史切换逻辑可作为 bring-up / 实用对照，但必须独立命名，不能用“RLT”掩盖动作参数化差异。</p></div>
+  </div>
+  <details open><summary>必须核对的 10 项 Baseline Contract</summary><div class="details-body">
+    <div class="table-wrap"><table>
+      <tr><th>核查项</th><th>必须回答</th></tr>
+      <tr><td>基础模型</td><td>π0.5 checkpoint、SFT 数据与训练量是什么？</td></tr>
+      <tr><td>读出</td><td>从哪层 hidden states 取？encoder / decoder / dim / reconstruction 如何定义？</td></tr>
+      <tr><td>梯度</td><td>Stage 1 哪些参数更新？Online 阶段冻结哪些？</td></tr>
+      <tr><td>Actor</td><td>完整 chunk 还是 residual？exploration、action limit、reference dropout？</td></tr>
+      <tr><td>Critic</td><td>状态、动作、target network、TD backup 与原文有何差异？</td></tr>
+      <tr><td>时间</td><td>预测 H、实际执行 C、control Hz、policy decision Hz、observation return frequency？</td></tr>
+      <tr><td>数据</td><td>demo / reference / RL rollout / intervention 如何进入 replay？</td></tr>
+      <tr><td>奖励</td><td>success、terminal、timeout、shaping 如何定义？</td></tr>
+      <tr><td>接管</td><td>全程 RL / critical phase / base-prefix + RL？切换是否使用 privileged information？</td></tr>
+      <tr><td>验证</td><td>train/eval seeds、checkpoint selection、控制步 / 决策次数 / wall-clock / VLA 调用预算如何对齐？</td></tr>
+    </table></div>
+  </div></details>
+  <div class="callout"><b>Baseline 完成 ≠ smoke。</b>必须同时有 reference / RLT 独立评估、可解释 learning curve、train/eval seeds、checkpoint/config、episode-level raw result、失败视频，以及没有未解释的 action / timing / input 差异。</div>
+</section>
+
+<section id="platforms">
+  <div class="section-head"><div><h2>04 · 双环境与任务协议</h2><div class="desc">RoboTwin2 用于高效迭代，RoboDojo 用于 Precision / Generalization / 外部有效性；先建立接口再扩规模。</div></div></div>
+  <div class="grid g2">
+    <div class="card"><h3>RoboTwin / RoboTwin2</h3><p>先利用已经打通的 hammer 完成 reference + RLT；同时抽象统一 task adapter，再迁移第二个 contact 机制任务。平台升级本身不能被误写成算法提升。</p></div>
+    <div class="card"><h3>RoboDojo：两层里程碑</h3><p><b>Dojo-Eval：</b>策略加载、obs/action contract、完整 episode、可重复结果。</p><p><b>Dojo-RL：</b>reset/step、逐 transition、reward/termination、learner update、weight sync、training evaluation。</p></div>
+  </div>
+  <details><summary>首批任务矩阵与为什么选它们</summary><div class="details-body">
+    <div class="table-wrap"><table>
+      <tr><th>任务族</th><th>物理机制</th><th>主要研究价值</th><th>进入正式实验前必须检查</th></tr>
+      <tr><td>beat_block_hammer</td><td>tool / impact</td><td>已有资产、接触建立、动作动态</td><td>官方 success 不能单独证明冲击质量；另记 contact timing / velocity / drop</td></tr>
+      <tr><td>click_bell</td><td>point contact</td><td>局部对准、换任务工程成本</td><td>是否过易、reward 是否真的刻画接触</td></tr>
+      <tr><td>Insert Tubes / Plug In Charger</td><td>precision insertion</td><td>“最后几毫米”的 contact-rich correction</td><td>碰撞几何、穿透、吸附、容差、插入深度、success logic</td></tr>
+      <tr><td>Push T</td><td>sustained contact / friction</td><td>非抓持持续接触和物体运动</td><td>是否真受 friction / contact dynamics 影响</td></tr>
+      <tr><td>Fasten Screws / Insert Key</td><td>orientation / constraint</td><td>方向约束与工具交互</td><td>task name 不等于真实螺纹 / 力学模型</td></tr>
+    </table></div>
+  </div></details>
+</section>
+
+<section id="diagnosis">
+  <div class="section-head"><div><h2>05 · Baseline 之后：先诊断，再选方法</h2><div class="desc">不要把所有失败都解释成“RLT 不懂物理”。</div></div></div>
+  <div class="flowline">
+    <div class="flowbox"><b>Failure Profile</b><br><span class="small">最早从哪一步开始失败？</span></div><div class="arrow">→</div>
+    <div class="flowbox"><b>Oracle Headroom</b><br><span class="small">同状态附近是否存在更好 correction？</span></div><div class="arrow">→</div>
+    <div class="flowbox"><b>Information Test</b><br><span class="small">普通 obs、actual state、history、physics labels 谁带来增量？</span></div><div class="arrow">→</div>
+    <div class="flowbox"><b>Only Then</b><br><span class="small">升级 1–2 个候选方向。</span></div>
+  </div>
+  <div class="table-wrap" style="margin-top:16px"><table>
+    <tr><th>实验</th><th>最小设计</th><th>核心问题</th><th>可能的路线决定</th></tr>
+    <tr><td>D1 · 输入与历史</td><td>command target → + actual q → + short history</td><td>缺“物理知识”还是根本没看到真实执行？</td><td>若 history 大幅提升 → R3 优先</td></tr>
+    <tr><td>D2 · 候选可改善空间</td><td>同状态：不修正 + 少量合法 candidates；follow-up policy 固定</td><td>reference 附近有没有 correction headroom？</td><td>若无 → 先改动作空间 / recovery data</td></tr>
+    <tr><td>D3 · 监督用途</td><td>同特征/数据/容量：reconstruction vs future latent vs physical consequence vs correction benefit</td><td>physics 应进入哪里？</td><td>representation / value / benefit 三选一</td></tr>
+    <tr><td>D4 · 数据覆盖</td><td>相同新增预算：普通 expert vs failure-recovery</td><td>改进是算法还是终于看到了失败附近？</td><td>若 recovery data 占主因 → data flywheel</td></tr>
+    <tr><td>D5 · 执行长度</td><td>C=1/5/10；记录 control Hz / VLA calls / actual executed range</td><td>反馈是不是太慢？</td><td>若短 C 解决大头 → adaptive execution 强基线</td></tr>
+  </table></div>
+</section>
+
+<section id="self-improve">
+  <div class="section-head"><div><h2>06 · “自进化”如何变成实验</h2><div class="desc">把宏观愿景拆成三个可测的改进机制。</div></div></div>
+  <div class="grid g3">
+    <div class="card"><h3>Context Adaptation</h3><p>参数不变，改变 history / memory / context。</p><span class="tag">Zeva</span></div>
+    <div class="card"><h3>Online Policy Adaptation</h3><p>更新 lightweight actor / critic / readout。</p><span class="tag green">RLT</span><span class="tag green">SmoothRL</span></div>
+    <div class="card"><h3>Experience Consolidation</h3><p>把已验证的新经验回写基础 VLA，并检查旧能力保持。</p><span class="tag purple">PLD</span></div>
+  </div>
+  <details open><summary>最小多轮 Self-Improvement Protocol</summary><div class="details-body">
+    <ol>
+      <li>预先冻结 task set、开发条件、final test 和总交互预算。</li>
+      <li>Round 0 保存 base policy 与独立评估。</li>
+      <li>每一轮各方法获得相同新增交互预算，记录 success / failure / recovery / human intervention。</li>
+      <li>更新后只在本轮未参与训练的 initial states / conditions 上评估。</li>
+      <li>至少观察数轮趋势，并每一轮回测旧任务 / 旧 dynamics，量化遗忘。</li>
+    </ol>
+    <p><b>核心指标：</b>每单位新增交互收益、恢复成功率、无效干预比例、旧能力下降、总采集 / 人工 / 计算成本。</p>
+  </div></details>
+  <div class="callout warn"><b>远期触发而非必经：</b>共享表示（至少两个任务有同类收益）｜蒸馏回 VLA（已产生稳定高质量 recovery data）｜严格 streaming（replay 约束成为真实瓶颈）｜完整 WAM（局部后果预测已经证明长时预测必要）｜Agent/Skill 演化（失败主要来自任务分解/调用而非局部控制）。</div>
+</section>
+
+<section id="plan">
+  <div class="section-head"><div><h2>07 · 近期行动</h2><div class="desc">按“可检查产物”推进，而不是按漂亮故事推进。</div></div></div>
+  <div class="table-wrap"><table>
+    <tr><th>Priority</th><th>行动</th><th>必须留下的产物</th><th>它决定什么</th></tr>
+    <tr><td>P0</td><td>评估 hammer SFT checkpoints</td><td>reference success + 阶段画像 + 视频 + 选模记录</td><td>基础策略是否可用、RL 从哪里开始</td></tr>
+    <tr><td>P1</td><td>审计 RLT 与本地实现差异，完成首任务 baseline</td><td>差异表 + smoke + learning curve + eval</td><td>共同 baseline 的定义</td></tr>
+    <tr><td>P2</td><td>第二个 RoboTwin contact task</td><td>统一入口 / logging / metrics</td><td>方法是否绑死 hammer</td></tr>
+    <tr><td>P3</td><td>RoboDojo Dojo-Eval</td><td>obs/action contract + reference result</td><td>Precision benchmark 是否适用</td></tr>
+    <tr><td>P4</td><td>RoboDojo Dojo-RL</td><td>online learner short run + sync log</td><td>双环境 online baseline 是否成立</td></tr>
+    <tr><td>P5</td><td>从 failure profile 选择 D1–D5</td><td>实验卡 + 结果 + 决策</td><td>只推进 1–2 个主候选</td></tr>
+  </table></div>
+  <div class="callout"><b>每次组会只回答三件事：</b>① 新增的可信事实是什么？② 下一项最小实验能排除哪种解释？③ 哪些想法本周不做，它们的触发条件是什么？</div>
+</section>
+
+<section id="experiment-log">
+  <div class="section-head"><div><h2>08 · 每日科研 / 实验进度</h2><div class="desc">这里维护“做了什么、证据在哪、改变了什么判断”。聊天中的正式更新会写进下一版；下方也可在本浏览器临时记录。</div></div><div class="toolbar"><button class="btn ghost" onclick="exportLogs('md')">导出 Markdown</button><button class="btn ghost" onclick="exportLogs('json')">导出 JSON</button></div></div>
+  <div class="grid g2">
+    <div class="card">
+      <h3>新增临时记录</h3>
+      <input id="logTitle" type="text" placeholder="例如：Hammer 20k checkpoint 首轮评估">
+      <div style="height:8px"></div>
+      <select id="logType"><option>实验</option><option>工程</option><option>论文</option><option>组会决策</option><option>研究假设</option></select>
+      <div style="height:8px"></div>
+      <textarea id="logBody" rows="6" placeholder="事实 / 结果 / 证据 / 下一步。不要只写“跑了实验”。"></textarea>
+      <div style="height:8px"></div><button class="btn" onclick="addLog()">保存到浏览器</button>
+    </div>
+    <div class="card">
+      <h3>正式进度模板</h3>
+      <p><b>事实：</b>实际运行 / 阅读得到什么？</p>
+      <p><b>证据：</b>checkpoint、日志、video、table、论文 section。</p>
+      <p><b>解释：</b>支持 / 削弱哪个假设？</p>
+      <p><b>下一步：</b>最便宜的证伪实验是什么？</p>
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px"><div id="logList"></div></div>
+</section>
+
+<section id="paper-program">
+  <div class="section-head"><div><h2>09 · 每日论文计划：围绕主线读，不追热点跑偏</h2><div class="desc">每篇论文只需要影响“边界、诊断、实验或长期地图”中的一项；否则归档，不改变路线。</div></div></div>
+  <div class="flowline">
+    <div class="flowbox"><b>读论文</b><br><span class="small">它解决什么？</span></div><div class="arrow">→</div>
+    <div class="flowbox"><b>定位</b><br><span class="small">Context / Harness / Policy / Foundation?</span></div><div class="arrow">→</div>
+    <div class="flowbox"><b>创新边界</b><br><span class="small">它占掉我们哪块空间？</span></div><div class="arrow">→</div>
+    <div class="flowbox"><b>项目动作</b><br><span class="small">改 baseline / 对照 / 诊断 / nothing。</span></div>
+  </div>
+  <details open><summary>第一轮优先阅读顺序（可随着项目瓶颈调整）</summary><div class="details-body">
+    <div class="table-wrap"><table>
+      <tr><th>阶段</th><th>论文</th><th>为什么现在读</th></tr>
+      <tr><td>Baseline / 时序</td><td>RLT → SERL → SmoothRL → PLD</td><td>先建立 online adaptation 的共同语言、系统条件和部署时序。</td></tr>
+      <tr><td>Physical Experience</td><td>V-GPS → Rapid Motor Adaptation → Pri4R → PHR-VLA → FD-VLA → HapticVLA → SR-WM</td><td>比较 physics 应进入 history / representation / value / world model 的哪一层。</td></tr>
+      <tr><td>Failure / Recovery</td><td>RedFlow → RL²-VLA → ViTaR → VLA-Corrector</td><td>研究失败怎样转成 correction、何时介入。</td></tr>
+      <tr><td>Context / Harness Evolution</td><td>Zeva → Harness VLA → SHAPER → ASPIRE → Zetta → ENPIRE</td><td>理解“不更新权重”的自进化，以及多时间尺度闭环，但不让它们抢走当前 RLT baseline 优先级。</td></tr>
+    </table></div>
+  </div></details>
+</section>
+
+<section id="papers">
+  <div class="section-head"><div><h2>10 · 论文知识库</h2><div class="desc">点击论文卡片可展开完整阅读笔记；“待读”论文先记录边界与问题，正式精读后再升级内容。</div></div></div>
+  <div class="grid g2" style="margin-bottom:14px">
+    <input id="paperSearch" type="search" placeholder="搜索：Zeva / failure / memory / RLT / Harness…">
+    <select id="paperFilter"><option value="all">全部主题</option><option value="context">Context / Memory</option><option value="policy">Policy / RL</option><option value="physical">Physical / History</option><option value="execution">Execution</option><option value="failure">Failure / Data</option><option value="harness">Harness / Skills</option><option value="agent">Agentic Improvement</option></select>
+  </div>
+  <div id="paperGrid" class="paper-grid"></div>
+</section>
+
+<section id="perspectives">
+  <div class="section-head"><div><h2>11 · 外部观点：具身 RSI / SeeAct AI 访谈</h2><div class="desc">这部分是行业 / 研究观点，不当作项目实验事实；作用是帮助确定长期 Research Vision。</div></div></div>
+  <div class="callout green">
+    <b>最值得吸收的一句话：</b>今天真正的机会可能不是再从零训练一个“机器人 GPT”，而是建立贯穿预训练与后训练的自进化系统：让机器人自主探索产生经验、Evaluator 判断经验、RL 把经验写回能力，并最终让经验跨本体复用。
+  </div>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card perspective"><h3>从“及格”到“可用”</h3><p>访谈把当前具身模型的关键差距概括为：少量示范可以让陌生环境中的初始泛化从 0 提到“及格”，但真实部署需要接近 99% 甚至更高可靠性。真正短缺的是失败后的自主纠错：机器人能否知道哪里错了，把这次经验留下，并让下一次策略变强。</p></div><div class="card perspective"><h3>具身 RSI 的核心定义</h3><p>不是“模型自己改两行代码”，而是智能体能够利用自主探索产生的数据，结合 reward / feedback 持续提升策略，而且关键经验不是人提前提供。Rollout 中既有成功也有失败，系统要把这些经验转成下一轮学习数据。</p></div><div class="card perspective"><h3>自顶向下 × 自底向上</h3><p>上层 Agent 持续提出更复杂任务，暴露底层 skill 缺口；底层通过探索、训练和验证补齐 skill；更强的底层能力又允许上层减少任务拆分、解决更长程问题。能力拓展自顶向下，能力增强自底向上，形成循环。</p></div><div class="card perspective"><h3>三套核心系统</h3><p>World Engine：低成本地产生大规模可交互 rollout（可是真机、仿真或 World Model）；Evaluator / Reward Model：判断成功、进度和失败点，把 rollout 转成可学习反馈；RL / Policy Base：把这些被评价的经验真正写回策略。</p></div><div class="card perspective"><h3>Harness 的位置</h3><p>无需从头训练另一个顶层大模型。上层可直接调用最强 foundation model，真正需要搭的是完整 Agent Harness：工具、skill、能力边界、memory、documents、reasoning flow，以及下面的 simulation / RL / data infrastructure。</p></div><div class="card perspective"><h3>物理世界反过来塑造模型</h3><p>长期愿景不是“大模型单向吞噬物理世界”，而是把物理世界视为一个拥有 diverse environment / task / feedback 的训练场。机器人在真实交互中产生的经验未来可能反哺更大的基础模型。</p></div><div class="card perspective"><h3>为什么需要群体经验</h3><p>单一本体很难支撑真正通用智能。如果机器人 A 已经踩过某类 failure，机器人 B 面对相似问题不应该重新从头探索。目标是把单个机器人自主纠错产生的经验变成跨本体可复用经验。</p></div>
+  </div>
+  <details><summary>这份观点对当前 RLT 项目的“可用指导”与“不可直接照搬”</summary><div class="details-body">
+    <p><b>可用：</b>强调 failure / recovery experience、reward/evaluator、经验闭环、跨任务/跨机器人复用；支持我们把“Physical Experience Flywheel”作为长期研究地图。</p>
+    <p><b>不可直接照搬：</b>World Engine / Agent Harness / 群体 RSI 都是上位系统概念。当前第一步仍是把局部精细操作的 reference + RLT baseline 跑清楚，并用 D1–D5 证明真正瓶颈。否则系统故事会掩盖 sensorimotor 科学问题。</p>
+  </div></details>
+</section>
+
+<section id="ideas">
+  <div class="section-head"><div><h2>12 · 科研假设池（主线之外的想法都放这里）</h2><div class="desc">Idea Pool 不是 Roadmap。只有满足“触发条件”才进入正式实验。</div></div></div>
+  <div class="grid g3">
+    <div class="card"><h3>R0 · Action Consequence</h3><p>用 decision-relevant action effect 塑造紧凑状态，而不是泛化地“预测 physics”。</p><span class="tag">触发：D3 表示/后果明显优于普通 future latent</span></div>
+    <div class="card"><h3>R1 · Value-Oriented Physics</h3><p>物理真值更适合做 privileged critic / candidate ranking teacher，而非重建目标。</p><span class="tag">触发：D2 有 oracle headroom</span></div>
+    <div class="card"><h3>R2 · Correction Benefit</h3><p>学习“这次 correction 是否值得介入、哪种 correction 更好”。</p><span class="tag">触发：候选有收益且误干预明显</span></div>
+    <div class="card"><h3>R3 · Execution History</h3><p>actual q / history / contact trace 可能比新 loss 更重要。</p><span class="tag">触发：D1 history 增益</span></div>
+    <div class="card"><h3>R4 · Failure Recovery Data</h3><p>失败附近数据覆盖可能是关键资源，而非 token 设计。</p><span class="tag">触发：D4 recovery data 赢</span></div>
+    <div class="card"><h3>R5 · Adaptive Execution</h3><p>接触附近缩短 chunk / async correction，提高闭环反馈频率。</p><span class="tag">触发：D5 短 C 显著改善</span></div>
+    <div class="card"><h3>R6–R9 · Secondary</h3><p>结构化 residual、contact-aware replay、actor/critic split、future event features。</p><span class="tag">触发：主诊断后再分支</span></div>
+    <div class="card"><h3>Fast Memory + Slow RL</h3><p>Zeva-style Context Evolution 与 RLT-style Policy Evolution 的双时间尺度适应。</p><span class="tag purple">长期</span></div>
+    <div class="card"><h3>Physical Experience Flywheel</h3><p>Deploy → Experience → Evaluate → Learn → Redeploy → Consolidate → Share。</p><span class="tag green">长期 North Star</span></div>
+  </div>
+</section>
+
+<section id="master-note">
+  <div class="section-head"><div><h2>13 · 完整研究总稿（不再简化）</h2><div class="desc">你刚刚附录的 1097 行研究材料完整保留在这里。上面的“项目主线”只是索引；这里才是详细工作文档。支持浏览器 Ctrl/Cmd+F 搜索。</div></div><div class="toolbar"><button class="btn" onclick="toggleMaster(true)">展开</button><button class="btn ghost" onclick="toggleMaster(false)">折叠</button></div></div>
+  <details id="masterDetails">
+    <summary>展开《面向物理交互的机器人自我改进：研究综述、项目现状与渐进实验路线》全文</summary>
+    <div class="master-doc"><h1>面向物理交互的机器人自我改进：研究综述、项目现状与渐进实验路线</h1>
+<p>****项目当前最需要完成的是：以 RLT 为技术起点，建立覆盖不同接触机制、能够重复评估和迭代算法的实验基座。**** 长期方向是物理交互能力与持续自我改进；近期先完成 reference 评估、RLT 算法适配和多任务 baseline，再根据失败证据选择方法。接触后果监督、价值学习、执行历史、失败恢复及执行调度均保留为候选。</p>
+<p>这份文档统一此前路线、进度和讨论材料，并依据最新会议意见调整优先级。事实核验截止 2026-09-11；文中区分“已有产物”“文献结论”“待验证假设”和“建议行动”。目前没有证据表明本项目已经获得物理监督、自进化或跨任务迁移的正式收益。</p>
+<p>阅读顺序：了解下一步先看 <a href="#decision">1. 当前决策</a>、<a href="#status">3. 项目状态</a>、<a href="#next">10. 近期行动</a>；准备实现看 <a href="#rlt">4. RLT 基线</a>、<a href="#platform">5. 双环境</a>、<a href="#tasks">6. 任务与协议</a>；准备科研讨论看 <a href="#literature">7. 文献地图</a>、<a href="#diagnosis">8. 诊断实验</a>、<a href="#reading">11. 每日论文</a>。</p>
+<hr />
+<p>&lt;a id=&quot;decision&quot;&gt;&lt;/a&gt;</p>
+<h2>1. 当前应当确定什么，保留什么不确定性</h2>
+<h3>1.1 统一的研究问题</h3>
+<p>建议使用工作名称：****面向物理交互的自我改进机器人策略****，英文暂用 <strong>Physically Grounded Self-Improving Robot Policies</strong>。名称表达研究对象与方向，不代表已经实现的能力或已确定的论文标题。</p>
+<p>核心问题是：</p>
+<blockquote>
+<p>预训练机器人策略在接触、约束和动力学变化中产生的成功、失败与恢复经验，应该怎样被利用，才能让策略以较少新增交互更可靠、更高效地完成精细操作？</p>
+</blockquote>
+<p>第一阶段把问题收窄为：****在固定或主要固定基础 VLA 的条件下，哪些物理交互信息、数据选择方式与轻量更新机制真正改善在线适应？**** 是否最终需要改变表示、critic、动作空间或数据收集机制，由实验决定。</p>
+<p>“Physical”在这里至少有三个可测含义：动作能否满足接触与几何约束；面对质量、摩擦、延迟等变化能否适应；失败后能否根据实际后果修正动作。仅仅增加物理变量预测头，不能证明这三项能力。</p>
+<p>“自进化”作为长期愿景，近期使用更容易验证的“自我改进 / 在线适应”。要声称自我改进，至少应展示****旧策略执行 → 新经验 → 策略更新 → 独立评估提升****；要声称持续自我改进，还应展示多轮积累、保持旧能力以及明确的人类投入。</p>
+<h3>1.2 研究层级分开管理</h3>
+<p>| 层级 | 当前内容 | 稳定程度 |</p>
+<p>|---|---|---|</p>
+<p>| 长期方向 | 物理交互能力、自我改进、经验复用 | 保持稳定 |</p>
+<p>| 近期目标 | RoboTwin2 与 RoboDojo 上可复用的精细操作实验基座 | 已明确，平台内推进顺序可调整 |</p>
+<p>| 算法起点 | RLT、当前可用的 π0.5、轻量 actor–critic | 先固定基线，明确与原论文差异 |</p>
+<p>| 研究假设 | 后果监督、价值判断、恢复数据、历史、执行调度 | 等待数据筛选 |</p>
+<p>| 工程状态 | 数据、权重、环境、接口、训练与评估记录 | 按实际产物更新 |</p>
+<p>| 远期扩展 | 蒸馏回基础模型、严格 streaming、完整 WAM | 达到相应条件后再启动 |</p>
+<p>RLT 是当前研究起点，应在技术说明中准确引用与归因；对外叙事可以围绕物理交互和自我改进展开。重新组织故事不会自动产生算法创新，创新仍需由机制、对照与证据支撑。</p>
+<h3>1.3 最新会议意见对应的路线变化</h3>
+<p>| 旧路线或表述 | 现在的处理 |</p>
+<p>|---|---|</p>
+<p>| hammer → Physical Token → streaming → WAM | 改为 baseline → 失败诊断 → 一至两个候选 → 多任务验证 → 按证据扩展 |</p>
+<p>| 接触后果监督与共享表示已是主线 | 保留为重要候选，与价值、数据、反馈路径竞争 |</p>
+<p>| 先把单任务创新完整做完，再迁移平台 | 提前建设多任务与双环境接口，避免方法绑死 hammer |</p>
+<p>| RoboTwin2 必须等到 B1 后才考虑 | 旧依赖不再作为新研究方向的限制；已有原生分支用于快速完成首个 baseline |</p>
+<p>| RoboDojo 一接入就能直接在线 RL | 拆成策略评估接入与在线训练适配两个里程碑 |</p>
+<p>| “多任务”意味着一个联合训练策略 | 首先指同一算法在多个任务上的独立验证；共享表示、联合训练另设实验 |</p>
+<p>| 看完一大批论文后确定完整计划 | 每天一篇与当前瓶颈相关的论文，每周根据证据调整下一步 |</p>
+<p>****近期只承诺形成实验能力与回答具体问题，不承诺某个候选必须有效，也不预设第一篇论文必须同时完成物理表示、持续学习、真机和世界模型。****</p>
+<p>&lt;a id=&quot;materials&quot;&gt;&lt;/a&gt;</p>
+<h2>2. 原有材料为何显得混乱，怎样保留已有价值</h2>
+<p>现有材料并非六个相互独立的科研方向，而是工程路线、状态记录、两轮方法调研和后续讨论的叠加。长附件还重复粘贴了若干已经存在的报告，不能把重复表述视作多份独立证据。<a href="#internal">内部资料 I1–I9</a></p>
+<p>| 材料 | 主要价值 | 需要修正或降级的内容 |</p>
+<p>|---|---|---|</p>
+<p>| 原 hammer 执行路线 | 环境、数据、冻结范围、标签、实验预算等具体约束 | 把 Physical Token 与 streaming 写成了必经路线；部分 K/C 配置存在版本差异 |</p>
+<p>| 原阶段状态表 | H0/H1/P0 的日期、日志和验收记录 | SFT 仍停留在 2026-09-10 启动快照，需要结合最终产物理解 |</p>
+<p>| Loss-first 调研 | 明确物理监督的近邻工作、梯度路径和迁移验证要求 | “推荐主线”应降级为待验证假设 |</p>
+<p>| 替代路线调研 | 引入价值、纠偏收益、历史、恢复和执行时机 | 候选过多，需要通过共同诊断收敛 |</p>
+<p>| 旧总汇与路线重整草稿 | 已开始区分愿景、baseline、方法和工程 | 重复较多；部分旧状态与平台可训练性表述需校正 |</p>
+<p>| 物理与自进化随想 | 明确研究对象是执行经验与能力改善 | Agent、Harness、ICL、WAM 等不必都成为近期模块；宏观趋势判断不是项目证据 |</p>
+<p>几项容易影响决策的矛盾应统一解释：</p>
+<p>1. ****SFT 已训练完，不等于 reference 已验收。**** 当前下一步是加载并评估已有 checkpoint。</p>
+<p>2. ****Stage 1 联合 SFT 不天然违反 RLT 原论文。**** 原文允许可选 VLA SFT；但若本项目要隔离“物理监督”的效果，就需要额外固定共同 reference。这是公平比较的设计要求。<a href="https://arxiv.org/html/2604.23073v2">RLT，IV-A 与 Algorithm 1</a>[^1]</p>
+<p>3. ****C=1 与 C=10 不能靠文档投票决定。**** 要记录实际执行长度、控制频率、策略切换和 TD 语义；旧配置中的 K、C、`num_action_chunks` 需逐一映射。</p>
+<p>4. ****命令目标、本体感知和真实执行反馈不是同一字段。**** 旧材料指出本地 `observation.state` 可能是 drive target；新增真实反馈是一项输入变更，需要对照。</p>
+<p>5. ****“物理难度曲线”不能把不同任务随意排成一条轴。**** 抓放与插入还同时改变视觉、数据、时长和控制难度。优先在同一任务内扫描明确物理因素，再比较不同机制。</p>
+<p>6. ****“RoboDojo 是 eval-only”不等于模拟器不能用于 RL。**** 它说明官方当前发布的职责边界；自建在线采样与学习接口仍然可以研究。<a href="https://github.com/RoboDojo-Benchmark/RoboDojo">官方 README</a>[^3]</p>
+<p>旧报告保留为历史资料和技术细节索引。新的研究方向以本文为入口，具体完成情况以有日期的原始产物为准。后续避免再产生数份都自称“唯一主计划”的汇总。</p>
+<p>&lt;a id=&quot;status&quot;&gt;&lt;/a&gt;</p>
+<h2>3. 项目当前实际走到哪一步</h2>
+<h3>3.1 有证据支持的进展</h3>
+<p>| 项目 | 当前可支持的结论 | 证据范围 |</p>
+<p>|---|---|---|</p>
+<p>| 原生 RoboTwin hammer bring-up | 已完成基础环境、三相机、14 维接口 smoke | 原状态表 H0；未在本次重新跑环境 |</p>
+<p>| 成功示教与 sidecar | 已记录 50 episodes、7,934 源帧、7,884 transitions | 原状态表及数据转换验收记录 |</p>
+<p>| 物理标签 | 记录中 7,620 条有效 transition；hammer-block contact 168 条 | 50 条成功示教的离线标签，不代表失败数据或在线标签完整 |</p>
+<p>| 数据转换、任务归一化 | 已通过，统计实际使用 7,872 行 | 原 H1 数据与 norm stats 记录 |</p>
+<p>| π0.5 正式 SFT | 5k、10k、15k、20k checkpoint 文件均存在，退出码记录为 0 | 本次直接检查训练目录与 `status.txt` |</p>
+<p>| SFT 权重可加载、reference 成功率 | 尚无本次核验通过的结论 | 未加载权重或重新运行策略评估 |</p>
+<p>| 原始/适配版 RLT baseline | 原状态表 H2 未开始，尚无可引用正式结果 | 不把 SFT 或 evaluator smoke 记作 RLT 结果 |</p>
+<p>| Physical Token、streaming、WAM | 没有可引用的方法收益 | 目前属于方案与调研 |</p>
+<p>| RoboTwin2 主线和 RoboDojo 在线 RLT | 没有已完成训练验收的证据 | 已有环境调研资产不等于 learner 已接通 |</p>
+<p>SFT 运行目录为 <a href="/data/kaize/rlinf/runs/beat-hammer-h1-sft-full">beat-hammer-h1-sft-full</a>，<a href="/data/kaize/rlinf/runs/beat-hammer-h1-sft-full/status.txt">退出记录</a>为 `sft_exit=0`。四份 `full_weights.pt` 文件各 8,526,557,492 字节。文件存在和退出成功支持“训练产物已生成”，仍需加载与完整 rollout 验证模型可用。</p>
+<p>因此，H1 更准确的状态是：****部分完成——训练产物已生成，reference 评估待验收。**** 旧状态表中“正式 SFT 正在运行、约 step 81”属于历史快照。<a href="../worktrees/beat-block-hammer/docs/research/beat_block_hammer_experiment_status_zh.md">原状态表</a></p>
+<h3>3.2 现有数据能支持哪些研究</h3>
+<p>50 条成功示教适合验证数据格式、标签同步、表示探针和任务 SFT，但不足以直接回答“哪个失败值得修正”“怎样恢复”“修正比原动作好多少”。同一轨迹相邻帧高度相关，7,884 条转移不等于 7,884 个独立物理情境。</p>
+<p>contact 标签稀少，报告分类准确率容易产生误导。应按 episode 划分训练/验证集合，关注 PR-AUC、事件召回、校准及跨条件表现；先检查全部预测为无接触的基线。现有训练集由成功 seeds 筛得，不能把专家筛选成功率当策略成功率，也不能只用这些成功 seeds 评估部署能力。</p>
+<p>此前 `adjust_bottle` 回退权重的 200-step evaluator smoke 仅证明管线能运行，其 `success=0` 不能代表本次 hammer SFT 的表现。<a href="../worktrees/beat-block-hammer/docs/research/beat_block_hammer_experiment_status_zh.md">原状态表 H0-EVALUATOR-SMOKE</a></p>
+<h3>3.3 下一项最有价值的实际行动</h3>
+<p>先对 20k checkpoint 做少量完整 episode，核对任务归一化、相机、动作解码与 horizon。随后在同一组开发 seeds 上比较 5k/10k/15k/20k，依据验证表现选定 reference；最终评估 seeds 另行保留。</p>
+<p>评估应回答：能否抓锤、抬起、接近目标、建立有效接触，以及失败最早发生在哪一步。若连抓取都不稳定，优先排查训练与控制接口；若经常到达接触前而最后失败，则适合继续研究局部在线改进。即使整体成功率很低，也不应仅按一个百分比禁止 RL，关键是有无可学习的前置能力、奖励信号与探索支持。</p>
+<p>&lt;a id=&quot;rlt&quot;&gt;&lt;/a&gt;</p>
+<h2>4. RLT 如何作为可信的技术起点</h2>
+<h3>4.1 原论文的核心机制与可继承内容</h3>
+<p>RLT 利用 VLA 的紧凑读出和参考动作支持小型在线 actor–critic。读出通过重建 VLA 特征学习；离线阶段可同时做任务 SFT，在线阶段冻结 VLA 与读出。actor 条件化于参考 chunk 并受动作锚定约束，输出 Gaussian action chunk；critic 使用 chunk 级 TD。论文包含参考动作 dropout，并分别考察关键阶段与完整任务。<a href="https://arxiv.org/html/2604.23073v2">原论文 IV–VI 节</a>[^1]</p>
+<p>原实验使用 π0.6，当前项目使用 π0.5；原论文 C=10 的短动作块与本地曾使用的 K=1 也不同。这些差异不妨碍开展研究，但必须在复现记录中明确，不能把移植后的数值直接称为原实验复现。</p>
+<p>可以保留的研究框架是：</p>
+<p>```mermaid</p>
+<p>flowchart LR</p>
+<p>    O[图像、指令与执行反馈] --&gt; V[固定基础 VLA]</p>
+<p>    V --&gt; Z[紧凑表示]</p>
+<p>    V --&gt; R[参考动作]</p>
+<p>    Z --&gt; A[轻量策略]</p>
+<p>    R --&gt; A</p>
+<p>    A --&gt; E[环境执行]</p>
+<p>    E --&gt; D[实际动作、后果与奖励]</p>
+<p>    D --&gt; Q[价值学习与策略更新]</p>
+<p>    Q --&gt; A</p>
+<p>```</p>
+<p>这个框架既允许研究表示，也允许研究价值、动作、数据与执行时机。RLT 没有直接证明其读出缺失物理信息，因此“RLT 不懂物理”只能作为待检验假设，不能直接写成论文结论。</p>
+<h3>4.2 基线命名与版本差异</h3>
+<p>建议维护两个明确标签，避免再用同一个 B0 混指多种算法：</p>
+<p>| 标签 | 定义 | 使用方式 |</p>
+<p>|---|---|---|</p>
+<p>| ****RLT-π0.5-adapted**** | π0.5 和目标环境上的算法移植，尽量保留原文读出、参考条件化、动作锚定和 chunk TD | 目标主基线；差异表必须齐全 |</p>
+<p>| ****Local-Residual**** | 本地已有加法残差、K=1 或特定切换逻辑的配置 | 调通管线与实用对照；明确是本地变体 |</p>
+<p>若首轮只能跑通 Local-Residual，应如实汇报，随后补齐 RLT-π0.5-adapted。无需为了命名同时维护两套完整训练基础设施，但不能用一种算法的名称掩盖另一种动作参数化。</p>
+<p>| 核查项 | 复现记录要回答的问题 |</p>
+<p>|---|---|</p>
+<p>| 基础模型 | 使用哪个 π0.5 checkpoint？任务 SFT 数据与训练量是多少？ |</p>
+<p>| 读出 | 从哪层特征提取？编码器、解码器、维度与重建目标是什么？ |</p>
+<p>| 梯度 | 重建损失是否更新 VLA？可选 SFT 是否更新 reference？在线阶段冻结哪些参数？ |</p>
+<p>| actor | 输出完整 chunk 还是加法残差？探索噪声、限制与 dropout 如何设置？ |</p>
+<p>| critic | 状态、动作及目标网络怎样构造？更新算法是否与原文对齐？ |</p>
+<p>| 时间 | VLA 预测长度 H、实际执行 C、控制频率、返回观测频率分别是多少？ |</p>
+<p>| 数据 | demo、reference rollout、RL rollout 与人工介入如何进入 replay？ |</p>
+<p>| 奖励 | 成功奖励、终止、稀疏/稠密版本及任何 shaping 如何定义？ |</p>
+<p>| 任务阶段 | 全程 RL、关键阶段 RL 还是基础策略前缀加 RL？切换依据是否使用特权信息？ |</p>
+<p>| 验证 | 固定哪些 seeds？如何选 checkpoint？比较的预算单位是什么？ |</p>
+<h3>4.3 公平比较物理监督时的额外约束</h3>
+<p>为了比较后果监督与普通读出的差异，先选定共同任务 reference，再让各组从同一冻结 VLA 特征训练同构读出。在线阶段首轮冻结读出，只训练同等规模 actor–critic。这样才能把“训练信号的收益”与“基础策略又做了一轮 SFT”的收益分开。</p>
+<p>这不是要求整个项目永远冻结 VLA。若后续研究蒸馏或联合更新，应作为单独条件，报告参数量、数据、算力与旧能力保持。</p>
+<h3>4.4 chunk 与 transition 的实现检查</h3>
+<p>以下是目标环境移植时的验收规范，不是本次已实现的代码：</p>
+<p>[</p>
+<p>y_t=\sum_{i=0}^{c_t-1}\gamma^i r_{t+i}</p>
+<p> + m_t\gamma^{c_t}\bar Q(x_{t+c_t},a'),</p>
+<p>]</p>
+<p>其中 (c_t) 是这条转移****实际执行****的控制步数，(m_t) 表示按照任务终止/截断定义是否允许 bootstrap。若在中途成功终止，不能仍按完整 C 步处理；自动 reset 不能把下一 episode 的初态当终态。时间限制截断的处理要与 finite-horizon 定义一致，并保留 final observation。</p>
+<p>比较不同 C 时，同时报告控制步数、策略决策次数和真实/仿真秒数。如果每个决策都更新相同次数，C=1 与 C=10 的每控制步训练量不同，不能声称预算天然相等。折扣也应按相同物理时间尺度解释。</p>
+<p>本地历史检查曾指出策略切换开关与 `num_action_chunks` 存在一致性风险；属于待核查配置问题，不能据此宣称已经发生训练故障。长训练前要读出最终生效配置，验证接管时机、实际执行长度和奖励聚合。</p>
+<h3>4.5 baseline 完成的标准</h3>
+<p>“程序能启动”只算 smoke。完成一项任务 baseline 至少需要：reference 与 RLT 均完成独立评估；一段可解释的学习曲线；有效的训练与评估 seeds；可恢复的权重和配置；原始 episode 结果及失败视频；没有未解释的动作/时间/输入差异。</p>
+<p>baseline 未超过 reference 也可以是可信结果，前提是已经排除实现问题并报告预算和不确定性。“复现通过”不应等价于筛选出一个赢的 seed。</p>
+<p>&lt;a id=&quot;platform&quot;&gt;&lt;/a&gt;</p>
+<h2>5. RoboTwin2 与 RoboDojo：保留双环境目标，分别验收</h2>
+<h3>5.1 RoboTwin2 的版本关系</h3>
+<p>官方 RoboTwin 仓库当前默认 `main` 为 2.0，同时保留 `RLinf_support` 等分支；主线说明与 RoboDojo 共用 XPolicyLab 部署栈。<a href="https://github.com/RoboTwin-Platform/RoboTwin">RoboTwin 官方仓库</a>[^2] RLinf 当前文档列出 46 个支持任务和 10 个预置环境配置，同时支持 π0/π0.5 的相应训练路径。<a href="https://rlinf.readthedocs.io/en/latest/rst_source/examples/embodied/robotwin.html">RLinf RoboTwin 文档</a>[^5]</p>
+<p>这里的“支持任务数”不代表每项任务都已有可直接运行的 π0.5 RLT 配置。RLinf 能训练 VLA、另有 RLT 实现，也不自动保证所有任务与算法组合都已验证。</p>
+<p>近期建议保留原生 hammer 工作区，完成已有 checkpoint 评估和首个 RLT baseline；与此同时梳理 RoboTwin2 主线适配差异。迁移时先对同一任务核对相机、机器人、控制器、动作缩放、随机化与成功定义，避免把换环境产生的变化归因于算法。</p>
+<h3>5.2 RoboDojo 的两个里程碑</h3>
+<p>RoboDojo 官方当前列出 42 个仿真任务与 18 个真机任务，发布以评估为主，策略集成由 XPolicyLab 负责。<a href="https://github.com/RoboDojo-Benchmark/RoboDojo">RoboDojo README</a>[^3] XPolicyLab 的策略训练和服务入口应按具体集成检查，不能因为存在 `train.sh` 就认为已提供在线 RLT learner。<a href="https://github.com/XPolicyLab/XPolicyLab">XPolicyLab</a>[^4]</p>
+<p>| 里程碑 | 必须打通的能力 | 完成后能宣称什么 |</p>
+<p>|---|---|---|</p>
+<p>| Dojo-Eval | 对应机器人和任务的策略加载、观测/动作契约、完整 episode、可重复结果 | 能在 RoboDojo 评估 reference 或已训练策略 |</p>
+<p>| Dojo-RL | 稳定 reset/step、逐转移数据、奖励/终止、learner 更新、权重同步和训练期评估 | 能在该平台开展本地在线 RLT 适配实验 |</p>
+<p>****Dojo-Eval 只是中间里程碑。**** 若当前目标是“双环境在线 RLT baseline”，Dojo-RL 应保留在近期工程待办中；出现明确接口阻碍时再记录阻碍与投入估计，不能静默把目标缩成只做评估。</p>
+<h3>5.3 不能直接搬用 hammer 权重的情况</h3>
+<p>ALOHA 的 14 维关节控制头不能默认直接控制 RoboDojo 的其他机器人。即使接口长度相同，关节顺序、单位、控制空间和夹爪含义也可能不同。每个目标任务要先确认可用示教、reference 权重、归一化与动作定义；必要时重新做任务/机器人 SFT 和 RL 训练。</p>
+<p>因此，Dojo 的 reference-versus-RLT 表需要说明 RLT 在哪里训练。如果它只在 RoboTwin 的 hammer 上训练过，直接用于不同机器人插入任务属于迁移研究，不能默认作为同任务 baseline。</p>
+<h3>5.4 平台接入的最小接口表</h3>
+<p>| 项目 | 需要记录与验收 |</p>
+<p>|---|---|</p>
+<p>| 版本 | 仓库 commit、任务配置、资源版本、模拟器和机器人 |</p>
+<p>| 图像 | 相机视角、裁剪、分辨率、RGB 解码和时间戳 |</p>
+<p>| 状态 | 命令状态与实际状态分别定义；有效维度、单位和频率 |</p>
+<p>| 动作 | 关节目标/末端增量、绝对/相对控制、反归一化、夹爪映射 |</p>
+<p>| 时间 | control dt、physics substep、推理耗时、chunk 实际执行范围 |</p>
+<p>| episode | reset seed、成功、失败、超时、final observation |</p>
+<p>| 学习 | 逐 transition 契约、replay、actor/critic 更新和策略版本 |</p>
+<p>| 物理诊断 | 接触、位姿、约束量是否可获取；未获取字段明确标缺失 |</p>
+<p>| 分支实验 | 完整状态恢复或前缀回放的准确性与额外成本 |</p>
+<p>接入初期只需要一项任务、一个工作进程、完整 episode 和短 learner smoke。并行采样与大规模训练应在时序契约稳定后扩展。模拟器与 learner 可以分开部署，但端到端耗时、网络延迟和权重同步必须实测，不能只根据 GPU 型号或显存大小估算。</p>
+<p>&lt;a id=&quot;tasks&quot;&gt;&lt;/a&gt;</p>
+<h2>6. 任务选择与可复用的实验协议</h2>
+<h3>6.1 首批任务按物理机制选</h3>
+<p>建议先保留一个现有先导任务，加入一个低成本接口扩展任务，再挑一个具有明确接触约束的主任务。首批目标约 3–4 项，后续再扩大；“任务候选”不代表已经配好数据和训练代码。</p>
+<p>| 任务或任务族 | 平台与状态 | 研究价值 | 主要限制与选择标准 |</p>
+<p>|---|---|---|---|</p>
+<p>| `beat_block_hammer` | 本地原生 RoboTwin 已有数据和 SFT 产物 | 工具抓取、接触建立、既有日志可复用 | 适合先导；原生几何加接触成功条件不能单独证明高质量冲击 |</p>
+<p>| `click_bell` | RoboTwin/RLinf 候选，任务配置可查 | 点接触、局部对准，检验换任务成本 | 须核对是否过于容易，以及奖励是否刻画真实接触要求 |</p>
+<p>| Insert Tubes 或 Plug In Charger | RoboDojo 官方 Precision 目录候选 | 插入、接触约束、误差恢复 | 先选一种，核验碰撞几何、容差、深度和成功判据 |</p>
+<p>| Push T | RoboDojo 官方任务候选 | 持续接触、摩擦与物体运动 | 更适合非抓持接触机制；不是仅凭任务名就能证明精密控制 |</p>
+<p>| Fasten Screws 或 Insert Key | RoboDojo 官方 Precision 目录候选 | 方向约束、工具或插入机制 | 验证是否真实建模相关约束；任务名不保证真实螺纹/力学 |</p>
+<p>| 一个抓放对照 | 在已接通平台选择 | 检查能力保持与方法是否普遍加速 | 不预设基础策略必然高成功，也不直接和插入作因果难度排序 |</p>
+<p>RoboDojo 候选的存在与类别来自<a href="https://robodojo-benchmark.com/doc/">官方任务目录</a>[^6]；这里不把未逐项核验的 task card 阈值写成确定数值。实际 YAML、代码中的 task ID 和成功逻辑应登记到各任务 manifest。</p>
+<p>hammer 原生成功条件在内部路线中记为 functional point 的 XY 分量误差各小于 2 cm 且发生接触。应保留官方指标，同时另记掉落、接触速度、首次接触时间和几何误差；不能在结果出来后改成功定义来制造提升。<a href="../worktrees/beat-block-hammer/docs/research/beat_block_hammer_physical_token_streaming_roadmap_zh.md">原执行路线</a></p>
+<h3>6.2 任务进入正式实验的门槛</h3>
+<p>优先选择满足以下条件的任务：可重复 reset；可获取足够 reference 数据；success 可解释且能人工抽查；失败集中在相关物理阶段；关键物理参数可控；能记录实际动作与后果。尚不满足条件的任务留在候选池，不因名字贴近“精细操作”就投入长训练。</p>
+<p>插入任务尤其要检查：视觉看似插入与碰撞实际插入是否一致，是否存在穿透、吸附或过宽成功阈值。接触研究依赖物理真实性；只有视觉对齐奖励的任务更适合研究对准能力。</p>
+<h3>6.3 分开报告四种“多任务 / 泛化”</h3>
+<p>| 设置 | 训练与测试关系 | 支持的结论 |</p>
+<p>|---|---|---|</p>
+<p>| 多任务独立训练 | 每项任务各自训练 reference/readout/actor | 算法适用于多个任务 |</p>
+<p>| 同任务新条件 | 新初态、对象、质量或摩擦；明确各因素 | 对特定分布变化的泛化或适应 |</p>
+<p>| 共享表示迁移 | 在 A/B 训练表示，冻结后在未参与表示训练的 C 学控制 | 表示复用与新增交互效率 |</p>
+<p>| 联合/持续多任务学习 | 一个系统顺序或联合处理多个任务 | 共享学习、遗忘和迁移，需要单独协议 |</p>
+<p>第一项应先做，第三项只在方法确实涉及可复用表示时变成核心实验。跨模拟器重新训练是外部有效性验证；直接迁移同一权重才涉及更强的迁移主张。</p>
+<h3>6.4 最小 baseline 表</h3>
+<p>| Task / 版本 | Reference | RLT-π0.5-adapted | 学习曲线面积 | 达到预设目标的控制步数 | 完整任务耗时 | 主要失败 |</p>
+<p>|---|---|---|---|---|---|---|</p>
+<p>| hammer | 待评估 | 待训练/验收 | — | — | — | 待归类 |</p>
+<p>| 第二项 RoboTwin 任务 | 待确定 reference | 待适配 | — | — | — | — |</p>
+<p>| Dojo 插入任务 | 待接入与评估 | 待 Dojo-RL | — | — | — | — |</p>
+<p>| 持续接触任务 | 候选 | 候选 | — | — | — | — |</p>
+<p>表中的空白保持空白；文献中的成功率不能替代本项目结果。</p>
+<h3>6.5 预算、统计与评估纪律</h3>
+<p>开发阶段可从每配置 3 个训练 seeds 起步，最终按方差与预期效果决定是否扩大至 5 个或更多。每个 checkpoint 在固定、独立的评估初态上测试。30 episodes 可作先导画像，但不是充分统计保证；即使忽略训练方差，成功率约 50% 时，30 次独立试验的标准误约 9 个百分点。</p>
+<p>报告训练 seed 间差异、每任务结果和置信区间。重采样应考虑“训练 seed—评估 episode”的层级，不能把同一个模型的几百个 episode 当成几百次独立训练。微小收益在区间高度重叠时应记为尚不确定。</p>
+<p>预算至少分为：原有示教、新增在线控制步、分支/恢复采集、人工介入、梯度更新、VLA 调用与墙钟时间。比较 C 或异步执行时，按相同控制时间和调用/计算预算分别看结果。</p>
+<p>学习曲线面积建议在共同控制步预算上积分并除以预算，使纵轴仍对应平均学习期成功率。达到目标成功率的步数需预先给定目标与评估规则；未达到写“预算内未达到”。耗时联合报告成功与超时，或使用 successes / total execution time，避免只统计成功 episode 造成幸存者偏差。</p>
+<p>&lt;a id=&quot;literature&quot;&gt;&lt;/a&gt;</p>
+<h2>7. 相关工作地图：研究空间与创新边界</h2>
+<p>下表围绕当前决策整理代表性工作，不按跨论文成功率排名。不同工作的机器人、传感器、示教、奖励和在线交互预算不同，不能把作者报告的数字横向相减。2026 年近期工作中多项仍是预印本；论文存在、代码公开、权重可得和本地可复现是四种不同状态。</p>
+<h3>7.1 轻量在线改进与真实执行</h3>
+<p>| 工作 | 已有机制与证据范围 | 对本项目最有用的问题 |</p>
+<p>|---|---|---|</p>
+<p>| RLT，2026 | 紧凑 VLA 读出、参考条件化 actor、轻量在线 RL；真实精细任务实验 | 基线是否忠实？瓶颈是否真在紧凑表示？[^1] |</p>
+<p>| SERL，2024 | 将样本高效 RL、奖励、reset、控制器与机器人任务组织成可运行系统 | reset、奖励和控制接口是否比算法本身更限制实验？[^8] |</p>
+<p>| SmoothRL，2026 | 在异步执行中区分 committed / execution / discarded 区域，仅对实际执行区传策略价值梯度 | 训练优化的动作是否就是机器人实际执行的动作？[^7] |</p>
+<p>SmoothRL 值得紧跟 RLT 阅读，但不应把它当作“加平滑损失”的工作，也不应把两篇论文排成必然技术继承关系。它突出了执行时序与学习目标的一致性问题。对当前项目，首先应保存 action chunk 的生成、执行、覆盖时间；只有确实研究异步时，才引入相应学习机制。<a href="https://arxiv.org/html/2608.29768v1">SmoothRL 原文</a>[^7]</p>
+<p>SERL 提供的启发是：样本效率并非只由网络结构决定。稳定 reset、奖励质量与控制实现也会改变算法表现。读这类系统论文，有助于避免把调试问题误判成科研瓶颈。<a href="https://arxiv.org/abs/2401.16013">SERL</a>[^8]</p>
+<h3>7.2 物理后果与表示学习</h3>
+<p>| 工作 | 已有机制 | 与当前候选的接近程度及边界 |</p>
+<p>|---|---|---|</p>
+<p>| Pri4R，2026 | 训练时通过未来 3D 点轨迹引入特权几何监督；推理保留原 VLA 接口 | “训练加未来物理监督、部署无额外输入”已是明确先例；它不直接等同轻量在线 RL[^9] |</p>
+<p>| PHR-VLA，2026 | 未来 latent 对齐，关注局部接触相关视觉特征 | 显式 contact 标签须证明比一般未来特征多带来了决策价值[^10] |</p>
+<p>| FD-VLA，2026 | 从视觉和机器人状态蒸馏力相关 token，部署不依赖真实力传感输入 | 无力传感部署与力信息蒸馏并非新命题；仍要检查可观测性与训练数据[^11] |</p>
+<p>| HapticVLA，2026 | 安全奖励加权的动作学习与触觉蒸馏 | 收益可能同时涉及奖励与表示，应分开归因[^12] |</p>
+<p>| SR-WM / Beyond Instance Slots，2026 | 以角色、关系、阶段组织动作条件后果，用于候选生成与重排 | 与“决策相关后果”很近；不能只换成接触语义就宣称首创[^13] |</p>
+<p>| SPR，2020/2021 | 通过自预测未来 latent 支持数据高效 RL，原实验以 Atari 为主 | 是一般未来预测对照，不能直接当精细操作收益证据[^27] |</p>
+<p>| PIN-WM，2025 | 可微物理与视觉重建支持非抓持操作的世界模型与系统辨识 | 适合理解显式物理路线；不是只加一个辅助头的等价方法[^28] |</p>
+<p>这一组文献表明，****“加入 physics loss”不足以单独支撑新颖性****。可能值得推进的具体问题是：在同等输入与预算下，哪种后果监督真正提高候选动作区分，并减少新物理条件下的在线交互需求？这是本报告提出的研究问题，尚不是已证实空白。</p>
+<p>还要避免两个过强推论。第一，下一状态可预测并不保证得到充分 Markov 状态；第二，在专家分布上预测准确不代表能预测策略偏离专家后的后果。表示研究应在失败附近、新动作和未见物理条件上验证。</p>
+<h3>7.3 物理信息可以用于价值，而不只用于重建</h3>
+<p>| 工作 | 已有机制 | 应当比较的内容 |</p>
+<p>|---|---|---|</p>
+<p>| V-GPS，CoRL 2024 | 用离线学到的价值函数重排基础策略动作，可复用于不同策略 | 候选筛选是强对照；候选里有没有好动作决定上限[^14] |</p>
+<p>| Asymmetric Actor Critic，2017/2018 | 训练 critic 使用完整状态，actor 使用图像 | 特权 critic 本身不是新方法；训练与部署输入要分别声明[^15] |</p>
+<p>| MSDP，RA-L 2026 | 多感官预训练，actor 与 critic 采用不同读出 | 分开读出已有近邻；其多感官设置不能当作普通 RGB 部署的直接证据[^16] |</p>
+<p>可比较的四种用途是：仅以普通观测学 RL；用物理量监督表示；让物理量只进入训练期 critic；把动作收益或排序蒸馏到部署可用输入。比较时应明确额外训练信息和成本。</p>
+<p>特权 critic 是诊断工具，不是保证更优的 oracle。若普通输入无法区分两个隐藏动力学状态，强行要求其精确恢复物理真值也可能无解；应考虑历史、条件期望或不确定性。</p>
+<p>各组的数据权限应在实现前明示：</p>
+<p>| 信息 | 监督标签 | 训练期 critic | 部署策略 |</p>
+<p>|---|---|---|---|</p>
+<p>| 图像、语言、真实可用本体反馈 | 可用 | 可用 | 可用，各比较组输入对齐 |</p>
+<p>| 历史动作与反馈 | 可用 | 按实验条件 | 按实验条件，单独报告历史收益 |</p>
+<p>| 仿真物体真值、接触、质量/摩擦 | 可用 | 仅明确标注的特权组允许 | 主方法不直接使用 |</p>
+<p>| 未来真实观测与结果 | 可用于训练目标 | 可构造训练目标，不能当作当前决策输入 | 不可使用 |</p>
+<p>| 真机外部测量或人工失败标注 | 可作带置信度标签 | 按实验条件与成本声明 | 仅在明确允许该传感/服务的条件下使用 |</p>
+<p>特权 critic 扩展了旧方案“物理信息只作 target”的设定，应单列实验组；不能悄悄加入原 baseline。</p>
+<h3>7.4 失败、恢复与经验回写</h3>
+<p>| 工作 | 已有机制 | 对本项目的启发与边界 |</p>
+<p>|---|---|---|</p>
+<p>| PLD，2025 预印本 | Probe–Learn–Distill：残差探索、与部署分布相符的数据收集、回写 VLA | 最直接的自我改进近邻；“残差 RL 产生数据再 SFT”已不是新故事[^17] |</p>
+<p>| FailSafe，2025/2026 | 利用规划支持生成失败与可执行恢复数据 | 先检验当前专家能否接管失败状态；不能假设 reset 专家能恢复任意状态[^18] |</p>
+<p>| RedFlow，2026 | 从混合质量经验中寻找上下文相关纠正目标，进行动作级离线改进 | 检索到的纠正目标不等于同状态真实反事实最优动作[^19] |</p>
+<p>| RL²-VLA，2026 | 失败预测触发潜空间组合 steering | 应控制错误干预；它主要涉及离线 RL 与推理 steering，不能一律叫在线学习[^20] |</p>
+<p>| ViTaR，2026 | 视觉触觉反馈支持效果判断和有界残差选择/缩放 | 与纠偏收益非常接近；触觉输入差异必须计入比较[^21] |</p>
+<p>这一组支持把“失败值得留下什么”作为研究对象。真正可研究的环节可能是可恢复性判断、恢复数据选择、纠正收益估计或跨条件复用。若只是加入一个失败分类器再叠残差，其新颖性压力较大。</p>
+<p>同样，****残差有界或基础模型冻结，并不保证整套部署策略保持原有能力****。附加模块仍可能在原本成功的状态错误介入，因此需要旧任务与成功状态的回归评估。</p>
+<h3>7.5 历史、执行时机与 streaming</h3>
+<p>| 工作 | 已有机制 | 当前定位 |</p>
+<p>|---|---|---|</p>
+<p>| RMA，2021 | 利用交互历史适应隐藏动力学，原任务是足式运动 | 历史适应的基础；不能直接推断接触操作收益[^22] |</p>
+<p>| Rapid Motor Adaptation for Robotic Manipulator Arms，CVPR 2024 | 将历史与感知用于机械臂动力学适应 | 与本项目更接近；需注意深度和特权训练设置[^23] |</p>
+<p>| AAC，CVPR 2026 | 使用动作熵线索调整推理执行长度 | 说明固定 C 本身就是有力对照；自适应 chunk 已有直接工作[^24] |</p>
+<p>| VLA-Corrector，2026 | 对执行偏离进行检测与纠正，调整动作 horizon | 需要区分边界重规划与执行中反馈；不是都能在现有 wrapper 直接实现[^25] |</p>
+<p>| BCP，2026 | 冻结 VLA，用轻量 continuation head 学执行前缀 | 与“加小头学何时重规划”高度接近，适合作为执行路线近邻[^26] |</p>
+<p>| Batch-to-Streaming，2026 | 研究连续控制中 batch 到 streaming 的转换 | 只有 replay baseline 稳定且存储/更新约束成为目标后再深读[^29] |</p>
+<p>“短历史”和“streaming”是两个轴：历史用于当前状态推断；streaming 约束经验如何被用于学习。实时推理、在线 RL、无 replay 和每条转移只学习一次也不是同义词。</p>
+<h3>7.6 可能形成论文的主张与所需证据</h3>
+<p>| 候选论文主张 | 必须出现的正面证据 | 必须排除的替代解释 |</p>
+<p>|---|---|---|</p>
+<p>| 物理后果监督提高在线适应效率 | held-out 动作区分、同预算学习提升、未见物理条件有效 | 只是参数更多、输入更多、数据更多或任务阶段识别 |</p>
+<p>| 纠偏收益学习减少无效干预 | 候选有余量、收益预测有效、错误干预减少、整体控制改善 | 只是多采样更多动作，或简单失败门控就能达到同样效果 |</p>
+<p>| 失败驱动数据选择提高持续改进效率 | 同数据/人工成本更有效、多轮改善、旧能力保持 | 只是新增示教多，或靠人工挑选更容易的测试状态 |</p>
+<p>| 物理反馈决定执行时机 | 在实际延迟与调用预算下改善接触行为 | 只是把 C 变短、多调用 VLA，或训练和部署时序不一致 |</p>
+<p>这些是****候选贡献模板****，不是预先宣布的创新结论。每条主张在正式立项前都需围绕最终方法再核验最新近邻与可复现对照。</p>
+<p>&lt;a id=&quot;diagnosis&quot;&gt;&lt;/a&gt;</p>
+<h2>8. baseline 之后怎样用小实验选择方向</h2>
+<h3>8.1 先问失败发生在哪里</h3>
+<p>```mermaid</p>
+<p>flowchart TD</p>
+<p>    B[Reference 与 RLT 基线可重复] --&gt; F[定位失败阶段]</p>
+<p>    F --&gt; P[前置抓取或动作接口失败]</p>
+<p>    P --&gt; FIX[修数据、归一化、控制与训练]</p>
+<p>    F --&gt; C[到达接触区但失败]</p>
+<p>    C --&gt; O[检查候选动作的可改善空间]</p>
+<p>    O --&gt; N[候选几乎无收益]</p>
+<p>    N --&gt; D[改动作候选或补恢复数据]</p>
+<p>    O --&gt; Y[候选存在稳定收益]</p>
+<p>    Y --&gt; H[比较当前观测、真实反馈与历史]</p>
+<p>    H --&gt; S[比较后果预测与价值或收益判断]</p>
+<p>    S --&gt; L[选择一至两个方向在线验证]</p>
+<p>```</p>
+<p>这个顺序防止过早把所有错误都解释成“表示不足”。诊断结论应写成限定在当前任务、候选和预算下的观察。</p>
+<h3>8.2 五个诊断实验</h3>
+<p>| 实验 | 最小设计 | 观察指标 | 决策含义 |</p>
+<p>|---|---|---|---|</p>
+<p>| D1 输入与历史 | 命令目标；加真实 q；加短历史。对照使用同等结构与输入 | 异常/接触探针、控制表现、延迟敏感性 | 判断观测缺失是否先于新损失 |</p>
+<p>| D2 候选可改善空间 | 同状态执行“不修正＋少数合法候选”，后续策略相同 | 重复 rollout 回报、候选最好表现、错误干预 | 若候选无余量，先改动作或恢复能力 |</p>
+<p>| D3 监督用途 | 同特征、同数据、同容量比较重建、一般未来预测、物理后果、候选收益 | held-out 排序、校准及在线学习曲线 | 判断物理标签应进入何处 |</p>
+<p>| D4 数据覆盖 | 相同新增预算比较普通专家与失败恢复；各自配有/无物理监督 | 恢复成功、有效新增样本、整体成功 | 分开归因数据与学习目标 |</p>
+<p>| D5 执行长度 | 固定 C=1/5/10，记录实际控制频率和 VLA 开销 | 成功、耗时、调用数、边界不连续 | 判断反馈速度是否是主要解释 |</p>
+<p>这五项不是下一周全部必须完成的清单。首先完成 D1 的字段审计与 D2 的少量分支；根据实际失败选择 D3–D5 中最相关的项目。即使保持执行系统不变，D5 的固定长度对照也常能提供有用信息。</p>
+<h3>8.3 同状态候选实验怎样做才有解释力</h3>
+<p>设 a⁽⁰⁾ 为基础动作，a⁽¹⁾…a⁽ᴷ⁾ 为合法局部修改。执行候选后使用固定后续策略 π_follow，估计：</p>
+<p>    Δ_i(s) = J(s, a⁽ⁱ⁾; π_follow) − J(s, a⁽⁰⁾; π_follow)</p>
+<p>这个量是****给定候选集合、后续策略和时间范围的干预收益****，不是全局最优 advantage。基础动作也可能已经正确，因此候选集合必须含“不修正”；若考虑干预成本，成本系数应预先设定并报告敏感性。</p>
+<p>先用约 20–40 个独立接触前状态、每个少量候选调通过程；它们只用于工程筛选。正式规模依据方差决定。状态恢复要涵盖机器人、对象、速度、控制器、任务逻辑、随机状态及模拟器可恢复的内部状态，并实测重复前缀是否得到一致结果。</p>
+<p>若不能精确恢复，使用同初态前缀回放并量化分支起点差异，不能仅把物体 pose 设回就声称反事实公平。所有分支、重复试验及前缀回放计入数据采集成本。随机环境下，用单次 rollout 的最大值选择“oracle”会乐观偏置，需通过独立重复试验评估候选价值。</p>
+<h3>8.4 物理后果监督的最小方案</h3>
+<p>若诊断支持表示不足，可用当前可获得观测历史 h_t 产生紧凑表示 z_t，再用候选执行序列预测后果：</p>
+<p>    z_t = f_phi(h_t)</p>
+<p>    predicted_consequence = g_omega(z_t, executed_action_sequence)</p>
+<p>第一版只选一两个决策相关目标，例如对象相对位移与接触建立。总目标可为重建项加带有效性 mask 的 Huber/BCE 项；每个目标按训练集统计量归一化。辅助头必须通过可训练表示产生输出，验证梯度确实到达 readout；冻结 VLA 不等于冻结 readout。</p>
+<p>注意几项实现边界：</p>
+<p>- 选动作前的状态表示使用截至 t 的信息；候选动作可以进入动作条件预测头或 critic，未来真实观测只能作为标签。</p>
+<p>- 首先考虑从冻结 VLA 的未压缩特征学习读出。若只在已经丢失信息的固定 token 后接 MLP，不能假设它能恢复缺失细节。</p>
+<p>- 与仅动作、仅状态、任务阶段和一般未来 latent 预测比较，检查模型是否实际利用状态—动作交互。</p>
+<p>- 目标必须对应真正执行的整个动作序列与时间区间，不能用首个动作或均值代表不同的执行轨迹。</p>
+<p>- 接触事件可能发生在保存帧之间，应按控制区间聚合；冲量不能未经单位与时间校验直接解释成力。</p>
+<p>- 探针提升后还要做小规模在线比较；预测更准不会自动推出控制更好。</p>
+<p>只有物理监督在同等数据与输入下产生稳定增量，才值得继续讨论“共享物理表示”。若新增标签只改善任务阶段识别，或 actor/critic 根本不利用新表示，则应修正解释或转向。</p>
+<h3>8.5 价值、数据与执行路线各自的最小版本</h3>
+<p>****价值/收益路线：**** 先训练候选回报排序或收益回归器，再测真实闭环选择效果；与失败概率门控、随机选择、固定残差以及相同候选数的价值引导对照。若直接排序已有效，不必先造一个复杂生成模型。</p>
+<p>****恢复数据路线：**** 先验证约 10 个失败状态可否被专家或规划器恢复，保留失败前缀、恢复动作与结果。普通专家新增数据与恢复数据按新增帧数和实际采集成本分别对齐；成功恢复不能只从容易状态中筛选后隐藏失败尝试。</p>
+<p>****执行路线：**** 首先验证固定执行长度的效果。当前 chunk 边界返回新观测与执行中中断是不同接口；自适应 horizon 要记录每条 transition 的实际长度，异步执行还要对齐在途动作与策略版本。不要把它估成只增加一个预测头。</p>
+<h3>8.6 继续或转向的规则</h3>
+<p>| 观察 | 下一步 |</p>
+<p>|---|---|</p>
+<p>| 候选最好动作也无法改善 | 改候选、接管时机、控制空间或恢复数据 |</p>
+<p>| 候选有收益，但普通观测无法判断 | 查历史、传感频率、标签歧义和分支误差 |</p>
+<p>| 真实反馈有效，物理 loss 无增量 | 优先反馈与历史路线，保留同输入对照 |</p>
+<p>| 表示探针提高，控制没有提高 | 检查表示使用、critic 与优化；结论限定为当前预算下无控制收益 |</p>
+<p>| 新增恢复数据已解释多数改善 | 转向数据获取与经验复用问题 |</p>
+<p>| 缩短 C 就显著改善且成本可接受 | 先以执行调度为强基线，再判断复杂模块价值 |</p>
+<p>| 物理监督在多任务同预算稳定有效 | 深入机制、迁移与真实接触验证 |</p>
+<p>| 不同 seeds 的波动覆盖了效果 | 扩大有针对性的重复，或把结论记为不确定 |</p>
+<p>停止条件不应是“损失没降到指定小数”或“一次没赢就放弃”。每轮先约定问题、预算、主要指标和允许的解释，再决定追加数据是否能解决不确定性。</p>
+<p>&lt;a id=&quot;self-improvement&quot;&gt;&lt;/a&gt;</p>
+<h2>9. 怎样把“自进化”变成可验证实验</h2>
+<h3>9.1 区分三种改进机制</h3>
+<p>| 机制 | 改变什么 | 合适的评价方式 |</p>
+<p>|---|---|---|</p>
+<p>| 历史条件适应 | 参数不变，输入上下文改变 | 同一任务中出现扰动后的恢复；历史重置对照 |</p>
+<p>| 在线策略适应 | 更新轻量策略、critic 或其他小模块 | 交互预算—性能曲线、新条件适应速度 |</p>
+<p>| 经验回写 | 使用新经验更新基础 VLA | 回写前后新旧任务表现、人工数据成本与遗忘 |</p>
+<p>仅给策略拼接历史，不等于它已经具备通用 in-context learning；应通过未见变化和历史干预实验检验。第一阶段聚焦轻量在线适应，经验回写参考 PLD 等工作后再决定。<a href="https://arxiv.org/abs/2511.00091">PLD</a>[^17]</p>
+<h3>9.2 一个可控的多轮改进协议</h3>
+<p>在 baseline 与一个候选方法稳定后，可做以下小型闭环：</p>
+<p>1. 固定任务集合、训练条件、开发集、最终测试集与总交互预算。</p>
+<p>2. Round 0 保存基础策略与初始评估。</p>
+<p>3. 每轮给所有方法相同新增采集预算，记录成功、失败、恢复及人工介入。</p>
+<p>4. 更新策略，再在不参与本轮训练的数据/初态上评估。</p>
+<p>5. 至少观察数轮趋势，并在每轮重新评估旧任务/旧动力学条件。</p>
+<p>每轮用于调整方法的是开发集。最终测试条件预先封存；若保留各轮 checkpoint，可在设计固定后统一评测最终测试曲线，避免每轮根据测试结果重新挑方法。</p>
+<p>必要对照包括冻结不更新、常规 RLT 持续训练、相同新增量的普通采集，以及候选经验选择方法。多轮胜过 Round 0 本身并不能说明采集机制更优，因为常规继续训练也会使用更多经验；优势需要在累计预算相同处比较。</p>
+<p>核心指标是每单位新增交互的收益、失败恢复成功率、无效干预比例、旧能力下降、总采集/人工/计算成本。若每轮都由人调参、挑数据或接管，要计入并准确称为有人参与的自我改进。</p>
+<h3>9.3 外观、动力学与持续变化分开设计</h3>
+<p>同任务内先扫描单个因素：初始对准误差、质量、摩擦、控制延迟或控制器增益。训练范围、验证范围和测试范围预先分开；同时监控任务是否仍然物理可解。</p>
+<p>外观随机化作为视觉泛化对照；不能把质量变化与纹理变化都合成一个 OOD 分数。持续学习可进一步考虑 A → B → A 的条件切换，区分适应新环境与回到旧环境后的能力保持。</p>
+<p>迁移实验还要写清：哪些参数复用、哪些重新训练、接收多少目标数据、是否接收目标物理标签。冻结表示迁移到新任务与在新任务重新训练全系统回答的是不同问题。</p>
+<h3>9.4 真机如何加入</h3>
+<p>双仿真任务稳定后，优先选择一类最能检验最终主张的真机任务。例如方法改善卡滞恢复，就选择可重复的插入误差；方法改善摩擦适应，就选择可控对象与表面变化。真机任务数量应服务于主张，第一阶段不必预设大型任务套件。</p>
+<p>策略输入与评测工具分开声明。可以只给策略 RGB 与本体反馈，同时用外部装置测接触质量；没有测量力的设备和校准，就不报告峰值力下降。真实反馈缺失时必须用 mask 和明确字段表示，不能填零当真实无接触。</p>
+<p>真机阶段记录每次 reset、人工介入、失败处置和有效采集时间，保留基础策略回退机制。这里的关键不是声称“完全自主”，而是证明在实际投入约束下，经验确实改善下一次行动。</p>
+<h3>9.5 远期方向的触发条件</h3>
+<p>| 扩展 | 何时值得启动 |</p>
+<p>|---|---|</p>
+<p>| 共享表示 | 至少两个任务显示同类监督有用，且迁移能检验方法主张 |</p>
+<p>| 蒸馏回 VLA | 轻量适应已经产生稳定高质量恢复经验，且部署希望去掉外部模块 |</p>
+<p>| 严格 streaming | replay 系统稳定，设备内存/经验存储成为明确问题，且能审计每条经验的使用次数 |</p>
+<p>| 完整 WAM | 小型后果预测显示长期规划确有价值，而非只需局部动作修正 |</p>
+<p>| Agent / 技能代码演化 | 失败证据主要来自任务拆解与技能组合，超出局部控制问题 |</p>
+<p>它们不应被排成“每项都必须完成”的必经链条。</p>
+<p>&lt;a id=&quot;next&quot;&gt;&lt;/a&gt;</p>
+<h2>10. 近期行动：按可检查产物推进</h2>
+<h3>10.1 当前优先顺序</h3>
+<p>| 优先级 | 行动 | 产物 | 完成后决定什么 |</p>
+<p>|---|---|---|---|</p>
+<p>| 1 | 评估现有 hammer SFT checkpoints | reference 成功率、阶段画像、视频与选模记录 | 基础策略是否可用，RL 从哪里开始 |</p>
+<p>| 2 | 审计 RLT 与本地实现差异，完成首任务基线 | 差异表、短训练验收、学习曲线 | 哪个版本可作为后续共同 baseline |</p>
+<p>| 3 | 提取任务适配接口，加入第二项 RoboTwin 任务 | 两任务相同入口、统一日志与结果表 | 扩展一项任务的真实工作量 |</p>
+<p>| 4 | 完成 RoboDojo 单任务策略评估接入 | Dojo-Eval 结果、输入/动作契约、reference 来源 | 目标任务、机器人和部署接口是否合适 |</p>
+<p>| 5 | 实现 RoboDojo 在线训练所缺能力 | Dojo-RL 短训练与正式 baseline | 双环境在线比较是否具备条件 |</p>
+<p>| 6 | 从失败画像选择少量诊断实验 | D1–D5 中有明确结果的实验卡 | 哪一至两个方法值得进一步实现 |</p>
+<p>统一日志应在第 1–2 项随基线建立，而不是等算法确定后补。RoboDojo 接口检查、第二任务数据准备和论文阅读可以与首任务训练在时间上交错进行，但不能让未经核验的平台切换污染已固定的 baseline。</p>
+<h3>10.2 建议的滚动时间窗</h3>
+<p>以下是工作组织方式，不是保证完成日期；实际工期取决于 GPU、模拟器、数据、reference 和人员。</p>
+<p>| 时间窗 | 主要工作 | 本窗结束应有的结果 |</p>
+<p>|---|---|---|</p>
+<p>| 接下来 1–2 个工作日 | hammer 权重加载与开发评估；RLT 差异表；Dojo 单任务入口检查 | 首份失败画像、明确的接口问题清单 |</p>
+<p>| 随后约一周 | RLT 首任务训练与重复；第二任务准备；Dojo-Eval | 第一版可信 baseline，或有证据的具体阻碍 |</p>
+<p>| 再下一轮约一周 | 第二机制任务、Dojo-RL 最小闭环；从失败选择一个诊断 | 多任务表开始填数，得到候选选择依据 |</p>
+<p>| 此后每周 | 回顾证据，只推进最有支持的假设；保留阅读与失败分析 | 逐步形成方法主张与正式实验 |</p>
+<p>如果 Dojo-RL 的接口投入较大，应保留清晰的未完成里程碑、问题与估时，同时在 RoboTwin 已接通任务上继续科学诊断。它仍是双环境目标的一部分，不是因为排期变化就消失。</p>
+<h3>10.3 每次组会只做三个决定</h3>
+<p>1. 现在最可信的新事实是什么？附运行产物或论文出处。</p>
+<p>2. 下一项最小实验能排除哪种解释？预算和主要指标是什么？</p>
+<p>3. 哪些想法本周不做，触发它们的条件是什么？</p>
+<p>组会不需要每次重写整个研究愿景。方向保持“物理交互＋自我改进”，每周只调整最近的实验与候选优先级。</p>
+<p>&lt;a id=&quot;reading&quot;&gt;&lt;/a&gt;</p>
+<h2>11. 每天一篇论文：先读能改变当前决策的工作</h2>
+<h3>11.1 第一轮 14 篇的推荐顺序</h3>
+<p>****如果今天开始，第一篇就读 RLT，边读边填第 4 节的差异表。**** 每天一篇是阅读与讨论节奏，不要求当天复现一篇，也不要求读完 14 篇再开始 baseline。预计每天集中 45–90 分钟，复杂论文可延续到第二天，优先保证理解与实际产出。</p>
+<p>前四天建立基线、工程和自我改进的共同语言：</p>
+<p>| 阅读日 | 论文 | 重点阅读 | 发群讨论的问题 | 当天可留下的产物 |</p>
+<p>|---|---|---|---|---|</p>
+<p>| Day 1 | <a href="https://arxiv.org/html/2604.23073v2">RLT</a>，2026[^1] | IV-A、IV-B、Algorithm 1、关键阶段/完整任务设置 | 我们哪些实现与论文一致，哪些是主动适配？ | 一页基线差异表 |</p>
+<p>| Day 2 | <a href="https://arxiv.org/abs/2401.16013">SERL</a>，2024[^8] | 系统组成、奖励、reset、控制与训练循环 | 当前卡住的是算法，还是交互系统？ | baseline 接入验收表 |</p>
+<p>| Day 3 | <a href="https://arxiv.org/html/2608.29768v1">SmoothRL</a>，2026[^7] | 异步时序图、执行区域、critic 输入与梯度范围 | replay 里记录的是计划动作还是实际动作？ | 一张本地执行时间轴 |</p>
+<p>| Day 4 | <a href="https://arxiv.org/abs/2511.00091">PLD</a>，2025[^17] | 三阶段框架、数据收集与部署分布 | 首先让小策略变好，还是先学习怎样收集好经验？ | 一份自我改进闭环草图 |</p>
+<p>接下来六天比较“物理信息应该如何进入学习”：</p>
+<p>| 阅读日 | 论文 | 重点阅读 | 发群讨论的问题 | 当天可留下的产物 |</p>
+<p>|---|---|---|---|---|</p>
+<p>| Day 5 | <a href="https://arxiv.org/abs/2410.13816">V-GPS</a>，CoRL 2024[^14] | 候选动作重排、价值函数复用 | 候选集合本身是否已有足够改进空间？ | D2 候选与预算设计 |</p>
+<p>| Day 6 | <a href="https://arxiv.org/abs/2312.04670">Rapid Motor Adaptation for Robotic Manipulator Arms</a>，CVPR 2024[^23] | 动作/反馈历史、深度与训练信息 | 我们是否缺少可辨识动力学的历史，而非新标签？ | 输入、历史与可部署性表 |</p>
+<p>| Day 7 | <a href="https://arxiv.org/abs/2603.01549">Pri4R</a>，2026[^9] | 未来 3D 点轨迹监督与训练/推理边界 | 几何预测已经做到什么？contact 标签的增量在哪里？ | 一张一般几何监督对照卡 |</p>
+<p>| Day 8 | <a href="https://arxiv.org/abs/2608.27609">PHR-VLA</a>，2026[^10] | 未来 latent、局部 patch 与相机位置 | 如果普通未来视觉特征就有效，显式物理监督还需证明什么？ | D3 的未来 latent 对照 |</p>
+<p>| Day 9 | <a href="https://arxiv.org/abs/2602.02142">FD-VLA</a>，2026，作者标注 ICRA 接收[^11] | 力蒸馏目标、视觉/状态条件与部署输入 | 从现有观测到底能推断哪些力相关信息？ | 标签与策略输入权限表 |</p>
+<p>| Day 10 | <a href="https://arxiv.org/abs/2511.14427">MSDP</a>，RA-L 2026[^16] | 多感官预训练、actor/critic 不同读出 | 预测物理量之外，是否应该改变 critic 取信息的方式？ | 共享/分开读出的最小对照 |</p>
+<p>最后四天回到失败、恢复和执行时机：</p>
+<p>| 阅读日 | 论文 | 重点阅读 | 发群讨论的问题 | 当天可留下的产物 |</p>
+<p>|---|---|---|---|---|</p>
+<p>| Day 11 | <a href="https://arxiv.org/abs/2510.01642">FailSafe</a>，作者标注 IROS 2026[^18] | 失败生成、可执行恢复与规划器依赖 | 现有专家能否从我们的失败状态继续执行？ | 约 10 个恢复状态的采集提案 |</p>
+<p>| Day 12 | <a href="https://arxiv.org/abs/2607.27782">RedFlow</a>，2026[^19] | 失败动作定位、纠正目标匹配与离线目标 | 相似上下文的成功动作是否真能救当前状态？ | 纠正标签的可信度核查卡 |</p>
+<p>| Day 13 | <a href="https://arxiv.org/abs/2608.22294">SR-WM / Beyond Instance Slots</a>，2026[^13] | 角色、关系、动作后果、候选排序 | 我们需要预测整个世界，还是只预测决定修正的事件？ | 最小后果目标与创新边界表 |</p>
+<p>| Day 14 | <a href="https://arxiv.org/abs/2608.03483">BCP / Continue or Replan?</a>，2026[^26] | continuation head、成功/调用开销权衡 | 固定更短的 C 能否解释当前失败与改进？ | D5 执行预算对照卡 |</p>
+<p>推荐顺序是为了逐步改变研究判断，不是重要性排行榜。若当前首要问题是卡滞恢复，可把 Day 11–12 提前；若图像/状态接口尚未正确，优先读系统和部署论文，不急于实施物理辅助损失。</p>
+<h3>11.2 第二轮按瓶颈选择，不必全部按序读</h3>
+<p>| 当前疑问 | 补充论文 | 推荐理由与需注意的边界 |</p>
+<p>|---|---|---|</p>
+<p>| 力/触觉监督的收益来自哪里？ | <a href="https://arxiv.org/abs/2603.15257">HapticVLA</a>[^12] | 拆开奖励加权与触觉蒸馏，避免笼统归因 |</p>
+<p>| 什么时候修正、修正多少？ | <a href="https://arxiv.org/abs/2608.15816">ViTaR</a>[^21] | 已有效果驱动的有界残差；必须核对触觉输入条件 |</p>
+<p>| 是否只在会失败时干预？ | <a href="https://arxiv.org/abs/2607.26991">RL²-VLA</a>[^20] | 失败门控与动作多样性的直接近邻 |</p>
+<p>| 自适应 C 的强基线是什么？ | <a href="https://openaccess.thecvf.com/content/CVPR2026/papers/Liang_Adaptive_Action_Chunking_at_Inference-time_for_Vision-Language-Action_Models_CVPR_2026_paper.pdf">AAC，CVPR 2026</a>[^24] | 从预测动作的不确定性决定执行长度 |</p>
+<p>| 执行途中怎样发现偏离？ | <a href="https://arxiv.org/abs/2607.01804">VLA-Corrector</a>[^25] | 对比执行检测与只在 chunk 边界重规划 |</p>
+<p>| 历史适应的基础逻辑是什么？ | <a href="https://arxiv.org/abs/2107.04034">RMA</a>[^22] | 理解隐变量适应；原任务是足式运动 |</p>
+<p>| 特权信息能否只帮助 critic？ | <a href="https://arxiv.org/abs/1710.06542">Asymmetric Actor Critic</a>[^15] | 理解训练和执行信息不对称的经典设计 |</p>
+<p>| 是否需要物理标签，还是一般预测就够？ | <a href="https://arxiv.org/abs/2007.05929">SPR</a>[^27] | 未来表示预测是必要基础对照，原实验不是机器人插入 |</p>
+<p>| 是否需要显式世界模型/辨识？ | <a href="https://arxiv.org/abs/2504.16693">PIN-WM</a>[^28] | 看显式物理模型获得什么、付出什么代价 |</p>
+<p>| 是否真有 streaming 的必要？ | <a href="https://arxiv.org/abs/2603.08588">Towards Batch-to-Streaming DRL</a>[^29] | 在 replay 稳定后研究经验使用约束，避免过早换 learner |</p>
+<p>平台论文与文档另作为按需材料：RoboTwin 2.0 的论文用于理解数据生成与随机化，RoboDojo 的论文/官方目录用于理解任务能力维度；它们不能代替实际任务 success 代码和控制接口核验。<a href="https://arxiv.org/abs/2506.18088">RoboTwin 2.0 论文</a>，<a href="https://robodojo-benchmark.com/doc/">RoboDojo 官方文档</a>。</p>
+<p>旧随想里只有缩写或缺少完整出处的工作，例如 RICL、ICWM、Zeva，暂不放进核心阅读序列。需要先确定具体论文及适用设定，再决定是否与当前 baseline 问题相关。宏观的 System 1/System 2 趋势判断和未核验产品性能数字，也不作为论文实验动机的事实证据。</p>
+<h3>11.3 每天分享的短模板</h3>
+<p>建议群内正文约 300–500 字，另附一张关键图或表的原文位置。不要为了满足模板编造效果数字；没有读到可比较的结果，就说明尚未核对。</p>
+<p>```text</p>
+<p>【论文】完整标题 / 年份 / 原文链接</p>
+<p>【它回答什么】一句话说明问题。</p>
+<p>【关键机制】最多 3 点，区分训练与推理。</p>
+<p>【证据】最关键结果或消融；写清任务、数据/交互预算、是否作者报告。</p>
+<p>【与我们关系】影响 baseline / 物理监督 / 价值 / 数据 / 执行中的哪一环？</p>
+<p>【创新边界】它已经做了什么；我们尚未验证的不同点是什么？</p>
+<p>【今天的一个问题】能否改变下一项实验或排除一种解释？</p>
+<p>【后续动作】一项小实验 / 补读一个消融 / 暂不行动。</p>
+<p>```</p>
+<p>示例：</p>
+<blockquote>
+<p>【论文】RLT，2026，<a href="https://arxiv.org/abs/2604.23073">原文链接</a>  </p>
+</blockquote>
+<blockquote>
+<p>【问题】怎样利用预训练 VLA，让小型在线 RL 有效改善精细任务？  </p>
+</blockquote>
+<blockquote>
+<p>【机制】读出压缩、参考动作条件化、带锚定的 chunk actor–critic。  </p>
+</blockquote>
+<blockquote>
+<p>【与我们关系】先审计本地 π0.5、残差 actor 和 K=1 的差异，不能直接称原设置复现。  </p>
+</blockquote>
+<blockquote>
+<p>【讨论】保留参考动作条件化的完整 actor 后，现有失败还有多少可改善空间？  </p>
+</blockquote>
+<blockquote>
+<p>【动作】完成复现差异表，先不加新物理 loss。</p>
+</blockquote>
+<p>群讨论只需要挑出一个最有价值的问题，不要求每天都形成新方法。每周把笔记汇总为“新增证据、被削弱的假设、下一项实验”三列，即可让阅读积累进入研究决策。</p>
+<p>&lt;a id=&quot;records&quot;&gt;&lt;/a&gt;</p>
+<h2>12. 统一记录方式与团队沟通</h2>
+<h3>12.1 从 baseline 开始保留可复用的经验</h3>
+<p>下列是建议的数据契约，不意味着当前所有字段都已实现。先保证核心字段完整，再按任务补充物理诊断；原始视频和高频物理量可保存为关联 sidecar，避免所有内容都塞进 learner 内存。</p>
+<p>| 类别 | 建议字段 | 用途 |</p>
+<p>|---|---|---|</p>
+<p>| 身份与版本 | task、episode、seed、env commit、policy checkpoint/version | 复现、跨平台对齐、定位权重更新 |</p>
+<p>| 时间 | observation timestamp、control dt、chunk 生成/执行时间 | 检查延迟、因果顺序和实际后果 |</p>
+<p>| 策略输入 | RGB 引用、语言、部署状态与历史索引 | 重建当时可获得的信息 |</p>
+<p>| 动作 | reference、actor proposal、clipped/executed action、实际执行长度 | 区分计划与执行，支持纠偏收益分析 |</p>
+<p>| 反馈 | q_cmd、q_real、可用 qvel、有效性 mask | 执行误差与历史适应 |</p>
+<p>| 物理 sidecar | 对象/TCP 相对位姿、接触事件、已校验冲量 | 训练标签与诊断，默认不直接输入部署 actor |</p>
+<p>| 结果 | reward、success、termination、truncation、final observation | 正确 TD 与完整评估 |</p>
+<p>| 恢复 | failure type、介入来源、恢复动作、恢复结果 | 数据选择与自我改进分析 |</p>
+<p>| 成本 | 推理、更新、reset、人工时长与 VLA 调用数 | 样本效率和真实系统效率 |</p>
+<p>| 分支 | parent state/episode、候选编号、复位误差、重复试验编号 | 区分相关样本与候选评估 |</p>
+<p>本地状态的命名尤需统一：drive target 写成命令状态，实际关节位置写成真实反馈。归一化后内部 padding 维度也要与真实 14 维机器人动作区分。未知/未记录不等于零，任何缺失物理标签都配有效性 mask。</p>
+<h3>12.2 一张实验卡足够约束一次试错</h3>
+<p>```text</p>
+<p>问题：这次实验想区分哪两种解释？</p>
+<p>假设：在什么条件下预期出现什么变化？</p>
+<p>任务与版本：环境 / 机器人 / commit / 数据和权重。</p>
+<p>变动：只改变什么？哪些输入、预算和参数保持一致？</p>
+<p>对照：最简单但足够有力的比较是什么？</p>
+<p>预算：控制步 / 分支成本 / 更新 / 人工 / 墙钟时间。</p>
+<p>划分：训练、开发、最终测试，如何避免同轨迹泄漏？</p>
+<p>主要指标：预先选择一至两个，次要指标另列。</p>
+<p>结果：原始产物路径、seed 分布、置信区间、失败视频。</p>
+<p>结论：支持 / 不支持 / 暂不确定，限定适用范围。</p>
+<p>下一步：继续、扩大、修实现、换假设或停止。</p>
+<p>```</p>
+<p>文中的 D1–D5 是本报告的诊断编号，不重定义原状态表 H0/H1/H2、P0、B0–B3 等历史实验 ID。旧 R0–R9 候选可归入三类：物理与历史信息；价值、纠偏与数据；执行和更新机制。以后引用时写全名，减少编号冲突。</p>
+<h3>12.3 原有工作的复用与暂存</h3>
+<p>| 已有投入 | 后续如何使用 |</p>
+<p>|---|---|</p>
+<p>| hammer 专家数据与 SFT checkpoints | 立即评估，形成首个可比较 reference |</p>
+<p>| physics sidecar 与时序校验 | 复用于失败诊断、后果监督与其他任务日志设计 |</p>
+<p>| RLinf 原生 bring-up | 作为首任务稳定基座，帮助判断主线迁移差异 |</p>
+<p>| RoboTwin2 bridge 和 RoboDojo 调研 | 转为双环境接口清单与实施入口，逐项验收 |</p>
+<p>| Physical Token 损失设计 | 放入 D3 的候选目标，不提前全部实现 |</p>
+<p>| streaming / WAM 草案 | 保留相关文献和触发条件，当前不形成硬依赖 |</p>
+<h3>12.4 可用于下一次组会的简短介绍</h3>
+<blockquote>
+<p>我们的长期方向是让机器人利用物理交互经验持续改善操作能力，目前以 RLT 作为轻量在线学习的技术起点。已有工作完成了原生 hammer 环境、示教与物理标签管线，并生成了 π0.5 的两万步 SFT 权重；接下来首先评估这些权重，明确基础策略到底在哪些阶段失败。</p>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p>近期重点是建立 RoboTwin2 和 RoboDojo 上可复用的多任务 baseline。RoboDojo 先完成策略评估接口，再补齐在线训练能力；每个任务都会明确 reference 来源、动作接口和与原论文的差异。</p>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p>方法上暂不锁死 Physical Token。我们会依据失败证据比较物理后果、价值判断、执行历史、恢复数据与执行长度，每轮只验证少数假设。每天读一篇相关论文、提炼一个可讨论问题，使调研和实验共同推动方向收敛。</p>
+</blockquote>
+<p>&lt;a id=&quot;internal&quot;&gt;&lt;/a&gt;</p>
+<h2>13. 资料索引与参考文献</h2>
+<h3>13.1 内部资料与证据层级</h3>
+<p>事实判断优先使用原始产物，其次是带日期的实验记录，再其次是研究草稿。草稿中的方法建议与未来排期不转写为完成状态。下列资料仅在当前工作区或已上传附件中可访问，外部分享时需要一并提供相应材料。</p>
+<p>| 编号 | 来源 | 在本文中的用途 |</p>
+<p>|---|---|---|</p>
+<p>| I1 | <a href="../worktrees/beat-block-hammer/docs/research/beat_block_hammer_physical_token_streaming_roadmap_zh.md">hammer 原执行路线</a> | 历史配置、成功条件、数据与冻结边界 |</p>
+<p>| I2 | <a href="../worktrees/beat-block-hammer/docs/research/beat_block_hammer_experiment_status_zh.md">hammer 阶段状态表</a>，更新于 2026-09-10 | H0、数据、归一化、SFT smoke 的历史验收 |</p>
+<p>| I3 | <a href="physical_token_loss_first_research_20260910.md">Loss-first 调研</a> | 后果监督、梯度和迁移约束 |</p>
+<p>| I4 | <a href="physical_token_alternative_ideas_research_20260911.md">替代路线调研</a> | 价值、历史、恢复与执行的替代解释 |</p>
+<p>| I5 | <a href="physical_token_research_master_zh.md">旧项目总汇</a> | 原统一路线与已有参考文献索引 |</p>
+<p>| I6 | <a href="/home/kaize/.codex/attachments/e08de28e-a350-4efb-843a-1e3fa1e72059/pasted-text.txt">六份材料合并附件</a> | 原研究需求、完整历史路线与重复材料对照 |</p>
+<p>| I7 | <a href="/home/kaize/.codex/attachments/c6e6326b-b569-4ce8-a20d-f57798016e6f/pasted-text.txt">替代路线及 SFT 后续核验讨论</a> | 较新的 SFT 完成线索与会议准备 |</p>
+<p>| I8 | <a href="/home/kaize/.codex/attachments/82587756-fcc0-40b7-9c3c-0a3f1706537e/pasted-text.txt">研究方向重整草稿</a> | 愿景、双平台、多任务与阅读路线 |</p>
+<p>| I9 | <a href="/home/kaize/.codex/attachments/ec2e824b-dcaa-4fbb-87a1-88becd0312a9/pasted-text.txt">物理与自进化随想分析</a> | 经验利用、时间尺度与持续改进框架 |</p>
+<p>| I10 | <a href="/data/kaize/rlinf/runs/beat-hammer-h1-sft-full">SFT 原始运行目录</a>及其中 `status.txt`、checkpoints | 本次直接核对文件存在与退出码；未检验权重加载 |</p>
+<p>本报告没有重新运行训练、策略评估或数据验证；进度结论以表中证据范围为限。在线物理字段和策略切换风险沿用既有代码审查记录，实施前仍需对当前生效配置复核。</p>
+<h3>13.2 外部来源与引用说明</h3>
+<p>以下链接以原论文、作者发布和官方项目为主，核验截止 2026-09-11。文献地图依据已核对的摘要、方法或官方说明陈述，未声称逐项复现。论文推荐以研究相关性为准；是否具备当前可用的代码、权重、数据和环境，需要在选定复现对象时单独验收。</p>
+<p>部分任务详情页与 OpenReview 页面读取不稳定，因此本文未引用无法再次确认的任务数值阈值，也未将 PLD 的会议录用状态作为论据。原材料中的其余长尾文献保留在旧报告，不把未经本轮核对的缩写和方法细节混入核心推荐。</p>
+<p>[^1]: Charles Xu et al. ****RL Token: Bootstrapping Online RL with Vision-Language-Action Models****. 2026，arXiv v2，2026-04-30。<a href="https://arxiv.org/html/2604.23073v2">全文：IV-A/IV-B、Algorithm 1、VI</a>。用于基线机制、可选离线 SFT、在线冻结、动作参数化与评估范围。</p>
+<p>[^2]: RoboTwin-Platform. ****RoboTwin 官方仓库****，2026-09-11 访问。<a href="https://github.com/RoboTwin-Platform/RoboTwin">README</a>。用于 2.0 主线、RLinf_support 分支与部署入口。相关论文：Tianxing Chen et al., <a href="https://arxiv.org/abs/2506.18088">RoboTwin 2.0: A Scalable Data Generator and Benchmark with Strong Domain Randomization for Robust Bimanual Robotic Manipulation</a>，2025 预印本。</p>
+<p>[^3]: RoboDojo-Benchmark. ****RoboDojo 官方仓库****，2026-09-11 访问。<a href="https://github.com/RoboDojo-Benchmark/RoboDojo">README</a>。用于当前评估发布边界、仿真/真机任务数量与 XPolicyLab 职责。</p>
+<p>[^4]: XPolicyLab. ****官方仓库与 README****，2026-09-11 访问。<a href="https://github.com/XPolicyLab/XPolicyLab">项目</a>。用于策略集成与服务职责；实际训练支持按策略逐项检查。</p>
+<p>[^5]: RLinf. ****RL with RoboTwin Benchmark****，2026-09-11 访问。<a href="https://rlinf.readthedocs.io/en/latest/rst_source/examples/embodied/robotwin.html">官方文档</a>。用于平台支持与预置配置范围，不作为全任务 RLT 已验收的证据。</p>
+<p>[^6]: RoboDojo. ****官方任务目录****，2026-09-11 访问。<a href="https://robodojo-benchmark.com/doc/">文档首页及任务导航</a>。用于任务候选存在与分类，具体 success 以固定版本代码为准。</p>
+<p>[^7]: Guang Gao, Yuxuan Nong, Baifu Huang, Jianan Wang. ****SmoothRL: Online Reinforcement Learning During Asynchronous Execution****. 2026-08-30 预印本。<a href="https://arxiv.org/html/2608.29768v1">全文</a>。用于异步执行区域、实际执行动作与价值梯度的对齐。</p>
+<p>[^8]: Jianlan Luo et al. ****SERL: A Software Suite for Sample-Efficient Robotic Reinforcement Learning****. 2024。<a href="https://arxiv.org/abs/2401.16013">论文</a>。用于机器人 RL 工程组成与样本效率的系统视角。</p>
+<p>[^9]: Jisoo Kim et al. ****Pri4R: Learning World Dynamics for Vision-Language-Action Models with Privileged 4D Representation****. 2026，v2。<a href="https://arxiv.org/abs/2603.01549">论文</a>。用于未来 3D 点轨迹监督与推理信息边界。</p>
+<p>[^10]: Davood Soleymanzadeh et al. ****PHR-VLA: Planning Horizon Reasoning for Vision-Language-Action Models****. 2026-08-27 预印本。<a href="https://arxiv.org/abs/2608.27609">论文</a>。用于未来 latent 与局部接触相关视觉监督。</p>
+<p>[^11]: Ruiteng Zhao et al. ****FD-VLA: Force-Distilled Vision-Language-Action Model for Contact-Rich Manipulation****. 2026，v2；arXiv 作者备注 ICRA 2026 Accepted。<a href="https://arxiv.org/abs/2602.02142">论文</a>。用于力相关表示蒸馏与部署输入。</p>
+<p>[^12]: Konstantin Gubernatorov et al. ****HapticVLA: Contact-Rich Manipulation via Vision-Language-Action Model without Inference-Time Tactile Sensing****. 2026，v2。<a href="https://arxiv.org/abs/2603.15257">论文</a>。用于安全奖励加权与触觉蒸馏的归因边界。</p>
+<p>[^13]: Juntao Cheng et al. ****Beyond Instance Slots: Semantically Rich World Models for Physical Interaction Planning****. 2026，v2，方法简称 SR-WM。<a href="https://arxiv.org/abs/2608.22294">论文</a>。用于角色、关系、动作后果与候选动作评价。</p>
+<p>[^14]: Mitsuhiko Nakamoto et al. ****Steering Your Generalists: Improving Robotic Foundation Models via Value Guidance****. CoRL 2024，arXiv v2 更新于 2025，方法 V-GPS。<a href="https://arxiv.org/abs/2410.13816">论文</a>。用于动作重排与价值函数复用。</p>
+<p>[^15]: Lerrel Pinto et al. ****Asymmetric Actor Critic for Image-Based Robot Learning****. 2017 预印本，RSS 2018。<a href="https://arxiv.org/abs/1710.06542">论文</a>，<a href="https://www.roboticsproceedings.org/rss14/p08.pdf">RSS 论文</a>。用于训练 critic 与部署 actor 的信息不对称。</p>
+<p>[^16]: Rickmer Krohn et al. ****Self-Supervised Multisensory Pretraining for Contact-Rich Robot Reinforcement Learning****. IEEE RA-L 2026，11(6):6799–6806，arXiv v4；方法 MSDP。<a href="https://arxiv.org/abs/2511.14427">论文与出版信息</a>。用于多感官表示和不同 actor/critic 读出。</p>
+<p>[^17]: Wenli Xiao et al. ****Self-Improving Vision-Language-Action Models with Data Generation via Residual RL****. 2025，方法 PLD。<a href="https://arxiv.org/abs/2511.00091">论文</a>。用于残差探索、部署分布数据收集与回写基础模型。</p>
+<p>[^18]: Zijun Lin et al. ****FailSafe: Reasoning and Recovery from Failures in Vision-Language-Action Models****. 2025 首发，2026 v4；作者备注 IROS 2026。<a href="https://arxiv.org/abs/2510.01642">论文</a>。用于失败与可执行恢复数据生成。</p>
+<p>[^19]: Zhengyang Yan et al. ****RedFlow: Redirect Failure into Action-Level Corrections for Flow-matching VLA Policy****. 2026-07-30 预印本。<a href="https://arxiv.org/abs/2607.27782">论文</a>。用于动作级失败纠正与离线学习。</p>
+<p>[^20]: Derek Ming Siang Tan et al. ****RL²-VLA: Adaptive RL Latent Compositional Steering with Test-Time Scaling for Vision-Language-Action Models****. 2026，v2。<a href="https://arxiv.org/abs/2607.26991">论文</a>。用于失败门控与潜空间 steering。</p>
+<p>[^21]: Yi Wang et al. ****ViTaR: Visuo-Tactile Residual Adaptation for Foundation VLA Manipulation****. 2026-08-16 预印本。<a href="https://arxiv.org/abs/2608.15816">论文</a>。用于效果驱动的有界残差及触觉输入边界。</p>
+<p>[^22]: Ashish Kumar, Zipeng Fu, Deepak Pathak, Jitendra Malik. ****RMA: Rapid Motor Adaptation for Legged Robots****. 2021。<a href="https://arxiv.org/abs/2107.04034">论文</a>。用于历史与隐藏动力学适应的背景。</p>
+<p>[^23]: Yichao Liang, Kevin Ellis, João F. Henriques. ****Rapid Motor Adaptation for Robotic Manipulator Arms****. 2023 首发，CVPR 2024。<a href="https://arxiv.org/abs/2312.04670">论文</a>。用于机械臂历史适应与输入条件。</p>
+<p>[^24]: Yuanchang Liang et al. ****Adaptive Action Chunking at Inference-time for Vision-Language-Action Models****. CVPR 2026，pp. 20802–20811。<a href="https://openaccess.thecvf.com/content/CVPR2026/papers/Liang_Adaptive_Action_Chunking_at_Inference-time_for_Vision-Language-Action_Models_CVPR_2026_paper.pdf">正式论文</a>。用于动作熵驱动的执行长度选择。</p>
+<p>[^25]: Yi Pan et al. ****VLA-Corrector: Lightweight Detect-and-Correct Inference for Adaptive Action Horizon****. 2026-07-02 预印本。<a href="https://arxiv.org/abs/2607.01804">论文</a>。用于执行偏离与 horizon 调整。</p>
+<p>[^26]: Weichen Xu et al. ****Continue or Replan? Bernoulli-Continuation Policy Learning for Adaptive Horizon Execution****. 2026-08-04 预印本，方法 BCP。<a href="https://arxiv.org/abs/2608.03483">论文</a>。用于冻结 VLA 的 continuation head 与调用成本权衡。</p>
+<p>[^27]: Max Schwarzer et al. ****Data-Efficient Reinforcement Learning with Self-Predictive Representations****. 2020 首发，ICLR 2021，方法 SPR。<a href="https://arxiv.org/abs/2007.05929">论文</a>。用于一般未来 latent 预测对照。</p>
+<p>[^28]: Wenxuan Li et al. ****PIN-WM: Learning Physics-INformed World Models for Non-Prehensile Manipulation****. RSS 2025。<a href="https://arxiv.org/abs/2504.16693">论文</a>。用于显式物理模型与系统辨识路线。</p>
+<p>[^29]: Riccardo De Monte, Matteo Cederle, Gian Antonio Susto. ****Towards Batch-to-Streaming Deep Reinforcement Learning for Continuous Control****. 2026 预印本。<a href="https://arxiv.org/abs/2603.08588">论文</a>。用于 batch-to-streaming 转换；不把普通在线学习等同 streaming。</p>
+</div>
+  </details>
+</section>
+
+<section id="maintenance">
+  <div class="section-head"><div><h2>14 · 网站维护协议</h2><div class="desc">以后不会再把新增内容简单压缩成卡片，而是采用“主线 + 深入笔记 + 原始材料归档”的三层结构。</div></div></div>
+  <div class="grid g3">
+    <div class="card"><h3>A · 项目主线</h3><p>只由实验结果、工程事实和足够强的创新边界证据修改。每天读论文不会自动改路线。</p></div>
+    <div class="card"><h3>B · 深入论文 / 观点</h3><p>每篇保留问题、方法、证据、局限、对本项目影响、待讨论问题；点击卡片深入阅读。</p></div>
+    <div class="card"><h3>C · 原始详情</h3><p>长文档、组会结论和详细路线原文保留在全文档案，不因首页需要简洁而丢失。</p></div>
+  </div>
+  <div class="callout"><b>未来更新规则：</b>你每天给我 ① 实验进展、② 新论文/工作、③ 随想/组会结论。下一版网站分别更新：Project State / Decision Log、Paper Knowledge Base、Idea Pool。论文只提供“借鉴”，除非它真的改变实验决策。</div>
+</section>
+
+<div class="footer">Embodied Self-Evolution Research OS · v0.4 · Project-first Living Website · 2026-09-11</div>
+</div></main>
+
+<div id="paperModal" class="modal" onclick="modalBackdrop(event)">
+  <div class="modal-card">
+    <div class="modal-head"><div><div class="small" id="modalMeta"></div><h2 id="modalTitle" style="font-size:24px;margin:2px 0"></h2></div><button class="close" onclick="closeModal()">×</button></div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+const papers = [{"id": "zeva", "title": "Zeva: In-Context Causal Learning for Generalizable Embodied Manipulation", "year": "2026", "layer": "Context Evolution", "theme": "context", "status": "已读 · Day 1", "url": "https://arxiv.org/abs/2608.30880", "one": "冻结 policy，不做梯度更新；把“执行动作 → 状态变化”编码成因果交互信号，写入双时间尺度 Memory，再作为 Context 影响后续动作。", "method": ["Causal Transition Encoder：视觉状态 + executed action + observed state change → phase token + causal interaction signal", "Brief Interaction Trace（attempt 内短期）+ Persistent Interaction Memory（同 episode 跨 attempt）", "按当前 phase 检索历史 interaction，形成 Causal Prompt 注入冻结 policy"], "evidence": "作者报告 RoboCasa365-Atomic5 平均 76.8%，ChemLab-Evo 真机 Level-1 平均 83.3%；更重要的是部署过程中成功率可随交互经验积累而继续提高。", "project": "对当前主线最直接的启发不是“改成 Zeva”，而是把 Physical Experience 的基本单位从单帧 state 提升到 action–effect transition；长期可探索 Fast Memory + Slow RL。", "boundary": "它主要解决 Context Evolution；不替代 RLT 的 Policy Evolution。PIM 当前并非无限生命周期记忆，公开 checkpoint / benchmark 与 cross-attempt self-evolution 复现实验也需区分。", "questions": ["哪些经验应该先进入 Context，哪些值得通过 RL 写进权重？", "Action→State Change 与我们候选的 consequence supervision 有何本质区别？"]}, {"id": "rlt", "title": "RL Token: Bootstrapping Online RL with Vision-Language-Action Models", "year": "2026", "layer": "Policy Evolution", "theme": "policy", "status": "核心基线", "url": "https://arxiv.org/abs/2604.23073", "one": "冻结大 VLA / 紧凑读出，以 reference-conditioned 轻量 actor–critic 在真实机器人上做样本高效 Online RL。", "method": ["Stage 1：从 VLA hidden representation 学紧凑 RL readout", "Stage 2：冻结大模型，用小 actor / critic 做 off-policy online RL", "Reference action + BC anchor + action chunk 减少探索和 credit-assignment 难度"], "evidence": "原论文在多个真实精细操作任务上展示成功率 / throughput 提升，并强调几分钟到数小时的在线适应预算。", "project": "当前项目的技术脚手架和共同 baseline，不再作为整篇工作的上位故事。", "boundary": "我们使用 π0.5、本地控制接口和可能不同的 chunk / residual 参数化，必须叫 RLT-π0.5-adapted，不能无条件声称忠实复现。", "questions": ["RLT 的真正瓶颈是 representation、critic、data，还是 execution？", "本地 replay 中存的是计划 action 还是实际 executed action？"]}, {"id": "smoothrl", "title": "SmoothRL: Online Reinforcement Learning During Asynchronous Execution", "year": "2026", "layer": "Policy / Execution Evolution", "theme": "execution", "status": "已读", "url": "https://arxiv.org/abs/2608.29768", "one": "把异步执行下的 action chunk 显式划分为 committed / execution / discarded，只让 actor 的 value gradient 通过真正执行的 region。", "method": ["训练和部署都采用 asynchronous execution", "Critic 看到真实 committed + execution sequence", "Actor 只优化真正执行的 execution region"], "evidence": "作者在 Astribot S1 的动态抛掷、笔帽、开箱等任务上报告显著在线提升。", "project": "它告诉我们：若后续从 synchronous chunk 转 async，必须首先修正 transition / credit assignment，而不是只把线程并行化。", "boundary": "不是“加平滑 loss”的论文；核心是 deployment timing 与 RL objective 对齐。", "questions": ["我们真实部署需要 async 的证据是什么？", "RLT local baseline 的 generated action 与 executed action 目前是否严格一致？"]}, {"id": "harness-vla", "title": "Harness VLA: Steering Frozen VLAs into Reliable Manipulation Primitives via Memory-Guided Agents", "year": "2026", "layer": "Skill / Harness Evolution", "theme": "harness", "status": "待读", "url": "https://arxiv.org/abs/2607.08448", "one": "把冻结 VLA 暴露为可重试的 contact-rich primitive，高层 memory-guided agent 学习这些固定 primitive 的 operating range，并在失败后 re-ground / re-stage / retry。", "method": ["Frozen VLA 负责局部 contact-rich phase", "固定 analytic primitives 负责 grounding / staging / transport / release 等", "Harness 从 execution traces、global success rules、failure models 学会什么时候调用、何时重试"], "evidence": "作者报告在 LIBERO-Pro、RoboCasa365 和 RoboTwin C2R 上相较强基线获得明显提升。", "project": "非常适合帮助我们定义“Policy 能力”和“Harness 组织能力”的边界；但当前 RLT 项目仍优先研究局部 physical self-improvement，而不是立刻转 Agent。", "boundary": "若我们的失败主要是局部插入 / 接触控制，Harness 不应成为第一优先级；若失败集中在调用、重试、阶段切换，则应升级其优先级。", "questions": ["当前 failure 到底属于 primitive 本身还是 primitive orchestration？", "什么时候 VLA 应该被当作一个可验证 / 可重试 API？"]}, {"id": "enpire", "title": "ENPIRE: Agentic Robot Policy Self-Improvement in the Real World", "year": "2026", "layer": "Policy / System Evolution", "theme": "agent", "status": "待读", "url": "https://research.nvidia.com/labs/gear/enpire/", "one": "让 agent 围绕真实机器人 rollout、verification、日志和训练代码形成 policy self-improvement loop，而不是只做一次性 task planning。", "method": ["真实 rollout 暴露 policy failure", "Agent 分析 execution / training evidence", "迭代修改训练 / 算法 / policy 并重新验证"], "evidence": "公开项目页把重点放在真实世界 agentic policy self-improvement。", "project": "对我们最有价值的是“科研 / 训练闭环自动化”视角：未来可把失败日志、实验配置、训练脚本纳入自进化系统；近期不替代 RLT baseline。", "boundary": "属于更上层系统 / agentic improvement；需要与直接 sensorimotor policy adaptation 分开。", "questions": ["Agent 修改的是 policy、数据还是训练基础设施？", "哪些部分可以迁移到我们的自动实验 / failure diagnosis loop？"]}, {"id": "shaper", "title": "Self-Evolving Embodied Agents via Skill-Harness Evolution (SHAPER)", "year": "2026", "layer": "Skill / Harness Evolution", "theme": "harness", "status": "待读", "url": "https://arxiv.org/abs/2608.11350", "one": "保持 foundation model 参数冻结，通过 target-environment rollouts 演化 reusable skills 和 context-code harness，实现 train-free embodied adaptation。", "method": ["同一 frozen model 同时充当 planner 与 optimizer", "优化外部 skill / context / code，而非更新 model weight", "用环境 rollout 反复改进 non-parametric agent system"], "evidence": "作者在 VLABench 与 ESI-Bench 比较纯执行、SFT 和 test-time scaling 等基线。", "project": "提醒我们“自进化”不是只等于 RL weight update；未来网站里的自进化地图必须把 non-parametric evolution 与 policy evolution 分层。", "boundary": "如果当前科研证据来自接触 control failure，SHAPER 只能作为宏观邻近路线，不能干扰局部 physical RL 主线。", "questions": ["什么时候改 harness 比改 policy 更便宜、更可靠？", "可复用 skill 的稳定性如何定义和验证？"]}, {"id": "aspire", "title": "ASPIRE: Agentic /Skills Discovery for Robotics", "year": "2026", "layer": "Skill / Code Evolution", "theme": "harness", "status": "待读", "url": "https://research.nvidia.com/labs/gear/aspire/", "one": "通过 Iterative Robot Exploration 自动编写和修正 Code-as-Policy，把验证成功的修复沉淀成 reusable skill library。", "method": ["执行机器人程序并收集 failure trace", "Agent 进行局部代码修复与重新验证", "成功修复沉淀为 /skills，在后续任务中复用"], "evidence": "项目强调 continual skill discovery 与 compounding experience。", "project": "最值得借鉴的是 failure attribution → local repair → validated skill consolidation，而不是把每个 physical control problem 都改写成代码。", "boundary": "代码适合组织、流程和离散恢复，不适合直接替代高频接触控制。", "questions": ["我们的 recovery experience 是否也能形成可复用 primitive？", "什么是最小可验证 skill unit？"]}, {"id": "zetta", "title": "Zetta ζ: An Efficient Closed-Loop Embodied Harness for Self-Evolving Physical Intelligence", "year": "2026", "layer": "Closed-loop Harness Evolution", "theme": "harness", "status": "待读", "url": "https://arxiv.org/abs/2608.16590", "one": "冻结 base policy，在线演化 runtime critic 与 recovery skills，并用三种时间尺度闭合 action-frequency governance、rollout-level proposal 与 validation-gated skill update。", "method": ["action-frequency runtime critic", "rollout-level failure → critic/recovery proposal", "验证通过后才把 skill 更新写回系统；Z-Infra 解耦 agent logic 与执行资源"], "evidence": "作者报告 LIBERO-Pro 90.8%、RoboCasa 93.6%，并报告显著吞吐 / inference speedup 与 zero-shot skill transfer。", "project": "和我们“多时间尺度自进化”框架高度一致；尤其值得借鉴 validation-gated update —— 经验不能一采到就写回系统。", "boundary": "它主攻 harness / recovery skill，不证明 policy-level RL 不再需要。", "questions": ["我们的 RLT experience 是否也需要 validation gate 再进入 replay / distillation？", "runtime critic 与 RL critic 有哪些相同和不同？"]}, {"id": "pld", "title": "Self-Improving VLA Models with Data Generation via Residual RL (PLD)", "year": "2025", "layer": "Policy → Foundation Evolution", "theme": "failure", "status": "推荐", "url": "https://arxiv.org/abs/2511.00091", "one": "用 residual RL 在基础策略薄弱区域生成更优经验，再把新经验蒸馏 / 回写给基础 VLA。", "method": ["Probe：识别基础策略薄弱区", "Learn：残差 RL 生成更好的部署分布经验", "Distill：把改进经验写回 foundation policy"], "evidence": "是“RL 不只是 specialist，而是数据生成器”的典型路线。", "project": "若 RLT 产生稳定 recovery / correction data，PLD 是最自然的下一阶段：Policy Evolution → Foundation Evolution。", "boundary": "残差 RL 产生数据再 SFT 已有直接先例，未来若做必须找新的经验选择 / 跨任务复用 / physical feedback 贡献。", "questions": ["我们真正需要优化 specialist，还是优化 experience generator？"]}, {"id": "pri4r", "title": "Pri4R: Learning World Dynamics for VLA with Privileged 4D Representation", "year": "2026", "layer": "Physical Representation", "theme": "physical", "status": "推荐", "url": "https://arxiv.org/abs/2603.01549", "one": "用训练期 privileged future geometry / trajectories 塑造 VLA 表征，部署保持原输入接口。", "method": ["privileged future geometry supervision", "training-only auxiliary signal", "deployment removes privileged input"], "evidence": "“训练时看更多物理真值、部署时不增加输入”已经是明确先例。", "project": "直接约束 R0 的新颖性：不能再用“加一个 physics loss”作为故事；必须证明 decision-relevant consequence 对在线适应的增量。", "boundary": "它不等于轻量 online RL，也不回答 failure recovery / action ranking。", "questions": ["什么 physics target 真正提高 candidate action discrimination？"]}, {"id": "vgps", "title": "Steering Your Generalists: Improving Robotic Foundation Models via Value Guidance (V-GPS)", "year": "2024", "layer": "Value Guidance", "theme": "policy", "status": "推荐", "url": "https://arxiv.org/abs/2410.13816", "one": "用价值函数对 generalist policy 产生的候选动作进行筛选 / 重排。", "method": ["base policy 提供 action candidates", "value function 估计候选优劣", "选择高价值 action 执行"], "evidence": "说明“物理信息直接服务动作价值判断”是强有力的替代路线。", "project": "R1 / R2 的关键 baseline：在发明复杂 representation 前先问 candidate set 是否已有可利用的 improvement headroom。", "boundary": "候选集合没有好动作时，value guidance 上限也有限。", "questions": ["D2 branch experiment 能否测出 candidate oracle headroom？"]}, {"id": "rma-arm", "title": "Rapid Motor Adaptation for Robotic Manipulator Arms", "year": "2024", "layer": "History-conditioned Adaptation", "theme": "physical", "status": "推荐", "url": "https://arxiv.org/abs/2312.04670", "one": "利用动作和执行反馈历史，推断隐藏动力学并快速适应机械臂。", "method": ["short interaction history", "dynamics / latent adaptation", "manipulator control under dynamics variation"], "evidence": "为“history 本身就是物理信息”提供直接近邻。", "project": "R3 强基线：actual q + short history 如果已经带来主要收益，则 physics auxiliary loss 的必要性会下降。", "boundary": "任务与传感器设置不同，不能直接等价到 contact-rich VLA。", "questions": ["我们是不是缺可观测性，而不是缺 representation capacity？"]}];
+
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
+function renderPapers(){
+  const q=(document.getElementById('paperSearch').value||'').toLowerCase();
+  const f=document.getElementById('paperFilter').value;
+  const grid=document.getElementById('paperGrid'); grid.innerHTML='';
+  papers.filter(p=>{
+    const text=[p.title,p.layer,p.one,p.project,p.boundary,...p.tags||[],...(p.method||[]),...(p.questions||[])].join(' ').toLowerCase();
+    return (f==='all'||p.theme===f) && text.includes(q);
+  }).forEach(p=>{
+    const d=document.createElement('div'); d.className='card paper'; d.onclick=()=>openPaper(p.id);
+    d.innerHTML=`<div class="small">${esc(p.year)} · ${esc(p.layer)} · ${esc(p.status)}</div>
+      <div class="paper-title">${esc(p.title)}</div>
+      <div class="paper-one">${esc(p.one)}</div>
+      <div class="paper-rel"><b>对当前项目：</b>${esc(p.project)}</div>
+      <div class="paper-actions"><button class="btn">深入阅读</button><a href="${esc(p.url)}" target="_blank" onclick="event.stopPropagation()">原文 ↗</a></div>`;
+    grid.appendChild(d);
+  });
+}
+function openPaper(id){
+  const p=papers.find(x=>x.id===id); if(!p)return;
+  document.getElementById('modalMeta').textContent=`${p.year} · ${p.layer} · ${p.status}`;
+  document.getElementById('modalTitle').textContent=p.title;
+  document.getElementById('modalBody').innerHTML=`
+    <div class="callout"><b>一句话：</b>${esc(p.one)}</div>
+    <h3 style="margin-top:22px">核心方法</h3><ol>${(p.method||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ol>
+    <h3>主要证据 / 结果</h3><p>${esc(p.evidence)}</p>
+    <h3>对当前科研项目的意义</h3><p>${esc(p.project)}</p>
+    <h3>创新边界 / 不要误读</h3><p>${esc(p.boundary)}</p>
+    <h3>读完必须讨论的问题</h3><ul>${(p.questions||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul>
+    <h3>我的本地阅读笔记</h3>
+    <textarea id="paperNote" rows="7" placeholder="这里的笔记只保存在本浏览器 localStorage；正式科研版请继续发到聊天里，由下一版网站固化。">${esc(localStorage.getItem('paperNote:'+p.id)||'')}</textarea>
+    <div style="margin-top:8px"><button class="btn" onclick="savePaperNote('${p.id}')">保存本地笔记</button> <a href="${esc(p.url)}" target="_blank">打开原文 ↗</a></div>`;
+  document.getElementById('paperModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function savePaperNote(id){localStorage.setItem('paperNote:'+id,document.getElementById('paperNote').value);}
+function closeModal(){document.getElementById('paperModal').classList.remove('open');document.body.style.overflow='';}
+function modalBackdrop(e){if(e.target.id==='paperModal')closeModal();}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+document.getElementById('paperSearch').addEventListener('input',renderPapers);
+document.getElementById('paperFilter').addEventListener('change',renderPapers);
+renderPapers();
+
+const officialLogs = [
+  {date:'2026-09-11',type:'研究决策',title:'项目主线重构',body:'从 Physical Token-first 调整为 Physical Interaction + Self-Improvement。RLT 成为技术 baseline；方法由 failure diagnosis 决定。'},
+  {date:'2026-09-11',type:'论文',title:'Zeva 初读',body:'加入 Context Evolution 维度：自我改进不必等于 weight update。提出 Fast Memory + Slow RL 作为长期问题。'},
+  {date:'2026-09-11',type:'资料',title:'具身 RSI / 穆尧访谈',body:'长期地图加入 World Engine / Evaluator / RL、top-down skill expansion × bottom-up capability improvement、cross-robot experience sharing。'},
+  {date:'2026-09-11',type:'状态校准',title:'研究总稿重新校准项目事实',body:'π0.5 SFT 5k/10k/15k/20k 产物已存在，但 reference 未验收；RLT baseline 仍无正式结果。'},
+  {date:'2026-09-11',type:'网站',title:'v0.4 Project-first 重构',body:'修复 v0.3 结构错位；主线优先；论文变为可展开知识库；完整 1097 行研究总稿不再压缩。'}
+];
+function getLocalLogs(){return JSON.parse(localStorage.getItem('researchLogs')||'[]');}
+function renderLogs(){
+ const all=[...officialLogs,...getLocalLogs()].sort((a,b)=>b.date.localeCompare(a.date));
+ const el=document.getElementById('logList'); el.innerHTML=all.map(x=>`<div style="padding:10px 0;border-bottom:1px solid var(--line)"><b>${esc(x.date)} · ${esc(x.title)}</b> <span class="tag">${esc(x.type)}</span><div class="small">${esc(x.body)}</div></div>`).join('');
+}
+function addLog(){
+ const title=document.getElementById('logTitle').value.trim(), body=document.getElementById('logBody').value.trim(), type=document.getElementById('logType').value;
+ if(!title&&!body)return;
+ const arr=getLocalLogs(); arr.push({date:new Date().toISOString().slice(0,10),type,title:title||'未命名',body});
+ localStorage.setItem('researchLogs',JSON.stringify(arr)); document.getElementById('logTitle').value='';document.getElementById('logBody').value='';renderLogs();
+}
+function exportLogs(fmt){
+ const all=[...officialLogs,...getLocalLogs()];
+ let content, type, name;
+ if(fmt==='json'){content=JSON.stringify(all,null,2);type='application/json';name='embodied-self-evolution-log.json';}
+ else {content=all.map(x=>`## ${x.date} · ${x.title}\n\n- 类型：${x.type}\n- 记录：${x.body}\n`).join('\n');type='text/markdown';name='embodied-self-evolution-log.md';}
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500);
+}
+renderLogs();
+
+function toggleMaster(open){document.getElementById('masterDetails').open=open; if(open)document.getElementById('master-note').scrollIntoView();}
+
+const nav=[...document.querySelectorAll('.nav a')], secs=[...document.querySelectorAll('main section[id]')];
+window.addEventListener('scroll',()=>{
+ let current=secs[0]?.id||''; for(const s of secs){if(window.scrollY>=s.offsetTop-80)current=s.id;}
+ nav.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+current));
+},{passive:true});
+</script>
+</body></html>
