@@ -1,5 +1,6 @@
 [
   {
+    "id": "zeva",
     "title": "Zeva: In-Context Causal Learning for Generalizable Embodied Manipulation",
     "year": "2026",
     "layer": "Context Evolution",
@@ -10,11 +11,24 @@
       "Causal Memory",
       "Action-Effect"
     ],
-    "one": "冻结 policy，把 Action → State Change 写入因果交互记忆，用 Context 让重复尝试越来越好。",
-    "project": "启发 Physical Experience 的基本单位从单帧 state 提升到 action–effect transition；长期可研究 Fast Memory + Slow RL。",
-    "note": "reader.html?path=notes/zeva.md"
+    "one": "冻结 policy，不做梯度更新；把“执行动作 → 状态变化”编码成因果交互信号，写入双时间尺度 Memory，再作为 Context 影响后续动作。",
+    "method": [
+      "Causal Transition Encoder：视觉状态 + executed action + observed state change → phase token + causal interaction signal",
+      "Brief Interaction Trace（attempt 内短期）+ Persistent Interaction Memory（同 episode 跨 attempt）",
+      "按当前 phase 检索历史 interaction，形成 Causal Prompt 注入冻结 policy"
+    ],
+    "evidence": "作者展示 RoboCasa365-Atomic5、ChemLab-Evo 以及 cross-attempt experience accumulation；核心价值是冻结策略也可以随交互历史改善后续行为。",
+    "project": "把 Physical Experience 的基本单位从单帧 state 提升到 action–effect transition；长期探索 Fast Memory + Slow RL。",
+    "boundary": "Context Evolution 不替代 Policy Evolution；memory 生命周期、跨 episode 持久化和权重更新要分开。",
+    "questions": [
+      "哪些经验应该先进入 Context，哪些值得通过 RL 写进权重？",
+      "Action→State Change 与 consequence supervision 的本质差异是什么？"
+    ],
+    "note": "reader.html?path=notes/zeva.md",
+    "url": "https://github.com/air-embodied-brain/Zeva"
   },
   {
+    "id": "rlt",
     "title": "RL Token: Bootstrapping Online RL with Vision-Language-Action Models",
     "year": "2026",
     "layer": "Policy Evolution",
@@ -23,73 +37,223 @@
     "tags": [
       "Online RL",
       "VLA",
-      "Action Chunk"
+      "Action Chunk",
+      "Reference Policy"
     ],
-    "one": "冻结大 VLA，用紧凑 readout + 轻量 actor-critic 做样本高效在线适应。",
-    "project": "当前项目的技术脚手架；主线不是“改 RL Token”，而是 Physical Interaction + Self-Improvement。",
-    "note": "reader.html?path=notes/rlt.md"
+    "one": "冻结大 VLA / 紧凑读出，以 reference-conditioned 轻量 actor–critic 在真实机器人上做样本高效 Online RL。",
+    "method": [
+      "Stage 1：从 VLA hidden representation 学紧凑 RL readout",
+      "Stage 2：冻结大模型，用小 actor / critic 做 off-policy online RL",
+      "Reference action + BC anchor + action chunk 减少探索和 credit-assignment 难度"
+    ],
+    "evidence": "原论文在多个真实精细操作任务上展示成功率 / throughput 提升，并强调少量在线经验适配。",
+    "project": "当前项目的技术脚手架和共同 baseline；上位故事改为 Physical Interaction + Self-Improvement。",
+    "boundary": "π0.5、本地控制接口、chunk/residual 参数化必须写成 adapted 版本，不能无条件声称忠实复现。",
+    "questions": [
+      "RLT 的真正瓶颈是 representation、critic、data 还是 execution？",
+      "replay 中存的是计划 action 还是实际 executed action？"
+    ],
+    "note": "reader.html?path=notes/rlt.md",
+    "url": "https://arxiv.org/abs/2604.23073"
   },
   {
+    "id": "smoothrl",
     "title": "SmoothRL: Online Reinforcement Learning During Asynchronous Execution",
     "year": "2026",
-    "layer": "Execution-aware RL",
+    "layer": "Policy / Execution Evolution",
     "theme": "execution",
     "status": "已读",
     "tags": [
       "Async",
       "Partial Chunk",
-      "Value Gradient"
+      "Value Gradient",
+      "Executed Action"
     ],
-    "one": "异步执行下 generated chunk ≠ executed chunk，只强化真正执行的 action region。",
-    "project": "如果后续改 async，必须先把 executed action / transition / credit assignment 定义正确。",
-    "note": "reader.html?path=notes/smoothrl.md"
+    "one": "把异步执行下的 action chunk 划分为 committed / execution / discarded，只让 actor 的 value gradient 通过真正执行的 region。",
+    "method": [
+      "训练和部署都采用 asynchronous execution",
+      "Critic 看到真实 committed + execution sequence",
+      "Actor 只优化真正执行的 execution region"
+    ],
+    "evidence": "作者在 Astribot S1 的动态抛掷、笔帽、开箱等任务上报告显著在线提升。",
+    "project": "若以后从 synchronous chunk 转 async，必须先修正 transition / credit assignment，而不是只把线程并行化。",
+    "boundary": "核心是 deployment timing 与 RL objective 对齐，不是普通 motion smoothness regularization。",
+    "questions": [
+      "我们真实部署需要 async 的证据是什么？",
+      "generated action 与 executed action 目前是否严格一致？"
+    ],
+    "note": "reader.html?path=notes/smoothrl.md",
+    "url": "https://arxiv.org/abs/2608.29768"
   },
   {
+    "id": "harness-vla",
     "title": "Harness VLA: Steering Frozen VLAs into Reliable Manipulation Primitives via Memory-Guided Agents",
-    "year": "2026",
-    "layer": "Harness Evolution",
-    "theme": "harness",
-    "status": "待读",
-    "tags": [
-      "Harness",
-      "Memory",
-      "Frozen VLA"
-    ],
-    "one": "把冻结 VLA 当作可验证、可重试 primitive，由 memory-guided agent 负责 re-ground / retry / recovery。",
-    "project": "用于区分 primitive 本身失败与 orchestration 失败；近期不改变 RLT baseline 优先级。",
-    "url": "https://arxiv.org/abs/2607.08448"
-  },
-  {
-    "title": "Self-Evolving Embodied Agents via Skill-Harness Evolution",
     "year": "2026",
     "layer": "Skill / Harness Evolution",
     "theme": "harness",
-    "status": "待读",
+    "status": "重点跟踪",
+    "tags": [
+      "Harness",
+      "Memory",
+      "Frozen VLA",
+      "Recovery"
+    ],
+    "one": "把冻结 VLA 暴露为可验证、可重试的 contact-rich primitive，高层 memory-guided agent 学习 operating range，并在失败后 re-ground / re-stage / retry。",
+    "method": [
+      "Frozen VLA 负责局部 contact-rich phase",
+      "analytic primitives 负责 grounding / staging / transport / release",
+      "Harness 从 execution traces、success/failure models 学会何时调用和重试"
+    ],
+    "evidence": "论文围绕 LIBERO-Pro、RoboCasa365、RoboTwin C2R 等设置展示 frozen VLA + harness 的可靠性增益。",
+    "project": "用于区分 primitive 本身失败与 orchestration 失败；近期不改变 RLT baseline 优先级。",
+    "boundary": "若 failure 主要发生在最后几毫米接触控制，Harness 不应先于底层 policy 改进。",
+    "questions": [
+      "当前 failure 属于 primitive 还是 orchestration？",
+      "什么时候 VLA 应被视作一个可验证 / 可重试 API？"
+    ],
+    "url": "https://arxiv.org/abs/2607.08448"
+  },
+  {
+    "id": "enpire",
+    "title": "ENPIRE: Agentic Robot Policy Self-Improvement in the Real World",
+    "year": "2026",
+    "layer": "Policy / System Evolution",
+    "theme": "agent",
+    "status": "重点跟踪",
+    "tags": [
+      "Agent",
+      "Real Robot",
+      "Policy Improvement",
+      "Experiment Loop"
+    ],
+    "one": "让 coding agent 围绕真实机器人 rollout、verification、日志和训练代码形成 policy self-improvement loop，而不是只做一次性 task planning。",
+    "method": [
+      "真实 rollout 暴露 policy failure",
+      "Agent 分析 execution / training evidence",
+      "迭代修改代码 / 训练 recipe / policy 并重新验证"
+    ],
+    "evidence": "公开项目重点是把 agentic loop 落到真实机器人 policy improvement。",
+    "project": "未来可把 failure logs、实验配置、训练脚本纳入自进化科研系统；近期不替代 RLT baseline。",
+    "boundary": "属于更上层 system / agentic improvement，需要与直接 sensorimotor policy adaptation 分开。",
+    "questions": [
+      "Agent 修改的是 policy、数据还是训练基础设施？",
+      "哪些环节适合迁移到自动 failure diagnosis？"
+    ],
+    "url": "https://research.nvidia.com/labs/gear/enpire/"
+  },
+  {
+    "id": "shaper",
+    "title": "Self-Evolving Embodied Agents via Skill-Harness Evolution (SHAPER)",
+    "year": "2026",
+    "layer": "Skill / Harness Evolution",
+    "theme": "harness",
+    "status": "重点跟踪",
     "tags": [
       "Skills",
       "Harness",
-      "Non-parametric"
+      "Non-parametric",
+      "Frozen Model"
     ],
-    "one": "冻结 foundation model，通过 rollout 演化 reusable skills 与 harness。",
-    "project": "提醒我们自进化不只等于 weight update，但局部 physical control 仍需独立验证。",
+    "one": "保持 foundation model 参数冻结，通过 target-environment rollouts 演化 reusable skills 和 context-code harness，实现 train-free embodied adaptation。",
+    "method": [
+      "同一 frozen model 同时充当 planner 与 optimizer",
+      "优化外部 skill / context / code 而非 model weights",
+      "用环境 rollout 反复改进 non-parametric agent system"
+    ],
+    "evidence": "作者在 VLABench 与 ESI-Bench 比较纯执行、SFT 和 test-time-scaling baselines。",
+    "project": "提醒我们自进化不等于 weight update；知识地图必须把 parametric 与 non-parametric evolution 分层。",
+    "boundary": "若当前证据来自 contact control failure，SHAPER 只能作为宏观邻近路线。",
+    "questions": [
+      "什么时候改 harness 比改 policy 更便宜？",
+      "可复用 skill 的稳定性如何验证？"
+    ],
     "url": "https://arxiv.org/abs/2608.11350"
   },
   {
+    "id": "aspire",
+    "title": "ASPIRE: Agentic /Skills Discovery for Robotics",
+    "year": "2026",
+    "layer": "Skill / Code Evolution",
+    "theme": "harness",
+    "status": "重点跟踪",
+    "tags": [
+      "Skill Discovery",
+      "Code-as-Policy",
+      "Failure Trace",
+      "Continual Learning"
+    ],
+    "one": "通过 Iterative Robot Exploration 自动编写和修正 Code-as-Policy，把验证成功的修复沉淀成 reusable skill library。",
+    "method": [
+      "执行机器人程序并收集 fine-grained failure trace",
+      "Agent 做局部代码修复并重新验证",
+      "成功修复沉淀为 /skills，在后续任务复用"
+    ],
+    "evidence": "项目强调 continual skill discovery、compounding experience 和长程任务迁移。",
+    "project": "最值得借的是 failure attribution → local repair → validated skill consolidation。",
+    "boundary": "代码擅长流程和离散恢复，不适合直接替代高频接触控制。",
+    "questions": [
+      "recovery experience 能否形成可复用 primitive？",
+      "什么是最小可验证 skill unit？"
+    ],
+    "url": "https://research.nvidia.com/labs/gear/aspire/"
+  },
+  {
+    "id": "zetta",
     "title": "Zetta ζ: An Efficient Closed-Loop Embodied Harness for Self-Evolving Physical Intelligence",
     "year": "2026",
-    "layer": "Closed-loop Harness",
+    "layer": "Closed-loop Harness Evolution",
     "theme": "harness",
-    "status": "待读",
+    "status": "重点跟踪",
     "tags": [
       "Runtime Critic",
       "Recovery",
-      "Validation Gate"
+      "Validation Gate",
+      "Multi-timescale"
     ],
-    "one": "用多时间尺度 harness 演化 runtime critic 和 recovery skills，并在验证后再写入 skill memory。",
-    "project": "很值得借鉴 validation-gated experience consolidation。",
+    "one": "冻结 base policy，在线演化 runtime critic 与 recovery skills，用三个时间尺度闭合 execution governance、rollout proposal 与 validation-gated skill update。",
+    "method": [
+      "action-frequency runtime critic",
+      "rollout-level failure → critic/recovery proposal",
+      "验证通过后才把 skill 更新写回系统"
+    ],
+    "evidence": "作者报告 LIBERO-Pro 90.8%、RoboCasa 93.6%、11.1× inference speedup，并持续扩展环境支持。",
+    "project": "强烈启发 validation-gated consolidation：经验不能采到就写回 replay / skill / distillation。",
+    "boundary": "主攻 harness / recovery，不证明 policy-level RL 不再需要。",
+    "questions": [
+      "RLT experience 是否也需要 validation gate？",
+      "runtime critic 与 RL critic 的边界是什么？"
+    ],
     "url": "https://arxiv.org/abs/2608.16590"
   },
   {
+    "id": "pld",
+    "title": "Self-Improving Vision-Language-Action Models with Data Generation via Residual RL (PLD)",
+    "year": "2025",
+    "layer": "Policy → Foundation Evolution",
+    "theme": "failure",
+    "status": "推荐",
+    "tags": [
+      "Residual RL",
+      "Data Generation",
+      "Distillation",
+      "Foundation Evolution"
+    ],
+    "one": "用 residual RL 在基础策略薄弱区域生成更优部署分布经验，再把新经验蒸馏 / 回写基础 VLA。",
+    "method": [
+      "Probe：识别基础策略薄弱区",
+      "Learn：残差 RL 生成更好的经验",
+      "Distill：把改进经验写回 foundation policy"
+    ],
+    "evidence": "代表“RL 不只是 specialist，也是高价值 experience generator”的路线。",
+    "project": "若 RLT 产生稳定 recovery / correction data，PLD 是 Phase 3 的自然下一步。",
+    "boundary": "Residual RL→SFT 已有先例；创新应来自经验选择、跨任务复用或 physical feedback。",
+    "questions": [
+      "我们是在优化 specialist，还是优化 experience generator？"
+    ],
+    "url": "https://arxiv.org/abs/2511.00091"
+  },
+  {
+    "id": "pri4r",
     "title": "Pri4R: Learning World Dynamics for VLA with Privileged 4D Representation",
     "year": "2026",
     "layer": "Physical Representation",
@@ -97,10 +261,74 @@
     "status": "推荐",
     "tags": [
       "Privileged",
-      "Future Geometry"
+      "Future Geometry",
+      "World Dynamics"
     ],
-    "one": "训练期用 future 3D/4D geometry 监督 VLA 表征，部署保持原输入。",
-    "project": "压缩单纯 Physical Token 的创新空间；必须证明 decision-relevant consequence 对在线适应的增量。",
+    "one": "用训练期 privileged future geometry / trajectories 塑造 VLA 表征，部署保持原输入接口。",
+    "method": [
+      "privileged future geometry supervision",
+      "training-only auxiliary signal",
+      "deployment removes privileged input"
+    ],
+    "evidence": "“训练时多看物理真值、部署时不增加输入”已经是明确先例。",
+    "project": "直接约束 R0 新颖性：不能只用“加一个 physics loss”作为故事。",
+    "boundary": "不等于在线 RL，也不回答 failure recovery / action ranking。",
+    "questions": [
+      "什么 physics target 真正提高 candidate action discrimination？"
+    ],
     "url": "https://arxiv.org/abs/2603.01549"
+  },
+  {
+    "id": "vgps",
+    "title": "Steering Your Generalists: Improving Robotic Foundation Models via Value Guidance (V-GPS)",
+    "year": "2024",
+    "layer": "Value Guidance",
+    "theme": "policy",
+    "status": "推荐",
+    "tags": [
+      "Value",
+      "Candidate Ranking",
+      "Foundation Policy"
+    ],
+    "one": "用价值函数对 generalist policy 产生的候选动作进行筛选 / 重排，而不是立刻重训大模型。",
+    "method": [
+      "base policy 提供 candidates",
+      "value function 估计优劣",
+      "选择高价值 action 执行"
+    ],
+    "evidence": "说明“物理信息直接服务动作价值判断”是一条强替代路线。",
+    "project": "R1 / R2 关键 baseline：先测 candidate set 是否已有 improvement headroom。",
+    "boundary": "候选集合没有好动作时，value guidance 上限有限。",
+    "questions": [
+      "D2 branch experiment 能否测出 candidate oracle headroom？"
+    ],
+    "url": "https://arxiv.org/abs/2410.13816"
+  },
+  {
+    "id": "rma-arm",
+    "title": "Rapid Motor Adaptation for Robotic Manipulator Arms",
+    "year": "2024",
+    "layer": "History-conditioned Adaptation",
+    "theme": "physical",
+    "status": "推荐",
+    "tags": [
+      "History",
+      "Dynamics",
+      "Adaptation",
+      "Proprioception"
+    ],
+    "one": "利用动作和执行反馈历史推断隐藏动力学并快速适应机械臂。",
+    "method": [
+      "short interaction history",
+      "dynamics / latent adaptation",
+      "manipulator control under dynamics variation"
+    ],
+    "evidence": "为“history 本身就是物理信息”提供直接机械臂近邻。",
+    "project": "D1 强基线：actual q + short history 若已带来主要收益，则新 physical auxiliary loss 的必要性会下降。",
+    "boundary": "不是 VLA，任务与传感器设置不能直接等价到 contact-rich VLA。",
+    "questions": [
+      "我们是不是缺可观测性，而不是缺 representation capacity？"
+    ],
+    "url": "https://arxiv.org/abs/2312.04670"
   }
 ]
