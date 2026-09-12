@@ -1,5 +1,10 @@
 [
   {
+    "date": "2026-09-12",
+    "title": "LWD 初读",
+    "summary": "Learning While Deploying 把部署变成 fleet-scale data flywheel：DIVL 学 heterogeneous return distribution，QAM 将 Q-gradient 写回 π0.5 flow action expert。对项目的主要启发是统一 experience schema、保留 failure/recovery/intervention，并把 pooled replay / validation gate / generalist consolidation 作为 Phase 3 长期问题。"
+  },
+  {
     "date": "2026-09-11",
     "title": "主线进入 Phase 0",
     "summary": "当前优先级改为 RoboTwin2 多任务 RLT benchmark；hammer 保留为 pilot/regression task。"
