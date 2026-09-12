@@ -40,7 +40,28 @@ Study repeated Deploy → Experience → Learn → Redeploy cycles, retention, c
 
 - **RoboTwin 2.0 / RLinf_support**: current pinned baseline reproduction path.
 - **RoboTwin 2.0 main**: migration / modern-environment comparison after the first baseline is frozen.
-- **RoboDojo on B300**: daily side track for hardware compatibility, install / renderer smoke, XPolicyLab debug and Dojo-Eval bring-up. No B300 simulator-compatibility conclusion is recorded until it is actually tested.
+- **RoboDojo on B300**: side track only. Current status remains **not yet tested on this machine**; no installation / doctor / Isaac Sim / renderer / task-smoke conclusion is recorded until actual local evidence exists.
+
+## Public repository policy
+
+This is a **public, redacted research log**.
+
+We publish:
+- research questions, algorithms, experiment design and conclusions;
+- public repository SHAs / branches where useful;
+- non-sensitive checkpoint step names and quantitative metrics;
+- sanitized failure causes and engineering lessons;
+- public paper / project links.
+
+We do **not** publish by default:
+- internal absolute server paths;
+- usernames, hostnames, IPs, credentials, tokens or private dashboard IDs;
+- other users' process names / PIDs / resource details;
+- private infrastructure commands or mount-point details that are not necessary to support a scientific claim.
+
+Full raw logs remain the source of evidence, but the public repository stores only the minimum sanitized evidence needed to make the research record reproducible and auditable at the scientific level.
+
+See [`research/knowledge-base-maintenance.md`](research/knowledge-base-maintenance.md) for the detailed publication / redaction protocol.
 
 ## Research north star
 
