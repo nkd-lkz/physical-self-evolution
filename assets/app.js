@@ -1,11 +1,18 @@
 async function loadJSON(path){const r=await fetch(path);if(!r.ok)throw new Error(path);return r.json()}
+async function loadJSONOptional(path){try{return await loadJSON(path)}catch(e){return []}}
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
 let papers=[];
 let frontier=[];
 async function init(){
   try{
-    papers=await loadJSON('data/papers.json');
-    frontier=await loadJSON('data/frontier.json');
+    const [basePapers,latestPapers,baseFrontier,frontierAdds]=await Promise.all([
+      loadJSON('data/papers.json'),
+      loadJSONOptional('data/latest-readings.json'),
+      loadJSON('data/frontier.json'),
+      loadJSONOptional('data/frontier-additions.json')
+    ]);
+    papers=[...latestPapers,...basePapers.filter(p=>!latestPapers.some(x=>x.id===p.id))];
+    frontier=[...frontierAdds,...baseFrontier.filter(p=>!frontierAdds.some(x=>x.id===p.id))];
     renderPapers();
     renderFrontier();
     const logs=await loadJSON('data/experiments.json');
