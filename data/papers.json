@@ -1,5 +1,38 @@
 [
   {
+    "id": "lwd",
+    "title": "Learning While Deploying: Fleet-Scale Reinforcement Learning for Generalist Robot Policies",
+    "year": "2026",
+    "layer": "Fleet / Foundation Evolution",
+    "theme": "policy",
+    "status": "已读 · 2026-09-12",
+    "tags": [
+      "Offline-to-Online RL",
+      "Fleet Learning",
+      "DIVL",
+      "QAM",
+      "π0.5",
+      "Experience Flywheel"
+    ],
+    "one": "把真实部署本身变成训练阶段：16 台机器人共享 autonomous rollout、failure 与 human intervention，通过 DIVL + QAM 持续更新同一个 generalist π0.5 policy。",
+    "method": [
+      "Stage 1：demonstration + historical success/failure rollout + play data 做 Offline RL 初始化",
+      "DIVL：学习 return distribution，并用 entropy-adaptive quantile 控制 bootstrap optimism",
+      "QAM：把 critic 的 action-space Q-gradient 通过 adjoint dynamics 转成 flow vector field 的 local learning target",
+      "Stage 2：fleet 异步采集在线经验，与 offline replay 约 1:1 混合；周期性把新 policy 广播回机器人"
+    ],
+    "evidence": "16 台 Agibot G1、8 个真实任务；LWD Online 平均 score 0.95，长程任务平均 0.91，对比 SFT 0.68（长程）与 LWD Offline 0.79。",
+    "project": "最重要的长期启发是 Physical Experience Flywheel：RLT 先解决局部 policy adaptation，未来再研究跨任务 pooled replay、experience selection、validation gate 和 generalist consolidation。",
+    "boundary": "这是 Phase 3 / North-Star 参考，不应现在直接替代 Phase 0 的 RoboTwin2 Multi-task RLT baseline；fleet规模、QAM和generalist online update都会显著增加变量。",
+    "questions": [
+      "哪些失败 / recovery experience 值得进入长期 replay，而不是一视同仁？",
+      "跨任务 pooled replay 会带来 transfer 还是 interference？",
+      "什么时候经验应该留在 Fast Memory，什么时候通过 RL / distillation 写回 policy？"
+    ],
+    "note": "reader.html?path=notes/lwd.md",
+    "url": "https://arxiv.org/abs/2605.00416"
+  },
+  {
     "id": "zeva",
     "title": "Zeva: In-Context Causal Learning for Generalizable Embodied Manipulation",
     "year": "2026",
