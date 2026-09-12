@@ -1,6 +1,31 @@
 [
   {
     "date": "2026-09-12",
+    "title": "Hammer RLT Stage 1 paper-aligned smoke 通过",
+    "summary": "通用 π0.5 base-init、rlt_alpha=1.0 的 1-step Stage 1 smoke 已通过：total/rlt/vla loss=3.49118/3.06114/0.43004，grad norm=5.7397；保存 667 model + 62 RLT tensors，均为有限值。下一步是相同口径的 2,000-step joint-full。"
+  },
+  {
+    "date": "2026-09-12",
+    "title": "Hammer task-SFT checkpoint 快筛完成",
+    "summary": "5k/10k/15k/20k 在同一 4-env 开发设置下为 1/4、0/4、2/4、2/4；20k 另一次为 1/4。当前仅固定 environment reset seed，action-sampling noise 尚未固定，所以只能用于快筛，正式 30-seed 配对评估前需补 action seed。"
+  },
+  {
+    "date": "2026-09-12",
+    "title": "Stage 2 C=10 时序语义完成 mock 验证",
+    "summary": "正式 actor chunk 固定 C=10、reference H=50、dropout=0.5；native adapter 已覆盖逐子步 reward/done/switch、early done、actual executed length、terminal observation 与 cross-chunk done freeze。真实 RoboTwin rollout 尚待 Stage 1 full 后验收。"
+  },
+  {
+    "date": "2026-09-12",
+    "title": "RoboTwin 2.0 复现与迁移阶段分离",
+    "summary": "近期先在 RoboTwin 2.0 / RLinf_support pinned path 完成第一条 RLT Stage 1/2 baseline；latest-main bridge 已完成 20/20 transition alignment 与相关单测，但 learner smoke 暂不阻塞当前主线。"
+  },
+  {
+    "date": "2026-09-12",
+    "title": "RoboDojo/B300 支线仍处于待实测状态",
+    "summary": "目前没有 B300 上 RoboDojo/Isaac Sim 的本机兼容性结果；下一步从 system manifest、doctor、import/headless、RGB renderer 开始，必要时采用 RTX simulator + B300 policy/learner 分离架构。"
+  },
+  {
+    "date": "2026-09-12",
     "title": "Zeva + Zetta 加深阅读",
     "summary": "Zeva 代表 Context Evolution：冻结 policy，把 executed action→state change 写入双时间尺度 causal memory，并在后续决策中检索注入；Zetta 代表 Harness Evolution：冻结 base policy，通过 action-frequency runtime critic、rollout-level failure diagnosis/recovery proposal 和 validation-gated skill update 持续演化执行系统。对项目的共同启发是 Physical Experience 可以在不绑定特定 VLA hidden token 的情况下被编码为 action-effect、physical predicates、critic 和 recovery interface。"
   },
