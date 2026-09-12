@@ -1,0 +1,19 @@
+[
+  {
+    "id": "motus2",
+    "title": "Motus2: A Self-Evolving General World Model for Dexterous Manipulation",
+    "year": 2026,
+    "category": "world",
+    "layer": "General World Model / Model-Based Policy Evolution",
+    "update": "action policy + shared world-model interfaces",
+    "feedback": "imagined consequence + progress value + tactile/history",
+    "timescale": "test-time planning + post-training",
+    "status": "已读 · 最新 RSI 工作",
+    "url": "https://arxiv.org/abs/2608.30237",
+    "summary": "同一共享参数模型暴露 policy、simulator、evaluator 三个接口，用 Best-of-N 做推理时规划，用 DiffusionNFT MBRL 把预测后果和 value 反馈写回 flow action policy。",
+    "mechanism": "Action-first causal mask + trajectory-dependent supervision routing + WAM/AC-WM/VM + Best-of-N + DiffusionNFT + working memory + lightweight tactile expert。",
+    "evidence": "MBRL/planning 两真机任务 65→75；tactile 60→72.5；real long-context global autoregression 57.5 vs hybrid memory 25；Ego pretrain 51→robot midtrain 84。",
+    "borrow": "重点借鉴失败数据监督分流、consequence→value→action ranking、value trajectory 做 failure diagnosis，以及大 backbone + 轻量高频 physical expert。",
+    "boundary": "属于受控 post-training 的 self-evolution，不等于开放世界持续 RSI；当前项目不应为它跳过 Phase 0 的 RLT Multi-task Benchmark。"
+  }
+]
