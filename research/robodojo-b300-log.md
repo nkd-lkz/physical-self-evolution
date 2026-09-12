@@ -1,7 +1,8 @@
 # RoboDojo on B300 · 每日小任务日志
 
 > 定位：第二实验平台 bring-up。  
-> 原则：每天固定少量时间推进，不抢占 RoboTwin2 / RLT 主线。
+> 原则：每天固定少量时间推进，不抢占 RoboTwin2 / RLT 主线。  
+> 当前状态（2026-09-12）：**尚未开始本机实测**。以下安装、doctor、Isaac Sim import、renderer、official task、Dojo-Eval / Dojo-RL 均不得在没有本机日志前标记为完成或部分完成。
 
 ---
 
@@ -14,6 +15,8 @@
 3. RoboDojo 能否跑官方最小任务？
 4. observation / action contract 是否方便接 π0.5 / RLT？
 5. Dojo-Eval 能否稳定复现？
+
+当前这些问题都仍是**待实测问题**，不能仅依据 RoboTwin2/SAPIEN 能在 B300 运行就推断 RoboDojo/Isaac Sim 也兼容。
 
 ---
 
@@ -90,17 +93,17 @@
 
 **执行命令**
 
-\`\`\`bash
+```bash
 # commands
-\`\`\`
+```
 
 **结果**
 
 **错误日志**
 
-\`\`\`text
+```text
 # error
-\`\`\`
+```
 
 **判断**
 
@@ -124,8 +127,13 @@
 
 - [ ] B300 system info
 - [ ] RoboDojo dependency install
-- [ ] simulator smoke
-- [ ] task smoke
+- [ ] official doctor / compatibility check
+- [ ] Isaac Sim import / headless app
+- [ ] simulator reset / step / render smoke
+- [ ] official task smoke
 - [ ] observation/action contract
+- [ ] XPolicyLab debug closed loop
 - [ ] Dojo-Eval
 - [ ] Dojo-RL feasibility
+
+当前结论：**未开始实测；无兼容性结论。**
