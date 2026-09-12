@@ -1,0 +1,29 @@
+[
+  {
+    "id": "motus2",
+    "title": "Motus2: A Self-Evolving General World Model for Dexterous Manipulation",
+    "year": "2026",
+    "layer": "World Model / Policy Evolution",
+    "theme": "physical",
+    "status": "已读 · 2026-09-12",
+    "tags": ["General World Model", "MBRL", "Best-of-N", "Value Model", "Memory", "Tactile", "Ego Data"],
+    "one": "把 WAM policy、action-conditioned world model 和 value model 做成同一共享参数模型的三个因果接口，再用预测后果与价值反馈做 Best-of-N planning 和 DiffusionNFT policy update。",
+    "method": [
+      "Action-first mask：Action 看不到对应 future video/value，保证 A→Future→Value 的因果信息流",
+      "Trajectory-dependent supervision：成功轨迹监督 policy；失败/次优轨迹用于 simulator/value，而不是 imitation",
+      "Best-of-N：candidate action→imagined future→value ranking→receding-horizon execution",
+      "DiffusionNFT MBRL：value score 反向塑造 flow-matching action distribution，只更新 action-related parameters",
+      "Working Memory + lightweight tactile expert 处理 partial observability 与 contact feedback"
+    ],
+    "evidence": "MBRL/planning 两个真机任务：65.0% base → 67.5% planning → 72.5% MBRL → 75.0% combined；tactile 60.0%→72.5%；long-context real robot 中 global autoregression 57.5% vs hybrid memory 25.0%；Ego pretrain 51%→robot-domain midtrain 84%。",
+    "project": "最值得借的是 Failure Data 分流、Action Consequence 必须服务 action ranking/value、Value trajectory 可做 failure diagnosis，以及‘慢 backbone + 快 physical expert’。当前不改变 Phase 0，多任务 RLT baseline 仍优先。",
+    "boundary": "这里的 Self-Evolution 仍是受控 robot post-training：模型用自身预测和 value 改进 action policy，并非开放世界无限自主 RSI。",
+    "questions": [
+      "我们的 Physical Consequence 是否也应该最终服务 candidate ranking，而不是只做 auxiliary loss？",
+      "failure trajectory 应该如何分流到 dynamics/value/recovery，而不是统一进 imitation/replay？",
+      "RLT 的真实 rollout 与 Motus2 imagined rollout 能否形成 Real + Imagined 双经验闭环？"
+    ],
+    "note": "reader.html?path=notes/motus2.md",
+    "url": "https://arxiv.org/abs/2608.30237"
+  }
+]
