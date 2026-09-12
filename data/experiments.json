@@ -1,6 +1,11 @@
 [
   {
     "date": "2026-09-12",
+    "title": "Motus2 初读",
+    "summary": "最新 RSI / General World Model 工作：用共享参数 Policy(WAM)+Simulator(AC-WM)+Evaluator(VM) 构成 Action→Consequence→Value→Policy Update 闭环；失败/次优轨迹不做 imitation，而用于 dynamics/value；对项目主要启发是 consequence 必须服务 action ranking、value trajectory 可做 failure diagnosis，以及 slow backbone + fast physical expert。当前不改变 Phase 0。"
+  },
+  {
+    "date": "2026-09-12",
     "title": "LWD 初读",
     "summary": "Learning While Deploying 把部署变成 fleet-scale data flywheel：DIVL 学 heterogeneous return distribution，QAM 将 Q-gradient 写回 π0.5 flow action expert。对项目的主要启发是统一 experience schema、保留 failure/recovery/intervention，并把 pooled replay / validation gate / generalist consolidation 作为 Phase 3 长期问题。"
   },
