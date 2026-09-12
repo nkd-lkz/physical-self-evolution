@@ -1,5 +1,30 @@
 [
   {
+    "date": "2026-09-12",
+    "decision": "Paper-aligned hammer RLT Stage 1 从通用 π0.5 base 开始联合训练，而不是把独立 20k task-SFT 作为必要初始化。",
+    "reason": "论文/代码复核与 base-init smoke 都支持：RLT reconstruction 只更新 RLT module，alpha>0 时 VLA 由 vla_loss 更新；20k SFT 保留为 standalone reference / post-SFT 对照。"
+  },
+  {
+    "date": "2026-09-12",
+    "decision": "正式 Stage 2 使用 C=10、reference H=50、dropout=0.5；C=1 只用于接线调试。",
+    "reason": "mock 时序已经覆盖 C=10 的逐子步执行、early done、actual executed length 与 terminal observation；下一门槛是真实 rollout。"
+  },
+  {
+    "date": "2026-09-12",
+    "decision": "先完成 RoboTwin 2.0 / RLinf_support pinned baseline，再迁移 RoboTwin 2.0 main。",
+    "reason": "不同时改变环境版本和算法复现；latest-main bridge 已完成 transition 对齐，但 learner smoke 仍未完成。"
+  },
+  {
+    "date": "2026-09-12",
+    "decision": "正式 reference/RLT 配对评估前同时固定 environment seed 与 action-sampling seed。",
+    "reason": "当前 4-env sweep 固定了 reset seeds，但 π0.5 action generation 的随机噪声尚未独立固定，因此不能把快筛当成严格 checkpoint 排名。"
+  },
+  {
+    "date": "2026-09-12",
+    "decision": "Physics sidecar 暂不进入第一条 RLT baseline 的 policy observation。",
+    "reason": "先避免 simulator privileged information leakage；这些字段当前只用于 logging、failure analysis 和后续受控 probe/critic/auxiliary target。"
+  },
+  {
     "date": "2026-09-11",
     "decision": "Research story 不以 RL Token 为中心。",
     "reason": "长期主线是 Physical Interaction + Self-Improvement；RLT 只是技术起点。"
