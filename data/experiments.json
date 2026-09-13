@@ -1,5 +1,10 @@
 [
   {
+    "date": "2026-09-13",
+    "title": "RISE 初读",
+    "summary": "RISE 把 Compositional World Model 直接作为 imaginary RL environment：Controllable Dynamics Model 预测 candidate action chunk 的多视角未来，Progress Value Model 结合 progress regression + TD learning 评估 imagined states，并将 chunk-wise advantage 用于 advantage-conditioned VLA policy self-improvement。对项目主要启发是 Physical Consequence 必须服务 action ranking/value/policy improvement，且未来应区分 real experience 与 imagined experience，并增加 confidence/validation gate。当前不改变 Phase 0 的 RLT multi-task baseline 主线。"
+  },
+  {
     "date": "2026-09-12",
     "title": "Hammer RLT Stage 1 paper-aligned smoke 通过",
     "summary": "通用 π0.5 base-init、rlt_alpha=1.0 的 1-step Stage 1 smoke 已通过：total/rlt/vla loss=3.49118/3.06114/0.43004，grad norm=5.7397；保存 667 model + 62 RLT tensors，均为有限值。下一步是相同口径的 2,000-step joint-full。"
