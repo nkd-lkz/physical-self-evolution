@@ -1,5 +1,45 @@
 # 实验日志
 
+## 2026-09-14 · 领导方案约束后的科研主线修正
+
+### 事实
+
+- 领导提供的 Physical Token 方案把研究问题明确收敛为：从现有 action-generation head 读取 compact token，用 measured transition prediction 与有效 physics constraints 进行 grounding，再通过小型在线 learner 在冻结 action model 的条件下适应变化的接触动力学。
+- Physical Token 第一版输入侧包含 action-head pre-output features、recent measured robot state、actual/executed-action history 与 robot/control metadata。
+- 当前“Universal”只定义为 shared token shape + shared physical objectives + lightweight model/robot adapters；跨 model family / embodiment 仍是待验证假设。
+- 第一组正式比较固定为：B0 RL Token / matched head-readout baseline；B1 + measured transition loss；B2 + valid physics loss。
+- 首轮 physics loss 只优先使用 kinematic consistency 与 actuator feasibility；contact/friction/force/rigid-body residual 只有 sensing、model、calibration 有效时才加入。
+- 在线阶段默认 freeze base model、action head 与 token encoder/readout，只更新 small actor/critic。
+- Streaming RL 保留为后续 online-efficiency 方向，不与首轮 Physical Token 表示变量同时改变。
+- 现有 block assembly、drawer opening + placement 视频只记为 RL Token qualitative reproduction，不记作 Physical Token result。
+
+### 解释
+
+今天不是新增一个模块，而是**收敛科研问题**。
+
+此前 Research OS 中的四阶段路线和大量 related-work synthesis 继续保留，但它们现在只作为：
+
+- 历史探索；
+- related work；
+- 未来扩展；
+
+不再自动决定当前实验。
+
+当前 Source of Truth 是：
+
+`research/physical-token-leadership-spec.md`
+
+### 下一步
+
+1. 固定 action-head extraction contract，并实现 backbone-tap vs head-tap 对照。
+2. 整理 B0 matched baseline：token size、learner capacity、data、reward、interaction budget、seed、chunk/timing 全部锁定。
+3. 实现 B1 measured transition prediction，只用 actual/executed action 与 measured next-state targets。
+4. 实现 B2 第一版 physics loss：kinematic consistency + actuator feasibility。
+5. 在 nominal setting 做 B0/B1/B2，再进入明确 physical/contact shift。
+6. 只有当前 model/robot 上成立后，才做 held-out head family 与 held-out embodiment。
+
+---
+
 ## 2026-09-12 · RLT Phase 0 关键推进
 
 ### 事实
@@ -14,74 +54,21 @@
 
 ### 解释
 
-今天最重要的推进不是新算法，而是把第一条 RLT baseline 的复现口径进一步纠正清楚：
-
-1. paper-aligned Stage 1 从通用 π0.5 base 开始，在目标任务 demonstrations 上联合做 VLA task loss + RLT reconstruction；
-2. 独立 20k task-SFT 继续保留为 standalone reference / post-SFT 对照，不作为主线 Stage 1 必要初始化；
-3. 正式 Stage 2 必须验证 C=10 的真实环境时序，C=1 只用于接线调试；
-4. RoboTwin 2.0 / RLinf_support pinned baseline 与 RoboTwin 2.0 main migration 分成两个阶段；
-5. physics sidecar 当前继续只做 logging / diagnosis / future probe，不泄漏给第一条 baseline policy。
+这些结果继续保留为 baseline / infrastructure evidence，但 2026-09-14 之后不再自动决定上位研究方向。
 
 ### 下一步
 
-1. 运行 paper-aligned base-init 的 2,000-step Stage 1 joint-full。
-2. full 完成后验证 Stage 2 feature loader/checkpoint 完整加载。
-3. 在真实 RoboTwin 上做 C=10 Stage 2 smoke，检查 transition/replay/critic/actor/update/sync/checkpoint 全链路。
-4. 正式 30-seed reference/RLT 配对评估前补 action-sampling seed。
-5. RoboDojo/B300 支线只推进一个小步骤：system manifest + 第一项官方兼容性 smoke。
+后续 RLT 基线工作应服务于 B0/B1/B2 matched comparison，而不是独立扩展成新的主故事。
 
 详细记录：`research/progress-2026-09-12.md`。
 
 ---
 
-## 2026-09-11 · 主线更新：进入 Phase 0
+## 2026-09-11 · 历史探索：进入 Phase 0
 
-### 事实
+此前将主线组织为 RLT Multi-task Benchmark → Failure Diagnosis → Physical Experience → Self-Improvement。
 
-- 现有 hammer 工程资产可用，但单任务不再作为项目唯一主线。
-- π0.5 SFT 5k / 10k / 15k / 20k checkpoints 已生成。
-- Reference checkpoint 尚未完成正式独立评估。
-- RLT baseline 仍无正式可引用结果。
-- RoboDojo 将作为 B300 上的每日小任务旁线推进。
-
-### 解释
-
-当前最缺的不是新 idea，而是：
-
-1. 多任务 RLT baseline；
-2. 统一 task / logger / evaluator；
-3. 明确 RLT 原论文与本地实现差异；
-4. 之后才能做 failure diagnosis。
-
-### 下一步
-
-1. Hammer checkpoints 统一 seeds 评估。
-2. 冻结 Reference。
-3. RLT 代码审计。
-4. Hammer RLT baseline。
-5. RoboTwin2 新增两个不同物理机制任务。
-6. B300 上每天推进 RoboDojo 安装 / smoke。
-
----
-
-## 2026-09-11 · 旧实验资产如何复用
-
-### 保留
-
-- hammer env / collector；
-- 50 demos；
-- LeRobot 数据；
-- norm stats；
-- π0.5 SFT；
-- physics sidecar；
-- contact / grasp / geometry labels；
-- eval / logging / video scripts。
-
-### 重新定位
-
-- hammer：Pilot / Regression Task。
-- physics sidecar：先做 logging / diagnosis，不直接变成 actor input。
-- Physical Token：从“计划中的下一模块”降为 Phase 2 候选。
+该结构保留用于历史追溯；2026-09-14 起被领导版 Universal Physical Token 研究合同取代。
 
 ---
 
