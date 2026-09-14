@@ -16,12 +16,12 @@
       "Working Memory + lightweight tactile expert 处理 partial observability 与 contact feedback"
     ],
     "evidence": "MBRL/planning 两个真机任务：65.0% base → 67.5% planning → 72.5% MBRL → 75.0% combined；tactile 60.0%→72.5%；long-context real robot 中 global autoregression 57.5% vs hybrid memory 25.0%；Ego pretrain 51%→robot-domain midtrain 84%。",
-    "project": "最值得借的是 Failure Data 分流、Action Consequence 必须服务 action ranking/value、Value trajectory 可做 failure diagnosis，以及‘慢 backbone + 快 physical expert’。当前不改变 Phase 0，多任务 RLT baseline 仍优先。",
+    "project": "当前仅作为 related work：它提醒我们 transition / consequence supervision 应服务 decision，但当前主线不转向 General World Model。优先验证领导定义的 action-head Physical Token：B0 matched readout、B1 + measured transition loss、B2 + valid physics loss。",
     "boundary": "这里的 Self-Evolution 仍是受控 robot post-training：模型用自身预测和 value 改进 action policy，并非开放世界无限自主 RSI。",
     "questions": [
-      "我们的 Physical Consequence 是否也应该最终服务 candidate ranking，而不是只做 auxiliary loss？",
-      "failure trajectory 应该如何分流到 dynamics/value/recovery，而不是统一进 imitation/replay？",
-      "RLT 的真实 rollout 与 Motus2 imagined rollout 能否形成 Real + Imagined 双经验闭环？"
+      "Motus2 的 consequence modeling 能否帮助我们选择 B1 的 measured transition targets，而不引入完整 world model？",
+      "哪些 failure / outcome 信号适合成为 Physical Token 的监督，哪些应留给 value/world model？",
+      "如果 B1/B2 已经有效，Full World Model 是否仍有必要？"
     ],
     "note": "reader.html?path=notes/motus2.md",
     "url": "https://arxiv.org/abs/2608.30237"
