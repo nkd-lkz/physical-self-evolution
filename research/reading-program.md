@@ -1,141 +1,154 @@
-# 每日论文阅读计划：让前沿知识服务于科研主线
+# 每日论文阅读计划：围绕 Universal Physical Token 服务当前科研主线
 
-> 原则：每天读论文是为了提高研究判断力，不是为了每天改一次方向。
+> 原则：论文用于找 baseline、边界和实现方法，不再用来每天扩展新的上位研究故事。  
+> 当前 Source of Truth：`research/physical-token-leadership-spec.md`。
 
 ---
 
 ## 1. 每篇论文固定回答 7 个问题
 
-1. 这篇论文真正解决的 failure mode 是什么？
-2. 它更新的是 weights、memory、skill、harness、world model 还是 execution schedule？
-3. 它利用什么 feedback？
-4. 改进发生在哪个时间尺度？
-5. 最强证据是什么？
-6. 它占掉了我们哪块 innovation space？
-7. 对当前项目要做什么？
+1. 它是否与 **action-head / compact readout** 直接相关？
+2. 它如何表示 **action → measured consequence**？
+3. 它用了什么 physics / dynamics supervision，是否真的可测、可校准？
+4. 它如何做 online adaptation，哪些参数被冻结？
+5. 它最强的 matched baseline / ablation 是什么？
+6. 它占掉了 Physical Token 的哪块 innovation space？
+7. 对当前 B0/B1/B2 实验要做什么？
 
-合法的“项目动作”只有：
+合法的“项目动作”优先只有：
 
 - Add baseline
 - Add ablation
-- Add diagnosis
+- Add implementation detail
+- Add metric
 - Archive / no action
+
+除非领导重新定义问题，否则论文不直接改上位主线。
 
 ---
 
-## 2. 第一轮阅读顺序
+## 2. 当前第一优先阅读 Track
 
-### Track A · Baseline / Online RL / Execution
+### Track A · Compact Readout / Online RL
 
 1. RLT
 2. SERL
-3. SmoothRL
-4. Q-VGM
-5. PLD
+3. Q-VGM
+4. SmoothRL
 
-目的：
-- 先理解 Online RL 最基本的系统条件；
-- 再理解 VLA / flow policy / async execution 的特殊性；
-- 最后理解 RL 经验如何回写 foundation model。
+重点看：
 
----
+- compact representation 从哪里读？
+- actor / critic 看什么？
+- online phase 冻结什么？
+- actual executed action 如何进 replay / critic？
+- learner 预算如何匹配？
 
-### Track B · Physical Experience
-
-6. V-GPS
-7. Rapid Motor Adaptation for Manipulator Arms
-8. Pri4R
-9. PHR-VLA
-10. FD-VLA
-11. MSDP
-12. HapticVLA
-13. SR-WM
-
-目的：
-
-比较 Physics 到底应该进入：
-
-- history；
-- representation；
-- critic/value；
-- privileged teacher；
-- world model。
+当前用途：服务 B0 与 Online Adaptation Protocol。
 
 ---
 
-### Track C · Failure / Recovery
+### Track B · Transition / Physical Representation
 
-14. FailSafe
-15. RedFlow
-16. RL²-VLA
-17. VLA-Corrector
-18. BCP
+1. Rapid Motor Adaptation for Manipulator Arms
+2. Pri4R
+3. FD-VLA
+4. HapticVLA
+5. MSDP
+6. PHR-VLA
 
-目的：
+重点看：
 
-回答：
-- 哪些失败应该纠正？
-- correction target 从哪里来？
-- 什么时候应该 replanning？
-- 什么时候应该缩短 chunk？
-- 是否需要更新权重？
+- history / dynamics / future outcome supervision；
+- privileged target 如何避免部署泄漏；
+- physical variable 的单位、frame、mask、normalization；
+- representation 改进是否最终帮助 control / critic。
 
----
-
-### Track D · Context / Harness / Agent Evolution
-
-19. Zeva
-20. Harness VLA
-21. SHAPER
-22. ASPIRE
-23. Zetta
-24. ENPIRE
-25. Learning While Deploying
-
-目的：
-
-理解：
-- 不更新权重的 self-improvement；
-- skill / harness evolution；
-- validation-gated memory；
-- agentic policy improvement；
-- fleet experience scaling。
+当前用途：服务 B1 / B2 target 选择。
 
 ---
 
-## 3. 当前 Phase 0 的“阅读优先级”
+### Track C · Action Consequence / World Model
 
-虽然知识库会越来越大，但当前项目最值得精读：
+1. RISE
+2. Motus2
+3. SR-WM
+4. V-GPS
 
-### 一级
+重点看：
 
-- RLT
-- SERL
-- RoboTwin2
-- SmoothRL
+- Action→Consequence 如何定义；
+- consequence 是否真正服务 decision；
+- value / ranking 与 auxiliary prediction 的区别；
+- 哪些机制可以压缩成轻量 Physical Token，而不必引入完整 World Model。
 
-### 二级
+当前用途：related work / target design，不把 Full World Model 引入首轮 B0/B1/B2。
 
-- Q-VGM
-- V-GPS
-- VLA-Corrector
-- BCP
+---
 
-### 三级
+### Track D · Online Efficiency / Streaming（后置）
 
-- Pri4R
+1. SmoothRL
+2. Streaming RL / batch-to-streaming continuous control
+3. adaptive chunk / continuation / replanning work
+
+只有 B1/B2 证明 Physical Token 有价值后，再重点研究：
+
+- replay vs no-replay；
+- batch size≈1；
+- chunk-boundary update；
+- uncertainty-aware update strength；
+- safety fallback。
+
+---
+
+### Track E · Self-Evolution Systems（知识库）
+
 - Zeva
-- RedFlow
-- Harness VLA
 - Zetta
-
-### 长期
-
-- PLD
-- Learning While Deploying
+- Harness VLA
+- LWD
 - ENPIRE
 - SHAPER
 - ASPIRE
+
+用途：长期理解 memory / harness / fleet / agentic evolution。
+
+当前不把这些模块加入首轮 Physical Token 方法。
+
+---
+
+## 3. 当前精读优先级
+
+### 一级：直接影响近期代码与实验
+
+- RLT
+- action-head / feature readout 相关工作
+- Rapid Motor Adaptation
+- Pri4R
+- FD-VLA
+- HapticVLA
+
+### 二级：帮助定义 consequence / value 边界
+
+- RISE
+- Motus2
+- V-GPS
+- SR-WM
+- Q-VGM
+
+### 三级：Physical Token 成立后再深入
+
+- SmoothRL
+- Streaming RL
+- BCP / VLA-Corrector
+
+### 长期知识库
+
+- Zeva / Zetta
+- LWD
+- Harness VLA
+- ENPIRE / SHAPER / ASPIRE
 
 ---
 
@@ -157,49 +170,49 @@
 
 最关键实验结果。
 
+### Physical Token Relevance
+
+只回答以下之一：
+
+- 对 B0 baseline 有帮助？
+- 对 B1 transition target 有帮助？
+- 对 B2 physics loss 有帮助？
+- 对 online learner / metric 有帮助？
+- 只是长期 related work？
+
 ### Boundary
 
-它没解决什么？
-
-### Our Project
-
-- Add baseline？
-- Add diagnosis？
-- Add ablation？
-- Archive？
+它没有解决什么？尤其检查是否真的支持“物理规律 / universal / self-evolution”这类强表述。
 
 ### One Discussion Question
 
-只留 1 个真正值得讨论的问题。
+只留 1 个真正值得影响实验设计的问题。
 
 ---
 
 ## 5. 每周复盘
 
-每周不要问：
+每周只围绕当前研究合同问：
 
-> 我看了多少篇？
-
-问：
-
-1. 哪个旧假设被削弱？
-2. 哪个 baseline 必须补？
-3. 哪个 failure mode 变得更清楚？
-4. 有哪些 idea 应该明确不做？
-5. 下周最便宜的证伪实验是什么？
+1. Action-head tap 假设变强还是变弱？
+2. B1 应预测哪些 measured transitions？
+3. B2 哪些 physical constraints 真正可靠？
+4. 有没有 stronger matched baseline 必须加入？
+5. 哪些变量应该明确后置，避免首轮实验耦合？
+6. 下周最便宜的 B0/B1/B2 证伪实验是什么？
 
 ---
 
 ## 6. 网站维护规则
 
-新增论文先进入 Knowledge Base。
+新论文默认进入 Knowledge Base。
 
-只有满足以下任一条件，才写进 Project Mainline：
+只有当它满足以下情况，才允许修改 Physical Token 主实验：
 
-1. 实验直接支持 / 否定某假设；
-2. 强近邻已经覆盖核心 novelty；
-3. 新论文给出更简单强 baseline；
-4. 新论文暴露当前实验设计不公平；
-5. 工程现实表明原问题定义错误。
+1. 已经覆盖 B0/B1/B2 的核心 novelty；
+2. 证明 action-head tap / transition loss / physics loss 的设计不公平；
+3. 给出必须补的 stronger baseline；
+4. 给出更简单、更可测的 physical objective；
+5. 实验事实直接否定当前领导方案中的某个假设。
 
-这样知识可以无限扩张，但主线不会无限发散。
+否则：归档、引用、用于讨论，但不改当前 Source of Truth。
