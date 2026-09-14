@@ -1,460 +1,333 @@
-# 面向物理交互的机器人自我改进：研究总路线
+# Universal Physical Token：研究总路线
 
-> 版本：2026-09-11  
-> 当前状态：进入 **Phase 0 — RLT Multi-task Benchmark**  
-> 用途：项目主线、实验协议、论文边界与滚动计划的统一文档。
-
----
-
-## 0. 最新主线
-
-项目不再按“Physical Token → Streaming → WAM”这种模块堆叠路线推进。
-
-新的四阶段主线是：
-
-| 阶段 | 目标 | 当前状态 |
-|---|---|---|
-| Phase 0 | RLT Multi-task Benchmark | **当前主阶段** |
-| Phase 1 | Failure Diagnosis | Phase 0 稳定后启动 |
-| Phase 2 | Physical Experience Representation | 只有诊断支持后启动 |
-| Phase 3 | Self-Improvement Loop | 多任务与诊断稳定后启动 |
-
-核心原则：
-
-> **先把 RLT baseline 和 benchmark 基础设施做扎实，再让失败证据决定创新方向。**
-
-RLT 是技术脚手架，不是最终研究叙事。
-
-长期 Research Vision 仍然是：
-
-**Physically Grounded Self-Improving Robot Policies**
+> 版本：2026-09-14  
+> 当前状态：**领导约束后的新主线**  
+> 主规范：[`physical-token-leadership-spec.md`](physical-token-leadership-spec.md)
 
 ---
 
-## 1. Phase 0 — RLT Multi-task Benchmark
+## 0. 主线纠正
 
-### 1.1 为什么现在先做这个？
+此前 Research OS 将项目扩展成“RLT Multi-task Benchmark → Failure Diagnosis → Physical Experience → Self-Improvement”的宽泛四阶段路线。
 
-当前最大风险不是“idea 不够多”，而是没有一个足够稳定、可重复、跨任务的 baseline bench。
+该结构现在降级为**历史探索框架**，不再作为当前实验主规范。
 
-如果 baseline 不清楚，后续任何收益都无法判断来自：
+当前项目严格收敛到：
 
-- 更好的 foundation policy；
-- 不同 action parameterization；
-- reward / termination 变化；
-- 任务难度；
-- 数据覆盖；
-- privileged input；
-- 真的算法创新。
+> **Universal Physical Token for Robot Self-Evolution**
 
-因此 Phase 0 的任务是建立：
+核心问题：
 
-\`\`\`
-Reference Policy
-      ↓
-RLT-π0.5-adapted
-      ↓
-Online Rollout
-      ↓
-Independent Evaluation
-      ↓
-Multi-task Comparison
-\`\`\`
+> **能否从已有 action model 的 action-generation head 读出一个紧凑 token，并通过 measured transition prediction 与有效 physics constraints 对它进行 grounding，使冻结 action model 在变化的接触动力学下通过小型在线 learner 持续适应？**
+
+这一定义优先于此前由 AI 辅助发散出的 Physical Experience / World Model / Harness / Fleet 等宽泛主线。那些内容保留在知识库作为 related work 与备选方向。
 
 ---
 
-### 1.2 Hammer 是否走偏？
+## 1. 核心结构
 
-结论：
+```text
+Frozen Backbone / Perception
+          ↓
+Frozen Action Head
+          ↓
+Pre-output features F_t^head
+          +
+Robot history h_t
+(state + actual/executed actions)
+          +
+Robot metadata r
+          ↓
+Model adapter A_m + learned readout E_phi
+          ↓
+Physical Token z_t  (fixed K × d)
+          ↓
+Small online actor / critic
+          ↓
+Adapted action
+```
 
-**没有白做，也不需要推倒；但它不再承担“唯一研究任务”的角色。**
-
-Hammer 已经提供了大量可复用资产：
-
-- RoboTwin 环境 bring-up；
-- 三相机与 14D observation/action interface；
-- 50 条成功 expert trajectories；
-- LeRobot 数据转换；
-- norm stats；
-- π0.5 SFT checkpoints；
-- physics sidecar；
-- contact / grasp / geometry 等辅助信号；
-- 训练 / 评估脚本和排错经验。
-
-这些资产对 Phase 0 和 Phase 1 都有价值。
-
-但 hammer 单任务有几个问题：
-
-1. success 定义未必完整刻画“高质量物理交互”；
-2. impact / tool use 只是物理交互的一种机制；
-3. 单任务容易把工程特例误当成一般结论。
-
-所以新的定位是：
-
-> **Hammer = Task 0 / Pilot / Regression Task**
-
-用于：
-- Reference checkpoint 验收；
-- RLT pipeline bring-up；
-- 每次代码重构后的 regression；
-- physics logging 验证。
-
-但论文核心结论必须来自多任务。
+当前 Physical Token 的研究对象是 **action-head readout**，不是一个泛化的“大世界模型”。
 
 ---
 
-### 1.3 第一批多任务应覆盖什么？
+## 2. Universal 的严格边界
 
-不追求任务数量，而追求物理机制差异。
+“Universal”当前只表示：
 
-推荐最小组合：
+- shared token shape；
+- shared physical objectives；
+- lightweight model-family adapters；
+- lightweight robot / embodiment adapters。
 
-| Task | 机制 | 作用 |
-|---|---|---|
-| Hammer | tool / impact | 保留已有资产，验证 pipeline |
-| Precision contact | local alignment / point contact | 验证小误差纠正 |
-| Insertion / constrained contact | contact-rich / constraint | 验证精细约束、卡住与恢复 |
+它目前仍是**可检验假设**，不是结果。
 
-Task 1 / Task 2 的具体任务名以 RoboTwin2 当前可用环境、reward 和 success 定义审计为准，不因为名字听起来“精细”就自动进入正式实验。
+必须通过：
 
----
+1. 当前 model family / robot 上先验证；
+2. held-out action-head family；
+3. held-out robot embodiment；
 
-### 1.4 Phase 0 完成标准
-
-至少满足：
-
-1. 三类物理机制任务；
-2. 统一 task adapter；
-3. 统一 observation/action contract；
-4. 统一 reference evaluation；
-5. 统一 online RL logger；
-6. 固定 train / eval seeds；
-7. 每个任务都有 reference 与 RLT learning curve；
-8. episode-level raw metrics；
-9. 失败视频；
-10. checkpoint/config 可恢复；
-11. action timing / executed action / replay transition 无未解释差异。
+才能讨论 cross-model / cross-robot universality。
 
 ---
 
-## 2. RLT Baseline Contract
+## 3. 表示学习目标
 
-我们使用 π0.5 与本地环境，因此必须把：
+```text
+L_token = L_ro + λ_dyn L_dyn + λ_phys L_phys
+```
 
-- **RLT-π0.5-adapted**
-- **Local-Residual**
+### 3.1 `L_ro` · Readout / Reconstruction
 
-明确分开。
+- reconstruct fixed stop-gradient action-head feature target；
+- 保留 action-head 已有任务与动作信息；
+- 不修改 base action model。
 
-### RLT-π0.5-adapted
+### 3.2 `L_dyn` · Measured Transition Prediction
 
-目标是尽量保留原论文：
+action-conditioned decoder：
 
-- compact readout；
-- reference-conditioned actor；
-- action anchoring / regularization；
-- reference dropout；
-- chunk-level TD；
-- off-policy replay。
+```text
+D(z_t, u_t, r) -> measured future physical state
+```
 
-只做基础模型与环境适配。
+其中：
 
-### Local-Residual
+- `u_t` 使用 actual / executed action；
+- target 使用真实测得的 transition；
+- 使用 validity mask；
+- 按 physical units 做 normalization；
+- terminal/reset 边界严格隔离。
 
-本地已有 residual actor、K=1 或历史切换逻辑。
+第一阶段优先 joint / EE / relative motion 等可靠 measured outcome。
 
-它可以用于 bring-up / 实用对照，但不能无条件称作原论文 RLT。
+### 3.3 `L_phys` · 有效 Physics Constraints
 
-### 必须核查
+第一版优先：
 
-1. 基础模型 checkpoint 与 SFT 数据。
-2. compact representation 从哪层取。
-3. Stage 1 / Online 阶段哪些参数更新 / 冻结。
-4. Actor 输出完整 chunk 还是 residual。
-5. Critic input / target / TD backup。
-6. 预测 H、执行 C、control frequency、policy decision frequency。
-7. replay 存计划 action 还是真实 executed action。
-8. reward / terminal / timeout。
-9. policy switch / critical phase 逻辑。
-10. train/eval seeds 与预算单位。
+- kinematic consistency：`||v_EE - J(q) q_dot||²`；
+- joint limits；
+- speed limits；
+- 明确的 actuator/control feasibility。
 
----
+Contact、friction、force/torque、rigid-body dynamics 只有在 sensing / model / calibration 有效时才加入。
 
-## 3. 当前已有资产：哪些继续用？
-
-### 3.1 直接保留
-
-- hammer environment；
-- expert collector；
-- 50 条成功 demo；
-- LeRobot 数据；
-- norm stats；
-- π0.5 SFT checkpoints；
-- physics sidecar；
-- contact / grasp / geometry labels；
-- evaluation / video / logging 脚本；
-- 当前训练环境和 server / client 接口经验。
-
-### 3.2 改造成共享基础设施
-
-过去为 hammer 写死的内容，要逐步抽成：
-
-- task adapter；
-- observation mapper；
-- action mapper；
-- reward / success wrapper；
-- episode logger；
-- video recorder；
-- seed manager；
-- checkpoint evaluator；
-- replay schema。
-
-目标是：
-
-> 新增一个 RoboTwin2 task，不再重新复制一套训练代码。
-
-### 3.3 暂时不丢，但不作为主线
-
-Physics sidecar 暂时不要删除。
-
-它在 Phase 0 只负责：
-- logging；
-- failure taxonomy；
-- representation probe；
-- 后续 D1–D5 诊断。
-
-只有 Phase 1 证明它有 decision-relevant 增量后，才进入 Phase 2 方法设计。
+**不因为模拟器能导出某个字段，就默认它可以成为主实验中的物理监督。**
 
 ---
 
-## 4. Phase 1 — Failure Diagnosis
+## 4. Online Self-Improvement
 
-Multi-task RLT baseline 稳定后，先做最便宜诊断。
+当前 self-improvement 的严格定义：
 
-### D1 · Input / History
+> 冻结大 action model，通过 Physical Token + 小型在线 learner，利用真实 executed action、reward 与 measured outcomes 改进行为。
 
-比较：
-- command target；
-- + actual q；
-- + short history。
+在线阶段默认：
 
-问：缺的是“物理表示”，还是缺真实执行可观测性？
-
-### D2 · Candidate Headroom
-
-同状态执行：
-- base action；
-- 少量合法 correction candidates。
-
-后续策略固定。
-
-问：Reference 周围到底有没有可利用的改进空间？
-
-### D3 · Supervision Purpose
-
-控制 feature / data / capacity，比较：
-- reconstruction；
-- future latent；
-- physical consequence；
-- correction benefit。
-
-问：physics 最适合进入 representation、value 还是 correction？
-
-### D4 · Data Coverage
-
-相同新增预算：
-- 普通 expert；
-- failure / near-failure / recovery。
-
-问：收益来自算法，还是终于覆盖了失败附近？
-
-### D5 · Execution Horizon
-
-固定 C=1 / 5 / 10，记录：
-- control frequency；
-- VLA calls；
-- actual executed action span。
-
-问：真正瓶颈是不是 feedback 太慢？
+- base model frozen；
+- action head frozen；
+- token encoder/readout frozen；
+- small actor/critic trainable；
+- outcome decoder 单独用 measured transitions 更新；
+- actor optimization 时 decoder weights frozen，但保留对 action 的 gradient；
+- hard execution limits 与 learned physical regularization 分开。
 
 ---
 
-## 5. Phase 2 — Physical Experience Representation
+## 5. 第一组正式实验
 
-Phase 2 不是默认会发生。
+领导给出的第一组验证不是“堆更多模块”，而是一个严格的递增消融：
 
-只有 Phase 1 证据支持后，才选择 1–2 个方向：
+| ID | 方法 | 新增内容 | 回答的问题 |
+|---|---|---|---|
+| B0 | RL Token / matched head-readout baseline | compact readout | baseline |
+| B1 | B0 + transition loss | measured outcome prediction | transition grounding 是否有增益？ |
+| B2 | B1 + physics loss | valid kinematic / actuator constraints | physics constraints 是否提供额外增益？ |
 
-### R0 · Action Consequence
+必须 matched：
 
-研究：
-
-\`\`\`
-(state, action) → decision-relevant consequence
-\`\`\`
-
-例如：
-- relative geometry change；
-- contact event；
-- object motion；
-- slip / stuck；
-- progress。
-
-### R1 · Value-Oriented Physics
-
-如果 candidate set 已有明显更优动作，则把 privileged physics 用于：
-- critic teacher；
-- candidate ranking；
-- value distillation。
-
-### R2 · Correction Benefit
-
-如果 correction headroom 明显，但无效干预很多，则学习：
-- 是否应该纠偏；
-- 哪种 correction 值得执行。
-
-### R3 · Execution History
-
-如果 D1 表明 actual state / history 已解释大部分收益，则优先解决 observability。
-
----
-
-## 6. Phase 3 — Self-Improvement Loop
-
-先区分三种自我改进：
-
-### Context Adaptation
-
-参数不更新，只改变 Memory / Context。
-
-代表：Zeva。
-
-### Online Policy Adaptation
-
-更新 lightweight actor / critic / readout。
-
-代表：RLT / SmoothRL。
-
-### Experience Consolidation
-
-把验证过的新经验回写 foundation policy。
-
-代表：PLD。
-
-### 最小多轮协议
-
-1. 冻结 task set / final test / 总交互预算。
-2. Round 0 保存 base policy 与独立评估。
-3. 每轮相同新增交互预算。
-4. 记录 success / failure / recovery / intervention。
-5. 更新后在未参与训练的 initial states 上评估。
-6. 每轮回测旧任务 / 旧 dynamics。
-7. 报告人工、数据、计算成本。
-
----
-
-## 7. RoboDojo：B300 每日小任务
-
-RoboDojo 当前不抢主线资源。
-
-定位：
-
-> **每天固定少量时间推进的第二实验平台 bring-up。**
-
-### 目标顺序
-
-1. 确认 B300 上 CUDA / PyTorch / simulator / rendering 兼容。
-2. 安装官方依赖。
-3. 跑官方最小 smoke。
-4. 明确 observation / action contract。
-5. 跑 Dojo-Eval。
-6. 最后才讨论 Dojo-RL。
-
-### 每日记录
-
-每天只要求留下一个可检查产物，例如：
-- 安装到哪一步；
-- 哪个依赖不兼容；
-- 完整错误日志；
-- 修复方法；
-- 官方示例是否成功；
-- GPU / renderer / driver 状态。
-
-避免“今天折腾了一下环境”这种不可复用记录。
-
----
-
-## 8. 近期行动顺序
-
-### P0
-
-Hammer checkpoints：
-- 5k / 10k / 15k / 20k；
-- 同一开发 seeds；
-- success / stage profile / video；
-- 冻结共同 Reference。
-
-### P0
-
-RLT 原文 vs 本地代码差异审计。
-
-输出：
-- readout；
-- actor；
-- critic；
-- H / C；
-- replay；
+- token size；
+- online learner capacity；
+- base model；
+- task data；
+- interaction budget；
 - reward；
-- switch；
-- learner / rollout timing。
+- seed；
+- action chunk / control frequency。
 
-### P1
+主要指标：
 
-Hammer 上完成首个 RLT-π0.5-adapted baseline。
-
-### P1
-
-迁移 RoboTwin2，新增至少两个不同 contact mechanism 任务。
-
-### Side Track
-
-每天推进 RoboDojo on B300。
+- task success；
+- physical violations；
+- adaptation time / interaction cost；
+- old-task retention；
+- repeated seeds；
+- uncertainty intervals。
 
 ---
 
-## 9. 每日论文阅读的角色
+## 6. 当前已有资产如何重新定位
 
-论文不是 roadmap。
+### 6.1 RL Token reproduction clips
 
-每篇论文只回答：
+现有：
 
-1. 它解决什么？
-2. 它的核心方法？
-3. 最重要证据？
-4. 它占掉我们哪块创新空间？
-5. 它是否要求新增 baseline / ablation / diagnosis？
-6. 如果不影响当前 Phase 0，就归档，不改变主线。
+- block assembly；
+- drawer opening + block placement。
+
+准确口径：
+
+> **RL Token qualitative baseline demonstrations**
+
+它们不是 Physical Token 结果，也不是 transition / physics loss 的比较结果。
+
+### 6.2 Hammer / RoboTwin 资产
+
+保留：
+
+- 环境 bring-up；
+- 数据、norm、checkpoint；
+- actual state / contact / geometry logging；
+- evaluation / video / seed / timing infrastructure。
+
+但 hammer 不再定义论文上位故事。它可以用于：
+
+- pipeline regression；
+- transition target 验证；
+- physics loss feasibility；
+- controlled ablation。
+
+### 6.3 Physics sidecar
+
+从“未来可能直接送进 policy 的 privileged physics”改为：
+
+- measured / privileged target 候选；
+- validity audit；
+- failure analysis；
+- physical constraint feasibility 检查。
+
+部署输入仍应优先来自 robot history、actual execution 与可获得 metadata，而不是 simulator-only truth。
 
 ---
 
-## 10. 长期 North Star
+## 7. Action-head extraction contract
 
-**Physical Experience Flywheel**
+不同 action model 必须先固定 extraction convention：
 
-\`\`\`
-Deploy
-  ↓
-Experience
-  ↓
-Evaluate
-  ↓
-Learn
-  ↓
-Redeploy
-  ↓
-Consolidate
-  ↓
-Share
-\`\`\`
+- Regression / MLP：penultimate activations；
+- Diffusion / Flow：selected sampling-step features，并包含 noise/time context；
+- Autoregressive：causal states before logits；
+- 禁止 future demonstrated actions leakage。
 
-最终目标不是单个机器人不断重复踩坑，而是让一个本体自主纠错产生的经验，被后续任务、后续本体和下一代 foundation policy 复用。
+同时必须保留：
+
+```text
+Backbone tap vs Action-head tap
+```
+
+对照，验证 action head 是否真的更适合物理 readout。
+
+---
+
+## 8. Streaming RL 的位置
+
+此前探索把 Streaming RL 与 Physical Token 同时放进首轮创新。
+
+现在调整为：
+
+> **先验证 token grounding，再验证 online-learning efficiency。**
+
+当前顺序：
+
+```text
+B0 RL Token / head readout
+   ↓
+B1 + transition loss
+   ↓
+B2 + physics loss
+   ↓
+matched online actor-critic
+   ↓
+physical/contact shift
+   ↓
+held-out model / robot
+   ↓
+Streaming RL / uncertainty-aware update（后续）
+```
+
+Streaming Actor-Critic、batch≈1、无 replay、uncertainty-aware learning rate、安全 fallback 继续保留，但不是第一组实验必须同时引入的变量。
+
+---
+
+## 9. 当前执行 Gate
+
+### Gate A · Baseline / extraction
+
+- RLT / RL Token baseline 可重复；
+- 明确 action-head feature tap；
+- 明确 robot history / executed action contract；
+- action-head vs backbone tap 对照可跑。
+
+### Gate B · Transition grounding
+
+- B0/B1 token capacity matched；
+- held-out transition prediction 有稳定差异；
+- 不存在 future leakage；
+- actual/executed action 与 target 时间对齐。
+
+### Gate C · Physics grounding
+
+- 只加入有严格定义与有效量纲的 constraints；
+- B2 相对 B1 的增益可独立归因；
+- 同时报告 physical violation，不只报告 success。
+
+### Gate D · Online adaptation
+
+- frozen base/head/token；
+- actor/critic 真正更新；
+- 使用 actual executed action 与 reward；
+- matched interaction budget；
+- old-task retention 可测。
+
+### Gate E · Universal hypothesis
+
+- 当前模型/机器人上先成立；
+- 再 held-out head family；
+- 再 held-out embodiment。
+
+---
+
+## 10. 当前禁止的过度表述
+
+没有实验前，不写：
+
+- “Physical Token 已经提升成功率”；
+- “学会物理规律”；
+- “Universal 已跨模型/跨本体成立”；
+- “接触/摩擦定律已显式建模”；
+- “机器人已实现开放环境无限自进化”；
+- “Streaming 一定优于 replay”。
+
+当前最准确的研究表述：
+
+> **提出一个 action-head Universal Physical Token 假设：以 measured transition prediction 和有效 physics constraints grounding compact readout，再通过轻量在线 learner，在冻结 action model 的条件下适应变化的接触动力学。**
+
+---
+
+## 11. 知识库与主线的关系
+
+RISE、Motus2、LWD、Zeva、Zetta、SmoothRL 等继续保留在 Frontier Knowledge Base。
+
+它们用于：
+
+- 找 baseline；
+- 找创新边界；
+- 找实现技巧；
+- 解释结果。
+
+但不会自动改变上述 Physical Token 主规范。
+
+如果论文观点与领导主线冲突，默认：
+
+> **先按领导定义完成可验证实验，再把论文作为对照/扩展。**
