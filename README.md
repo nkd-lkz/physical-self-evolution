@@ -1,71 +1,148 @@
 # Physical Self-Evolution
 
-Living research website for **Physical Interaction, Embodied Self-Evolution, VLA, Online RL, Memory / ICL, Failure Recovery and robot learning experiments**.
+Living research website for **Universal Physical Token, robot self-improvement, VLA / action models, Online RL and embodied physical adaptation**.
 
 ## Website
 
 **https://nkd-lkz.github.io/physical-self-evolution/**
 
-## Current research phase
+## Current research mainline — 2026-09-14
 
-### Phase 0 — RLT Multi-task Benchmark **← current**
-Build a reproducible multi-task VLA + Online RL research bench on RoboTwin 2.0.
+The project has been refocused according to the latest leadership research proposal.
 
-Current execution order:
+> **Universal Physical Token for Robot Self-Evolution**
 
-1. finish the first **RoboTwin 2.0 / RLinf_support pinned** RLT Stage 1/2 baseline;
-2. validate real `C=10` Stage 2 rollout / replay / actor-critic updates;
-3. freeze the first baseline;
-4. migrate to RoboTwin 2.0 `main` bridge;
-5. expand to additional contact mechanisms and only then move to diagnosis / novelty.
+Current question:
 
-### Latest verified progress — 2026-09-12
+> Can we read a compact representation from an existing action-generation head, ground it with measured transition prediction and valid physical constraints, and use a small online learner to adapt to changing contact dynamics **without retraining the action model**?
 
-- hammer task-SFT checkpoint quick sweep completed: 5k/10k/15k/20k = 1/4, 0/4, 2/4, 2/4; action-sampling RNG is not yet fixed, so these are development-screening results only;
-- paper-aligned **generic π0.5 base-init RLT Stage 1 1-step smoke passed**: total/RLT/VLA loss = 3.49118 / 3.06114 / 0.43004, grad norm = 5.7397, 667 model + 62 RLT tensors saved and finite;
-- formal Stage 2 semantics use **C=10**, reference horizon **H=50**, reference dropout **0.5**; mock sub-step / early-done timing tests pass, real rollout is still pending;
-- next main gate: **2,000-step Stage 1 joint-full → Stage 2 feature-load check → real C=10 Stage 2 smoke**;
-- detailed daily record: [`research/progress-2026-09-12.md`](research/progress-2026-09-12.md).
+The current source of truth is:
 
-### Phase 1 — Failure Diagnosis
-Determine whether failures come from observability, action candidates, critic/value learning, data coverage, or execution horizon.
+- [`research/physical-token-leadership-spec.md`](research/physical-token-leadership-spec.md)
+- [`research/master-roadmap.md`](research/master-roadmap.md)
+- [`research/rlt-multitask-benchmark.md`](research/rlt-multitask-benchmark.md) — now a baseline / validation protocol rather than the top-level research story.
 
-### Phase 2 — Physical Experience Representation
-Only after diagnosis, investigate action consequence, value-oriented physics, execution history, correction benefit, etc.
+## Core architecture
 
-### Phase 3 — Self-Improvement Loop
-Study repeated Deploy → Experience → Learn → Redeploy cycles, retention, consolidation and experience reuse.
+```text
+Frozen action model
+      ↓
+Action-head pre-output features
+      + robot history
+      + robot metadata
+      ↓
+Lightweight model/robot adapters
+      ↓
+Fixed-size Physical Token z_t
+      ↓
+Small online actor / critic
+      ↓
+Behavior adaptation
+```
 
-## Platform split
+The representation objective is:
 
-- **RoboTwin 2.0 / RLinf_support**: current pinned baseline reproduction path.
-- **RoboTwin 2.0 main**: migration / modern-environment comparison after the first baseline is frozen.
-- **RoboDojo on B300**: side track only. Current status remains **not yet tested on this machine**; no installation / doctor / Isaac Sim / renderer / task-smoke conclusion is recorded until actual local evidence exists.
+```text
+L_token = L_ro + λ_dyn L_dyn + λ_phys L_phys
+```
+
+- `L_ro`: readout / reconstruction from stop-gradient action-head features;
+- `L_dyn`: action-conditioned prediction of measured physical transitions;
+- `L_phys`: only valid physical constraints, starting from kinematic consistency and actuator feasibility.
+
+Contact / friction / rigid-body residuals are optional and require valid sensing, models and calibration.
+
+## Initial experiment
+
+The first controlled comparison is intentionally small:
+
+1. **B0 — RL Token / matched head-readout baseline**
+2. **B1 — B0 + measured transition loss**
+3. **B2 — B1 + valid physics loss**
+
+Keep matched:
+
+- token size;
+- learner capacity;
+- base action model;
+- data;
+- online interaction budget;
+- task reward;
+- seeds;
+- action chunk / timing.
+
+Measure:
+
+- task success;
+- physical violations;
+- adaptation cost / time;
+- old-task retention;
+- repeated seeds and uncertainty intervals.
+
+## What “Universal” currently means
+
+Universal is currently a **research hypothesis**, not a result.
+
+It means:
+
+- shared token shape;
+- shared physical objectives;
+- lightweight adapters for different model families and robot embodiments.
+
+Cross-model and cross-robot transfer must be demonstrated on held-out model-head families and held-out embodiments before being claimed.
+
+## Online self-improvement scope
+
+During the online learning phase the default contract is:
+
+- base model frozen;
+- action head frozen;
+- token encoder/readout frozen;
+- small actor/critic updated from actual executed actions and task rewards;
+- outcome decoder trained separately from measured transitions.
+
+This is the current operational meaning of robot self-improvement in this project.
+
+## Existing evidence
+
+Current block-assembly and drawer-opening/placement clips are treated as:
+
+> **RL Token qualitative reproduction / baseline demonstrations**
+
+They are **not** Physical Token results and are not evidence for transition loss, physics loss or universality.
+
+Existing hammer / RoboTwin assets remain useful for regression, transition logging and controlled physics experiments, but they no longer define the top-level research story.
+
+## Streaming RL
+
+Streaming RL remains a later online-efficiency direction.
+
+The current order is:
+
+```text
+RL Token / head-readout baseline
+→ + transition grounding
+→ + physics grounding
+→ matched online adaptation
+→ physical/contact shift
+→ held-out model / robot
+→ streaming / uncertainty-aware update later
+```
+
+We intentionally do not mix Physical Token and Streaming RL in the first ablation.
+
+## Platform status
+
+- **RoboTwin / existing RL Token infrastructure**: baseline and Physical Token validation platform.
+- **RoboDojo on B300**: side track only; current status remains **not yet tested on this machine**. No compatibility claim is recorded without local evidence.
 
 ## Public repository policy
 
 This is a **public, redacted research log**.
 
-We publish:
-- research questions, algorithms, experiment design and conclusions;
-- public repository SHAs / branches where useful;
-- non-sensitive checkpoint step names and quantitative metrics;
-- sanitized failure causes and engineering lessons;
-- public paper / project links.
+We publish scientific design, sanitized metrics, public SHAs / branches and research conclusions. We do not publish internal absolute paths, usernames, IPs, credentials, private dashboard identifiers or unnecessary infrastructure details.
 
-We do **not** publish by default:
-- internal absolute server paths;
-- usernames, hostnames, IPs, credentials, tokens or private dashboard IDs;
-- other users' process names / PIDs / resource details;
-- private infrastructure commands or mount-point details that are not necessary to support a scientific claim.
-
-Full raw logs remain the source of evidence, but the public repository stores only the minimum sanitized evidence needed to make the research record reproducible and auditable at the scientific level.
-
-See [`research/knowledge-base-maintenance.md`](research/knowledge-base-maintenance.md) for the detailed publication / redaction protocol.
-
-## Research north star
-
-> How can a robot turn one physical experience into a better next action — and eventually accumulate, consolidate and reuse that experience across tasks and embodiments?
+See [`research/knowledge-base-maintenance.md`](research/knowledge-base-maintenance.md).
 
 ## Repository structure
 
@@ -78,6 +155,7 @@ See [`research/knowledge-base-maintenance.md`](research/knowledge-base-maintenan
 ├── notes/
 ├── archive/
 └── research/
+    ├── physical-token-leadership-spec.md
     ├── master-roadmap.md
     ├── rlt-multitask-benchmark.md
     ├── progress-2026-09-12.md
@@ -85,37 +163,11 @@ See [`research/knowledge-base-maintenance.md`](research/knowledge-base-maintenan
     ├── experiment-log.md
     ├── decision-log.md
     ├── frontier-landscape.md
-    ├── perspectives-and-theses.md
     └── reading-program.md
 ```
 
-## Maintenance rule
+## Knowledge-base rule
 
-New papers do **not** automatically change the project mainline.
+The Frontier Knowledge Base continues to track RISE, Motus2, LWD, RLT, SmoothRL, Zeva, Zetta and related work.
 
-They first update:
-- innovation boundaries,
-- baseline / ablation choices,
-- diagnosis hypotheses,
-- long-term research map.
-
-The mainline changes only when experiments or strong neighboring evidence justify it.
-
-## Knowledge-base architecture
-
-The live site intentionally separates:
-
-- **Project Mainline** — current phase, experiments, evidence and next actions.
-- **Frontier Knowledge Base** — papers, systems, labs, research directions, boundaries and inspiration.
-- **Historical Archive** — immutable previous Research OS snapshots.
-
-Key files:
-
-- `data/frontier.json` — searchable frontier-work database.
-- `research/frontier-landscape.md` — detailed “what others are doing” survey.
-- `research/perspectives-and-theses.md` — external RSI viewpoints and long-term synthesis.
-- `research/reading-program.md` — daily reading tracks.
-- `research/knowledge-base-maintenance.md` — update protocol.
-- `archive/v0.4-original.html` — preserved full v0.4 snapshot.
-
-The website is intended to be the project's **first research entry point and decision memory**, not the only source of truth. New public work still needs continuous search, verification and ingestion.
+These papers are used to understand baselines and innovation boundaries, but they do not override the leadership-defined Physical Token experimental contract.
