@@ -49,9 +49,9 @@ function renderPapers(){
   const f=document.getElementById('paperFilter').value;
   const grid=document.getElementById('paperGrid');
   grid.innerHTML='';
-  papers.filter(p=>{const txt=[p.title,p.layer,p.one,p.project,...(p.tags||[])].join(' ').toLowerCase();return (f==='all'||p.theme===f)&&txt.includes(q)}).forEach(p=>{
+  papers.filter(p=>{const txt=[p.title,p.layer,p.one,...(p.tags||[])].join(' ').toLowerCase();return (f==='all'||p.theme===f)&&txt.includes(q)}).forEach(p=>{
     const a=document.createElement('a');a.className='card paper-card';a.href=p.note||p.url||'#';
-    a.innerHTML='<div class="paper-meta">'+esc(p.year)+' · '+esc(p.layer)+' · '+esc(p.status)+'</div><div class="paper-title">'+esc(p.title)+'</div><p>'+esc(p.one)+'</p><div class="paper-relation"><b>对当前项目：</b>'+esc(p.project)+'</div><div class="read-more">深入阅读 →</div>';
+    a.innerHTML='<div class="paper-meta">'+esc(p.year)+' · '+esc(p.layer)+' · '+esc(p.status)+'</div><div class="paper-title">'+esc(p.title)+'</div><p>'+esc(p.one)+'</p><div class="paper-relation"><b>当前主线提示：</b>论文卡保留为知识库；具体项目关系以 Leadership Physical Token Spec 为准。</div><div class="read-more">深入阅读 →</div>';
     grid.appendChild(a);
   });
 }
