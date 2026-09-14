@@ -1,5 +1,40 @@
 [
   {
+    "date": "2026-09-14",
+    "decision": "当前上位研究主线改为 Universal Physical Token for Robot Self-Evolution。",
+    "reason": "领导最新方案把研究对象收敛到 action-head compact readout + measured transition grounding + valid physics constraints + lightweight online adaptation；此前更宽泛的四阶段路线降级为历史探索。"
+  },
+  {
+    "date": "2026-09-14",
+    "decision": "Physical Token 第一版从 action-head pre-output features 读取，并融合 recent measured robot state、actual/executed-action history 与 robot/control metadata。",
+    "reason": "action-head proximity to action generation 是核心假设，但必须保留 action-head tap vs backbone tap 对照，避免把 tap 位置变化误当作 physics grounding 收益。"
+  },
+  {
+    "date": "2026-09-14",
+    "decision": "Universal 只作为 shared token shape + shared physical objectives + lightweight adapters 的 empirical hypothesis。",
+    "reason": "跨 action-model family 与跨 embodiment transfer 都必须通过 held-out 实验后才能升级为结果。"
+  },
+  {
+    "date": "2026-09-14",
+    "decision": "首轮目标固定为 L_token = L_ro + lambda_dyn L_dyn + lambda_phys L_phys；physics loss 先用 kinematic consistency 与 actuator feasibility。",
+    "reason": "Contact/friction/rigid-body/force terms 只有 sensing、model、calibration 有效时才加入，避免把 simulator 可导出字段自动当成可信物理监督。"
+  },
+  {
+    "date": "2026-09-14",
+    "decision": "首轮正式比较固定为 B0 RL Token/head-readout baseline、B1 + measured transition loss、B2 + valid physics loss；Streaming RL 后置。",
+    "reason": "首轮只改变 representation grounding，保持 learner/data/interaction budget 匹配；先证明 Physical Token 再研究 replay vs streaming，避免变量耦合。"
+  },
+  {
+    "date": "2026-09-14",
+    "decision": "在线 self-improvement 阶段冻结 base model、action head 和 token encoder/readout，只更新 small actor/critic。",
+    "reason": "当前科学问题是轻量接口能否吸收物理变化，而不是重新训练大 action model。"
+  },
+  {
+    "date": "2026-09-14",
+    "decision": "现有 block assembly 与 drawer opening/placement 视频只作为 RL Token qualitative reproduction。",
+    "reason": "没有 Physical Token、transition loss、physics loss 或 universality 的定量对照，不能提前写成方法结果。"
+  },
+  {
     "date": "2026-09-12",
     "decision": "Paper-aligned hammer RLT Stage 1 从通用 π0.5 base 开始联合训练，而不是把独立 20k task-SFT 作为必要初始化。",
     "reason": "论文/代码复核与 base-init smoke 都支持：RLT reconstruction 只更新 RLT module，alpha>0 时 VLA 由 vla_loss 更新；20k SFT 保留为 standalone reference / post-SFT 对照。"
@@ -21,22 +56,17 @@
   },
   {
     "date": "2026-09-12",
-    "decision": "Physics sidecar 暂不进入第一条 RLT baseline 的 policy observation。",
-    "reason": "先避免 simulator privileged information leakage；这些字段当前只用于 logging、failure analysis 和后续受控 probe/critic/auxiliary target。"
+    "decision": "Physics sidecar 不直接进入 baseline policy observation。",
+    "reason": "privileged simulator fields 只能按 measured/valid/calibrated 规则作为 logging、transition target 或 physics-constraint候选，不自动成为部署输入。"
   },
   {
     "date": "2026-09-11",
-    "decision": "Research story 不以 RL Token 为中心。",
-    "reason": "长期主线是 Physical Interaction + Self-Improvement；RLT 只是技术起点。"
-  },
-  {
-    "date": "2026-09-11",
-    "decision": "Baseline before novelty。",
-    "reason": "先建立多任务 RLT research bench，再用 D1–D5 定位瓶颈。"
+    "decision": "此前四阶段路线保留为历史探索，不再作为当前 Source of Truth。",
+    "reason": "2026-09-14 领导方案已把研究问题具体化为 Universal Physical Token。"
   },
   {
     "date": "2026-09-11",
     "decision": "论文阅读不自动改主线。",
-    "reason": "论文进入知识库；只有实验或强近邻证据才改变项目决策。"
+    "reason": "论文进入知识库；当前若与领导定义冲突，先完成领导给出的实验合同，再作为 baseline / ablation / discussion。"
   }
 ]
