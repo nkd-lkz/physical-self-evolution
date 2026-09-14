@@ -1,67 +1,67 @@
 [
   {
+    "date": "2026-09-14",
+    "title": "主线按领导方案收敛为 Universal Physical Token",
+    "summary": "根据领导提供的两份 Physical Token PPT，项目上位问题改为：从 action-generation head 读取 compact token，用 measured transition prediction 与有效 physics constraints grounding，再让冻结 action model 通过小型在线 learner 适应变化的接触动力学。此前更宽泛的 RLT Multi-task→Failure Diagnosis→Physical Experience→Self-Improvement 四阶段路线降级为历史探索。"
+  },
+  {
+    "date": "2026-09-14",
+    "title": "首轮 Physical Token 实验合同固定",
+    "summary": "第一组正式比较固定为 B0 RL Token/matched head-readout baseline、B1 + measured transition loss、B2 + valid physics loss；token size、learner capacity、base model、data、interaction budget、reward、seed 与 chunk/timing 必须匹配。主要报告 success、physical violations、adaptation cost、old-task retention 与重复 seed 的置信区间。Streaming RL 后置，避免与 representation 变量耦合。"
+  },
+  {
+    "date": "2026-09-14",
+    "title": "现有 RL Token 视频重新定性",
+    "summary": "Block assembly 与 drawer opening + placement 只作为 RL Token qualitative reproduction / baseline demonstrations；当前没有 Physical Token、transition loss、physics loss 或 Universal transfer 的定量结果，公开仓库不得提前写成方法效果。"
+  },
+  {
     "date": "2026-09-13",
     "title": "RISE 初读",
-    "summary": "RISE 把 Compositional World Model 直接作为 imaginary RL environment：Controllable Dynamics Model 预测 candidate action chunk 的多视角未来，Progress Value Model 结合 progress regression + TD learning 评估 imagined states，并将 chunk-wise advantage 用于 advantage-conditioned VLA policy self-improvement。对项目主要启发是 Physical Consequence 必须服务 action ranking/value/policy improvement，且未来应区分 real experience 与 imagined experience，并增加 confidence/validation gate。当前不改变 Phase 0 的 RLT multi-task baseline 主线。"
+    "summary": "RISE 把 Compositional World Model 直接作为 imaginary RL environment：Controllable Dynamics Model 预测 candidate action chunk 的多视角未来，Progress Value Model 结合 progress regression + TD learning 评估 imagined states，并将 chunk-wise advantage 用于 advantage-conditioned VLA policy self-improvement。现在仅作为 Frontier related work；不改变领导定义的 Physical Token 主实验合同。"
   },
   {
     "date": "2026-09-12",
     "title": "Hammer RLT Stage 1 paper-aligned smoke 通过",
-    "summary": "通用 π0.5 base-init、rlt_alpha=1.0 的 1-step Stage 1 smoke 已通过：total/rlt/vla loss=3.49118/3.06114/0.43004，grad norm=5.7397；保存 667 model + 62 RLT tensors，均为有限值。下一步是相同口径的 2,000-step joint-full。"
+    "summary": "通用 π0.5 base-init、rlt_alpha=1.0 的 1-step Stage 1 smoke 已通过：total/rlt/vla loss=3.49118/3.06114/0.43004，grad norm=5.7397；保存 667 model + 62 RLT tensors，均为有限值。该结果保留为 baseline engineering evidence，不再定义上位研究故事。"
   },
   {
     "date": "2026-09-12",
     "title": "Hammer task-SFT checkpoint 快筛完成",
-    "summary": "5k/10k/15k/20k 在同一 4-env 开发设置下为 1/4、0/4、2/4、2/4；20k 另一次为 1/4。当前仅固定 environment reset seed，action-sampling noise 尚未固定，所以只能用于快筛，正式 30-seed 配对评估前需补 action seed。"
+    "summary": "5k/10k/15k/20k 在同一 4-env 开发设置下为 1/4、0/4、2/4、2/4；20k 另一次为 1/4。当前仅固定 environment reset seed，action-sampling noise 尚未固定，所以只能用于快筛。"
   },
   {
     "date": "2026-09-12",
     "title": "Stage 2 C=10 时序语义完成 mock 验证",
-    "summary": "正式 actor chunk 固定 C=10、reference H=50、dropout=0.5；native adapter 已覆盖逐子步 reward/done/switch、early done、actual executed length、terminal observation 与 cross-chunk done freeze。真实 RoboTwin rollout 尚待 Stage 1 full 后验收。"
+    "summary": "正式 actor chunk 固定 C=10、reference H=50、dropout=0.5；native adapter 已覆盖逐子步 reward/done/switch、early done、actual executed length、terminal observation 与 cross-chunk done freeze。该基础设施可继续服务 B0/B1/B2 在线对照。"
   },
   {
     "date": "2026-09-12",
     "title": "RoboTwin 2.0 复现与迁移阶段分离",
-    "summary": "近期先在 RoboTwin 2.0 / RLinf_support pinned path 完成第一条 RLT Stage 1/2 baseline；latest-main bridge 已完成 20/20 transition alignment 与相关单测，但 learner smoke 暂不阻塞当前主线。"
+    "summary": "RoboTwin 2.0 / RLinf_support 与 latest-main bridge 的工程证据继续保留，用于 baseline 与后续 controlled ablation；不再自动扩展成独立主故事。"
   },
   {
     "date": "2026-09-12",
     "title": "RoboDojo/B300 支线仍处于待实测状态",
-    "summary": "目前没有 B300 上 RoboDojo/Isaac Sim 的本机兼容性结果；下一步从 system manifest、doctor、import/headless、RGB renderer 开始，必要时采用 RTX simulator + B300 policy/learner 分离架构。"
+    "summary": "目前没有 B300 上 RoboDojo/Isaac Sim 的本机兼容性结果；继续保持未开始实测，不形成兼容性结论。"
   },
   {
     "date": "2026-09-12",
     "title": "Zeva + Zetta 加深阅读",
-    "summary": "Zeva 代表 Context Evolution：冻结 policy，把 executed action→state change 写入双时间尺度 causal memory，并在后续决策中检索注入；Zetta 代表 Harness Evolution：冻结 base policy，通过 action-frequency runtime critic、rollout-level failure diagnosis/recovery proposal 和 validation-gated skill update 持续演化执行系统。对项目的共同启发是 Physical Experience 可以在不绑定特定 VLA hidden token 的情况下被编码为 action-effect、physical predicates、critic 和 recovery interface。"
+    "summary": "Zeva / Zetta 继续作为 Context / Harness self-improvement 的 Frontier 参考；不直接改写 Universal Physical Token 的 action-head readout、physical objectives 与首轮 B0/B1/B2 实验。"
   },
   {
     "date": "2026-09-12",
     "title": "Motus2 初读",
-    "summary": "最新 RSI / General World Model 工作：用共享参数 Policy(WAM)+Simulator(AC-WM)+Evaluator(VM) 构成 Action→Consequence→Value→Policy Update 闭环；失败/次优轨迹不做 imitation，而用于 dynamics/value；对项目主要启发是 consequence 必须服务 action ranking、value trajectory 可做 failure diagnosis，以及 slow backbone + fast physical expert。当前不改变 Phase 0。"
+    "summary": "Motus2 的 Action→Consequence→Value 思路保留为 related work；当前项目不因此转向 General World Model，优先完成领导定义的 compact Physical Token 与 measured transition / physics grounding。"
   },
   {
     "date": "2026-09-12",
     "title": "LWD 初读",
-    "summary": "Learning While Deploying 把部署变成 fleet-scale data flywheel：DIVL 学 heterogeneous return distribution，QAM 将 Q-gradient 写回 π0.5 flow action expert。对项目的主要启发是统一 experience schema、保留 failure/recovery/intervention，并把 pooled replay / validation gate / generalist consolidation 作为 Phase 3 长期问题。"
+    "summary": "LWD 的 fleet-scale online learning 保留为长期 related work；当前在线更新只要求冻结 action model 后用 small actor/critic 做 matched-budget adaptation，不把 fleet/generalist consolidation 引入首轮实验。"
   },
   {
     "date": "2026-09-11",
-    "title": "主线进入 Phase 0",
-    "summary": "当前优先级改为 RoboTwin2 多任务 RLT benchmark；hammer 保留为 pilot/regression task。"
-  },
-  {
-    "date": "2026-09-11",
-    "title": "RoboDojo B300 旁线启动",
-    "summary": "每天固定少量时间推进安装、兼容性、官方 smoke 与 Dojo-Eval，不抢 RoboTwin2 主线。"
-  },
-  {
-    "date": "2026-09-11",
-    "title": "项目状态校准",
-    "summary": "π0.5 SFT 5k/10k/15k/20k 产物存在，但 Reference 仍待正式验收；RLT baseline 尚无正式结果。"
-  },
-  {
-    "date": "2026-09-11",
-    "title": "Zeva 初读",
-    "summary": "加入 Context Evolution 维度：Self-Improvement 不必等于 weight update；长期考虑 Fast Memory + Slow RL。"
+    "title": "历史探索：四阶段 Research OS",
+    "summary": "此前建立的 RLT Multi-task Benchmark→Failure Diagnosis→Physical Experience→Self-Improvement 四阶段路线保留作历史记录与知识库组织，但 2026-09-14 起不再作为当前 Source of Truth。"
   }
 ]
