@@ -3,22 +3,21 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <meta name="description" content="Physical Self-Evolution — 具身智能自进化科研记录与论文知识库"/>
-  <title>Physical Self-Evolution Research OS</title>
+  <meta name="description" content="Universal Physical Token — 机器人自进化科研记录与具身智能前沿知识库"/>
+  <title>Universal Physical Token · Research OS</title>
   <link rel="stylesheet" href="assets/style.css"/>
 </head>
 <body>
   <aside class="sidebar">
-    <div class="brand">Physical Self-Evolution</div>
-    <div class="sub">Embodied Self-Evolution Research OS</div>
+    <div class="brand">Universal Physical Token</div>
+    <div class="sub">Robot Self-Evolution Research OS</div>
     <nav>
       <a href="#home">总览</a>
-      <a href="#mainline">科研主线</a>
-      <a href="#status">当前进度</a>
-      <a href="#baseline">Phase 0 · RLT Benchmark</a>
-      <a href="#diagnosis">Phase 1 · Failure Diagnosis</a>
-      <a href="#physical">Phase 2 · Physical Experience</a>
-      <a href="#self-improve">Phase 3 · Self-Improvement</a>
+      <a href="#mainline">当前科研主线</a>
+      <a href="#architecture">Token 接口</a>
+      <a href="#physical">Physical Objectives</a>
+      <a href="#baseline">首轮验证</a>
+      <a href="#status">当前证据</a>
       <a href="#plan">近期行动</a>
       <div class="nav-label">持续更新</div>
       <a href="#logs">每日科研日志</a>
@@ -27,197 +26,200 @@
       <a href="#reading">每日论文计划</a>
       <a href="#papers">精读论文库</a>
       <a href="#perspectives">外部观点 / RSI</a>
-      <a href="#ideas">科研假设池</a>
+      <a href="#ideas">研究假设池</a>
       <div class="nav-label">资料</div>
       <a href="#archive">详细资料</a>
     </nav>
     <div class="side-note">
-      <b>主线守则</b><br>
-      新论文默认只进入“借鉴 / 边界 / 对照”，不会自动改变主线。当前第一优先级始终是：RoboTwin2 多任务 RLT baseline + 可复现 benchmark 基础设施。
+      <b>当前 Source of Truth</b><br>
+      领导定义的主问题是：<b>Action-head Physical Token + measured transition / valid physics grounding + lightweight online adaptation</b>。知识库里的 World Model、Harness、Fleet、Streaming 等工作只作为 related work / 后续扩展，不自动改写主实验。
     </div>
   </aside>
 
   <main class="main">
     <section id="home" class="hero">
-      <div class="kicker">Living Research Website · Project-first</div>
-      <h1>面向物理交互的<br/>机器人自我改进</h1>
-      <p>核心问题：<b>机器人如何把一次真实物理经历，转化为下一次更好的行动，并最终形成可持续复用的经验闭环？</b></p>
+      <div class="kicker">Leadership-aligned Research Mainline · 2026-09-14</div>
+      <h1>Universal Physical Token<br/>for Robot Self-Evolution</h1>
+      <p>核心问题：<b>能否从已有 action-generation head 读出一个紧凑表示，用 measured transition prediction 与有效 physics constraints 对其 grounding，并在不重新训练 action model 的情况下适应变化的接触动力学？</b></p>
       <div class="callout">
-        当前执行重点不是继续发明新 idea，而是先把 <b>RLT Multi-task Benchmark</b> 做扎实：
-        在 RoboTwin2 上建立多个不同接触机制任务的 Reference → RLT → Evaluation 闭环；hammer 保留为已有资产丰富的 pilot task，但不再让单一 hammer 牵着整条科研路线走。
+        当前研究不再以“泛化的 Physical Experience / World Model / 多阶段自进化框架”为实验主线。
+        第一组正式问题被严格收敛为：<b>RL Token / matched head readout → + transition loss → + physics loss</b>，所有比较在 matched token size、learner capacity、data 与 interaction budget 下完成。
       </div>
+      <p><a class="button" href="reader.html?path=research/physical-token-leadership-spec.md">打开领导版主规范</a></p>
     </section>
 
     <section id="mainline">
       <div class="section-head">
-        <div><h2>01 · 科研主线</h2><p class="muted">路线更新：从“Physical Token 探索”切换为四阶段、证据驱动推进。</p></div>
+        <div><h2>01 · 当前科研主线</h2><p class="muted">目标是“轻量接口吸收物理变化”，而不是重新训练整个 action model。</p></div>
       </div>
 
       <div class="steps">
-        <div class="step phase-current"><b>Phase 0 · RLT Multi-task Benchmark</b><span>当前阶段：RoboTwin2 多任务复现 RLT，统一任务接口、评估与日志。</span></div>
-        <div class="step"><b>Phase 1 · Failure Diagnosis</b><span>定位真正瓶颈：observability / candidate / critic / data / execution。</span></div>
-        <div class="step phase-future"><b>Phase 2 · Physical Experience Representation</b><span>只有诊断支持后，才研究 consequence / value / history / correction。</span></div>
-        <div class="step phase-future"><b>Phase 3 · Self-Improvement Loop</b><span>多轮 Deploy → Experience → Learn → Redeploy，并检查能力保持与经验复用。</span></div>
+        <div class="step phase-current"><b>A · Baseline / Extraction</b><span>复现 RL Token，固定 action-head extraction contract，并做 backbone tap vs head tap。</span></div>
+        <div class="step"><b>B · Transition Grounding</b><span>加入 actual/executed-action conditioned measured transition prediction。</span></div>
+        <div class="step"><b>C · Physics Grounding</b><span>加入有效的 kinematic consistency 与 actuator feasibility。</span></div>
+        <div class="step"><b>D · Online Adaptation</b><span>冻结 base/head/token，仅更新 small actor/critic，比较 adaptation cost 与 retention。</span></div>
+        <div class="step phase-future"><b>E · Universal Hypothesis</b><span>当前模型/机器人上成立后，再做 held-out action-head family 与 held-out embodiment。</span></div>
       </div>
 
       <div class="grid two">
         <article class="card">
-          <h3>长期 Vision</h3>
-          <p><b>Physically Grounded Self-Improving Robot Policies</b></p>
-          <p>让机器人利用真实执行中的接触、动作后果、失败与恢复，持续获得新能力，而不是长期依赖人重新示范、重新标注、重新训练。</p>
+          <h3>当前准确 Research Claim</h3>
+          <p><b>Action-head compact readout can be physically grounded.</b></p>
+          <p>我们要验证的是：加入 measured transition 与有效 physics constraints 后，compact token 是否更适合在线适应，而不是笼统声称“模型学会了物理规律”。</p>
         </article>
         <article class="card">
-          <h3>近期可验证目标</h3>
-          <p><b>建立一个能持续承载算法创新的 VLA + Online RL 多任务实验台。</b></p>
-          <p class="muted">先回答“RLT 在哪些物理机制任务上有效 / 失效、为什么”，再回答“我们应该改哪里”。</p>
+          <h3>Universal 的边界</h3>
+          <p><b>Universal = shared token shape + shared objectives + lightweight adapters。</b></p>
+          <p class="muted">跨模型、跨本体目前都是 empirical hypothesis。没有 held-out tests 前，不写成结果。</p>
         </article>
       </div>
     </section>
 
-    <section id="status">
-      <h2>02 · 当前项目进度</h2>
-      <div class="grid four metrics">
-        <article class="card"><div class="metric">50</div><div class="muted">hammer 成功示教 episodes</div></article>
-        <article class="card"><div class="metric">7,884</div><div class="muted">LeRobot transitions</div></article>
-        <article class="card"><div class="metric">7,620</div><div class="muted">记录中的有效 physics transitions</div></article>
-        <article class="card"><div class="metric">20k</div><div class="muted">π0.5 SFT 最终 checkpoint 已生成；Reference 待验收</div></article>
+    <section id="architecture">
+      <h2>02 · Physical Token at the Action Head</h2>
+      <div class="grid three">
+        <article class="card"><h3>Action-head feature</h3><p><code>F_t^head</code>：最终动作投影之前的 causal / pre-output features。</p><span class="tag">核心假设：更靠近动作生成</span></article>
+        <article class="card"><h3>Robot history</h3><p>Recent measured state + actual/executed-action history；只使用部署时真实可得信息。</p><span class="tag">禁止 future leakage</span></article>
+        <article class="card"><h3>Robot metadata</h3><p>Morphology、joint/action convention、control metadata，通过轻量 adapter 对齐。</p><span class="tag">跨本体需要实测</span></article>
       </div>
 
-      <div class="timeline">
-        <div><b>有用资产 · 保留</b><p>hammer 环境、三相机、14D 接口、数据转换、norm stats、π0.5 SFT checkpoints、physics sidecar、contact / grasp 标签。这些都是 Phase 0/1 的工程和诊断资产，不需要推倒重来。</p></div>
-        <div><b>现在</b><p>先完成 hammer checkpoint reference 验收，同时审计 RLT 本地实现；hammer 定位为 pilot / regression task，不再作为唯一论文任务。</p></div>
-        <div><b>主线下一步</b><p>迁移 / 对齐 RoboTwin2，并加入至少两个不同物理机制任务，形成 multi-task RLT benchmark。</p></div>
-        <div><b>旁线每日推进</b><p>RoboDojo 在 B300 上做“安装与接口验证”小任务：每天固定少量时间推进，不抢占 RoboTwin2 主线。</p></div>
+      <div class="callout">
+        <b>统一接口：</b><code>z_t = E_phi(A_m(F_t^head), h_t, r)</code>，输出固定 <code>K × d</code> 连续 latent，供 small online learner 使用。Base model 与 action head 保持冻结。
       </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Action model family</th><th>第一版 readout 约定</th><th>必须注意</th></tr></thead>
+          <tbody>
+            <tr><td>Regression / MLP</td><td>Penultimate activations</td><td>与 final action projection 分开</td></tr>
+            <tr><td>Diffusion / Flow</td><td>Selected sampling-step features</td><td>固定 sampling-time convention；包含 noise/time context</td></tr>
+            <tr><td>Autoregressive</td><td>Causal states before logits</td><td>不能读取 future demonstrated actions</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="muted"><b>关键对照：</b>Action-head tap vs Backbone tap。Action head 是否真的保留更多 decision-relevant physical information，必须由实验回答。</p>
     </section>
 
-    <section id="baseline">
-      <div class="section-head">
-        <div><h2>03 · Phase 0：RLT Multi-task Benchmark</h2><p class="muted">当前最高优先级。</p></div>
-        <a class="button" href="reader.html?path=research/rlt-multitask-benchmark.md">打开详细执行文档</a>
-      </div>
+    <section id="physical">
+      <h2>03 · Physical Objectives</h2>
+      <div class="callout"><b>第一版目标：</b><code>L_token = L_ro + λ_dyn L_dyn + λ_phys L_phys</code></div>
 
       <div class="grid three">
-        <article class="card phase-current">
-          <h3>Task 0 · Hammer（保留）</h3>
-          <p>已有工程资产最完整，适合做 reference / RLT pipeline 的 regression 与 smoke。</p>
-          <p class="muted">定位变化：从“主故事任务”降为 pilot task，不再单独支撑科研结论。</p>
+        <article class="card">
+          <h3>L_ro · Readout</h3>
+          <p>重建 fixed / stop-gradient action-head feature target，保留已有动作与任务信息。</p>
+          <p class="muted">该 loss 不允许反向修改 base action model。</p>
         </article>
         <article class="card">
-          <h3>Task 1 · Precision Contact</h3>
-          <p>优先选择 RoboTwin2 中一个局部对准 / 点接触任务，例如 bell / button 类；进入正式实验前先检查 reward、success 和接触物理。</p>
+          <h3>L_dyn · Transition</h3>
+          <p><code>D(z_t, u_t, r) → measured future physical state</code></p>
+          <p>其中 <code>u_t</code> 必须对应 actual / executed action；target 来自真实测得的后续状态。</p>
         </article>
         <article class="card">
-          <h3>Task 2 · Constrained Contact / Insertion</h3>
-          <p>再选择一个插入 / 约束接触 / sustained contact 任务，与 hammer 形成互补物理机制。</p>
+          <h3>L_phys · Constraints</h3>
+          <p>第一版优先 kinematic consistency 与 actuator feasibility。</p>
+          <p class="muted">Contact / friction / force / rigid-body terms 只有 sensing、model、calibration 有效时才加入。</p>
         </article>
       </div>
 
       <details open>
-        <summary>RLT Baseline Contract：必须核对的 10 项</summary>
+        <summary>第一版允许进入 L_phys 的内容</summary>
         <div class="detail-body">
-          <ol>
-            <li>基础模型：π0.5 checkpoint、SFT 数据与训练量。</li>
-            <li>读出：从哪层 hidden states 取；encoder / decoder / reconstruction。</li>
-            <li>梯度：Stage 1 哪些参数更新；Online 阶段冻结哪些。</li>
-            <li>Actor：完整 chunk 还是 residual；exploration、action limit、reference dropout。</li>
-            <li>Critic：状态 / 动作输入、target network、TD backup。</li>
-            <li>时间：预测 H、实际执行 C、control Hz、policy decision Hz。</li>
-            <li>数据：demo / reference / RL rollout / intervention 如何进入 replay。</li>
-            <li>奖励：success / terminal / timeout / shaping。</li>
-            <li>阶段：全程 RL、critical phase 还是 base-prefix + RL。</li>
-            <li>验证：train/eval seeds、checkpoint selection、控制步 / 决策次数 / wall-clock / VLA 调用预算。</li>
-          </ol>
+          <ul>
+            <li><code>||v_EE - J(q) q_dot||²</code>，且所有量必须在同一 frame / unit / convention 下；</li>
+            <li>joint limit violation；</li>
+            <li>joint / actuator speed limit violation；</li>
+            <li>其他明确存在、可审计的 controller / actuator constraints。</li>
+          </ul>
+          <p><b>不是因为 simulator 能导出 mass / friction / impulse，就默认它们可以成为主实验里的“物理规律监督”。</b></p>
         </div>
       </details>
-
-      <div class="callout">
-        <b>Phase 0 完成标准：</b>至少 3 类物理机制任务；每个任务都有同一套 Reference / RLT 评估接口、learning curve、固定 seeds、episode-level raw metrics、失败视频和配置可恢复性。代码能启动只算 smoke。
-      </div>
     </section>
 
-    <section id="diagnosis">
-      <h2>04 · Phase 1：Failure Diagnosis</h2>
-      <p class="muted">Multi-task baseline 之后再做，不把所有失败都归结为“缺 physics”。</p>
+    <section id="baseline">
+      <div class="section-head">
+        <div><h2>04 · 首轮验证：B0 / B1 / B2</h2><p class="muted">这是当前最重要的实验合同。</p></div>
+        <a class="button" href="reader.html?path=research/rlt-multitask-benchmark.md">打开 Baseline / Validation Protocol</a>
+      </div>
+
+      <div class="grid three">
+        <article class="card phase-current"><h3>B0 · Baseline</h3><p>RL Token / matched action-head readout。</p><span class="tag">compact readout only</span></article>
+        <article class="card"><h3>B1 · + Transition</h3><p>加入 actual/executed-action conditioned measured transition loss。</p><span class="tag">action → measured outcome</span></article>
+        <article class="card"><h3>B2 · + Physics</h3><p>在 B1 上加入 valid kinematic / actuator constraints。</p><span class="tag">physics grounding</span></article>
+      </div>
+
       <div class="table-wrap">
         <table>
-          <thead><tr><th>实验</th><th>最小设计</th><th>要回答的问题</th></tr></thead>
+          <thead><tr><th>必须 matched</th><th>主要结果</th><th>后续才允许扩展</th></tr></thead>
           <tbody>
-            <tr><td>D1 · 输入与历史</td><td>command target → + actual q → + short history</td><td>缺“物理知识”，还是没看到真实执行？</td></tr>
-            <tr><td>D2 · Candidate Headroom</td><td>同状态：不修正 + 少量合法 candidates；后续策略固定</td><td>Reference 附近到底有没有更好的 correction？</td></tr>
-            <tr><td>D3 · 监督用途</td><td>reconstruction vs future latent vs physical consequence vs correction benefit</td><td>Physics 应进入 representation、value 还是 correction？</td></tr>
-            <tr><td>D4 · 数据覆盖</td><td>同新增预算：普通 expert vs failure-recovery</td><td>改进来自算法，还是因为终于覆盖失败附近？</td></tr>
-            <tr><td>D5 · 执行长度</td><td>C=1/5/10，记录 control Hz、VLA 调用、真实执行范围</td><td>主要失败是不是 chunk 太长、反馈太慢？</td></tr>
+            <tr><td>token size、learner capacity、base model、data、interaction budget、reward、seed、chunk/timing</td><td>success、physical violations、adaptation cost、old-task retention、CI</td><td>physical shift → held-out model family → held-out embodiment</td></tr>
           </tbody>
         </table>
       </div>
-    </section>
 
-    <section id="physical">
-      <h2>05 · Phase 2：Physical Experience Representation</h2>
-      <p class="muted">这是候选研究阶段，不是当前默认路线。只有 Phase 1 给出证据后才启动。</p>
-      <div class="grid three">
-        <article class="card"><h3>Action Consequence</h3><p>研究 action → state / contact / relation change 是否比普通 latent reconstruction 更有控制价值。</p></article>
-        <article class="card"><h3>Value-Oriented Physics</h3><p>把 privileged physics 用作 candidate ranking / critic teacher，而不是直接给 actor 作弊。</p></article>
-        <article class="card"><h3>Execution History</h3><p>如果 actual q + short history 已经解释大部分收益，则优先解决 observability，而不是发明新 token。</p></article>
-      </div>
-    </section>
-
-    <section id="self-improve">
-      <h2>06 · Phase 3：Self-Improvement Loop</h2>
-      <div class="grid three">
-        <article class="card"><h3>Context Adaptation</h3><p>参数不变，通过 Memory / History / Context 快速适应。</p><span class="tag">Zeva-like</span></article>
-        <article class="card"><h3>Online Policy Adaptation</h3><p>更新 lightweight actor / critic / readout。</p><span class="tag">RLT-like</span></article>
-        <article class="card"><h3>Experience Consolidation</h3><p>把验证过的新经验写回基础 VLA，并检查旧能力保持。</p><span class="tag">PLD-like</span></article>
-      </div>
       <div class="callout">
-        长期闭环：Deploy → Experience → Evaluate → Learn → Redeploy → Consolidate → Share。
-        但当前只先把其中的 Reference → Online Adaptation → Independent Evaluation 做扎实。
+        <b>Streaming RL 当前后置。</b>先证明 transition / physics grounding 的增益，再比较 replay learner vs streaming learner。否则 representation 与 learner 两个变量同时变化，无法归因。
+      </div>
+    </section>
+
+    <section id="status">
+      <h2>05 · 当前证据与严格口径</h2>
+      <div class="grid four metrics">
+        <article class="card"><div class="metric">B0</div><div class="muted">RL Token baseline / reproduction 已有工程基础</div></article>
+        <article class="card"><div class="metric">B1</div><div class="muted">Measured transition grounding 待正式实现/比较</div></article>
+        <article class="card"><div class="metric">B2</div><div class="muted">Valid physics grounding 待正式实现/比较</div></article>
+        <article class="card"><div class="metric">U</div><div class="muted">Universal transfer 仍是待验证假设</div></article>
+      </div>
+
+      <div class="timeline">
+        <div><b>已有 qualitative baseline</b><p>Block assembly、drawer opening + block placement 视频只说明 RL Token reproduction 可以执行；不构成 Physical Token 定量结果。</p></div>
+        <div><b>已有工程资产</b><p>Hammer / RoboTwin 的数据、norm、checkpoint、actual-state/contact logging、timing 与 evaluation infrastructure 继续复用，用于 regression、transition targets 与 controlled ablation。</p></div>
+        <div><b>尚未有的结论</b><p>没有 Physical Token 成功率提升、没有 Universal 跨模型/跨本体结果、没有 contact/friction law 学习结论、没有 Streaming 优于 replay 的结论。</p></div>
+        <div><b>RoboDojo/B300</b><p>仍为独立支线且未开始本机兼容性实测；不从其他模拟器结果推断 RoboDojo/Isaac Sim 兼容性。</p></div>
       </div>
     </section>
 
     <section id="plan">
-      <h2>07 · 接下来具体做什么</h2>
+      <h2>06 · 接下来具体做什么</h2>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>轨道</th><th>下一步</th><th>可检查产物</th><th>优先级</th></tr></thead>
+          <thead><tr><th>优先级</th><th>下一步</th><th>必须留下的证据</th></tr></thead>
           <tbody>
-            <tr><td>主线 A</td><td>Hammer 5k/10k/15k/20k Reference 评估，冻结共同 checkpoint</td><td>固定 seeds、success、阶段 failure profile、视频</td><td>P0</td></tr>
-            <tr><td>主线 B</td><td>RLT 原论文 vs 本地实现代码审计</td><td>差异表：readout / actor / critic / C / replay / reward / switch</td><td>P0</td></tr>
-            <tr><td>主线 C</td><td>在 hammer 上完成 RLT-π0.5-adapted 首个可重复 baseline</td><td>smoke + learning curve + 独立 eval</td><td>P1</td></tr>
-            <tr><td>主线 D</td><td>迁移 RoboTwin2，加入两个不同物理机制任务</td><td>统一 task adapter / logger / evaluator</td><td>P1</td></tr>
-            <tr><td>旁线</td><td>B300 上每天推进 RoboDojo 安装与接口验证</td><td>安装日志、依赖兼容表、官方 smoke、Dojo-Eval</td><td>每日小任务</td></tr>
-            <tr><td>暂缓</td><td>Physical Token / Streaming / Full WAM / Agent Harness</td><td>只有触发条件满足才开</td><td>Hold</td></tr>
+            <tr><td>P0</td><td>固定 action-head extraction convention，并跑 backbone tap vs head tap</td><td>feature shape、sampling convention、matched token capacity、held-out probe</td></tr>
+            <tr><td>P0</td><td>冻结 B0 实验合同</td><td>base model、token size、actor/critic capacity、data、reward、budget、seed、timing</td></tr>
+            <tr><td>P0</td><td>实现 B1 measured transition decoder</td><td>actual/executed action 对齐、validity mask、unit normalization、held-out transition metrics</td></tr>
+            <tr><td>P1</td><td>实现 B2 kinematic + actuator constraints</td><td>frame/unit 审计、physical violation metrics、B1 vs B2 独立增益</td></tr>
+            <tr><td>P1</td><td>做 matched online adaptation</td><td>frozen base/head/token、actor/critic update、success/adaptation cost/retention</td></tr>
+            <tr><td>P2</td><td>Physical/contact shift</td><td>shift parameter metadata、nominal vs shifted results</td></tr>
+            <tr><td>Later</td><td>Held-out model family / robot embodiment；Streaming RL</td><td>只有前述 gate 通过才启动</td></tr>
           </tbody>
         </table>
       </div>
-      <p><a class="button secondary" href="reader.html?path=research/robodojo-b300-log.md">打开 RoboDojo B300 小任务日志</a></p>
     </section>
-
 
     <section id="frontier">
       <div class="section-head">
         <div>
           <h2>知识库 · 前沿工作地图：别人正在做什么？</h2>
-          <p class="muted">独立于项目 Roadmap 的前沿观察层。这里允许知识无限扩张，但不会自动把新模块塞进当前 Phase 0。</p>
+          <p class="muted">Frontier 继续保留，但它现在服务于 Universal Physical Token 的 baseline、边界与实现选择，而不是自动扩展主线。</p>
         </div>
         <a class="button" href="reader.html?path=research/frontier-landscape.md">打开完整前沿调研总览</a>
       </div>
 
       <div class="callout knowledge-callout">
-        <b>这个专栏怎么用：</b>以后它会成为你科研找灵感的“第一站”——快速看一条路线已经做到哪里、有哪些近邻、能借什么、哪里还有空白。
-        但它不应该成为唯一信息源：具身领域变化太快，所以每天新看到的论文 / 项目仍然要持续加入并核验，网站本身就是不断更新的索引与研究记忆。
+        <b>使用原则：</b>RISE、Motus2、LWD、SmoothRL、Zeva、Zetta 等工作可以提供 comparison / ablation / discussion；如果和当前领导方案冲突，先完成领导定义的 B0/B1/B2，再讨论扩展。
       </div>
 
       <div class="grid four" style="margin-top:14px">
-        <article class="card"><h3>Policy / RL</h3><p>RLT、SERL、Q-VGM：部署经验如何直接改变 policy / critic / flow action expert。</p></article>
-        <article class="card"><h3>Failure / Recovery</h3><p>FailSafe、RedFlow、RL²-VLA：失败如何被定位、改写成 correction，并决定何时介入。</p></article>
-        <article class="card"><h3>Physical / World</h3><p>Pri4R、FD-VLA、MSDP、SR-WM：物理信息应进入 representation、critic、teacher 还是 world model。</p></article>
-        <article class="card"><h3>Memory / Harness / Agent</h3><p>Zeva、Harness VLA、SHAPER、ASPIRE、Zetta、ENPIRE：权重不变时系统怎样持续长能力。</p></article>
+        <article class="card"><h3>Policy / RL</h3><p>RLT、SERL、Q-VGM：small online learner 如何适配部署经验。</p></article>
+        <article class="card"><h3>Physical Representation</h3><p>Pri4R、FD-VLA、HapticVLA：物理监督如何进入 compact representation。</p></article>
+        <article class="card"><h3>World / Consequence</h3><p>RISE、Motus2、SR-WM：Action→Consequence 建模能否提供更好的决策反馈。</p></article>
+        <article class="card"><h3>Execution / System</h3><p>SmoothRL、Zeva、Zetta：异步执行、memory、recovery 如何作为后续扩展。</p></article>
       </div>
 
       <div class="filters frontier-filters">
-        <input id="frontierSearch" type="search" placeholder="搜索：failure / world model / action horizon / harness / fleet…"/>
+        <input id="frontierSearch" type="search" placeholder="搜索：physical token / transition / world model / streaming / recovery…"/>
         <select id="frontierFilter">
           <option value="all">全部路线</option>
           <option value="policy">Policy / Online RL</option>
@@ -237,17 +239,17 @@
 
     <section id="reading">
       <div class="section-head">
-        <div><h2>知识库 · 每日论文计划</h2><p class="muted">阅读服务于主线：定位 → 创新边界 → 项目动作，而不是追热点改方向。</p></div>
+        <div><h2>知识库 · 每日论文计划</h2><p class="muted">阅读问题优先围绕 action-head representation、transition prediction、physics constraints、online adaptation 与 universality。</p></div>
         <a class="button secondary" href="reader.html?path=research/reading-program.md">打开完整阅读计划</a>
       </div>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Track</th><th>优先论文 / 工作</th><th>我们要学什么</th></tr></thead>
+          <thead><tr><th>Track</th><th>优先工作</th><th>当前用途</th></tr></thead>
           <tbody>
-            <tr><td>Baseline / Online RL</td><td>RLT → SERL → SmoothRL → Q-VGM → PLD</td><td>在线适应、工程栈、异步执行、Flow policy 更新、经验回写。</td></tr>
-            <tr><td>Physical Experience</td><td>V-GPS → RMA-Arm → Pri4R → PHR-VLA → FD-VLA → MSDP → HapticVLA → SR-WM</td><td>Physics 应进入 history / value / representation / privileged teacher / world model 的哪一层。</td></tr>
-            <tr><td>Failure / Recovery</td><td>FailSafe → RedFlow → RL²-VLA → VLA-Corrector → BCP</td><td>失败怎样变 correction、何时介入、何时 replan、如何缩短 blind horizon。</td></tr>
-            <tr><td>Context / Harness / RSI</td><td>Zeva → Harness VLA → SHAPER → ASPIRE → Zetta → ENPIRE → LWD</td><td>非参数自进化、skill consolidation、validation gate、agentic improvement、fleet experience scaling。</td></tr>
+            <tr><td>Compact readout / Online RL</td><td>RLT → SERL → Q-VGM</td><td>Baseline、actor/critic、online adaptation。</td></tr>
+            <tr><td>Physical representation</td><td>Pri4R → FD-VLA → HapticVLA → RMA-Arm</td><td>Transition / dynamics / privileged supervision 的设计边界。</td></tr>
+            <tr><td>Consequence / World Model</td><td>RISE → Motus2 → SR-WM</td><td>理解 action consequence，但当前不把 Full WM 作为首轮方法。</td></tr>
+            <tr><td>Execution efficiency</td><td>SmoothRL → Streaming RL</td><td>Physical Token 成立后的后续 learner / execution 方向。</td></tr>
           </tbody>
         </table>
       </div>
@@ -255,7 +257,7 @@
 
     <section id="papers">
       <div class="section-head">
-        <div><h2>知识库 · 精读论文库</h2><p class="muted">这里保存我们已经重点读过或明确需要精读的论文卡；前沿工作全量索引见上一节。</p></div>
+        <div><h2>知识库 · 精读论文库</h2><p class="muted">保留已有精读；“对当前项目”的解释以后统一服从 Physical Token 主规范。</p></div>
         <a class="button" href="reader.html?path=research/master-roadmap.md">打开完整研究路线</a>
       </div>
       <div class="filters">
@@ -274,41 +276,33 @@
       <div id="paperGrid" class="grid three"></div>
     </section>
 
-
     <section id="perspectives">
       <div class="section-head">
-        <div><h2>知识库 · 外部观点 / 具身 RSI</h2><p class="muted">保留 v0.4 的行业与研究者观点，并与项目事实严格分开。</p></div>
+        <div><h2>知识库 · 外部观点 / RSI</h2><p class="muted">行业 RSI / Agent / Foundation 观点继续保留，但与当前 Physical Token 实验事实严格分开。</p></div>
         <a class="button secondary" href="reader.html?path=research/perspectives-and-theses.md">打开完整观点与研究框架</a>
       </div>
       <div class="grid two">
-        <article class="card"><h3>从“及格”到“可用”</h3><p>当前具身模型更大的缺口是部署可靠性与失败后的自主纠错，而不只是一次成功。经验能否被留下并让下一次策略更强，是自我改进的核心问题。</p></article>
-        <article class="card"><h3>World Engine · Evaluator · Learning</h3><p>World Engine 产生经验；Evaluator / Reward Model 判断经验；RL / Policy / Skill system 把经验变成能力。</p></article>
-        <article class="card"><h3>Top-down × Bottom-up</h3><p>上层复杂任务暴露底层 skill gap；底层探索与学习补能力；能力变强以后，上层可以解决更长程任务。</p></article>
-        <article class="card"><h3>Physical World → Model</h3><p>长期不只是模型进入物理世界；物理世界产生的 diverse environment / task / feedback 也可能成为下一代模型持续训练的数据源。</p></article>
-        <article class="card"><h3>Harness 不会消失</h3><p>机器人没有 Ctrl+Z。Tool、Skill、State、Verifier、Recovery、Safety、Compute 与 Communication 都需要运行时系统管理。</p></article>
-        <article class="card"><h3>群体经验</h3><p>机器人 A 已经踩过的坑，机器人 B 不应该从头探索。长期真正要 scale 的是自主纠错产生的共享 Physical Experience。</p></article>
+        <article class="card"><h3>当前自进化定义</h3><p>本项目当前不是开放世界无限自主学习；而是冻结 action model 后，由 compact physical interface + small learner 做局部在线适应。</p></article>
+        <article class="card"><h3>更强 RSI 作为后续</h3><p>World model、memory、recovery、fleet consolidation 只有在当前 Physical Token 主问题得到实验回答后再讨论。</p></article>
       </div>
     </section>
 
     <section id="ideas">
       <div class="section-head">
-        <div><h2>知识库 · 科研假设池</h2><p class="muted">Idea Pool 不是 Roadmap。每个想法必须有实验触发条件。</p></div>
+        <div><h2>知识库 · 当前研究假设池</h2><p class="muted">这里围绕领导定义的主问题组织，不再无限发散。</p></div>
       </div>
       <div class="grid three">
-        <article class="card"><h3>R0 · Action Consequence</h3><p>学习 decision-relevant action effect，而不是泛化地“预测 physics”。</p><span class="tag">触发：D3 consequence 明显优于 generic future latent</span></article>
-        <article class="card"><h3>R1 · Value-Oriented Physics</h3><p>Privileged physics 先服务 critic / candidate ranking，再决定是否蒸馏回 actor。</p><span class="tag">触发：D2 有明显 candidate headroom</span></article>
-        <article class="card"><h3>R2 · Correction Benefit</h3><p>学习“这次是否值得纠偏、哪种 correction 更好”。</p><span class="tag">触发：有 correction headroom 但误干预明显</span></article>
-        <article class="card"><h3>R3 · Execution History</h3><p>actual q / history / contact trace 可能比新 token 更重要。</p><span class="tag">触发：D1 history 增益大</span></article>
-        <article class="card"><h3>R4 · Failure Recovery Data</h3><p>失败附近的数据覆盖可能是最关键资源。</p><span class="tag">触发：D4 recovery data 明显胜出</span></article>
-        <article class="card"><h3>R5 · Adaptive Execution</h3><p>学习何时缩短 chunk、何时 replan、何时 async correction。</p><span class="tag">触发：D5 短 C 解决主要失败</span></article>
-        <article class="card"><h3>Fast Memory + Slow RL</h3><p>Zeva-style Context Evolution 与 RLT-style Policy Evolution 的双时间尺度适应。</p><span class="tag">长期</span></article>
-        <article class="card"><h3>Validation-Gated Consolidation</h3><p>借鉴 Zetta / ASPIRE：经验先验证，再进入长期 skill / replay / distillation。</p><span class="tag">长期</span></article>
-        <article class="card"><h3>Physical Experience Flywheel</h3><p>Deploy → Experience → Evaluate → Learn → Redeploy → Consolidate → Share。</p><span class="tag">North Star</span></article>
+        <article class="card"><h3>H1 · Head vs Backbone</h3><p>Action-head pre-output features 是否比 backbone features 更适合物理 adaptation readout？</p><span class="tag">首轮必须验证</span></article>
+        <article class="card"><h3>H2 · Transition Grounding</h3><p>Measured action→outcome prediction 是否让 compact token 更适合在线 learner？</p><span class="tag">B1</span></article>
+        <article class="card"><h3>H3 · Valid Physics</h3><p>Kinematic / actuator constraints 是否在 transition loss 之外提供独立增益？</p><span class="tag">B2</span></article>
+        <article class="card"><h3>H4 · Online Adaptation</h3><p>冻结大模型时，小 actor/critic 是否能利用 grounded token 更快适应 physical shift？</p><span class="tag">matched budget</span></article>
+        <article class="card"><h3>H5 · Universal</h3><p>共享 token shape / objectives 能否通过轻量 adapter 迁到 held-out action-head family 与 embodiment？</p><span class="tag">后续强 claim</span></article>
+        <article class="card"><h3>H6 · Streaming</h3><p>在 Physical Token 成立后，无 replay / low-memory streaming learner 是否进一步降低 adaptation cost？</p><span class="tag">后置，不与 B1/B2 同时改</span></article>
       </div>
     </section>
 
     <section id="logs">
-      <h2>09 · 科研日志</h2>
+      <h2>07 · 科研日志</h2>
       <div id="experimentList" class="timeline"></div>
       <p>
         <a class="button secondary" href="reader.html?path=research/experiment-log.md">实验日志全文</a>
@@ -317,23 +311,21 @@
     </section>
 
     <section id="archive">
-      <h2>10 · 详细资料</h2>
+      <h2>08 · 详细资料</h2>
       <div class="grid three">
-        <a class="card link-card" href="reader.html?path=research/master-roadmap.md"><h3>Research Roadmap</h3><p>四阶段主线、平台、Baseline、诊断与 Self-Improvement。</p></a>
-        <a class="card link-card" href="reader.html?path=research/rlt-multitask-benchmark.md"><h3>RLT Multi-task Benchmark</h3><p>当前主执行文档：任务、验收、代码复用与里程碑。</p></a>
-        <a class="card link-card" href="reader.html?path=research/robodojo-b300-log.md"><h3>RoboDojo on B300</h3><p>每日小任务推进：安装、兼容性、smoke、Dojo-Eval。</p></a>
-        <a class="card link-card" href="reader.html?path=research/frontier-landscape.md"><h3>具身自进化前沿地图</h3><p>Policy、Failure、Physical、World Model、Memory、Harness、Agent、Fleet 等路线的系统调研。</p></a>
-        <a class="card link-card" href="reader.html?path=research/perspectives-and-theses.md"><h3>观点 / 具身 RSI</h3><p>SeeAct / RSI 观点与我们的分层自进化长期框架。</p></a>
-        <a class="card link-card" href="reader.html?path=research/reading-program.md"><h3>每日论文阅读计划</h3><p>按当前瓶颈组织论文，而不是按热度追论文。</p></a>
-        <a class="card link-card" href="reader.html?path=research/knowledge-base-maintenance.md"><h3>知识库维护协议</h3><p>实验、论文、观点和历史版本分别进入什么位置，以及什么情况下允许改变主线。</p></a>
-        <a class="card link-card" href="archive/v0.4-original.html"><h3>v0.4 历史完整快照</h3><p>保留重构前完整单文件版本，防止过去的学习资料、观点和假设在整理过程中丢失。</p></a>
-        <a class="card link-card" href="reader.html?path=notes/zeva.md"><h3>Zeva</h3><p>Context Evolution / Causal Memory / Action→State Change。</p></a>
-        <a class="card link-card" href="reader.html?path=notes/rlt.md"><h3>RLT</h3><p>当前主 baseline：RL Token、reference action、action chunk、online RL。</p></a>
-        <a class="card link-card" href="reader.html?path=notes/smoothrl.md"><h3>SmoothRL</h3><p>Asynchronous execution 下的 partial chunk 与 value-gradient 对齐。</p></a>
+        <a class="card link-card" href="reader.html?path=research/physical-token-leadership-spec.md"><h3>Leadership Physical Token Spec</h3><p>当前 Source of Truth：action-head interface、physical objectives、online update contract 与首轮实验。</p></a>
+        <a class="card link-card" href="reader.html?path=research/master-roadmap.md"><h3>Research Roadmap</h3><p>按领导方案重写后的执行主线与 Gate。</p></a>
+        <a class="card link-card" href="reader.html?path=research/rlt-multitask-benchmark.md"><h3>RL Token / Physical Token Validation</h3><p>B0/B1/B2 matched comparison、指标与 universality protocol。</p></a>
+        <a class="card link-card" href="reader.html?path=research/robodojo-b300-log.md"><h3>RoboDojo on B300</h3><p>独立支线；未实测前不形成兼容性结论。</p></a>
+        <a class="card link-card" href="reader.html?path=research/frontier-landscape.md"><h3>具身自进化前沿地图</h3><p>Related work / inspiration，不覆盖当前领导主线。</p></a>
+        <a class="card link-card" href="reader.html?path=research/knowledge-base-maintenance.md"><h3>知识库维护协议</h3><p>实验、论文、观点、公开脱敏与历史记录规则。</p></a>
+        <a class="card link-card" href="archive/v0.4-original.html"><h3>历史完整快照</h3><p>保留旧 Research OS，避免路线修正时丢失历史知识。</p></a>
+        <a class="card link-card" href="reader.html?path=notes/rlt.md"><h3>RLT</h3><p>当前 baseline：compact readout + lightweight online RL。</p></a>
+        <a class="card link-card" href="reader.html?path=notes/rise.md"><h3>RISE</h3><p>World-model imagination related work，不是当前首轮方法。</p></a>
       </div>
     </section>
 
-    <footer>Physical Self-Evolution Research OS · maintained through GitHub · 2026</footer>
+    <footer>Universal Physical Token · Physical Self-Evolution Research OS · 2026</footer>
   </main>
   <script src="assets/app.js"></script>
 </body>
