@@ -1,5 +1,56 @@
 # 科研决策日志
 
+## 2026-09-15 · clean500 固定 train450 / val50，norm 只用 train450
+
+**决定：**
+
+Hammer 成功示范扩充到 500 条后，正式数据处理固定为：
+
+- 500 条成功 raw trajectories 全量完成并先做完整性验收；
+- 再固定拆分 `train450 / val50`；
+- norm stats **只使用 train450** 计算；
+- val50 不参与 norm 统计，也不参与训练期 checkpoint selection 的数据拟合。
+
+**原因：**
+
+当前 clean50 数据量小、重复采样高。扩充数据的目的之一是降低小数据重复和过拟合风险，因此必须提前冻结 train/val 与 norm 口径，避免后续根据结果调整划分造成泄漏。
+
+---
+
+## 2026-09-15 · RoboDojo 按 D0–D10 Gate 严格推进，D3 renderer 未通过前不跳到真实任务
+
+**决定：**
+
+RoboDojo 当前采用分层验收：
+
+- D0–D2：源码/资产/runtime；
+- D3：B300 headless app + RGB renderer；
+- D4：XPolicyLab CPU protocol；
+- D5：官方原生 task episode；
+- D6–D7：RLinf reference / Dojo-Eval；
+- D8–D9：training bridge / RLT L0；
+- D10：完整 baseline。
+
+截至当前：D0–D2 与 D4 已完成，D3 尚未执行。
+
+**原因：**
+
+Isaac Python import 成功不能替代真实 renderer/device 验收，XPolicyLab CPU closed loop 也不能替代 Dojo-Eval。保持 gate 分离可以避免把“环境能启动”“policy 协议能通信”“RLinf 已接入”“online RL 已跑通”混成一个结论。
+
+---
+
+## 2026-09-15 · RoboDojo simulator 与 policy runtime 继续隔离依赖
+
+**决定：**
+
+RoboDojo/Isaac simulator runtime 与 XPolicyLab policy runtime 保持独立 Python 环境；后续 RLinf integration 优先复用跨进程 bridge，而不是把所有依赖强行合并。
+
+**原因：**
+
+已观察到 Isaac runtime 与 XPolicyLab 对 `websockets` 的版本要求冲突。分离环境已完成 CPU protocol 验证，同时避免污染 hammer 训练环境。
+
+---
+
 ## 2026-09-15 · 在 B0/B1/B2 之前增加 Gate 0：Baseline Recovery
 
 **决定：**
@@ -96,197 +147,81 @@ B2 + valid physics
 
 此前 Research OS 自动扩展出的“RLT Multi-task Benchmark → Failure Diagnosis → Physical Experience → Self-Improvement”四阶段路线不删除，但降级为**历史探索框架**，不再覆盖领导定义的主规范。
 
-**原因：**
-
-领导最新 PPT 已把研究对象、表示位置、physical objectives、online update contract 和首轮消融写得更具体。后续仓库与网站优先按该定义维护，不再让宽泛的 AI 辅助 brainstorming 反向决定科研问题。
-
 ---
 
 ## 2026-09-14 · Physical Token 固定在 action-head readout
 
-**决定：**
-
-第一版 Physical Token 优先从 action head 的 pre-output / pre-projection features 读取，并显式融合：
-
-- recent measured robot state；
-- actual / executed-action history；
-- robot morphology / control convention metadata。
-
-通过 lightweight model adapter + learned readout 输出固定形状 `K × d` token。
-
-必须保留：
-
-> **Action-head tap vs Backbone tap**
-
-作为关键对照。
-
-**原因：**
-
-“Action head 更接近物理动作生成”是研究假设，不是默认事实；action head 也可能丢失部分物理信息，因此必须实验验证 tap location 本身的贡献。
+第一版 Physical Token 优先从 action head 的 pre-output / pre-projection features 读取，并显式融合 recent measured robot state、actual/executed-action history 与 robot/control metadata。必须保留 Action-head tap vs Backbone tap 作为关键对照。
 
 ---
 
 ## 2026-09-14 · Universal 是 empirical hypothesis，不是现有结果
 
-**决定：**
-
-当前“Universal”只允许表示：
-
-- shared token shape；
-- shared physical objectives；
-- lightweight model-family / robot adapters。
-
-只有当前 model/robot 上成立后，才能进入 held-out head family 与 held-out embodiment 测试。
-
-**禁止提前表述：**“已经适配所有 action model / 本体”。
+当前“Universal”只允许表示 shared token shape、shared physical objectives 与 lightweight model-family / robot adapters；跨模型/跨本体必须通过 held-out 实验后再升级为结果。
 
 ---
 
 ## 2026-09-14 · Physical objective 首轮固定为 reconstruction + transition + valid physics
 
-**决定：**
-
-第一版目标：
+第一版：
 
 ```text
 L_token = L_ro + λ_dyn L_dyn + λ_phys L_phys
 ```
 
-其中：
-
-- `L_ro`：stop-gradient action-head feature reconstruction；
-- `L_dyn`：基于 actual/executed action 的 measured transition prediction；
-- `L_phys`：优先 kinematic consistency + actuator feasibility。
-
-Contact / friction / rigid-body / force-torque 项只有 sensing、model、calibration 有效时才加入。
-
-**原因：**
-
-避免把“模拟器里能导出的物理量”直接等价成“可信的物理监督”。首轮只使用定义明确、量纲与 frame 可核对的物理约束。
+`L_phys` 第一版优先 kinematic consistency + actuator feasibility；contact/friction/rigid-body/force-torque 只有 sensing、model、calibration 有效时才加入。
 
 ---
 
 ## 2026-09-14 · 首轮主实验固定为 B0/B1/B2，Streaming RL 后置
 
-**决定：**
+1. B0：RL Token / matched head-readout baseline；
+2. B1：B0 + measured transition loss；
+3. B2：B1 + valid physics loss。
 
-首轮正式比较固定为：
-
-1. `B0`：RL Token / matched head-readout baseline；
-2. `B1`：B0 + measured transition loss；
-3. `B2`：B1 + valid physics loss。
-
-严格 matched：token size、learner capacity、base model、data、interaction budget、reward、seed、chunk/timing。
-
-Streaming Actor–Critic、batch≈1、no replay、uncertainty-aware update 等保留为后续 online-efficiency 方向，不与首轮 Physical Token 表示变量同时改变。
-
-**原因：**
-
-如果同时改 representation 和 learner，很难判断收益来自 Physical Token 还是 Streaming RL。
+表示变量与 learner 变量不同时改变。
 
 ---
 
 ## 2026-09-14 · Online self-improvement 的参数冻结边界
 
-**决定：**
-
-在线阶段默认：
-
-- freeze base model；
-- freeze action head；
-- freeze token encoder/readout；
-- update small actor/critic；
-- 使用 actual executed actions 与 task rewards；
-- outcome decoder 用 measured transitions 单独训练；
-- actor update 时 decoder weights frozen，但保留 action gradient。
-
-**原因：**
-
-项目要验证的是“轻量接口吸收物理变化”，而不是通过重新训练大 action model 获得提升。
+在线阶段默认 freeze base model、action head、token encoder/readout；只更新 small actor/critic。Outcome decoder 用 measured transitions 单独训练。
 
 ---
 
 ## 2026-09-14 · 现有视频只记为 RL Token qualitative baseline
 
-**决定：**
-
-现有 block assembly、drawer opening + placement 视频，只记录为：
-
-> **RL Token reproduction / qualitative baseline demonstrations**
-
-禁止把它们写成 Physical Token / transition loss / physics loss / Universal 的实验结果。
+现有 block assembly、drawer opening + placement 视频只作为 RL Token reproduction / qualitative baseline demonstrations。
 
 ---
 
 ## 2026-09-12 · Paper-aligned Stage 1 口径纠正
 
-**决定：**
-
-第一条 hammer RLT 主线 Stage 1 从 **通用 π0.5 base** 开始，在目标任务 demonstrations 上联合完成：
-
-- VLA task loss；
-- RLT reconstruction loss。
-
-本地沿用 RLinf 的 `rlt_alpha=1.0`。独立训练好的 20k task-SFT checkpoint 只保留为：
-
-- standalone reference；
-- post-SFT 工程兼容性/额外对照。
-
-它不再作为 paper-aligned Stage 1 的必要初始化。
-
-**原因：**
-
-重新核对论文训练流程与本地代码梯度语义后，确认 `prefix_out.detach()` 使 RLT reconstruction 不回传 VLA；当 alpha>0 时 VLA 由 `vla_loss` 更新。本地 base-init 1-step smoke 已通过，支持进入 2,000-step joint-full。
+第一条 hammer RLT 主线 Stage 1 从通用 π0.5 base 开始，在目标任务 demonstrations 上联合完成 VLA task loss + RLT reconstruction；独立 20k task-SFT 保留为 standalone reference / post-SFT 对照。
 
 ---
 
 ## 2026-09-12 · Stage 2 正式口径固定为 C=10【历史工程口径，2026-09-15 增加执行协议限定】
 
-**历史决定：**
-
-- RLT 论文 actor chunk 使用 `C=10`；
-- π0.5 reference horizon 为 `H=50`；
-- reference dropout 为 0.5。
-
-**当前限定：**
-
-在 RoboTwin TOPP 语义下，`H50/C10` 不能再直接作为 Stage1 reference 能力的公平锚点；论文式 C10 必须单独建立与验证控制/transition 适配。
+RLT 论文 actor chunk 使用 `C=10`，但在 RoboTwin TOPP 语义下，`H50/C10` 不能直接作为已有 H50 Stage1 checkpoint 的公平能力锚点；论文式 C10 必须单独建立与验证控制/transition适配。
 
 ---
 
 ## 2026-09-12 · RoboTwin 2.0 版本顺序
 
-**决定：**
-
-1. 先在 **RoboTwin 2.0 / RLinf_support pinned path** 完成第一条可信 baseline；
-2. baseline 冻结后，再迁移到 RoboTwin 2.0 `main` bridge；
-3. 不同时切换环境版本和算法复现，以免无法归因。
+先在 RoboTwin 2.0 / RLinf_support pinned path 完成第一条可信 baseline，再迁移 RoboTwin 2.0 main bridge；不同时切换环境版本和算法复现。
 
 ---
 
 ## 2026-09-12 · Reference 正式评估前固定双重随机性
 
-**决定：**
-
-正式 reference/RLT 配对评估前必须同时固定：
-
-- environment seed；
-- action-sampling seed。
+正式 reference/RLT 配对评估前同时固定 environment seed 与 action-sampling seed。
 
 ---
 
 ## 2026-09-12 · Physics sidecar 暂不进入 baseline observation
 
-**决定：**
-
-已有 contact / impulse / actual state / object dynamics sidecar 继续作为：
-
-- logging；
-- failure analysis；
-- future representation probe；
-- future critic/reward/auxiliary target 候选。
-
-第一条 baseline 不把这些 simulator privileged labels 拼入 actor/policy observation。
+已有 privileged sidecar 继续作为 logging、failure analysis、future representation probe 与 critic/reward/auxiliary target 候选；不直接拼进第一条 baseline policy observation。
 
 ---
 
@@ -298,19 +233,16 @@ Streaming Actor–Critic、batch≈1、no replay、uncertainty-aware update 等�
 
 ## 2026-09-11 · Hammer 的重新定位
 
-Hammer 当前定位为：pipeline regression、transition/physics logging 与 controlled ablation 资产，不定义 Universal Physical Token 的上位故事。
+Hammer 当前定位为 pipeline regression、transition/physics logging 与 controlled ablation 资产，不定义 Universal Physical Token 的上位故事。
 
 ---
 
 ## 2026-09-11 · RoboTwin2 / RoboDojo 分工
 
-- RoboTwin / 现有 RL Token infrastructure：当前 baseline 与 Physical Token 验证平台；
-- RoboDojo：B300 上的独立支线，仍须实测后才形成兼容性结论。
+RoboTwin / 现有 RL Token infrastructure 是当前 baseline 与 Physical Token 验证平台；RoboDojo 是独立支线，按自身 Gate 验收。
 
 ---
 
 ## 2026-09-11 · Paper Reading Guardrail
 
-新论文默认只进入知识库，不自动修改研究主线。
-
-如果论文观点与领导定义的主实验冲突，先按领导实验合同完成可验证结果，再把论文作为 baseline / ablation / discussion。
+新论文默认只进入知识库，不自动修改研究主线；如果与领导主实验冲突，先完成领导定义的实验合同，再作为 baseline / ablation / discussion。
