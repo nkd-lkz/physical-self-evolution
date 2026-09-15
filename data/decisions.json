@@ -1,5 +1,25 @@
 [
   {
+    "date": "2026-09-15",
+    "decision": "在 B0/B1/B2 之前增加 Gate 0 Baseline Recovery。",
+    "reason": "旧 Stage2 零成功同时受到 Stage1 capability 与 RoboTwin H/C 执行协议影响；先恢复可信 reference 和 online baseline，Physical Token 消融才有因果解释。"
+  },
+  {
+    "date": "2026-09-15",
+    "decision": "当前 RoboTwin Stage1 能力锚点使用 H50/C50；H50/C10 只保留为历史执行协议诊断。",
+    "reason": "每10个目标重新进入TOPP会改变规划边界、物理时长、再观测频率与状态分布，因此不能把H50/C10直接当作已有H50 checkpoint的公平能力结论。"
+  },
+  {
+    "date": "2026-09-15",
+    "decision": "Stage1 baseline recovery 优先采用 generic pi05_base + rlt_alpha=1 + 20k joint training；SFT20k + alpha0 + 2k 暂缓。",
+    "reason": "保留论文/官方 base-init joint topology，同时补足旧2k Stage1明显较小的训练预算；这是受控恢复实验，不把训练步数提前定义成唯一根因。"
+  },
+  {
+    "date": "2026-09-15",
+    "decision": "新 Stage1 checkpoint 按固定 seed H50/C50 闭环能力选择，不按最低 train loss 选择。",
+    "reason": "clean50 数据较小而 20k×64 的重复采样很高，低 imitation/reconstruction loss 不等于更好的闭环成功率，必须看 success、completion time、failure stage 与 paired stability。"
+  },
+  {
     "date": "2026-09-14",
     "decision": "当前上位研究主线改为 Universal Physical Token for Robot Self-Evolution。",
     "reason": "领导最新方案把研究对象收敛到 action-head compact readout + measured transition grounding + valid physics constraints + lightweight online adaptation；此前更宽泛的四阶段路线降级为历史探索。"
@@ -41,8 +61,8 @@
   },
   {
     "date": "2026-09-12",
-    "decision": "正式 Stage 2 使用 C=10、reference H=50、dropout=0.5；C=1 只用于接线调试。",
-    "reason": "mock 时序已经覆盖 C=10 的逐子步执行、early done、actual executed length 与 terminal observation；下一门槛是真实 rollout。"
+    "decision": "论文 C=10 仍是 RLT 目标语义，但 RoboTwin 的 H50/C10 不能直接作为已有 H50 Stage1 checkpoint 的公平能力锚点。",
+    "reason": "RoboTwin TOPP 执行使 C10 分段重新规划改变实际执行语义；论文式 C10 需要单独设计并验证。"
   },
   {
     "date": "2026-09-12",
@@ -52,7 +72,7 @@
   {
     "date": "2026-09-12",
     "decision": "正式 reference/RLT 配对评估前同时固定 environment seed 与 action-sampling seed。",
-    "reason": "当前 4-env sweep 固定了 reset seeds，但 π0.5 action generation 的随机噪声尚未独立固定，因此不能把快筛当成严格 checkpoint 排名。"
+    "reason": "早期 checkpoint sweep 只固定 reset seeds，π0.5 action generation 的随机噪声未固定，因此快筛不能视作严格 checkpoint 排名。"
   },
   {
     "date": "2026-09-12",
