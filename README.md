@@ -6,21 +6,62 @@ Living research website for **Universal Physical Token, robot self-improvement, 
 
 **https://nkd-lkz.github.io/physical-self-evolution/**
 
-## Current research mainline — 2026-09-14
+## Current research mainline — 2026-09-15
 
-The project has been refocused according to the latest leadership research proposal.
+The project is aligned to the leadership-defined research proposal:
 
 > **Universal Physical Token for Robot Self-Evolution**
 
 Current question:
 
-> Can we read a compact representation from an existing action-generation head, ground it with measured transition prediction and valid physical constraints, and use a small online learner to adapt to changing contact dynamics **without retraining the action model**?
+> Can we read a compact representation from an existing action-generation head, ground it with measured transition prediction and valid physical constraints, and use a small online learner to adapt to changing contact dynamics **without retraining the action model during online adaptation**?
 
 The current source of truth is:
 
 - [`research/physical-token-leadership-spec.md`](research/physical-token-leadership-spec.md)
 - [`research/master-roadmap.md`](research/master-roadmap.md)
-- [`research/rlt-multitask-benchmark.md`](research/rlt-multitask-benchmark.md) — now a baseline / validation protocol rather than the top-level research story.
+- [`research/rlt-multitask-benchmark.md`](research/rlt-multitask-benchmark.md) — baseline / validation protocol
+- [`research/progress-2026-09-15.md`](research/progress-2026-09-15.md) — latest baseline recovery status
+
+## Current execution gate: recover a trustworthy B0 baseline first
+
+Before implementing B1/B2, the project is currently in **Gate 0 — Baseline Recovery**:
+
+```text
+Recover a usable Stage1 reference
+        ↓
+Fix RoboTwin execution / timing semantics
+        ↓
+Establish a trustworthy B0 online baseline
+        ↓
+B1 + measured transition loss
+        ↓
+B2 + valid physics loss
+```
+
+Two separate issues are now tracked:
+
+1. **Execution protocol** — existing hammer Stage1 uses `H=50`; RoboTwin native TOPP execution under `H50/C50` is the current capability anchor. Historical `H50/C10` changes replanning boundaries and is kept as a diagnostic setting, not a fair reference capability result.
+2. **Stage1 capability** — the old base-init Stage1 used only 2k optimizer steps / global batch32, while standalone task-SFT used 20k / batch64. Paired H50/C50 evaluation shows at least one scene where SFT succeeds and the old Stage1 fails, while an additional positive-control scene shows both can succeed. This motivates stronger Stage1 recovery, but does **not** prove training budget is the unique root cause.
+
+## Current Stage1 recovery experiment
+
+The next baseline run is configured as:
+
+- generic `pi05_base` initialization;
+- `rlt_alpha=1`;
+- joint VLA task adaptation + RLT reconstruction;
+- `H=50`;
+- 20,000 optimizer steps;
+- 2-GPU data parallel;
+- global batch 64 / micro batch 2;
+- gradient accumulation 16 per rank;
+- warmup 1,000 steps;
+- checkpoint every 2,000 steps.
+
+The configuration dry-run has passed. **The full GPU training is still pending and is not recorded as completed.**
+
+Checkpoint selection will use fixed-seed `H50/C50` closed-loop capability curves (`2k / 4k / ... / 20k`), not minimum training loss.
 
 ## Core architecture
 
@@ -52,9 +93,9 @@ L_token = L_ro + λ_dyn L_dyn + λ_phys L_phys
 
 Contact / friction / rigid-body residuals are optional and require valid sensing, models and calibration.
 
-## Initial experiment
+## Initial Physical Token experiment
 
-The first controlled comparison is intentionally small:
+After Gate 0 is stable, the first controlled comparison remains:
 
 1. **B0 — RL Token / matched head-readout baseline**
 2. **B1 — B0 + measured transition loss**
@@ -91,27 +132,12 @@ It means:
 
 Cross-model and cross-robot transfer must be demonstrated on held-out model-head families and held-out embodiments before being claimed.
 
-## Online self-improvement scope
-
-During the online learning phase the default contract is:
-
-- base model frozen;
-- action head frozen;
-- token encoder/readout frozen;
-- small actor/critic updated from actual executed actions and task rewards;
-- outcome decoder trained separately from measured transitions.
-
-This is the current operational meaning of robot self-improvement in this project.
-
 ## Existing evidence
 
-Current block-assembly and drawer-opening/placement clips are treated as:
-
-> **RL Token qualitative reproduction / baseline demonstrations**
-
-They are **not** Physical Token results and are not evidence for transition loss, physics loss or universality.
-
-Existing hammer / RoboTwin assets remain useful for regression, transition logging and controlled physics experiments, but they no longer define the top-level research story.
+- Existing block-assembly and drawer-opening/placement clips are **RL Token qualitative reproduction / baseline demonstrations**, not Physical Token results.
+- Hammer data / norm / checkpoints / transition logging remain valuable baseline infrastructure.
+- The old Stage2 run proved rollout → replay → actor/critic update → weight sync → checkpoint engineering, but its zero-reward episodes do **not** establish a usable B0 performance baseline.
+- Expert reward probing has produced a positive success/reward example, so the current evidence does not support the claim that the task can never emit positive reward.
 
 ## Streaming RL
 
@@ -120,7 +146,7 @@ Streaming RL remains a later online-efficiency direction.
 The current order is:
 
 ```text
-RL Token / head-readout baseline
+Gate 0: trustworthy RL Token baseline
 → + transition grounding
 → + physics grounding
 → matched online adaptation
@@ -133,7 +159,7 @@ We intentionally do not mix Physical Token and Streaming RL in the first ablatio
 
 ## Platform status
 
-- **RoboTwin / existing RL Token infrastructure**: baseline and Physical Token validation platform.
+- **RoboTwin / existing RL Token infrastructure**: current baseline and Physical Token validation platform.
 - **RoboDojo on B300**: side track only; current status remains **not yet tested on this machine**. No compatibility claim is recorded without local evidence.
 
 ## Public repository policy
@@ -158,6 +184,7 @@ See [`research/knowledge-base-maintenance.md`](research/knowledge-base-maintenan
     ├── physical-token-leadership-spec.md
     ├── master-roadmap.md
     ├── rlt-multitask-benchmark.md
+    ├── progress-2026-09-15.md
     ├── progress-2026-09-12.md
     ├── robodojo-b300-log.md
     ├── experiment-log.md
