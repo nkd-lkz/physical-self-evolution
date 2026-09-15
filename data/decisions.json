@@ -1,6 +1,21 @@
 [
   {
     "date": "2026-09-15",
+    "decision": "clean500 完成后固定 train450/val50，norm stats 只使用 train450。",
+    "reason": "数据扩充用于降低 clean50 的重复采样与过拟合风险，因此提前冻结 split 与 norm 口径，避免 validation leakage。"
+  },
+  {
+    "date": "2026-09-15",
+    "decision": "RoboDojo 严格按 D0–D10 Gate 推进；D3 B300 renderer 未通过前不进入官方 GPU task，D7 未完成前不做 training bridge。",
+    "reason": "Isaac import、CPU policy protocol、Dojo-Eval 与 Dojo-RL 是不同验收层级，必须分别留证，避免把基础设施成功误写成算法接入成功。"
+  },
+  {
+    "date": "2026-09-15",
+    "decision": "RoboDojo simulator runtime 与 XPolicyLab/RLinf policy runtime 保持环境隔离。",
+    "reason": "已观察到 Isaac runtime 与 XPolicyLab 对 websockets 的版本要求冲突；跨进程 bridge 能避免污染 hammer 环境并更符合后续 Dojo-RL 架构。"
+  },
+  {
+    "date": "2026-09-15",
     "decision": "在 B0/B1/B2 之前增加 Gate 0 Baseline Recovery。",
     "reason": "旧 Stage2 零成功同时受到 Stage1 capability 与 RoboTwin H/C 执行协议影响；先恢复可信 reference 和 online baseline，Physical Token 消融才有因果解释。"
   },
@@ -12,22 +27,22 @@
   {
     "date": "2026-09-15",
     "decision": "Stage1 baseline recovery 优先采用 generic pi05_base + rlt_alpha=1 + 20k joint training；SFT20k + alpha0 + 2k 暂缓。",
-    "reason": "保留论文/官方 base-init joint topology，同时补足旧2k Stage1明显较小的训练预算；这是受控恢复实验，不把训练步数提前定义成唯一根因。"
+    "reason": "保留论文/官方 base-init joint topology，同时补足旧2k Stage1较小的训练预算；这是受控恢复实验，不把训练步数提前定义成唯一根因。"
   },
   {
     "date": "2026-09-15",
     "decision": "新 Stage1 checkpoint 按固定 seed H50/C50 闭环能力选择，不按最低 train loss 选择。",
-    "reason": "clean50 数据较小而 20k×64 的重复采样很高，低 imitation/reconstruction loss 不等于更好的闭环成功率，必须看 success、completion time、failure stage 与 paired stability。"
+    "reason": "clean50 数据小、20k×64 重复采样高；低训练 loss 不等于更好的闭环成功率，必须看 success、completion time、failure stage 与 paired stability。"
   },
   {
     "date": "2026-09-14",
     "decision": "当前上位研究主线改为 Universal Physical Token for Robot Self-Evolution。",
-    "reason": "领导最新方案把研究对象收敛到 action-head compact readout + measured transition grounding + valid physics constraints + lightweight online adaptation；此前更宽泛的四阶段路线降级为历史探索。"
+    "reason": "领导方案把研究对象收敛到 action-head compact readout + measured transition grounding + valid physics constraints + lightweight online adaptation。"
   },
   {
     "date": "2026-09-14",
     "decision": "Physical Token 第一版从 action-head pre-output features 读取，并融合 recent measured robot state、actual/executed-action history 与 robot/control metadata。",
-    "reason": "action-head proximity to action generation 是核心假设，但必须保留 action-head tap vs backbone tap 对照，避免把 tap 位置变化误当作 physics grounding 收益。"
+    "reason": "action-head proximity to action generation 是核心假设，但必须保留 action-head tap vs backbone tap 对照。"
   },
   {
     "date": "2026-09-14",
@@ -37,12 +52,12 @@
   {
     "date": "2026-09-14",
     "decision": "首轮目标固定为 L_token = L_ro + lambda_dyn L_dyn + lambda_phys L_phys；physics loss 先用 kinematic consistency 与 actuator feasibility。",
-    "reason": "Contact/friction/rigid-body/force terms 只有 sensing、model、calibration 有效时才加入，避免把 simulator 可导出字段自动当成可信物理监督。"
+    "reason": "contact/friction/rigid-body/force terms 只有 sensing、model、calibration 有效时才加入。"
   },
   {
     "date": "2026-09-14",
     "decision": "首轮正式比较固定为 B0 RL Token/head-readout baseline、B1 + measured transition loss、B2 + valid physics loss；Streaming RL 后置。",
-    "reason": "首轮只改变 representation grounding，保持 learner/data/interaction budget 匹配；先证明 Physical Token 再研究 replay vs streaming，避免变量耦合。"
+    "reason": "先只改变 representation grounding，避免与 learner/replay 变量耦合。"
   },
   {
     "date": "2026-09-14",
@@ -52,12 +67,12 @@
   {
     "date": "2026-09-14",
     "decision": "现有 block assembly 与 drawer opening/placement 视频只作为 RL Token qualitative reproduction。",
-    "reason": "没有 Physical Token、transition loss、physics loss 或 universality 的定量对照，不能提前写成方法结果。"
+    "reason": "没有 Physical Token、transition loss、physics loss 或 universality 的定量对照。"
   },
   {
     "date": "2026-09-12",
     "decision": "Paper-aligned hammer RLT Stage 1 从通用 π0.5 base 开始联合训练，而不是把独立 20k task-SFT 作为必要初始化。",
-    "reason": "论文/代码复核与 base-init smoke 都支持：RLT reconstruction 只更新 RLT module，alpha>0 时 VLA 由 vla_loss 更新；20k SFT 保留为 standalone reference / post-SFT 对照。"
+    "reason": "RLT reconstruction 只更新 RLT module，alpha>0 时 VLA 由 vla_loss 更新；20k SFT 保留为 standalone reference / post-SFT 对照。"
   },
   {
     "date": "2026-09-12",
@@ -67,17 +82,17 @@
   {
     "date": "2026-09-12",
     "decision": "先完成 RoboTwin 2.0 / RLinf_support pinned baseline，再迁移 RoboTwin 2.0 main。",
-    "reason": "不同时改变环境版本和算法复现；latest-main bridge 已完成 transition 对齐，但 learner smoke 仍未完成。"
+    "reason": "不同时改变环境版本和算法复现。"
   },
   {
     "date": "2026-09-12",
     "decision": "正式 reference/RLT 配对评估前同时固定 environment seed 与 action-sampling seed。",
-    "reason": "早期 checkpoint sweep 只固定 reset seeds，π0.5 action generation 的随机噪声未固定，因此快筛不能视作严格 checkpoint 排名。"
+    "reason": "早期 checkpoint sweep 只固定 reset seeds，π0.5 action sampling noise 未固定。"
   },
   {
     "date": "2026-09-12",
     "decision": "Physics sidecar 不直接进入 baseline policy observation。",
-    "reason": "privileged simulator fields 只能按 measured/valid/calibrated 规则作为 logging、transition target 或 physics-constraint候选，不自动成为部署输入。"
+    "reason": "privileged simulator fields 只能按 measured/valid/calibrated 规则作为 logging、transition target 或 physics-constraint候选。"
   },
   {
     "date": "2026-09-11",
