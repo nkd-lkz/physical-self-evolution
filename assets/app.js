@@ -37,6 +37,8 @@ function renderCurrentStatus(s){
   }
   const statusHeading=document.querySelector('#status h2');
   if(statusHeading&&s.as_of){statusHeading.title='动态状态快照：'+s.as_of;}
+  const dojoCard=document.querySelector('a[href*="research/robodojo-b300-log.md"] p');
+  if(dojoCard){dojoCard.textContent='D0–D2 与 D4 已通过；D3 B300 headless RGB renderer/device 仍待验收，Dojo-Eval / Dojo-RL 尚未开始。';}
 }
 function renderFrontier(){
   const q=(document.getElementById('frontierSearch')?.value||'').toLowerCase();
