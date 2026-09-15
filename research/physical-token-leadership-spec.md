@@ -1,6 +1,6 @@
 # Universal Physical Token：领导约束后的研究主线
 
-> 版本：2026-09-14  
+> 版本：2026-09-15  
 > 状态：**当前项目主规范 / Source of Truth**  
 > 说明：本页根据领导提供的两份 Physical Token PPT 整理。此前 Research OS 中更宽泛的“Physical Experience / Self-Evolution / 多阶段探索”只保留为历史与知识库背景，不再覆盖本页定义的主线。
 
@@ -10,7 +10,7 @@
 
 当前项目要回答的不是“预训练 action model 有没有能力”，而是：
 
-> **在不重新训练 action model 的前提下，能否用一个轻量、可复用的 Physical Token 接口，让机器人适应变化的接触动力学，并在在线交互中持续改进行为？**
+> **在不重新训练 action model 的在线适应阶段，能否用一个轻量、可复用的 Physical Token 接口，让机器人适应变化的接触动力学，并在在线交互中持续改进行为？**
 
 核心思路：
 
@@ -33,6 +33,31 @@ Behavior adaptation
 ```
 
 这里的重点是：**Physical Token 是 action-generation head 上的紧凑 readout，不是一个泛化到任意物理规律的“大而全世界模型”。**
+
+### 0.1 当前工程前置：Gate 0 — Baseline Recovery
+
+领导定义的 B0/B1/B2 科学问题不变，但当前已有 hammer RLT 工程结果暴露出两个必须先解决的 baseline 问题：
+
+1. **执行协议混杂**：已有 Stage1 使用 `H=50`；RoboTwin 原生 TOPP 下 `H50/C10` 与 `H50/C50` 会产生不同规划边界、物理时长和再观测分布，因此不能把历史 H50/C10 零成功直接解释成 Stage1 权重失效。
+2. **Stage1 capability 风险**：协议对齐后的开发配对中已经出现 SFT20k 成功、旧 Stage1 2k 失败的场景；同时也存在二者都成功的正对照。因此旧 Stage1 不是完全不可用，但还不足以成为稳定 B0 reference。
+
+因此当前执行顺序增加：
+
+```text
+Gate 0A  恢复可用 Stage1 reference
+       ↓
+Gate 0B  固定 execution / timing semantics
+       ↓
+Gate 0C  建立可信 B0 online baseline
+       ↓
+B1      + measured transition loss
+       ↓
+B2      + valid physics loss
+```
+
+当前 Stage1 recovery 方案：generic `pi05_base` + `rlt_alpha=1`，20k joint training，global batch64；checkpoint 按固定 seed 的 `H50/C50` 闭环能力曲线选择，不按最低训练 loss 选择。
+
+**Gate 0 不是新的科研主张，只是为了让 B0/B1/B2 的比较可解释。**
 
 ---
 
@@ -238,10 +263,11 @@ B2  B1 + physics loss
 
 优先实验顺序：
 
-1. 先在已复现的 RL Token 任务上完成 B0/B1/B2；
-2. 再引入明确的 physical shift / contact-dynamics shift；
-3. Physical Token 在单模型/单本体成立后，再做 held-out model head family；
-4. 最后做 held-out robot embodiment，检验 Universal hypothesis。
+1. 先通过 Gate 0 得到可信 B0；
+2. 在同一任务上完成 B0/B1/B2；
+3. 再引入明确的 physical shift / contact-dynamics shift；
+4. Physical Token 在单模型/单本体成立后，再做 held-out model head family；
+5. 最后做 held-out robot embodiment，检验 Universal hypothesis。
 
 ---
 
@@ -265,6 +291,8 @@ Hammer 等已有工程资产可以继续用于：
 - later controlled ablation；
 
 但它们不自动定义当前主研究故事。
+
+旧 Stage2 C10 run 当前只作为工程闭环证据，不作为 B0 性能基线。
 
 ---
 
@@ -306,7 +334,9 @@ Streaming RL 保留为后续 online-efficiency 方向，而不是第一组 Physi
 - “Physical Token 已经提升成功率”；
 - “Contact / friction law 已被模型显式掌握”；
 - “系统已经完成开放环境持续自进化”；
-- “Streaming RL 一定优于 replay”。
+- “Streaming RL 一定优于 replay”；
+- “旧 Stage2 零成功证明 RLT 缺 physics”；
+- “Stage1 训练步数不足已经被证明是唯一根因”。
 
 当前准确表述应为：
 
@@ -317,7 +347,7 @@ Streaming RL 保留为后续 online-efficiency 方向，而不是第一组 Physi
 ## 9. 当前执行顺序
 
 ```text
-RLT reproduction / baseline audit
+Gate 0 · trustworthy RL Token baseline
     ↓
 Action-head extraction contract
     ↓
