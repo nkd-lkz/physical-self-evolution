@@ -1,5 +1,20 @@
 [
   {
+    "date": "2026-09-15",
+    "title": "Hammer RLT 进入 Baseline Recovery gate",
+    "summary": "旧 base-init Stage1 2k 与旧 Stage2 继续保留为工程证据，但不再直接作为 Physical Token B0 性能基线。当前先恢复可信 Stage1 reference：严格区分 H50/C50 原生 RoboTwin TOPP 能力锚点与历史 H50/C10 执行协议；新优先实验为 pi05_base + rlt_alpha=1 的 20k joint Stage1。"
+  },
+  {
+    "date": "2026-09-15",
+    "title": "H50/C50 配对暴露 Stage1-specific capability gap",
+    "summary": "在固定 H50/C50 开发协议中，目前一个 seed 旧 Stage1 与 SFT20k 都失败，一个 seed 为 SFT20k 成功而旧 Stage1 失败；额外正对照 seed 两者都成功。结果说明旧 Stage1 并非完全失效，但存在能力不足风险；样本数不足，不能把训练步数或单一因素写成唯一根因。"
+  },
+  {
+    "date": "2026-09-15",
+    "title": "新 Stage1 20k 配置已通过 dry-run",
+    "summary": "新 baseline recovery 配置固定为 generic pi05_base、rlt_alpha=1、20k optimizer steps、2-GPU data parallel、global batch64、micro batch2、每 rank gradient accumulation16、warmup1000、每2000步保存。正式 GPU 训练仍待启动；checkpoint 将按固定 seed H50/C50 闭环能力而非最低 train loss 选择。"
+  },
+  {
     "date": "2026-09-14",
     "title": "主线按领导方案收敛为 Universal Physical Token",
     "summary": "根据领导提供的两份 Physical Token PPT，项目上位问题改为：从 action-generation head 读取 compact token，用 measured transition prediction 与有效 physics constraints grounding，再让冻结 action model 通过小型在线 learner 适应变化的接触动力学。此前更宽泛的 RLT Multi-task→Failure Diagnosis→Physical Experience→Self-Improvement 四阶段路线降级为历史探索。"
@@ -32,7 +47,7 @@
   {
     "date": "2026-09-12",
     "title": "Stage 2 C=10 时序语义完成 mock 验证",
-    "summary": "正式 actor chunk 固定 C=10、reference H=50、dropout=0.5；native adapter 已覆盖逐子步 reward/done/switch、early done、actual executed length、terminal observation 与 cross-chunk done freeze。该基础设施可继续服务 B0/B1/B2 在线对照。"
+    "summary": "正式 actor chunk 固定 C=10、reference H=50、dropout=0.5；native adapter 已覆盖逐子步 reward/done/switch、early done、actual executed length、terminal observation 与 cross-chunk done freeze。该基础设施继续保留为工程证据；2026-09-15 起 H50/C10 不再作为 Stage1 reference 能力锚点。"
   },
   {
     "date": "2026-09-12",
