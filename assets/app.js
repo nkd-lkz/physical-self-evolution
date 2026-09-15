@@ -5,19 +5,38 @@ let papers=[];
 let frontier=[];
 async function init(){
   try{
-    const [basePapers,latestPapers,baseFrontier,frontierAdds]=await Promise.all([
+    const [basePapers,latestPapers,baseFrontier,frontierAdds,currentStatus]=await Promise.all([
       loadJSON('data/papers.json'),
       loadJSONOptional('data/latest-readings.json'),
       loadJSON('data/frontier.json'),
-      loadJSONOptional('data/frontier-additions.json')
+      loadJSONOptional('data/frontier-additions.json'),
+      loadJSONOptional('data/current-status.json')
     ]);
     papers=[...latestPapers,...basePapers.filter(p=>!latestPapers.some(x=>x.id===p.id))];
     frontier=[...frontierAdds,...baseFrontier.filter(p=>!frontierAdds.some(x=>x.id===p.id))];
     renderPapers();
     renderFrontier();
+    renderCurrentStatus(currentStatus);
     const logs=await loadJSON('data/experiments.json');
     document.getElementById('experimentList').innerHTML=logs.map(x=>'<div><b>'+esc(x.date)+' · '+esc(x.title)+'</b><p>'+esc(x.summary)+'</p></div>').join('');
   }catch(e){console.error(e)}
+}
+function renderCurrentStatus(s){
+  if(!s||Array.isArray(s)||!s.metrics)return;
+  const metricWrap=document.querySelector('#status .metrics');
+  if(metricWrap){
+    metricWrap.innerHTML=s.metrics.map(x=>'<article class="card"><div class="metric">'+esc(x.value)+'</div><div class="muted">'+esc(x.label)+'</div></article>').join('');
+  }
+  const timeline=document.querySelector('#status .timeline');
+  if(timeline&&Array.isArray(s.timeline)){
+    timeline.innerHTML=s.timeline.map(x=>'<div><b>'+esc(x.title)+'</b><p>'+esc(x.body)+'</p></div>').join('');
+  }
+  const planBody=document.querySelector('#plan tbody');
+  if(planBody&&Array.isArray(s.plan)){
+    planBody.innerHTML=s.plan.map(x=>'<tr><td>'+esc(x.priority)+'</td><td>'+esc(x.action)+'</td><td>'+esc(x.evidence)+'</td></tr>').join('');
+  }
+  const statusHeading=document.querySelector('#status h2');
+  if(statusHeading&&s.as_of){statusHeading.title='动态状态快照：'+s.as_of;}
 }
 function renderFrontier(){
   const q=(document.getElementById('frontierSearch')?.value||'').toLowerCase();
