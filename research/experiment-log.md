@@ -1,5 +1,41 @@
 # 实验日志
 
+## 2026-09-15 · Hammer RLT baseline recovery：先恢复可信 B0，再进入 Physical Token
+
+### 事实
+
+- 旧 hammer Stage1 `base-init + rlt_alpha=1 + 2k` 已完成工程训练，但训练预算明显低于 standalone task-SFT20k：2k/global batch32 vs 20k/global batch64，样本槽位约相差 20×。
+- 离线动作误差检查显示旧 Stage1 的动作 MAE 约高于 SFT20k 4–5×；这支持“旧 Stage1 任务能力不足风险”，但尚不能把训练步数定义为唯一根因。
+- H/C 执行协议是另一个独立混杂变量：已有 H50 checkpoint 在 RoboTwin 原生整段 TOPP 下用 H50/C50 能成功；此前 H50/C10 会改变 TOPP 规划边界、物理时长和再观测分布，因此旧 C10 结果不能直接代表 Stage1 权重失效。
+- 固定 H50/C50 开发配对中，目前有一个 seed 两者都失败、一个 seed 为旧 Stage1 失败而 SFT20k 成功；另有一个额外正对照 seed 两者都成功。其余配对未完成的 seed 不计入结果。
+- 官方 expert 已在一个验证场景中完成任务，并沿 native→adapter 链路产生正 reward / success / terminated；因此目前没有证据支持“任务永远无法产生正奖励”。
+- 新 Stage1 决策为：从通用 `pi05_base` 开始，`rlt_alpha=1`，联合 VLA task adaptation + RLT reconstruction，20,000 optimizer steps，2-GPU data parallel，global batch64、micro batch2、每 rank gradient accumulation16、warmup1000、每2000步保存。
+- 新 Stage1 配置 dry-run 已通过；正式 GPU 训练当前仍是待启动 / 待验收状态。
+- `SFT20k + alpha0 + 2k` 暂缓，保留为后续保能力 / 初始化方式对照。
+
+### 解释
+
+当前不是“Physical Token 已经该实现”的阶段，而是领导版主线中的 **Gate 0 — Baseline Recovery**。
+
+需要严格区分两个问题：
+
+1. **execution protocol**：H50/C10 与 H50/C50 的 TOPP 边界不同；
+2. **Stage1 capability**：在协议对齐后，旧 2k Stage1 仍出现比 SFT20k 更弱的场景。
+
+因此现在最合理的动作是先恢复一个有闭环能力证据的 Stage1 reference，再建立可信 B0 online baseline。只有 B0 可解释后，B1 transition grounding / B2 physics grounding 才有因果意义。
+
+### 下一步
+
+1. 完成新的 `base + alpha1 + 20k` Stage1 joint training。
+2. 对 `2k/4k/.../20k` checkpoints 做固定 environment seed + action seed 的 H50/C50 闭环评测。
+3. 不按 train loss 最低选权重；按 success、completion time、failure stage 和配对稳定性选 Stage1 checkpoint。
+4. 冻结 Stage1 reference 后重新设计 Stage2 B0；旧 C10 Stage2 只保留为工程闭环证据。
+5. B0 稳定后再进入 B1 `+ measured transition` 与 B2 `+ valid physics`。
+
+详细记录：`research/progress-2026-09-15.md`。
+
+---
+
 ## 2026-09-14 · 领导方案约束后的科研主线修正
 
 ### 事实
