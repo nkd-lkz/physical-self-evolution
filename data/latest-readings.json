@@ -1,5 +1,32 @@
 [
   {
+    "id": "shaper",
+    "title": "Self-Evolving Embodied Agents via Skill-Harness Evolution (SHAPER)",
+    "year": "2026",
+    "layer": "Skill / Harness Evolution",
+    "theme": "harness",
+    "status": "已读 · 2026-09-16",
+    "tags": ["Train-free", "Frozen Model", "Skill Evolution", "Context Harness", "Textual Gradient", "Validation Gate"],
+    "one": "冻结 planner 与 executor，通过 target-environment rollouts 做局部 action-effect 诊断和 episode summarization，先演化 reusable skill，再演化 context-code harness，实现 non-parametric self-improvement。",
+    "method": [
+      "Agent factorization：frozen planner + frozen executor + textual skill + context-code harness",
+      "Rollout-guided textual diagnosis：before/action/after 的 round-level critique + episode summary + aggregate stats 形成 textual gradient",
+      "Two-stage evolution：先固定 harness 优化 skill，再固定 evolved skill 优化 harness",
+      "Harness code 先 sandbox validation，再在固定 validation set 上 beam-search / top-K selection",
+      "VLABench 的 evolved skill 学 actor-aware canonical commands、progress checking 与 recovery；ESI-Bench 的 evolved harness 学 sparse evidence-aware visual memory"
+    ],
+    "evidence": "VLABench：Direct VLA 23.25%、same-data SFT 24.0%、Seed Agent 28.25%、Skill 33.5%、Harness 30.5%、SHAPER 34.5%；ESI-Bench 231-question subset：Seed 32.5/31.2 micro/macro → SHAPER 49.8/42.9。",
+    "project": "最值得借的不是把 Agent 加进主线，而是强化 Gate 0 的归因纪律：policy/representation capability 与 execution harness 必须分开。可把 before→executed action→after→outcome 的层级诊断借到 hammer/RoboDojo failure analysis；当前不改变 B0→B1→B2。",
+    "boundary": "属于 train-free non-parametric evolution；没有更新 VLA/policy weights，没有真实机器人与 cross-embodiment 验证。当前只能作为 Frontier / diagnosis reference，不能替代 Physical Token 的 matched ablation。",
+    "questions": [
+      "如果同一 frozen policy 仅因 H/C、TOPP、context/execution harness 改变就显著变化，如何证明 B1/B2 的收益来自 physical grounding？",
+      "能否把 rollout 的 before→executed action→after 结构化为自动 failure card，而不引入新的 planner 变量？",
+      "哪些 future recovery / adaptive execution 模块需要像 SHAPER 一样经过 validation gate 才能写回系统？"
+    ],
+    "note": "reader.html?path=notes/shaper.md",
+    "url": "https://arxiv.org/abs/2608.11350"
+  },
+  {
     "id": "motus2",
     "title": "Motus2: A Self-Evolving General World Model for Dexterous Manipulation",
     "year": "2026",
