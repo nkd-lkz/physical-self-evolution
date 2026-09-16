@@ -1,21 +1,21 @@
 # Universal Physical Token：领导约束后的研究主线
 
-> 版本：2026-09-15  
+> 版本：2026-09-16  
 > 状态：**当前项目主规范 / Source of Truth**  
-> 说明：本页根据领导提供的两份 Physical Token PPT 整理。此前 Research OS 中更宽泛的“Physical Experience / Self-Evolution / 多阶段探索”只保留为历史与知识库背景，不再覆盖本页定义的主线。
+> 说明：本页根据领导提供的 Physical Token 方案与后续讨论持续维护。此前 Research OS 中更宽泛的“Physical Experience / Self-Evolution / Agent/Harness / 多阶段探索”只保留为历史与知识库背景，不再覆盖本页定义的主线。
 
 ---
 
 ## 0. 核心命题
 
-当前项目要回答的不是“预训练 action model 有没有能力”，而是：
+当前项目要回答的不是“预训练 action model 有没有能力”，也不是“能否用更强通用模型做高层 planner”，而是：
 
-> **在不重新训练 action model 的在线适应阶段，能否用一个轻量、可复用的 Physical Token 接口，让机器人适应变化的接触动力学，并在在线交互中持续改进行为？**
+> **在不重新训练 action model 的在线适应阶段，能否从 actor / action-generation head 提取一个轻量、可复用的通用 Physical Token，通过物理 grounding + 小型在线 learner，最终提升机器人在物理交互任务中的成功率？**
 
 核心思路：
 
 ```text
-Frozen action model
+Frozen action model / actor
       ↓
 Action-head pre-output features
       +
@@ -29,10 +29,10 @@ Fixed-size Physical Token z_t
       ↓
 Small online learner
       ↓
-Behavior adaptation
+Better physical adaptation / task success
 ```
 
-这里的重点是：**Physical Token 是 action-generation head 上的紧凑 readout，不是一个泛化到任意物理规律的“大而全世界模型”。**
+这里的重点是：**Physical Token 是 actor / action-generation head 上的紧凑 readout，不是一个高层 planner，也不是一个泛化到任意物理规律的“大而全世界模型”。**
 
 ### 0.1 当前工程前置：Gate 0 — Baseline Recovery
 
@@ -59,11 +59,45 @@ B2      + valid physics loss
 
 **Gate 0 不是新的科研主张，只是为了让 B0/B1/B2 的比较可解释。**
 
+### 0.2 领导最新边界：Planner / Harness 路线与本项目有本质区别
+
+针对 GPT-6 Astra + π0.5、Harness VLA、SHAPER 等工作，领导明确要求：
+
+> **这些工作主要是在看 planner / orchestration 怎么使用已有具身策略；本项目不是做 planner，而是从 actor 里提取通用 token，并用它提升最后的物理交互成功率。**
+
+因此当前统一边界为：
+
+```text
+Astra / Harness / Agent route:
+observation + history + candidate skill/action
+        ↓
+planner / reviewer / orchestration
+        ↓
+决定“调用谁、何时重试、是否修正”
+
+Our route:
+actor / action-generation features
+        ↓
+Universal Physical Token
+        ↓
+physical grounding + lightweight online learner
+        ↓
+提升 actor-side physical adaptation / final success
+```
+
+由此产生三条维护规则：
+
+1. Astra / Harness / SHAPER 继续阅读，主要用于理解别人如何组织 planner、memory、retry、correction 与 execution harness；
+2. 不把它们的 zero-shot reasoning、LLM planner、memory 或 skill evolution 直接并入第一阶段方法；
+3. 如果借鉴其中的 failure diagnosis / operating-range / validation 思想，优先作为 **diagnostic / analysis tool**，不能替代 B0/B1/B2 的 actor-side representation 实验。
+
+这条边界优先于任何由论文阅读衍生出的“把大模型 planner 接到当前系统里”的扩展想法。
+
 ---
 
 ## 1. Physical Token 放在哪里？
 
-### 1.1 首选位置：Action Head
+### 1.1 首选位置：Action Head / Actor Side
 
 定义 action head 在最终动作投影之前的因果特征：
 
@@ -336,11 +370,13 @@ Streaming RL 保留为后续 online-efficiency 方向，而不是第一组 Physi
 - “系统已经完成开放环境持续自进化”；
 - “Streaming RL 一定优于 replay”；
 - “旧 Stage2 零成功证明 RLT 缺 physics”；
-- “Stage1 训练步数不足已经被证明是唯一根因”。
+- “Stage1 训练步数不足已经被证明是唯一根因”；
+- “GPT-6 Astra / Harness planner 的结果直接验证了 Physical Token”；
+- “本项目要通过增加大模型 planner 获得主要性能提升”。
 
 当前准确表述应为：
 
-> **我们提出并验证一个 action-head Physical Token 假设：通过 measured transition prediction 与有效 physics constraints 对 compact readout 进行 grounding，再让轻量在线 learner 在冻结 action model 的条件下适应变化的接触动力学。**
+> **我们提出并验证一个 actor-side action-head Physical Token 假设：通过 measured transition prediction 与有效 physics constraints 对 compact readout 进行 grounding，再让轻量在线 learner 在冻结 action model 的条件下适应变化的接触动力学，并以最终任务成功率验证其价值。**
 
 ---
 
@@ -367,5 +403,7 @@ Held-out embodiment
     ↓
 Streaming RL / uncertainty-aware update（后续）
 ```
+
+Planner / Harness / general-model orchestration 始终保持在 Frontier / system-extension 层，除非后续单独立项，不进入上述首轮因果链。
 
 本页优先级高于此前由 Research OS 自动扩展出的四阶段 Physical Experience 路线。旧内容保留作历史记录与 related-work / idea pool，不再作为当前实验主规范。
