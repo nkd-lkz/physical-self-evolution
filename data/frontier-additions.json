@@ -1,5 +1,22 @@
 [
   {
+    "id": "shaper",
+    "title": "Self-Evolving Embodied Agents via Skill-Harness Evolution (SHAPER)",
+    "year": 2026,
+    "category": "harness",
+    "layer": "Train-free / Non-parametric Skill-Harness Evolution",
+    "update": "reusable textual skill + context-code harness",
+    "feedback": "target-environment rollouts → round diagnosis → episode summaries → textual gradient",
+    "timescale": "multi-episode artifact evolution; deployment reuses selected artifacts",
+    "status": "已读 · 2026-09-16",
+    "url": "https://arxiv.org/abs/2608.11350",
+    "summary": "冻结 upper-level planner 与 executor，不做参数更新；把 rollout 的 before/action/after 与 outcome 分层诊断成 textual gradient，先优化 reusable skill，再优化 context-code harness。",
+    "mechanism": "Frozen planner/executor + local rollout judger + episode summarizer + two-stage skill→harness evolution + sandbox validation + fixed-validation top-K beam search。",
+    "evidence": "VLABench overall：Seed Agent 28.25→Skill 33.50→Harness 30.50→SHAPER 34.50（Direct VLA 23.25，same-data SFT 24.00）；ESI-Bench micro/macro：32.5/31.2→49.8/42.9。",
+    "borrow": "对当前 Universal Physical Token 最重要的是归因纪律：policy/representation 与 execution harness 分开。可借 rollout-guided hierarchy 做 hammer/RoboDojo failure diagnosis，并借 validation gate 约束未来 recovery/adaptive-execution artifact。",
+    "boundary": "non-parametric self-improvement，不更新 policy/VLA weights；论文没有真实机器人或 cross-embodiment 验证。当前 Gate 0/B0/B1/B2 不加入 planner、memory 或 skill evolution。"
+  },
+  {
     "id": "motus2",
     "title": "Motus2: A Self-Evolving General World Model for Dexterous Manipulation",
     "year": 2026,
@@ -14,6 +31,6 @@
     "mechanism": "Action-first causal mask + trajectory-dependent supervision routing + WAM/AC-WM/VM + Best-of-N + DiffusionNFT + working memory + lightweight tactile expert。",
     "evidence": "MBRL/planning 两真机任务 65→75；tactile 60→72.5；real long-context global autoregression 57.5 vs hybrid memory 25；Ego pretrain 51→robot midtrain 84。",
     "borrow": "重点借鉴失败数据监督分流、consequence→value→action ranking、value trajectory 做 failure diagnosis，以及大 backbone + 轻量高频 physical expert。",
-    "boundary": "属于受控 post-training 的 self-evolution，不等于开放世界持续 RSI；当前项目不应为它跳过 Phase 0 的 RLT Multi-task Benchmark。"
+    "boundary": "属于受控 post-training 的 self-evolution，不等于开放世界持续 RSI；当前项目不应跳过 Gate 0 与 B0/B1/B2。"
   }
 ]
