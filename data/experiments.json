@@ -1,6 +1,11 @@
 [
   {
     "date": "2026-09-16",
+    "title": "四篇公众号/报告阅读：GPT-6 Astra × RoboDojo + Odyssey-3",
+    "summary": "今天把四篇公众号/配套材料按证据等级整理进 Research OS：Astra×π0.5 技术报告的一手可核验结论是 Hybrid 在 RoboDojo selected 10-task paired set 上 48% success / 62.60 Score、Direct 26% / 37.81，且 Astra 只修正14.4% executed steps；最值得当前项目借的是 actual action→measured outcome、operating-range/failure-onset probe、sparse intervention 与 hard safety。另一篇 RoboDojo Astra 大规模/真机报道暂按二手转述记录，待锁定一手 artifact 后再升级证据等级。Odyssey-3 官方博客则代表 shared world representation + lightweight action decoder 路线，直接强化 backbone tap vs action-head tap 必须做 matched comparison。两条 frontier 都不改变 Gate0→B0→B1→B2。"
+  },
+  {
+    "date": "2026-09-16",
     "title": "SHAPER 精读：Skill-Harness Evolution",
     "summary": "SHAPER 冻结 planner 与 executor，用 target-environment rollout 做 round-level action-effect diagnosis、episode summarization 和 textual gradient，先优化 reusable skill，再优化 context-code harness。对当前 Universal Physical Token 的直接作用是强化 Gate 0 归因纪律：policy/representation capability 与 H/C、TOPP、context/execution harness 必须分开；可借层级 diagnosis 与 validation gate，但不把 planner/skill evolution 引入 B0/B1/B2。"
   },
