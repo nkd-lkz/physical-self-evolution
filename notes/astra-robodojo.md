@@ -2,9 +2,53 @@
 
 > 阅读日期：2026-09-16  
 > 类型：技术报告 + RoboDojo 相关公众号转述 / 行业解读  
-> 项目关系：**Frontier / execution-harness / failure diagnosis reference；不改变 Gate 0 → B0 → B1 → B2 主线。**
+> 项目关系：**Planner / Harness frontier reference；不改变 Gate 0 → B0 → B1 → B2 主线。**
 
-## 0. 先分清证据等级
+## 0. 领导讨论后的最终定位
+
+领导对这类工作的态度已经明确：
+
+> **主要看别人怎么用 Astra；不要把 Astra 的 planner / zero-shot reasoning 直接拉进当前方法。**
+
+本项目与 Astra-Hybrid 的本质区别是：
+
+```text
+Astra Hybrid:
+planner / reviewer
+    ↓
+审核、接受或修正已有 policy proposal
+
+Universal Physical Token:
+actor / action-generation head
+    ↓
+提取通用 compact token
+    ↓
+transition / physics grounding
+    ↓
+small online learner
+    ↓
+最终物理任务成功率提升
+```
+
+所以后续阅读 Astra / Harness VLA / SHAPER 的目标主要是：
+
+- 看 planner 如何使用已有 VLA；
+- 看 failure / recovery / execution history 如何组织；
+- 看什么时候高层 reasoning 有帮助，什么时候物理执行仍是瓶颈。
+
+但当前不把：
+
+- LLM planner；
+- zero-shot reasoning；
+- memory；
+- skill evolution；
+- planner-side correction；
+
+并入第一阶段 B0/B1/B2。
+
+---
+
+## 1. 先分清证据等级
 
 今天四篇公众号/材料中，有三篇围绕 GPT-6 Astra 机器人控制：
 
@@ -16,7 +60,7 @@
 
 ---
 
-## 1. 已核验：π0.5 + GPT-6 Astra Hybrid
+## 2. 已核验：π0.5 + GPT-6 Astra Hybrid
 
 公开技术报告比较两种闭环控制：
 
@@ -58,13 +102,13 @@ RoboDojo 10-task subset、每任务 5 个 paired cases 中：
 
 ---
 
-## 2. 最值得当前项目关注的行为机制
+## 3. 最值得观察的行为机制
 
-### 2.1 Sparse intervention / targeted correction
+### 3.1 Sparse intervention / targeted correction
 
 Hybrid 并不是每一步都由 Astra 重写动作；大部分时间沿用 VLA，只在 observed execution failure 或 next-intent misalignment 时接管。
 
-这比“让大模型全程控制”更值得借鉴：
+这说明一种系统范式：
 
 ```text
 strong prior
@@ -72,18 +116,18 @@ strong prior
 small fraction of targeted corrections
 ```
 
-对 Universal Physical Token 的长期启发是：如果 grounded token 能判断 **何时 base action prior 正在离开有效工作区间**，未来可以支持 intervention / correction gating。
+**但对当前项目，它只是 planner-side / harness-side 参考，不是 Physical Token 的直接实现。**
 
-但当前不把这一 gate 加进 B0/B1/B2，避免新增变量。
+如果后续要研究 intervention gating，应作为 B0/B1/B2 之后独立的系统变量。
 
-### 2.2 Outcome review 与 next-intent review 分离
+### 3.2 Outcome review 与 next-intent review 分离
 
 技术报告中的 gate 明确分成两个问题：
 
 1. **Last chunk execution outcome**：比较 before / after RGB、measured state、executed gripper command 和 history，判断 progress / failure / uncertainty / recovery；
 2. **Next proposal intent**：当前 student chunk 是否仍在追求正确 subgoal、对象、位置、顺序和 grasp/release phase。
 
-这和当前项目的 failure diagnosis 很契合。可以借成一个不改变算法的诊断框架：
+这套拆法可以借到**诊断工具**：
 
 ```text
 before state
@@ -94,9 +138,9 @@ before state
 → next-intent card
 ```
 
-未来比较 `z_rl` 与 `z_physical` 时，可用它们做 **failure-onset / continuation / operating-range probe**。
+但诊断工具不等于方法本体。当前 actor-side Universal Physical Token 仍以 compact representation + physical grounding 为主。
 
-### 2.3 “动作目标”不等于“物理结果”
+### 3.3 “动作目标”不等于“物理结果”
 
 报告反复强调：
 
@@ -107,7 +151,7 @@ before state
 
 这直接支持当前 Physical Token 的 `actual/executed action → measured consequence` 设计，而不是只学习 policy command。
 
-### 2.4 Chunk-boundary feedback 仍太慢
+### 3.4 Chunk-boundary feedback 仍太慢
 
 Hybrid 即使加入强 reasoning，仍有典型失败：chunk 内发生 slip / collision，但 Astra 要等动作片段结束才能看到下一次观测。
 
@@ -119,63 +163,49 @@ Hybrid 即使加入强 reasoning，仍有典型失败：chunk 内发生 slip / c
 
 ---
 
-## 3. 公众号转述的 RoboDojo 大规模 Astra 评测：值得跟踪，但暂不当作已锁定主证据
+## 4. 公众号转述的大规模 Astra 评测：值得跟踪，但不改项目方法
 
-公众号称另一组 RoboDojo 报告对 GPT-6 Astra 做了 42 项仿真任务、2,100 次试验，并报告约 28.97 Score / 22.48% success；同时称真实机器人测试因不合理或不安全动作提前停止。
+公众号称另一组 RoboDojo 报告对 GPT-6 Astra 做了更大规模评测，并转述了两个现象：
 
-该文章还转述了两个对当前研究非常有启发的现象：
+### 4.1 语义强、精密接触弱
 
-### 3.1 语义强、精密接触弱
-
-转述结果把 Astra 的能力地图描述成：
+报道将 Astra 的能力地图描述成：
 
 - open / semantic / spatial tasks 较强；
 - precision、contact、long-horizon 显著较弱；
 - 真机安全性尤其暴露问题。
 
-这个方向和 Hybrid 报告是一致的：**知道目标、识别异常、重新规划**与**稳定抓取、摩擦/碰撞控制、连续接触**仍是不同能力层。
+这和 Hybrid 报告的总体方向一致：**知道目标、识别异常、重新规划**与**稳定抓取、摩擦/碰撞控制、连续接触**仍是不同能力层。
 
-### 3.2 交互后的 adaptation 比额外 demonstration 更值得关注
+这类现象对当前项目主要提供**问题背景**：物理交互仍是瓶颈；不是告诉我们去做更强 planner。
 
-公众号转述：在某些 ICL 试验中，增加另一个 layout 的图像/EEF 或文本 demonstration 并未提升结果；而坐标反转、镜像视图、屏蔽头部相机等扰动下，模型会根据“预期动作 vs 实际反馈”的差异重新校准后续控制。
+### 4.2 交互后的 adaptation 值得观察
 
-如果一手报告后续确认，这一点对项目很重要，因为它更接近：
+公众号还转述了坐标反转、镜像视图、屏蔽相机等扰动下，模型会根据“预期动作 vs 实际反馈”的差异调整后续控制。
+
+如果一手报告后续确认，这一点与当前项目的：
 
 ```text
 command / expected effect
         ↓
 actual measured outcome
         ↓
-infer hidden control / observation mismatch
-        ↓
-adapt next action
+representation / learner adapts
 ```
 
-这与 `B1 measured transition grounding + short history` 的科学问题非常接近。
+有概念上的相邻性。
 
-但需要明确：**“in-context demonstration 没帮助”不能被外推成“clean500 数据扩充没价值”。** 前者是在当前 episode/布局下给 general model 额外 context；后者是用于训练 task policy / representation 的离线数据规模问题，实验机制完全不同。
+但仍需保持边界：Astra 的 adaptation 发生在 general-model context/reasoning 层；本项目要验证的是 **actor-side token 是否能吸收并利用这种物理差异**。
+
+另外，**“in-context demonstration 没帮助”不能被外推成“clean500 数据扩充没价值”**。前者是 general model context；后者是 task policy / representation 的 offline training data scaling。
 
 ---
 
-## 4. 对 Universal Physical Token 的直接可借鉴点
+## 5. 对 Universal Physical Token 的可借鉴点：只保留 actor-side 相关部分
 
-### Borrow A：Operating-range / intervention-need probe
+### Borrow A：Expected vs Actual Transition Mismatch
 
-未来在 representation evaluation 中增加诊断 probe：
-
-```text
-z_rl or z_physical
-    ↓
-P(base action remains valid / continuation is safe)
-P(failure onset)
-P(local correction is needed)
-```
-
-它可作为 representation evidence，但**不进入第一轮 B1/B2 主 loss**。
-
-### Borrow B：Expected vs actual transition mismatch
-
-Astra 的交互校准现象提示，一个有意义的 physical representation 应能区分：
+一个有意义的 Physical Token 应该能描述：
 
 ```text
 intended / commanded motion
@@ -183,49 +213,67 @@ vs
 actual executed motion / object consequence
 ```
 
-这强化了 B1 优先使用 measured transition 和 actual/executed action，而不是只预测 reference action。
+这强化 B1 的 measured transition target 设计。
 
-### Borrow C：安全边界必须是 hard constraint，不交给 reasoning 猜
+### Borrow B：Failure / Operating-Range Probe 仅作为表示诊断
 
-即使 general model reasoning 很强，真实机器人的安全仍可能失败。因此未来任何 online adaptation / correction 都应保持：
+可在 representation evaluation 中增加：
+
+```text
+z_rl or z_physical
+    ↓
+P(failure onset)
+P(base action still valid)
+P(local correction may be needed)
+```
+
+其用途是回答“这个 token 有没有捕获与最终成功相关的物理状态”，而不是把 planner intervention 作为方法本身。
+
+### Borrow C：Safety Hard Constraint 与 Learned Physics 分开
+
+未来任何 online adaptation / correction 都必须保留：
 
 - joint/action bounds；
 - controller feasibility；
 - explicit safety filters；
-- validation / abort conditions；
+- validation / abort conditions。
 
-这些与 learned physical regularization 分开。
+这些不能交给 planner reasoning 或 learned physical regularization 替代。
 
-### Borrow D：Student prior fit 是必须报告的条件
+### Borrow D：Base Actor Capability 必须先验收
 
-Hybrid 的收益依赖 base policy 对任务是否有合适动作先验。这和当前 hammer Gate 0 完全一致：在讨论 Physical Token 增益前，必须先证明 frozen reference 有可用闭环能力。
+Hybrid 是否受益强烈依赖 student policy 是否适配任务。这与当前 hammer Gate 0 一致：
+
+> **先证明 frozen actor/reference 有可用闭环能力，再讨论 token / online learner 的增益。**
 
 ---
 
-## 5. 当前项目动作
+## 6. 当前项目动作
 
-**不改主线。**
+**不改主线，不引入 Astra planner。**
 
 仍然是：
 
 ```text
-Gate 0 trustworthy baseline
+Gate 0 trustworthy actor / baseline
 → B0 matched compact readout
 → B1 + measured transition grounding
 → B2 + valid physics grounding
+→ final task success / adaptation gain
 ```
 
-Astra 相关工作当前只增加三类未来分析：
+Astra 相关工作当前只保留：
 
-1. failure-onset / operating-range probe；
-2. expected-vs-actual transition mismatch；
-3. sparse intervention / correction 作为 B1/B2 之后的系统层扩展。
+1. planner / harness frontier observation；
+2. failure diagnosis 语言与案例；
+3. expected-vs-actual transition mismatch 的启发；
+4. future operating-range probe。
 
 RoboDojo 平台线仍按 D3 → D5 → D6/D7 → D8/D9 → D10 的 gate 走，不因为 Astra 报告看起来很强就跳过本地 renderer、native task、schema 与 reference adapter 验收。
 
 ---
 
-## 6. Source guardrail
+## 7. Source guardrail
 
 以下内容不进入科研事实层：
 
