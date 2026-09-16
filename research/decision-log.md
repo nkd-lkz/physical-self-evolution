@@ -1,5 +1,29 @@
 # 科研决策日志
 
+## 2026-09-16 · 领导明确：Astra / Harness 属于 planner 侧参考，本项目坚持 actor-side Universal Physical Token
+
+**决定：**
+
+针对 GPT-6 Astra + π0.5 等近期工作，领导明确：
+
+- 这些路线主要研究 **planner / reviewer / orchestration 如何使用已有具身策略**；
+- 本项目与其有本质区别：**从 actor / action-generation head 内部提取通用 compact token**；
+- token 需要通过 transition / physics grounding 获得对真实物理执行有用的表示；
+- 最终评价不是 planner reasoning 是否更强，而是 **在 matched 条件下，是否提高最终物理交互任务成功率与在线适应能力**。
+
+因此后续处理 Astra、Harness VLA、SHAPER 等工作时：
+
+1. 继续阅读“别人怎么用 planner / harness”；
+2. 可借 failure diagnosis、operating-range、validation gate 等分析思想；
+3. 不把 LLM planner、memory、skill evolution 或 zero-shot reasoning 直接并入 B0/B1/B2；
+4. 不把 planner-side 提升当成 Physical Token 的直接证据。
+
+**原因：**
+
+如果把 planner/harness 与 actor-side representation 同时引入，就无法回答领导定义的核心科学问题：**从 actor 提取并物理 grounding 的通用 token 本身，是否能带来最终成功率提升。**
+
+---
+
 ## 2026-09-15 · clean500 固定 train450 / val50，norm 只用 train450
 
 **决定：**
