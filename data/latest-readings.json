@@ -1,5 +1,57 @@
 [
   {
+    "id": "astra-robodojo",
+    "title": "GPT-6 Astra × RoboDojo: Direct Control, π0.5 Hybrid and Feedback Adaptation",
+    "year": "2026",
+    "layer": "General Reasoning / Execution-Harness",
+    "theme": "harness",
+    "status": "已读 · 2026-09-16",
+    "tags": ["GPT-6 Astra", "RoboDojo", "π0.5", "Hybrid Policy", "Sparse Intervention", "Action-Outcome", "Safety"],
+    "one": "一手技术报告显示：在 RoboDojo 10-task subset 上，π0.5 提供熟练动作先验、Astra 只在少量关键步骤审核/修正；Hybrid 48% success、62.60 Score，Direct 26%/37.81，且 Astra 只替换 14.4% executed control steps。",
+    "method": [
+      "π0.5 每轮生成 H50 candidate joint trajectory；Astra 基于当前观测、history 与 FK trajectory 选择接受 1–15 步或做 bounded 1–5 步 EEF correction",
+      "Outcome review 与 next-intent review 分离：先判断上一 chunk 的真实执行结果，再判断下一 candidate 是否仍追求正确 subgoal",
+      "所有 correction 仍受显式 EEF / IK / joint-step hard bounds；模型要用下一轮 RGB + measured state 验证真实结果",
+      "公众号另转述更大规模 RoboDojo Astra 评测和 perturbation ICL 现象；在锁定一手报告前只作为待核验 evidence"
+    ],
+    "evidence": "公开技术报告可核验：Hybrid 24/50 success（48%）、mean Score 62.60；Direct 13/50（26%）、mean Score 37.81；Astra correction 14.4% of executed control steps；Hybrid recorded tokens 比 Direct 少约44.8%。RoboLab selected zero-shot subset：Direct 49/50、Hybrid 46/50、π0.5 18/50。",
+    "project": "直接强化当前 Physical Token 设计的三点：actual/executed action→measured consequence、base-policy operating-range/failure-onset probe、hard safety 与 learned regularization 分离。当前不引入 Astra planner/correction，仍先完成 Gate0→B0→B1→B2。",
+    "boundary": "Hybrid、Direct 与公开榜单并非所有比较都严格 same-seed rerun；更大规模 RoboDojo Astra/真机结果目前只从公众号转述获取，尚未锁定对应一手 artifact。媒体化的“降维打击”、训练数据/算力/参数量等说法不进入科研事实层。",
+    "questions": [
+      "z_physical 是否比 z_rl 更能预测 base policy 已离开 operating range / 需要 intervention？",
+      "expected motion 与 measured outcome 的 mismatch 是否能成为 B1 的高价值 transition target？",
+      "为什么 in-context feedback adaptation 可能有效，而不相关 demonstration 反而干扰？这与离线 clean500 data scaling 有何本质区别？"
+    ],
+    "note": "reader.html?path=notes/astra-robodojo.md",
+    "url": "https://anonymous-report-421.github.io/public-website/"
+  },
+  {
+    "id": "odyssey3",
+    "title": "Odyssey-3: A General-Purpose Physical Intelligence",
+    "year": "2026",
+    "layer": "Foundation World Model / Physical Representation",
+    "theme": "physical",
+    "status": "已读 · 2026-09-16",
+    "tags": ["World Model", "Physical Agents", "Action Decoder", "Cross-Embodiment", "Frozen Backbone", "Recovery", "PROWL"],
+    "one": "Odyssey 官方把同一个 autoregressive diffusion-transformer world model 作为共享 foundation representation，再用较小的 system-specific action decoder / policy 适配机器人、Humanoid、车辆、无人机和游戏。",
+    "method": [
+      "大规模世界视觉观测预训练 shared world representation",
+      "physical-system observation + action experience 用于训练 action decoder / task policy，把 frozen or shared representation 映射到具体控制接口",
+      "机器人与 Humanoid 使用数十小时 task data；driving 报告 20h simulated data；drone / game 也沿用 shared representation + small action component",
+      "PROWL 探索 agent 暴露 world-model failure、world model 反过来生成训练 experience 的 recursive loop"
+    ],
+    "evidence": "当前主要是 Odyssey 官方公司研究博客的自报告：robot-arm demo 中出现未在示范显式覆盖的 recovery；driving 中 frozen backbone + small policy，20h simulated data；官方也明确称跨 body/view/control 的稳定 transfer 边界仍需进一步评估。",
+    "project": "最直接的作用是强化 action-head tap vs backbone tap 必须做：Odyssey 代表强 backbone physical/world prior 假设。其 shared representation + lightweight system adapter 也与 Universal 的严格定义相邻，但当前不转向 full world model。",
+    "boundary": "公司自报告、尚非当前项目可直接复现的独立 benchmark；qualitative recovery 不能等价成显式 physics law understanding。PROWL/recursive world-model-agent loop 属于长期方向，不进入当前 Gate0/B0/B1/B2。",
+    "questions": [
+      "强 backbone readout 会不会已经包含大部分 B1/B2 所需物理信息，从而削弱 action-head-only 假设？",
+      "Universal 应如何量化 adapter efficiency：参数量、task data、online steps、retention？",
+      "如果未来引入 imagined experience，如何把 real/imagined transition 与 model-confidence 严格分开？"
+    ],
+    "note": "reader.html?path=notes/odyssey3.md",
+    "url": "https://odyssey.systems/introducing-odyssey-3"
+  },
+  {
     "id": "shaper",
     "title": "Self-Evolving Embodied Agents via Skill-Harness Evolution (SHAPER)",
     "year": "2026",
