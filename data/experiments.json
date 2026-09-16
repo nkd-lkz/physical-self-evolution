@@ -1,5 +1,10 @@
 [
   {
+    "date": "2026-09-16",
+    "title": "SHAPER 精读：Skill-Harness Evolution",
+    "summary": "SHAPER 冻结 planner 与 executor，用 target-environment rollout 做 round-level action-effect diagnosis、episode summarization 和 textual gradient，先优化 reusable skill，再优化 context-code harness。对当前 Universal Physical Token 的直接作用是强化 Gate 0 归因纪律：policy/representation capability 与 H/C、TOPP、context/execution harness 必须分开；可借层级 diagnosis 与 validation gate，但不把 planner/skill evolution 引入 B0/B1/B2。"
+  },
+  {
     "date": "2026-09-15",
     "title": "Stage1 20k joint recovery 已启动",
     "summary": "13:29 UTC 快照：新的 generic pi05_base + rlt_alpha=1 joint Stage1 已运行到 2459/20000 steps，global_step_2000 checkpoint 已保存；最近 loss/rlt/vla/grad=0.254/0.252/0.00251/1.27，均有限。该 run 仍在运行，不能记为能力恢复完成；结束后按固定 seed H50/C50 闭环曲线评测 2k/4k/.../20k，而不是按最低 train loss 选权重。"
