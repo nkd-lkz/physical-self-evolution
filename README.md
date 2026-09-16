@@ -6,7 +6,7 @@ Living research website for **Universal Physical Token, robot self-improvement, 
 
 **https://nkd-lkz.github.io/physical-self-evolution/**
 
-## Current research mainline — 2026-09-15
+## Current research mainline — 2026-09-16
 
 The project is aligned to the leadership-defined research proposal:
 
@@ -14,7 +14,32 @@ The project is aligned to the leadership-defined research proposal:
 
 Current question:
 
-> Can we read a compact representation from an existing action-generation head, ground it with measured transition prediction and valid physical constraints, and use a small online learner to adapt to changing contact dynamics **without retraining the action model during online adaptation**?
+> Can we extract a compact, reusable representation from an existing actor / action-generation head, ground it with measured transition prediction and valid physical constraints, and use a small online learner to improve physical adaptation and final task success **without retraining the action model during online adaptation**?
+
+### Scope boundary: actor-side token, not planner-side orchestration
+
+The latest leadership clarification is explicit:
+
+- GPT-6 Astra / Harness-style systems are mainly **planner / reviewer / orchestration** approaches around an existing policy;
+- this project is **not** trying to win by adding a stronger planner;
+- the core object is an **actor-side universal compact token** extracted from the action model itself;
+- planner/harness work remains Frontier reference for understanding how others use policies, organize failure/recovery and perform validation.
+
+The core causal question remains:
+
+```text
+actor / action-generation features
+        ↓
+Universal Physical Token
+        ↓
+transition / physics grounding
+        ↓
+small online learner
+        ↓
+final physical-task success / adaptation gain
+```
+
+LLM planner, memory, zero-shot reasoning and skill-harness evolution are **not first-round B0/B1/B2 variables**.
 
 Current source of truth:
 
@@ -96,7 +121,7 @@ Simulator and policy runtimes are intentionally isolated because their Python de
 ## Core architecture
 
 ```text
-Frozen action model
+Frozen action model / actor
       ↓
 Action-head pre-output features
       + robot history
@@ -149,6 +174,7 @@ Cross-model / cross-robot claims require held-out tests.
 - Old hammer Stage2 proves rollout → replay → actor/critic update → weight sync → checkpoint engineering, but not a usable B0 performance baseline.
 - Expert reward probing produced a positive success/reward case, so the task is not known to be reward-dead.
 - clean500 and RoboDojo progress are infrastructure/data advances, not Physical Token algorithm gains.
+- Astra / Harness / SHAPER results are planner/harness references, not direct evidence that the actor-side Physical Token hypothesis is correct.
 
 ## Platform status
 
@@ -187,4 +213,4 @@ See [`research/knowledge-base-maintenance.md`](research/knowledge-base-maintenan
 
 ## Knowledge-base rule
 
-The Frontier Knowledge Base continues to track RISE, Motus2, LWD, RLT, SmoothRL, Zeva, Zetta and related work. They inform baselines and innovation boundaries, but do not override the leadership-defined Physical Token experimental contract.
+The Frontier Knowledge Base continues to track RISE, Motus2, LWD, RLT, SmoothRL, Zeva, Zetta, Astra/Harness and related work. They inform baselines and innovation boundaries, but do not override the leadership-defined actor-side Physical Token experimental contract.
