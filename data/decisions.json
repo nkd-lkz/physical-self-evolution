@@ -1,5 +1,10 @@
 [
   {
+    "date": "2026-09-16",
+    "decision": "Astra/Harness 等工作只作为 planner/orchestration 参考；当前项目坚持从 actor/action-generation head 提取 Universal Physical Token，并以最终物理任务成功率提升作为核心验证。",
+    "reason": "领导明确两者有本质区别：Astra路线重点是 planner 如何使用/修正已有策略，本项目研究 actor-side compact representation + physical grounding + lightweight online learner。LLM planner、memory、skill evolution 不进入首轮 B0/B1/B2。"
+  },
+  {
     "date": "2026-09-15",
     "decision": "clean500 完成后固定 train450/val50，norm stats 只使用 train450。",
     "reason": "数据扩充用于降低 clean50 的重复采样与过拟合风险，因此提前冻结 split 与 norm 口径，避免 validation leakage。"
