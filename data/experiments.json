@@ -1,6 +1,11 @@
 [
   {
     "date": "2026-09-16",
+    "title": "领导讨论：Astra 是 planner-side reference，不改 Universal Physical Token 主线",
+    "summary": "领导明确：Astra/Harness 类工作重点是 planner/reviewer 如何使用已有策略；当前项目与其有本质区别，目标是从 actor/action-generation head 提取通用 compact token，通过 transition/physics grounding 与轻量 online learner 提升最终物理交互成功率。后续只观察 Astra 的使用方式与 failure/recovery 组织，不把 LLM planner、zero-shot reasoning、memory 或 skill evolution 并入 B0/B1/B2。"
+  },
+  {
+    "date": "2026-09-16",
     "title": "四篇公众号/报告阅读：GPT-6 Astra × RoboDojo + Odyssey-3",
     "summary": "今天把四篇公众号/配套材料按证据等级整理进 Research OS：Astra×π0.5 技术报告的一手可核验结论是 Hybrid 在 RoboDojo selected 10-task paired set 上 48% success / 62.60 Score、Direct 26% / 37.81，且 Astra 只修正14.4% executed steps；最值得当前项目借的是 actual action→measured outcome、operating-range/failure-onset probe、sparse intervention 与 hard safety。另一篇 RoboDojo Astra 大规模/真机报道暂按二手转述记录，待锁定一手 artifact 后再升级证据等级。Odyssey-3 官方博客则代表 shared world representation + lightweight action decoder 路线，直接强化 backbone tap vs action-head tap 必须做 matched comparison。两条 frontier 都不改变 Gate0→B0→B1→B2。"
   },
