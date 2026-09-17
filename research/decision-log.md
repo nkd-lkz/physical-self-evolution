@@ -1,5 +1,103 @@
 # 科研决策日志
 
+## 2026-09-17 · clean500 全量审计后正式收敛为 clean490 / train450 / eval40
+
+**决定：**
+
+- 500 条原始轨迹全部保留作审计证据；
+- 10 条强动作轨迹异常从新 Stage1 动作监督和 train/eval candidate 中排除，不删除原始文件；
+- 不为凑齐“500 条干净数据”继续补采，正式候选集使用 **clean490**；
+- clean490 固定为 `train450 / eval40`；
+- norm stats 只使用 train450；
+- eval40 只用于开发 checkpoint selection，不能称为最终独立测试集。
+
+**原因：**
+
+全量审计说明“文件导出成功”与“动作轨迹适合监督”是不同层级。当前490条已经能形成稳定开发划分；继续补采会同时引入新的采集成本与分布变量。2026-09-15 的 `train450/val50` 只是采集未完成时的预案，从本条起被正式取代。
+
+---
+
+## 2026-09-17 · Contact / impulse 弱标签保留轨迹，但必须按标签 mask
+
+**决定：**
+
+10 条动作轨迹连续、抓取和末端几何可接受，但非零 contact/impulse 证据偏弱。它们：
+
+- 保留用于 Stage1 VLA/RLT 动作学习；
+- contact/impulse-specific auxiliary target 使用 validity mask；
+- 不作为可靠的“没有接触 / 任务失败”负样本；
+- 其他可靠 measured-transition 字段继续使用。
+
+**原因：**
+
+sidecar 中的非零冲量事件与任务几何接触/成功并非同一语义。缺失标签填零会把“未记录/弱证据”错误解释为真实负样本，直接污染后续 Physical Token 的物理监督。
+
+---
+
+## 2026-09-17 · 12k 是当前 Stage1 开发候选，不是最终 reference
+
+**决定：**
+
+统一 20-seed、`H50/C50 native_macro`、固定 prompt 与 action-sampling seed 下：
+
+- 6k：8/20（40%）
+- 8k：7/20（35%）
+- 10k：8/20（40%）
+- 12k：10/20（50%）
+
+当前把 12k 作为 **development candidate**，继续做 full-physics failure-stage 分析与独立 seed 复核，不直接冻结为最终 reference。
+
+**原因：**
+
+曲线非单调，20 个开发 seeds 统计能力有限，而且 12k 仍有 10/20 失败。现有结果足以证明 Stage1 有部分闭环能力，但不足以证明泛化问题解决，也不足以把训练步数、数据规模或联合 loss 定成唯一根因。
+
+---
+
+## 2026-09-17 · 新 clean490 Stage1 默认 30k / 每5k保存，正式 GPU 训练尚未启动
+
+**决定：**
+
+下一轮 Stage1 baseline recovery 使用：
+
+- generic `pi05_base`；
+- `rlt_alpha=1`；
+- H50；
+- global batch64；
+- dual-GPU data parallel；
+- warmup1k；
+- 默认最多 **30k optimizer steps**；
+- 每 5k 保存 checkpoint；
+- `5k/10k/15k/20k/25k/30k` 使用 eval40 做开发闭环选择。
+
+30k 是训练上限，不是必须跑满；连续 checkpoint 无改善/下降时可以提前停止。CPU data/norm/loader/dry-run 已通过，但正式 GPU run 尚未启动。
+
+**原因：**
+
+旧 clean50 20k 会造成约162个等效 frame-level 遍历；新 train450 的30k约27个量级，不能把两者简单视为同一过拟合风险。训练步数仍然不能替代闭环验证。
+
+---
+
+## 2026-09-17 · B1 数据合同显式区分 command 与 measured execution
+
+**决定：**
+
+B1 measured-transition grounding 必须在 schema 中区分：
+
+```text
+reference / proposed action
+actual executed action
+command state
+measured state
+```
+
+当前 Stage1 imitation dataset 的 `state` 继续保持已有 command/drive-target 语义；未来 B1 的 actual qpos / EEF / object consequence 必须来自 sidecar 或真实 rollout measurement，不能静默替换字段含义。
+
+**原因：**
+
+Physical Token 的科学问题是 action consequence grounding。如果用命令目标冒充实际状态，模型可能只学习控制器/命令映射，而不是执行后的物理后果。
+
+---
+
 ## 2026-09-16 · 领导明确：Astra / Harness 属于 planner 侧参考，本项目坚持 actor-side Universal Physical Token
 
 **决定：**
@@ -18,26 +116,11 @@
 3. 不把 LLM planner、memory、skill evolution 或 zero-shot reasoning 直接并入 B0/B1/B2；
 4. 不把 planner-side 提升当成 Physical Token 的直接证据。
 
-**原因：**
-
-如果把 planner/harness 与 actor-side representation 同时引入，就无法回答领导定义的核心科学问题：**从 actor 提取并物理 grounding 的通用 token 本身，是否能带来最终成功率提升。**
-
 ---
 
-## 2026-09-15 · clean500 固定 train450 / val50，norm 只用 train450
+## 2026-09-15 · clean500 固定 train450 / val50【历史预案，已被 2026-09-17 取代】
 
-**决定：**
-
-Hammer 成功示范扩充到 500 条后，正式数据处理固定为：
-
-- 500 条成功 raw trajectories 全量完成并先做完整性验收；
-- 再固定拆分 `train450 / val50`；
-- norm stats **只使用 train450** 计算；
-- val50 不参与 norm 统计，也不参与训练期 checkpoint selection 的数据拟合。
-
-**原因：**
-
-当前 clean50 数据量小、重复采样高。扩充数据的目的之一是降低小数据重复和过拟合风险，因此必须提前冻结 train/val 与 norm 口径，避免后续根据结果调整划分造成泄漏。
+当时在数据采集未完成时预先计划 `train450/val50`、norm 仅使用 train450。全量审计后发现10条强轨迹异常，因此正式方案更新为 clean490 `train450/eval40`。本条只保留历史决策轨迹。
 
 ---
 
@@ -79,7 +162,7 @@ RoboDojo/Isaac simulator runtime 与 XPolicyLab policy runtime 保持独立 Pyth
 
 **决定：**
 
-领导定义的 Universal Physical Token 主问题不变，但实验顺序增加一个明确前置门槛：
+领导定义的 Universal Physical Token 主问题不变，但实验顺序增加明确前置门槛：
 
 ```text
 Gate 0A  恢复可用 Stage1 reference
@@ -93,67 +176,28 @@ B2 + valid physics
 
 **原因：**
 
-旧 Stage2 的零成功不能直接解释为“缺 physics”。当前已经确认 execution protocol 与 Stage1 capability 都可能影响结果；如果 B0 reference / online baseline 本身不稳定，B1/B2 的收益无法归因。
+旧 Stage2 的零成功不能直接解释为“缺 physics”。execution protocol 与 Stage1 capability 都可能影响结果；如果 B0 reference / online baseline 不稳定，B1/B2 的收益无法归因。
 
 ---
 
 ## 2026-09-15 · H50/C50 是当前 RoboTwin Stage1 能力锚点；H50/C10 只保留为历史诊断
 
-**决定：**
-
 - 当前已有 Stage1 checkpoint 使用 `H=50`；
-- 在 RoboTwin 原生 TOPP 执行中，用 `H50/C50` 作为 reference 能力锚点；
-- 旧 `H50/C10` 结果继续保留为工程与执行协议诊断，不作为 Stage1 能力公平结论；
-- 后续论文式 `C=10` 必须单独设计并验证其控制/transition 语义，不能仅改推理字段后宣称与原论文等价。
-
-**原因：**
-
-每 10 个目标重新进入 TOPP 会改变规划边界、物理时长、再观测频率和状态分布。已经观察到同一 H50 policy 在 C10 与 C50 下行为明显不同。
+- RoboTwin 原生 TOPP 下以 `H50/C50` 作为 reference 能力锚点；
+- `H50/C10` 保留为执行协议诊断；
+- 论文式 C10 必须单独建立控制/transition 适配。
 
 ---
 
-## 2026-09-15 · Stage1 恢复优先采用 base + alpha1 + 20k joint training
+## 2026-09-15 · Stage1 recovery 优先 base + alpha1 joint training【后续由 clean490 新方案继续】
 
-**决定：**
-
-当前优先运行：
-
-- generic `pi05_base` initialization；
-- `rlt_alpha=1`；
-- joint VLA task adaptation + RLT reconstruction；
-- 20,000 optimizer steps；
-- 2-GPU data parallel；
-- global batch64 / micro batch2；
-- warmup1000；
-- every 2000 steps save checkpoint。
-
-`SFT20k + alpha0 + 2k` 暂缓，保留为后续保能力 / 初始化方式对照。
-
-**原因：**
-
-这一路径保留论文/官方的 base-init joint-training topology，同时把旧 2k Stage1 明显较小的训练预算补足。现有证据支持“旧 Stage1 存在能力不足风险”，但并未证明训练步数是唯一根因，因此新 20k run 被定义为 baseline recovery experiment，而不是“已知修复”。
+该决策保留论文/官方 base-init joint topology。旧 clean50 长 run 后续停止于约12.3k；2026-09-17 起以 clean490 新数据和30k上限继续同一 baseline-recovery 思路。
 
 ---
 
 ## 2026-09-15 · Stage1 checkpoint 不能按最低训练 loss 选择
 
-**决定：**
-
-新 Stage1 以 `2k/4k/.../20k` 保存，并使用固定 environment seed + action seed 的 `H50/C50` 闭环能力曲线选择 checkpoint。
-
-选择指标优先：
-
-- success；
-- completion time / episode length；
-- failure stage；
-- 与 SFT20k 的 paired behavior；
-- 多 seed 稳定性。
-
-训练 loss 只作为优化健康度，不作为最终选模标准。
-
-**原因：**
-
-当前 clean50 数据规模较小，20k×64 对应约 1.28M 样本槽位，存在高重复与后期过拟合风险；更低的 imitation / reconstruction loss 不等价于更好的闭环操作能力。
+新 Stage1 必须使用固定环境/action seed 的 H50/C50 闭环能力选择 checkpoint，优先看 success、completion time、failure stage、paired behavior 与多 seed 稳定性。
 
 ---
 
@@ -161,15 +205,9 @@ B2 + valid physics
 
 **决定：**
 
-从今天起，当前项目的上位研究主线固定为：
-
 > **Universal Physical Token for Robot Self-Evolution**
 
-核心目标是：
-
-> 从已有 action-generation head 读出 compact token，通过 measured transition prediction 与有效 physics constraints 做 grounding，再用小型在线 learner 在冻结 action model 的前提下适应变化的接触动力学。
-
-此前 Research OS 自动扩展出的“RLT Multi-task Benchmark → Failure Diagnosis → Physical Experience → Self-Improvement”四阶段路线不删除，但降级为**历史探索框架**，不再覆盖领导定义的主规范。
+核心目标：从已有 action-generation head 读出 compact token，通过 measured transition prediction 与有效 physics constraints 做 grounding，再用小型 online learner 在冻结 action model 的前提下适应变化的接触动力学。
 
 ---
 
@@ -186,8 +224,6 @@ B2 + valid physics
 ---
 
 ## 2026-09-14 · Physical objective 首轮固定为 reconstruction + transition + valid physics
-
-第一版：
 
 ```text
 L_token = L_ro + λ_dyn L_dyn + λ_phys L_phys
@@ -221,19 +257,13 @@ L_token = L_ro + λ_dyn L_dyn + λ_phys L_phys
 
 ## 2026-09-12 · Paper-aligned Stage 1 口径纠正
 
-第一条 hammer RLT 主线 Stage 1 从通用 π0.5 base 开始，在目标任务 demonstrations 上联合完成 VLA task loss + RLT reconstruction；独立 20k task-SFT 保留为 standalone reference / post-SFT 对照。
+Hammer RLT Stage 1 从通用 π0.5 base 开始，在目标任务 demonstrations 上联合完成 VLA task loss + RLT reconstruction；独立 task-SFT 保留为 standalone reference / post-SFT 对照。
 
 ---
 
-## 2026-09-12 · Stage 2 正式口径固定为 C=10【历史工程口径，2026-09-15 增加执行协议限定】
+## 2026-09-12 · Stage 2 C=10【历史工程口径】
 
-RLT 论文 actor chunk 使用 `C=10`，但在 RoboTwin TOPP 语义下，`H50/C10` 不能直接作为已有 H50 Stage1 checkpoint 的公平能力锚点；论文式 C10 必须单独建立与验证控制/transition适配。
-
----
-
-## 2026-09-12 · RoboTwin 2.0 版本顺序
-
-先在 RoboTwin 2.0 / RLinf_support pinned path 完成第一条可信 baseline，再迁移 RoboTwin 2.0 main bridge；不同时切换环境版本和算法复现。
+RLT 论文 actor chunk 使用 `C=10`，但 RoboTwin TOPP 语义下 `H50/C10` 不能直接作为已有 H50 checkpoint 的公平能力锚点；论文式 C10 必须单独建立与验证控制/transition 适配。
 
 ---
 
@@ -245,7 +275,7 @@ RLT 论文 actor chunk 使用 `C=10`，但在 RoboTwin TOPP 语义下，`H50/C10
 
 ## 2026-09-12 · Physics sidecar 暂不进入 baseline observation
 
-已有 privileged sidecar 继续作为 logging、failure analysis、future representation probe 与 critic/reward/auxiliary target 候选；不直接拼进第一条 baseline policy observation。
+已有 privileged sidecar 继续作为 logging、failure analysis、representation probe 与 critic/reward/auxiliary target 候选；不直接拼进第一条 baseline policy observation。
 
 ---
 
@@ -258,12 +288,6 @@ RLT 论文 actor chunk 使用 `C=10`，但在 RoboTwin TOPP 语义下，`H50/C10
 ## 2026-09-11 · Hammer 的重新定位
 
 Hammer 当前定位为 pipeline regression、transition/physics logging 与 controlled ablation 资产，不定义 Universal Physical Token 的上位故事。
-
----
-
-## 2026-09-11 · RoboTwin2 / RoboDojo 分工
-
-RoboTwin / 现有 RL Token infrastructure 是当前 baseline 与 Physical Token 验证平台；RoboDojo 是独立支线，按自身 Gate 验收。
 
 ---
 
