@@ -6,7 +6,7 @@ Living research website for **Universal Physical Token, robot self-improvement, 
 
 **https://nkd-lkz.github.io/physical-self-evolution/**
 
-## Current research mainline — 2026-09-16
+## Current research mainline — 2026-09-17
 
 The project is aligned to the leadership-defined research proposal:
 
@@ -18,14 +18,10 @@ Current question:
 
 ### Scope boundary: actor-side token, not planner-side orchestration
 
-The latest leadership clarification is explicit:
-
 - GPT-6 Astra / Harness-style systems are mainly **planner / reviewer / orchestration** approaches around an existing policy;
 - this project is **not** trying to win by adding a stronger planner;
 - the core object is an **actor-side universal compact token** extracted from the action model itself;
-- planner/harness work remains Frontier reference for understanding how others use policies, organize failure/recovery and perform validation.
-
-The core causal question remains:
+- planner/harness work remains Frontier reference for failure diagnosis, operating-range reasoning and validation-gated recovery.
 
 ```text
 actor / action-generation features
@@ -46,11 +42,11 @@ Current source of truth:
 - [`research/physical-token-leadership-spec.md`](research/physical-token-leadership-spec.md)
 - [`research/master-roadmap.md`](research/master-roadmap.md)
 - [`research/rlt-multitask-benchmark.md`](research/rlt-multitask-benchmark.md)
-- [`research/progress-2026-09-15.md`](research/progress-2026-09-15.md) — latest execution snapshot
+- [`research/progress-2026-09-17.md`](research/progress-2026-09-17.md) — latest execution snapshot
 
-## Current execution gate: recover a trustworthy B0 baseline first
+## Current execution gate: trustworthy B0 first
 
-Before B1/B2, the project remains in **Gate 0 — Baseline Recovery**:
+Before B1/B2, the project remains in **Gate 0 — Baseline Recovery / Validation**:
 
 ```text
 Recover a usable Stage1 reference
@@ -64,59 +60,66 @@ B1 + measured transition loss
 B2 + valid physics loss
 ```
 
-Two separate issues remain tracked:
+### Stage1 capability curve — 2026-09-17
 
-1. **Execution protocol** — current hammer Stage1 uses `H=50`; RoboTwin native TOPP with `H50/C50` is the current capability anchor. Historical `H50/C10` changes replanning boundaries and is kept as a diagnostic setting.
-2. **Stage1 capability** — paired H50/C50 evaluation contains a case where SFT20k succeeds and the old Stage1 2k fails, while a positive-control seed shows both can succeed. This motivates recovery but does not prove training budget is the unique root cause.
+The old clean50 `pi05_base + rlt_alpha=1` long Stage1 run stopped at about 12.3k steps, so the originally planned 20k run was **not completed**. Complete 6k/8k/10k/12k checkpoints were evaluated using one unified 20-seed development cohort, `H50/C50 native_macro`, the same task prompt and fixed action-sampling seed:
 
-## Live execution snapshot — 2026-09-15 13:29 UTC
+| checkpoint | success | rate |
+|---|---:|---:|
+| 6k | 8/20 | 40% |
+| 8k | 7/20 | 35% |
+| 10k | 8/20 | 40% |
+| 12k | 10/20 | 50% |
 
-### Hammer Stage1 20k
+`12k` is the current **development reference candidate**, not a final result. The curve is non-monotonic, the cohort is small, and 10/20 failures remain. These results prove partial closed-loop capability but do not prove that Stage1 generalization is solved or that training budget is the unique root cause.
 
-A new `pi05_base + rlt_alpha=1` joint Stage1 is **running**:
+A full-physics 12k video/trace capture on the same cohort is prepared for failure-stage analysis but has not yet been run.
 
-- target: 20,000 optimizer steps;
-- 2-GPU data parallel;
-- global batch 64 / micro batch 2;
-- gradient accumulation 16 per rank;
-- warmup 1,000;
-- checkpoint every 2,000 steps;
-- `H=50`.
+## Hammer clean500 → clean490
 
-Snapshot:
+The original clean50 plus 450 newly collected successful demonstrations have now been fully exported: 500 raw/main/physics/video episodes with 500 unique seeds.
 
-- `2459 / 20000` steps;
-- step-2000 checkpoint saved;
-- latest `loss/rlt/vla/grad = 0.254 / 0.252 / 0.00251 / 1.27`;
-- run not finished, so capability recovery is **not** yet accepted.
+A full CPU-side quality audit decoded all numeric fields, all four-camera RGB frames and all MP4 frames. File structure, finite values and temporal alignment passed, but **10 action trajectories showed strong motion discontinuities / branch-jump anomalies**. Raw evidence is preserved; those 10 are excluded from new action supervision.
 
-Checkpoint selection will use fixed-seed `H50/C50` closed-loop capability curves (`2k / 4k / ... / 20k`), not minimum training loss.
+This yields **clean490**:
 
-### Hammer clean500 data expansion
+- 490 trajectory candidates;
+- `train450`: 70,640 train indices;
+- `eval40`: 6,238 development-validation indices;
+- norm stats computed from `train450` only.
 
-- target: 500 successful expert trajectories;
-- snapshot: `160 / 500` successful **raw trajectories**;
-- 110 are newly collected beyond the original clean50;
-- final HDF5 / physics sidecar / video export has not yet reached 160 episodes.
+Another 10 trajectories have valid action continuity but weak/nonzero-impulse contact evidence. They remain usable for Stage1 action learning, while contact/impulse-specific auxiliary supervision must use a validity mask. A missing impulse label is **not** treated as a reliable “no contact / failed task” negative.
 
-After raw collection completes:
+`eval40` is a development validation set, not the final independent test set, because some seeds were previously used during checkpoint development.
 
-- fixed split: `train450 / val50`;
-- norm stats use **train450 only**;
-- no clean500 training starts before conversion / split / norm validation finishes.
+## New clean490 Stage1 preparation
 
-### RoboDojo
+A fresh Stage1 recovery run is prepared from generic `pi05_base`:
 
-RoboDojo has moved beyond “not tested”:
+- joint VLA task adaptation + RLT reconstruction;
+- `rlt_alpha=1`;
+- `H=50`;
+- global batch 64;
+- dual-GPU data parallel;
+- default maximum **30k optimizer steps**;
+- warmup 1k;
+- checkpoint every 5k;
+- checkpoint selection by fixed `eval40` closed-loop capability, not minimum training loss.
+
+Dataset conversion, train-only normalization, OpenPI loader checks, Hydra train/eval dry-runs and focused CPU tests are complete. **The new GPU training has not started yet.**
+
+## RoboDojo
+
+RoboDojo status is unchanged from the previous gate review:
 
 - **D0 complete**: source / system manifest;
-- **D1 complete**: fixed submodules + ~66 GB assets, doctor `13 PASS / 4 WARN / 0 FAIL`;
-- **D2 complete**: independent Isaac Sim / Isaac Lab runtime, doctor `14 PASS / 3 WARN / 0 FAIL`;
-- **D4 complete**: XPolicyLab CPU WebSocket closed loop, 10 episodes × 20 action steps = 200 steps; ARX X5 joint schema = 14D float32, chunk length 2;
+- **D1 complete**: fixed submodules + assets;
+- **D2 complete**: independent Isaac Sim / Isaac Lab runtime;
+- **D4 complete**: XPolicyLab CPU WebSocket protocol loop;
 - **D3 pending**: no B300 headless RGB renderer/device acceptance yet;
-- D5 native task, D6–D7 Dojo-Eval, D8–D9 Dojo-RL, D10 baseline are still pending.
+- D5 native task, D6–D7 Dojo-Eval, D8–D9 Dojo-RL, D10 baseline remain pending.
 
-Simulator and policy runtimes are intentionally isolated because their Python dependency constraints conflict.
+RoboDojo is a second platform and does not block the current Hammer/RLT baseline and Physical Token hypothesis tests.
 
 ## Core architecture
 
@@ -143,10 +146,10 @@ L_token = L_ro + λ_dyn L_dyn + λ_phys L_phys
 ```
 
 - `L_ro`: readout / reconstruction from stop-gradient action-head features;
-- `L_dyn`: action-conditioned prediction of measured physical transitions;
+- `L_dyn`: action-conditioned prediction of **measured** physical transitions using actual/executed actions;
 - `L_phys`: valid physical constraints, starting from kinematic consistency and actuator feasibility.
 
-Contact / friction / rigid-body residuals are optional and require valid sensing, models and calibration.
+Contact / friction / rigid-body / force targets are optional and require valid sensing, models, calibration and per-label validity masks.
 
 ## Initial Physical Token experiment
 
@@ -157,6 +160,17 @@ After Gate 0 is stable:
 3. **B2 — B1 + valid physics loss**
 
 Matched variables include token size, learner capacity, base model, data, online interaction budget, reward, seeds and action timing.
+
+A critical data contract is now explicit:
+
+```text
+reference / proposed action
+actual executed action
+command state
+measured state
+```
+
+These must remain distinct. The current Stage1 imitation dataset keeps the original command-state semantics; B1 must explicitly source measured state / executed consequences rather than silently reusing command targets.
 
 ## What “Universal” currently means
 
@@ -172,14 +186,9 @@ Cross-model / cross-robot claims require held-out tests.
 
 - Block-assembly and drawer-opening/placement clips are **RL Token qualitative reproduction**, not Physical Token results.
 - Old hammer Stage2 proves rollout → replay → actor/critic update → weight sync → checkpoint engineering, but not a usable B0 performance baseline.
-- Expert reward probing produced a positive success/reward case, so the task is not known to be reward-dead.
-- clean500 and RoboDojo progress are infrastructure/data advances, not Physical Token algorithm gains.
+- The unified Stage1 20-seed curve demonstrates partial reference capability; 12k is only a development candidate.
+- clean490 strengthens data quality and supervision validity; it does not yet prove better task success.
 - Astra / Harness / SHAPER results are planner/harness references, not direct evidence that the actor-side Physical Token hypothesis is correct.
-
-## Platform status
-
-- **RoboTwin / RL Token infrastructure**: current Gate 0 and Physical Token validation platform.
-- **RoboDojo**: second platform; source/assets/runtime and CPU policy protocol are validated, while B300 renderer/device compatibility remains unverified until D3.
 
 ## Public repository policy
 
@@ -203,7 +212,7 @@ See [`research/knowledge-base-maintenance.md`](research/knowledge-base-maintenan
     ├── physical-token-leadership-spec.md
     ├── master-roadmap.md
     ├── rlt-multitask-benchmark.md
-    ├── progress-2026-09-15.md
+    ├── progress-2026-09-17.md
     ├── robodojo-b300-log.md
     ├── experiment-log.md
     ├── decision-log.md
