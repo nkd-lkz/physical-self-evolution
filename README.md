@@ -43,6 +43,7 @@ Current source of truth:
 - [`research/master-roadmap.md`](research/master-roadmap.md)
 - [`research/rlt-multitask-benchmark.md`](research/rlt-multitask-benchmark.md)
 - [`research/progress-2026-09-17.md`](research/progress-2026-09-17.md) — latest execution snapshot
+- [`research/robodojo-b300-log.md`](research/robodojo-b300-log.md) — second-platform bring-up / RLinf integration log
 
 ## Current execution gate: trustworthy B0 first
 
@@ -108,18 +109,24 @@ A fresh Stage1 recovery run is prepared from generic `pi05_base`:
 
 Dataset conversion, train-only normalization, OpenPI loader checks, Hydra train/eval dry-runs and focused CPU tests are complete. **The new GPU training has not started yet.**
 
-## RoboDojo
+## RoboDojo second-platform status
 
-RoboDojo status is unchanged from the previous gate review:
+RoboDojo has advanced beyond the earlier bring-up state:
 
 - **D0 complete**: source / system manifest;
 - **D1 complete**: fixed submodules + assets;
-- **D2 complete**: independent Isaac Sim / Isaac Lab runtime;
+- **D2 complete for the current native-task path**, with an important correction: the historical doctor import check could produce a false positive on this host, so the required IsaacLab/runtime imports were re-verified directly and missing task-runtime dependencies were added in the isolated RoboDojo environment;
+- **D3 complete**: B300 headless RGB gate passed using a visible USD test scene; RGB was `240×320×3 uint8`, with sufficient dynamic range and manual visual confirmation;
 - **D4 complete**: XPolicyLab CPU WebSocket protocol loop;
-- **D3 pending**: no B300 headless RGB renderer/device acceptance yet;
-- D5 native task, D6–D7 Dojo-Eval, D8–D9 Dojo-RL, D10 baseline remain pending.
+- **D5 complete**: native `stack_bowls / ARX X5 / joint` single-episode execution produced a full result plus three `640×480`, 25 FPS camera videos. The debug policy emitted near-zero targets, so task success was 0 by design; this is infrastructure evidence, not VLA/RLT performance;
+- **D6–D10 remain pending**: RLinf reference adapter, multi-seed Dojo-Eval, real transition bridge, RLT smoke and complete baseline are not yet complete.
 
-RoboDojo is a second platform and does not block the current Hammer/RLT baseline and Physical Token hypothesis tests.
+Two contract findings now matter for later RLT / Physical Token work:
+
+1. ARX X5 arm joint state is measured `joint_pos`, while the gripper scalar is command-derived from previous control state; the full 14D vector must not be called uniformly “measured state”.
+2. One policy target is internally interpolated / held across multiple simulator control items, so a policy action is **not** one physics tick. Future RLT discounting and measured-transition targets must use the real execution interval.
+
+RoboDojo remains a second platform and does not block the current Hammer/RLT baseline and Physical Token hypothesis tests.
 
 ## Core architecture
 
@@ -170,7 +177,7 @@ command state
 measured state
 ```
 
-These must remain distinct. The current Stage1 imitation dataset keeps the original command-state semantics; B1 must explicitly source measured state / executed consequences rather than silently reusing command targets.
+These must remain distinct. The current Stage1 imitation dataset keeps the original command-state semantics; B1 must explicitly source measured state / executed consequences rather than silently reusing command targets. RoboDojo reinforces the same rule: even within one fixed-size proprio vector, some fields can be measured while others are command-derived.
 
 ## What “Universal” currently means
 
@@ -188,6 +195,7 @@ Cross-model / cross-robot claims require held-out tests.
 - Old hammer Stage2 proves rollout → replay → actor/critic update → weight sync → checkpoint engineering, but not a usable B0 performance baseline.
 - The unified Stage1 20-seed curve demonstrates partial reference capability; 12k is only a development candidate.
 - clean490 strengthens data quality and supervision validity; it does not yet prove better task success.
+- RoboDojo D3/D5 prove current-node renderer + native-task infrastructure paths, **not** RLinf/RLT algorithm performance.
 - Astra / Harness / SHAPER results are planner/harness references, not direct evidence that the actor-side Physical Token hypothesis is correct.
 
 ## Public repository policy
