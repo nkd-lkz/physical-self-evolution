@@ -1,5 +1,45 @@
 # 实验日志
 
+## 2026-09-17 · RoboDojo D3/D5 真实验证完成
+
+### 事实
+
+- 在显式共享 GPU 授权下，RoboDojo D3 B300 headless RGB renderer gate 已完成。最终通过的最小 USD 场景产生 `240×320×3 uint8` RGB，像素动态范围约 `85–247`，并完成人工可见性检查。此前黑图 run 保留为失败证据，不计作 D3 成功。
+- D5 原生 `stack_bowls / ARX X5 / joint` 单环境、单 episode 已完成。运行到原生 800-action 上限，三路 camera 各产生 801 帧 `640×480 @ 25 FPS` 视频并通过解码 / 人工首帧检查。
+- D5 使用 debug / near-zero action policy，因此 `success=0`、`score=0` 只说明该 debug policy 没完成任务，**不能解释为环境、VLA 或 RLT 性能失败**。
+- D5 调试过程中补齐了隔离 runtime 中的 GLU/OpenGL、IsaacLab task runtime、ARX X5 planner 配置、B300 `sm_103` 对应的隔离 NVRTC 12.9 编译路径以及录像 ffmpeg PATH；Hammer venv / model / Torch / NumPy 未修改。
+- 历史 doctor 的 import 检查存在 host-specific 假阳性风险：`conda run ... python -` + stdin 在本机可能 exit 0 但未执行 marker。本轮改用 direct `python -c` / import 作为真实 runtime 证据。
+- ARX X5 原生 state 契约进一步明确：arm joint state 来自实际 `joint_pos`，gripper scalar 来自 previous control 的 command-derived state；14D proprio 不能整体称为 measured state。
+- 一次 RoboDojo policy target 会在内部生成插值 / hold 控制项，因此一次 policy action 不是一个 physics tick。未来 RLT `C`、discount、early termination 和 measured transition 必须按真实 executed duration 定义。
+- CPU bridge schema / transition contract 预验收合计 24/24 tests passed，其中 20/20 mock transitions 通过；这些仍不是 D8 真实 transition 验收。
+
+### 解释
+
+RoboDojo 已从“安装 / CPU protocol”推进到 **真实 renderer + 原生 task episode**。当前可以把 D3、D5 标为完成，但 Dojo-Eval / Dojo-RL 仍未完成。
+
+这次最有研究价值的不是 debug policy 的成功率，而是跨平台数据契约进一步被具体化：
+
+```text
+fixed-size state vector
+≠ all-measured physical state
+
+policy action
+≠ one physics tick
+```
+
+这会直接约束后续 Universal Physical Token 的 B1 measured-transition 定义。
+
+### 下一步
+
+1. D6：确定与 ARX X5 / target task 匹配的 checkpoint、processor、norm，先做 reference-only adapter。
+2. D7：固定 seeds 做 Dojo-Eval，保存 raw reward / success / action trace / video。
+3. D7 通过后进入 D8：single-env、`C=1`、20 条真实 `(s,a,r,s')` transition 对齐；显式记录 terminal observation 与 executed duration。
+4. D8 通过后才接 replay / actor / critic 做 D9 RLT L0 smoke。
+
+详细记录：`research/robodojo-b300-log.md`。
+
+---
+
 ## 2026-09-17 · Stage1 固定20-seed能力曲线 + clean500全量审计 + clean490准备
 
 ### 事实
