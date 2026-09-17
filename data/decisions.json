@@ -1,13 +1,38 @@
 [
   {
+    "date": "2026-09-17",
+    "decision": "clean500全量审计后不补采异常轨迹，正式候选数据改为clean490，并固定train450/eval40；norm stats只使用train450。",
+    "reason": "500条导出完整不等于500条动作监督都合格。10条轨迹存在明显关节/TCP异常，应保留原始证据但从新训练候选排除；当前490条已足够形成独立train/eval开发划分。旧的train450/val50预案被本决策取代。"
+  },
+  {
+    "date": "2026-09-17",
+    "decision": "10条contact/impulse证据偏弱但动作连续的轨迹继续用于Stage1动作学习；contact/impulse相关辅助目标必须使用validity mask。",
+    "reason": "sidecar的非零冲量接触语义不等于任务几何接触/成功语义。缺失冲量不能填0当作可靠的无接触负样本；其他可信transition字段不需要整条丢弃。"
+  },
+  {
+    "date": "2026-09-17",
+    "decision": "旧clean50 Stage1的12k作为当前开发reference候选，但不冻结为最终reference；6k/8k/10k/12k统一20-seed结果分别为40%/35%/40%/50%。",
+    "reason": "统一H50/C50 native_macro、固定prompt/action seed后12k在当前20-seed cohort最高，但曲线非单调、样本量有限且仍有10/20失败，需要failure-stage分析和独立seeds复核。"
+  },
+  {
+    "date": "2026-09-17",
+    "decision": "新的clean490 Stage1仍从generic pi05_base、rlt_alpha=1联合训练；默认最多30k optimizer steps、warmup1k、每5k保存，并用eval40闭环能力选checkpoint。正式GPU训练尚未启动。",
+    "reason": "旧clean50长run未完成20k且数据重复高。train450显著扩大几何覆盖并完成质量过滤；30k约27个等效frame epochs，与clean50 20k约162遍不是同一重复风险。步数只是上限，连续checkpoint无改善时允许提前停止。"
+  },
+  {
+    "date": "2026-09-17",
+    "decision": "B1 measured-transition实现必须显式区分reference/proposed action、actual executed action、command state和measured state；当前Stage1 command-state字段不能直接冒充B1的真实物理状态。",
+    "reason": "现有数据接口中的state仍是drive target，而Physical Token要学习真实action consequence。若静默混用命令状态与实际qpos/EEF，会把控制命令拟合误写成物理grounding。"
+  },
+  {
     "date": "2026-09-16",
     "decision": "Astra/Harness 等工作只作为 planner/orchestration 参考；当前项目坚持从 actor/action-generation head 提取 Universal Physical Token，并以最终物理任务成功率提升作为核心验证。",
     "reason": "领导明确两者有本质区别：Astra路线重点是 planner 如何使用/修正已有策略，本项目研究 actor-side compact representation + physical grounding + lightweight online learner。LLM planner、memory、skill evolution 不进入首轮 B0/B1/B2。"
   },
   {
     "date": "2026-09-15",
-    "decision": "clean500 完成后固定 train450/val50，norm stats 只使用 train450。",
-    "reason": "数据扩充用于降低 clean50 的重复采样与过拟合风险，因此提前冻结 split 与 norm 口径，避免 validation leakage。"
+    "decision": "clean500完成后原计划train450/val50【已被2026-09-17 clean490 train450/eval40决策取代】。",
+    "reason": "这是数据采集未完成时的预案；全量质量审计识别10条强轨迹异常后，正式开发数据方案更新为clean490。"
   },
   {
     "date": "2026-09-15",
@@ -31,13 +56,13 @@
   },
   {
     "date": "2026-09-15",
-    "decision": "Stage1 baseline recovery 优先采用 generic pi05_base + rlt_alpha=1 + 20k joint training；SFT20k + alpha0 + 2k 暂缓。",
-    "reason": "保留论文/官方 base-init joint topology，同时补足旧2k Stage1较小的训练预算；这是受控恢复实验，不把训练步数提前定义成唯一根因。"
+    "decision": "Stage1 baseline recovery优先采用generic pi05_base + rlt_alpha=1 joint training；原20k clean50 run作为历史恢复实验，后续由2026-09-17 clean490新run取代。",
+    "reason": "保留论文/官方base-init joint topology，同时避免继续依赖小clean50高重复数据。"
   },
   {
     "date": "2026-09-15",
-    "decision": "新 Stage1 checkpoint 按固定 seed H50/C50 闭环能力选择，不按最低 train loss 选择。",
-    "reason": "clean50 数据小、20k×64 重复采样高；低训练 loss 不等于更好的闭环成功率，必须看 success、completion time、failure stage 与 paired stability。"
+    "decision": "Stage1 checkpoint按固定seed H50/C50闭环能力选择，不按最低train loss选择。",
+    "reason": "低训练loss不等于更好的闭环成功率，必须看success、completion time、failure stage与paired stability。"
   },
   {
     "date": "2026-09-14",
@@ -83,11 +108,6 @@
     "date": "2026-09-12",
     "decision": "论文 C=10 仍是 RLT 目标语义，但 RoboTwin 的 H50/C10 不能直接作为已有 H50 Stage1 checkpoint 的公平能力锚点。",
     "reason": "RoboTwin TOPP 执行使 C10 分段重新规划改变实际执行语义；论文式 C10 需要单独设计并验证。"
-  },
-  {
-    "date": "2026-09-12",
-    "decision": "先完成 RoboTwin 2.0 / RLinf_support pinned baseline，再迁移 RoboTwin 2.0 main。",
-    "reason": "不同时改变环境版本和算法复现。"
   },
   {
     "date": "2026-09-12",
