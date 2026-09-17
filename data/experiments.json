@@ -1,5 +1,20 @@
 [
   {
+    "date": "2026-09-17",
+    "title": "Stage1 6k–12k 统一20-seed能力曲线完成",
+    "summary": "在同一开发cohort、H50/C50 native_macro、固定training prompt与action-sampling seed下，6k/8k/10k/12k分别为8/20、7/20、8/20、10/20（40%/35%/40%/50%）。12k是当前最高开发候选，但曲线非单调且仍有10/20失败；不能宣布泛化问题解决或把训练量写成唯一根因。旧clean50长run最终停在约12.3k，因此20k目标未完成。"
+  },
+  {
+    "date": "2026-09-17",
+    "title": "clean500全量审计完成，正式候选收敛为clean490",
+    "summary": "500条raw/main/physics/video全部完整、500个seed唯一；全量数值、318,116张四相机RGB与79,529个MP4帧解码/时序对齐通过。识别10条强动作轨迹异常并从新训练候选排除，原始证据保留；另有10条动作连续但contact/impulse证据偏弱，Stage1保留、contact辅助监督必须mask。正式开发数据固定为train450/eval40，norm仅由train450计算。"
+  },
+  {
+    "date": "2026-09-17",
+    "title": "clean490新Stage1 CPU准备完成，30k GPU run待启动",
+    "summary": "train450/eval40转换、train-only norm、OpenPI loader检查、Hydra train/eval dry-run与focused CPU tests已完成。新Stage1仍从generic pi05_base开始、alpha1、H50、global batch64，最新默认最多30k optimizer steps、warmup1k、每5k保存，并用eval40闭环能力选checkpoint；正式GPU训练尚未启动。"
+  },
+  {
     "date": "2026-09-16",
     "title": "领导讨论：Astra 是 planner-side reference，不改 Universal Physical Token 主线",
     "summary": "领导明确：Astra/Harness 类工作重点是 planner/reviewer 如何使用已有策略；当前项目与其有本质区别，目标是从 actor/action-generation head 提取通用 compact token，通过 transition/physics grounding 与轻量 online learner 提升最终物理交互成功率。后续只观察 Astra 的使用方式与 failure/recovery 组织，不把 LLM planner、zero-shot reasoning、memory 或 skill evolution 并入 B0/B1/B2。"
@@ -16,38 +31,33 @@
   },
   {
     "date": "2026-09-15",
-    "title": "Stage1 20k joint recovery 已启动",
-    "summary": "13:29 UTC 快照：新的 generic pi05_base + rlt_alpha=1 joint Stage1 已运行到 2459/20000 steps，global_step_2000 checkpoint 已保存；最近 loss/rlt/vla/grad=0.254/0.252/0.00251/1.27，均有限。该 run 仍在运行，不能记为能力恢复完成；结束后按固定 seed H50/C50 闭环曲线评测 2k/4k/.../20k，而不是按最低 train loss 选权重。"
+    "title": "Stage1 20k joint recovery 已启动【历史快照，后续停于约12.3k】",
+    "summary": "13:29 UTC 快照：generic pi05_base + rlt_alpha=1 joint Stage1运行到2459/20000并保存step2000。该run后续未完成20k，最终在约12.3k停止；6k/8k/10k/12k已于2026-09-17完成统一20-seed闭环评测。"
   },
   {
     "date": "2026-09-15",
-    "title": "Hammer clean500 成功示范采集进行中",
-    "summary": "13:29 UTC 快照：目标从原 clean50 扩到 500 条成功 expert trajectory；当前已有 160/500 条成功 raw trajectories，其中新增 110 条。最终 data/physics/video 仍处于批量导出前，因此不能写成 160 条最终 dataset episode。收齐后固定 train450/val50，并只用 train450 计算 norm stats。"
+    "title": "Hammer clean500 成功示范采集进行中【历史快照】",
+    "summary": "13:29 UTC 快照时为160/500条成功raw trajectories。2026-09-17已完成全500导出与全量质量审计，并在排除10条强轨迹异常后收敛为clean490。"
   },
   {
     "date": "2026-09-15",
     "title": "RoboDojo D0–D2 与 D4 已通过，D3 renderer 待实测",
-    "summary": "RoboDojo 已完成固定源码/子模块/约66GB assets、独立 Isaac Sim/Isaac Lab runtime 与 XPolicyLab CPU WebSocket closed loop。D1 doctor=13 PASS/4 WARN/0 FAIL，D2 doctor=14 PASS/3 WARN/0 FAIL；D4 完成10×20=200 action steps，ARX X5 joint schema为14D float32、chunk length 2。B300 headless RGB renderer D3 尚未执行，因此仍无 renderer/device 兼容性结论，Dojo-Eval/Dojo-RL 也未开始。"
+    "summary": "RoboDojo 已完成固定源码/子模块/assets、独立 Isaac Sim/Isaac Lab runtime 与 XPolicyLab CPU WebSocket closed loop。D1 doctor=13 PASS/4 WARN/0 FAIL，D2 doctor=14 PASS/3 WARN/0 FAIL；D4 完成10×20=200 action steps，ARX X5 joint schema为14D float32、chunk length 2。B300 headless RGB renderer D3 尚未执行，因此仍无 renderer/device 兼容性结论，Dojo-Eval/Dojo-RL 也未开始。"
   },
   {
     "date": "2026-09-15",
     "title": "Hammer RLT 进入 Baseline Recovery gate",
-    "summary": "旧 base-init Stage1 2k 与旧 Stage2 继续保留为工程证据，但不再直接作为 Physical Token B0 性能基线。当前先恢复可信 Stage1 reference：严格区分 H50/C50 原生 RoboTwin TOPP 能力锚点与历史 H50/C10 执行协议；新优先实验为 pi05_base + rlt_alpha=1 的 20k joint Stage1。"
+    "summary": "旧 base-init Stage1 2k 与旧 Stage2 继续保留为工程证据，但不再直接作为 Physical Token B0 性能基线。当前先恢复可信 Stage1 reference：严格区分 H50/C50 原生 RoboTwin TOPP 能力锚点与历史 H50/C10 执行协议。"
   },
   {
     "date": "2026-09-15",
     "title": "H50/C50 配对暴露 Stage1-specific capability gap",
-    "summary": "在固定 H50/C50 开发协议中，目前一个 seed 旧 Stage1 与 SFT20k 都失败，一个 seed 为 SFT20k 成功而旧 Stage1 失败；额外正对照 seed 两者都成功。结果说明旧 Stage1 并非完全失效，但存在能力不足风险；样本数不足，不能把训练步数或单一因素写成唯一根因。"
-  },
-  {
-    "date": "2026-09-15",
-    "title": "新 Stage1 20k 配置通过 dry-run【历史快照】",
-    "summary": "baseline recovery 配置固定为 generic pi05_base、rlt_alpha=1、20k optimizer steps、2-GPU data parallel、global batch64、micro batch2、每 rank gradient accumulation16、warmup1000、每2000步保存。该配置随后已正式启动；本条保留为启动前历史快照。"
+    "summary": "在固定 H50/C50 开发协议中，存在 SFT20k 成功而旧 Stage1 失败的配对，也存在二者都成功的正对照。结果说明旧 Stage1 并非完全失效，但存在能力不足风险；不能把训练步数或单一因素写成唯一根因。"
   },
   {
     "date": "2026-09-14",
     "title": "主线按领导方案收敛为 Universal Physical Token",
-    "summary": "根据领导提供的两份 Physical Token PPT，项目上位问题改为：从 action-generation head 读取 compact token，用 measured transition prediction 与有效 physics constraints grounding，再让冻结 action model 通过小型 online learner 适应变化的接触动力学。此前更宽泛的四阶段路线降级为历史探索。"
+    "summary": "根据领导提供的 Physical Token 方案，项目上位问题改为：从 action-generation head 读取 compact token，用 measured transition prediction 与有效 physics constraints grounding，再让冻结 action model 通过小型 online learner 适应变化的接触动力学。此前更宽泛的四阶段路线降级为历史探索。"
   },
   {
     "date": "2026-09-14",
