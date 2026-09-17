@@ -1,24 +1,29 @@
 {
-  "as_of": "2026-09-15 13:29 UTC",
+  "as_of": "2026-09-17",
   "metrics": [
-    {"value": "2459/20k", "label": "Stage1 20k joint recovery 运行中快照；step-2000 已保存"},
-    {"value": "160/500", "label": "clean500 成功 raw trajectories；最终 dataset 尚未导出完成"},
-    {"value": "D0–D2 + D4", "label": "RoboDojo 已完成源码/资产/runtime 与 CPU policy protocol"},
-    {"value": "D3 pending", "label": "B300 headless RGB renderer/device 尚未验收"}
+    {"value": "10/20", "label": "Stage1 step12k 在统一 H50/C50 开发 cohort 上成功；当前最高候选，不是最终结果"},
+    {"value": "40/35/40/50%", "label": "Stage1 6k/8k/10k/12k 固定20-seed能力曲线"},
+    {"value": "500 → 490", "label": "clean500 全量审计后排除10条强轨迹异常；原始证据全部保留"},
+    {"value": "450/40", "label": "clean490 固定 train450 / eval40；norm只由train450计算"},
+    {"value": "30k planned", "label": "新clean490 Stage1 CPU准备完成；正式GPU训练尚未启动"},
+    {"value": "D3 pending", "label": "RoboDojo B300 headless RGB renderer/device 仍待验收"}
   ],
   "timeline": [
-    {"title": "Stage1 20k 正在运行", "body": "generic pi05_base + alpha1 joint Stage1 已运行到 2459/20000；loss/rlt/vla/grad 均有限。run 未结束，不能写成能力恢复完成。"},
-    {"title": "clean500 正在扩充", "body": "已有 160/500 条成功 raw expert trajectories，其中新增 110 条；最终 HDF5/physics/video 批量导出尚未完成。完成后固定 train450/val50，norm 只用 train450。"},
-    {"title": "RoboDojo D0–D2 与 D4 已完成", "body": "固定源码/子模块/约66GB assets、独立 Isaac runtime 与 XPolicyLab CPU WebSocket closed loop 均已验收。D1 doctor 13 PASS/4 WARN/0 FAIL，D2 doctor 14 PASS/3 WARN/0 FAIL。"},
-    {"title": "RoboDojo D3 仍是关键硬件门槛", "body": "尚无 B300 headless app + 真实 RGB renderer/device 证据，因此不能声称 B300 已兼容 RoboDojo/Isaac renderer；D5–D10 仍未开始。"},
-    {"title": "Physical Token 仍未进入正式消融", "body": "当前仍是 Gate 0 Baseline Recovery。先恢复可信 Stage1/B0，再进入 B1 measured transition 与 B2 valid physics。"}
+    {"title": "Stage1 统一能力曲线完成", "body": "同一20-seed开发cohort、H50/C50 native_macro、固定prompt/action seed下：6k=8/20、8k=7/20、10k=8/20、12k=10/20。12k是当前开发候选；曲线非单调且样本有限。"},
+    {"title": "旧长程Stage1未完成20k", "body": "旧clean50 base+alpha1长run最终停止在约12.3k steps；因此当前只验收已有完整6k/8k/10k/12k checkpoint，不写成20k完成。"},
+    {"title": "clean500全量质量审计完成", "body": "500条raw/main/physics/video完整，数值与全帧解码/对齐通过；识别10条强轨迹异常并从新训练候选排除，得到clean490。"},
+    {"title": "contact标签引入validity mask", "body": "另有10条动作轨迹连续但contact/impulse证据偏弱；保留用于Stage1动作学习，contact/impulse辅助监督必须mask，不能把缺失冲量当作无接触。"},
+    {"title": "新clean490 Stage1准备完成", "body": "train450/eval40转换、train-only norm、OpenPI loader检查、Hydra dry-run与CPU测试完成；默认30k、每5k保存，GPU训练尚未启动。"},
+    {"title": "Physical Token仍未进入正式消融", "body": "当前继续处于Gate 0。先锁定可信Stage1/B0，再做B1 measured transition与B2 valid physics。"},
+    {"title": "RoboDojo状态不变", "body": "D0–D2与D4已完成；D3 B300 renderer/device仍待执行，D5–D10未开始。"}
   ],
   "plan": [
-    {"priority": "P0", "action": "保持 Stage1 20k 正常运行；结束后固定 seed H50/C50 评测 2k/4k/.../20k", "evidence": "checkpoint、success、completion time、failure stage、paired video"},
-    {"priority": "P0", "action": "clean500 收满 500 条成功 raw trajectories，再做 train450/val50 转换和 train450-only norm", "evidence": "500份完整性、split manifest、norm provenance"},
-    {"priority": "P0", "action": "GPU 空闲后先做 RoboDojo D3 headless/RGB gate", "evidence": "renderer log、device info、320×240 RGB、stable exit"},
-    {"priority": "P1", "action": "D3 通过后跑 D5 原生 RoboDojo 单 episode，再接 D6/D7 RLinf reference", "evidence": "raw reward/success、video、action schema、multi-seed eval"},
-    {"priority": "P1", "action": "冻结可信 Stage1 reference 后重新建立 B0 Stage2", "evidence": "execution/timing contract、positive reward opportunity、transition/replay/update trace"},
-    {"priority": "P2", "action": "B0 稳定后才做 B1 transition grounding 与 B2 physics grounding", "evidence": "matched-budget ablation、held-out transition metrics、physical violation metrics"}
+    {"priority": "P0", "action": "完成12k full-physics录像与failure-stage标注，结果与原20-env聚合评测分开保存", "evidence": "full physics video、chunk/physics trace、failure-stage summary"},
+    {"priority": "P0", "action": "启动clean490新Stage1；按5k/10k/15k/20k/25k/30k做eval40闭环曲线", "evidence": "checkpoint、closed-loop success、completion time、failure stage"},
+    {"priority": "P0", "action": "development-best checkpoint用封存独立reset seeds复核", "evidence": "independent success/CI、paired videos"},
+    {"priority": "P1", "action": "冻结可信Stage1后重新建立H50/C50 native-macro B0 Stage2", "evidence": "execution/timing contract、positive-reward opportunity、replay/update trace"},
+    {"priority": "P2", "action": "B0稳定后实现B1 measured-transition grounding；严格区分proposed/executed action与command/measured state", "evidence": "transition target audit、validity mask、held-out metrics"},
+    {"priority": "P2", "action": "B2只加入已验证physics constraints，contact/impulse标签按有效性mask使用", "evidence": "gradient audit、constraint metrics、matched-budget ablation"},
+    {"priority": "P1", "action": "RoboDojo有合适资源时继续D3 headless/RGB gate", "evidence": "renderer log、device info、RGB、stable exit"}
   ]
 }
