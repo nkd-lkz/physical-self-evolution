@@ -1,16 +1,13 @@
 # Universal Physical Token：研究总路线
 
-> 版本：2026-09-15  
-> 当前状态：**领导主线不变；当前执行处于 Gate 0 — Baseline Recovery**  
-> 主规范：[`physical-token-leadership-spec.md`](physical-token-leadership-spec.md)
+> 版本：2026-09-17  
+> 当前状态：**领导主线不变；执行处于 Gate 0 — Baseline Recovery / Validation**  
+> 主规范：[`physical-token-leadership-spec.md`](physical-token-leadership-spec.md)  
+> 最新进展：[`progress-2026-09-17.md`](progress-2026-09-17.md)
 
 ---
 
-## 0. 主线纠正
-
-此前 Research OS 将项目扩展成“RLT Multi-task Benchmark → Failure Diagnosis → Physical Experience → Self-Improvement”的宽泛四阶段路线。
-
-该结构现在降级为**历史探索框架**，不再作为当前实验主规范。
+## 0. 当前研究问题
 
 当前项目严格收敛到：
 
@@ -18,23 +15,37 @@
 
 核心问题：
 
-> **能否从已有 action model 的 action-generation head 读出一个紧凑 token，并通过 measured transition prediction 与有效 physics constraints 对它进行 grounding，使冻结 action model 在变化的接触动力学下通过小型在线 learner 持续适应？**
+> **能否从已有 action model 的 actor / action-generation head 读出一个紧凑 token，并通过 measured transition prediction 与有效 physics constraints 对它进行 grounding，使冻结 action model 在变化的接触动力学下通过小型 online learner 更快、更可靠地适应？**
 
-这一定义优先于此前由 AI 辅助发散出的 Physical Experience / World Model / Harness / Fleet 等宽泛主线。那些内容保留在知识库作为 related work 与备选方向。
+此前更宽泛的 Physical Experience / World Model / Harness / Fleet 路线继续保留在知识库作为 related work 与未来扩展，不覆盖当前领导定义的实验主线。
 
-### 0.1 当前执行门槛：先恢复可信 B0
-
-2026-09-15 的工程证据表明，旧 hammer baseline 同时存在两个需要分开的混杂：
-
-1. **execution protocol**：已有 Stage1 是 `H=50`；RoboTwin 原生 TOPP 下，`H50/C10` 与 `H50/C50` 的规划边界、物理时间和再观测分布不同。历史 H50/C10 不能继续作为 Stage1 能力的公平锚点。
-2. **Stage1 capability**：在 H50/C50 对齐后，已有开发配对中出现 SFT20k 成功而旧 Stage1 2k 失败的场景；同时也存在两者都成功的正对照。因此旧 Stage1 不是完全失效，但仍存在明显能力不足风险。
-
-所以在 B1/B2 之前增加：
+### Scope boundary
 
 ```text
-Gate 0A  Recover usable Stage1 reference
+Astra / Harness / Agent:
+planner / reviewer / orchestration
+→ 决定调用谁、何时重试、是否修正
+
+Our project:
+actor / action-generation features
+→ Universal Physical Token
+→ physical grounding
+→ lightweight online adaptation
+→ final physical-task success
+```
+
+当前第一篇工作不靠增加 LLM planner、memory 或 skill evolution 获得主要收益。
+
+---
+
+## 1. 当前执行门槛：Gate 0
+
+在 B1 / B2 前先建立可信 RLT / RL Token baseline：
+
+```text
+Gate 0A  Recover & validate Stage1 reference
        ↓
-Gate 0B  Fix RoboTwin execution / timing semantics
+Gate 0B  Fix execution / timing semantics
        ↓
 Gate 0C  Establish trustworthy B0 online baseline
        ↓
@@ -43,23 +54,123 @@ B1      + measured transition grounding
 B2      + valid physics grounding
 ```
 
-当前 Stage1 recovery：generic `pi05_base` + `rlt_alpha=1` + 20k joint training；global batch64；checkpoint 每2k保存并用固定 seed H50/C50 闭环能力选择。
+Gate 0 是因果归因的前置，不是新的算法主张。
 
-Gate 0 是实验可解释性的前置，不改变领导定义的科学主张。
+### 1.1 2026-09-17 Stage1 证据
+
+旧 clean50 `pi05_base + alpha1` 长程 Stage1 未完成原计划20k，最终停止在约12.3k。统一协议下已完成 6k/8k/10k/12k 的固定20-seed开发评测：
+
+| checkpoint | success | rate |
+|---|---:|---:|
+| 6k | 8/20 | 40% |
+| 8k | 7/20 | 35% |
+| 10k | 8/20 | 40% |
+| 12k | 10/20 | 50% |
+
+协议固定为 `H50/C50 native_macro`、相同 task prompt、相同 action-sampling seed 和同一 cohort。
+
+当前结论：
+
+- Stage1 已证明具备部分闭环任务能力；
+- 12k 是当前 development candidate；
+- 曲线非单调、样本量有限且12k仍有10/20失败；
+- 不能宣布泛化问题解决，也不能把训练步数/数据量/联合loss写成唯一根因；
+- 需要完整物理视频、failure-stage分析和独立最终seeds继续验证。
 
 ---
 
-## 1. 核心结构
+## 2. 数据基座：clean500 → clean490
+
+### 2.1 全量审计
+
+500条原始成功示范已经完整导出并完成全量CPU审计：
+
+- 500 unique seeds；
+- 79,529 raw/source frames；
+- 318,116 four-camera RGB frames decoded；
+- 79,529 MP4 frames decoded；
+- 数值有限性、字段长度、图像尺寸、视频帧数与 transition 对齐通过；
+- repository physics validator 对全部500条通过。
+
+但审计识别出 **10条强动作轨迹异常**。这些原始文件继续保存为证据，但不进入新的动作监督数据。
+
+因此正式候选数据为：
+
+> **clean490 = train450 + eval40**
+
+- train450：70,640 training indices；
+- eval40：6,238 development-validation indices；
+- norm stats 只使用 train450。
+
+### 2.2 Physics label validity
+
+另有10条动作轨迹本身连续，但 contact/impulse 标签证据偏弱。
+
+原则：
+
+```text
+trajectory validity != per-physics-label validity
+```
+
+处理：
+
+- Stage1 动作学习保留；
+- contact/impulse auxiliary loss 使用 validity mask；
+- 缺失/弱冲量标签不能填0解释成“无接触”；
+- 其他可信 transition targets 可继续使用。
+
+这个结论直接进入未来 B1/B2 的数据合同。
+
+### 2.3 Command state 与 measured state 分离
+
+当前 imitation dataset 的 state 仍沿用原 OpenPI/RoboTwin command/drive-target 语义。
+
+未来 Physical Token B1 必须显式区分：
+
+```text
+reference / proposed action
+actual executed action
+command state
+measured state
+```
+
+Measured transition 需要 actual qpos / EE / object consequence 等真实测量，不允许把 command target 静默当作真实物理状态。
+
+---
+
+## 3. 新 clean490 Stage1 baseline recovery
+
+下一轮 Stage1 从 generic `pi05_base` 重新开始：
+
+- joint VLA task adaptation + RLT reconstruction；
+- `rlt_alpha=1`；
+- H50；
+- global batch64；
+- dual-GPU data parallel；
+- warmup1k；
+- default maximum 30k optimizer steps；
+- checkpoint every5k；
+- `5k/10k/15k/20k/25k/30k` 使用 eval40 做开发选择。
+
+当前数据转换、train-only norm、loader、Hydra dry-run 与 CPU regression 已完成；**GPU正式训练尚未启动**。
+
+30k 是上限，不是必须跑满。选择依据仍然是 closed-loop capability，而不是最低训练 loss。
+
+最终 reference 需要在 development-best checkpoint 确定后，用未参与开发的独立 reset seeds 重新评估。
+
+---
+
+## 4. 核心结构
 
 ```text
 Frozen Backbone / Perception
           ↓
-Frozen Action Head
+Frozen Action Head / Action Expert
           ↓
-Pre-output features F_t^head
+Pre-output action-generation features F_t^head
           +
 Robot history h_t
-(state + actual/executed actions)
+(measured state + actual/executed actions)
           +
 Robot metadata r
           ↓
@@ -72,81 +183,93 @@ Small online actor / critic
 Adapted action
 ```
 
-当前 Physical Token 的研究对象是 **action-head readout**，不是一个泛化的“大世界模型”。
+核心假设不是“物理变量越多越好”，而是：
+
+> **在固定容量下，action-side compact representation 经过真实 action consequence 与可靠 physics constraints grounding 后，是否更适合价值判断和在线适应。**
 
 ---
 
-## 2. Universal 的严格边界
-
-“Universal”当前只表示：
-
-- shared token shape；
-- shared physical objectives；
-- lightweight model-family adapters；
-- lightweight robot / embodiment adapters。
-
-它目前仍是**可检验假设**，不是结果。
-
-必须通过：
-
-1. 当前 model family / robot 上先验证；
-2. held-out action-head family；
-3. held-out robot embodiment；
-
-才能讨论 cross-model / cross-robot universality。
-
----
-
-## 3. 表示学习目标
+## 5. Physical Token 目标
 
 ```text
 L_token = L_ro + λ_dyn L_dyn + λ_phys L_phys
 ```
 
-### 3.1 `L_ro` · Readout / Reconstruction
+### 5.1 `L_ro` · Readout / Reconstruction
 
-- reconstruct fixed stop-gradient action-head feature target；
-- 保留 action-head 已有任务与动作信息；
-- 不修改 base action model。
+- preserve stop-gradient action-generation features；
+- 保持原任务/动作信息；
+- 不修改 frozen action model。
 
-### 3.2 `L_dyn` · Measured Transition Prediction
-
-action-conditioned decoder：
+### 5.2 `L_dyn` · Measured Transition Prediction
 
 ```text
-D(z_t, u_t, r) -> measured future physical state
+D(z_t, u_t^exec, r) -> measured future physical outcome
 ```
-
-其中：
-
-- `u_t` 使用 actual / executed action；
-- target 使用真实测得的 transition；
-- 使用 validity mask；
-- 按 physical units 做 normalization；
-- terminal/reset 边界严格隔离。
-
-第一阶段优先 joint / EE / relative motion 等可靠 measured outcome。
-
-### 3.3 `L_phys` · 有效 Physics Constraints
 
 第一版优先：
 
-- kinematic consistency：`||v_EE - J(q) q_dot||²`；
+- actual joint / EE motion；
+- relative robot-object motion；
+- execution discrepancy；
+- 可靠的事件/接触结果（仅在标签有效时）。
+
+要求：
+
+- actual/executed action；
+- validity mask；
+- terminal/reset隔离；
+- train-only normalization；
+- future真实结果只能作target，不能泄漏到当前actor输入。
+
+### 5.3 `L_phys` · Valid Physics Constraints
+
+第一版优先：
+
+- kinematic consistency；
 - joint limits；
 - speed limits；
-- 明确的 actuator/control feasibility。
+- 明确的 actuator / controller feasibility。
 
-Contact、friction、force/torque、rigid-body dynamics 只有在 sensing / model / calibration 有效时才加入。
+Contact、friction、force/torque、full rigid-body residual 只有 sensing/model/calibration 可靠后才进入。
 
-**不因为模拟器能导出某个字段，就默认它可以成为主实验中的物理监督。**
+**模拟器能导出字段，不等于该字段天然适合作为物理监督。**
 
 ---
 
-## 4. Online Self-Improvement
+## 6. 第一组正式实验
 
-当前 self-improvement 的严格定义：
+| ID | 方法 | 新增内容 | 回答的问题 |
+|---|---|---|---|
+| B0 | RL Token / matched head-readout baseline | compact readout | baseline |
+| B1 | B0 + measured transition | real action-outcome grounding | transition grounding 是否带来增量？ |
+| B2 | B1 + valid physics | kinematic/actuator constraints | physics constraints 是否有独立增量？ |
 
-> 冻结大 action model，通过 Physical Token + 小型在线 learner，利用真实 executed action、reward 与 measured outcomes 改进行为。
+所有组必须 matched：
+
+- base/reference checkpoint；
+- token capacity；
+- actor/critic capacity；
+- deployment inputs；
+- offline data；
+- online interaction budget；
+- reward；
+- seeds；
+- H/C/timing/execution semantics。
+
+### 必须增加的 readout 对照
+
+```text
+Backbone tap
+vs.
+Action-head / Action-Expert tap
+```
+
+Action-head 更接近动作生成是研究假设，不是已知事实。
+
+---
+
+## 7. Online self-improvement
 
 在线阶段默认：
 
@@ -154,220 +277,111 @@ Contact、friction、force/torque、rigid-body dynamics 只有在 sensing / mode
 - action head frozen；
 - token encoder/readout frozen；
 - small actor/critic trainable；
-- outcome decoder 单独用 measured transitions 更新；
-- actor optimization 时 decoder weights frozen，但保留对 action 的 gradient；
-- hard execution limits 与 learned physical regularization 分开。
+- learner 使用真实 executed actions 与 task rewards；
+- replay 与 outcome target 对齐真实执行时间。
 
-注意：**当前 Gate 0 的 Stage1 joint training 属于 baseline/reference 建设，不是 Physical Token 的 online adaptation 阶段。**
+第一阶段 actor/critic 结构尽量沿用 matched RLT，先只更换表示，避免 learner 改动掩盖 representation 的贡献。
 
----
+后续可以单列：
 
-## 5. 第一组正式实验
+- actor-only token use；
+- critic-only physical token；
+- both actor/critic；
+- Q-guided flow update；
+- streaming / low-replay。
 
-领导给出的第一组验证仍是严格递增消融：
-
-| ID | 方法 | 新增内容 | 回答的问题 |
-|---|---|---|---|
-| B0 | RL Token / matched head-readout baseline | compact readout | baseline |
-| B1 | B0 + transition loss | measured outcome prediction | transition grounding 是否有增益？ |
-| B2 | B1 + physics loss | valid kinematic / actuator constraints | physics constraints 是否提供额外增益？ |
-
-在进入该表前必须先通过 Gate 0。
-
-B0/B1/B2 必须 matched：
-
-- token size；
-- online learner capacity；
-- base model；
-- task data；
-- interaction budget；
-- reward；
-- seed；
-- action chunk / control frequency。
-
-主要指标：
-
-- task success；
-- physical violations；
-- adaptation time / interaction cost；
-- old-task retention；
-- repeated seeds；
-- uncertainty intervals。
+这些不是首轮 B1/B2 必须变量。
 
 ---
 
-## 6. 当前已有资产如何重新定位
+## 8. 指标与证据链
 
-### 6.1 RL Token reproduction clips
+### 8.1 Representation evidence
 
-现有：
+- held-out transition prediction；
+- contact/slip/event AUPRC（有可靠标签时）；
+- failure-onset / operating-range probes；
+- hidden dynamics parameter probe 仅作诊断，不直接输入主策略。
 
-- block assembly；
-- drawer opening + block placement。
+### 8.2 Decision evidence
 
-准确口径：
+- same-state candidate ranking；
+- critic calibration / action discrimination；
+- token usage ablation。
 
-> **RL Token qualitative baseline demonstrations**
+### 8.3 Online control evidence
 
-它们不是 Physical Token 结果，也不是 transition / physics loss 的比较结果。
+- success rate；
+- success-vs-interaction curve / AUC；
+- interaction steps to target performance；
+- completion time；
+- physical violation metrics；
+- failure taxonomy；
+- old-condition retention。
 
-### 6.2 Hammer / RoboTwin 资产
-
-保留：
-
-- 环境 bring-up；
-- 数据、norm、checkpoint；
-- actual state / contact / geometry logging；
-- evaluation / video / seed / timing infrastructure。
-
-Hammer 当前最重要的角色是：
-
-- Gate 0 baseline recovery；
-- transition target / physics-loss feasibility；
-- controlled ablation；
-- pipeline regression。
-
-### 6.3 Physics sidecar
-
-作为：
-
-- measured / privileged target 候选；
-- validity audit；
-- failure analysis；
-- physical constraint feasibility 检查。
-
-部署输入仍优先来自 robot history、actual execution 与可获得 metadata，而不是 simulator-only truth。
-
----
-
-## 7. Action-head extraction contract
-
-不同 action model 必须先固定 extraction convention：
-
-- Regression / MLP：penultimate activations；
-- Diffusion / Flow：selected sampling-step features，并包含 noise/time context；
-- Autoregressive：causal states before logits；
-- 禁止 future demonstrated actions leakage。
-
-同时必须保留：
+主张需要形成：
 
 ```text
-Backbone tap vs Action-head tap
+better representation
+→ better action/value discrimination
+→ better online adaptation
+→ better task success
 ```
 
-对照，验证 action head 是否真的更适合物理 readout。
+不能只靠 auxiliary loss 下降。
 
 ---
 
-## 8. Streaming RL 的位置
+## 9. Physical shift 与 Universal test
 
-此前探索把 Streaming RL 与 Physical Token 同时放进首轮创新。
+只有 nominal B0/B1/B2 稳定后，才进入：
 
-现在调整为：
+1. 同任务单因素 physical shift：mass / friction / delay / gain / contact tolerance；
+2. appearance shift 单独报告，不与 dynamics shift 混合；
+3. held-out task / head family；
+4. held-out embodiment。
 
-> **先验证 token grounding，再验证 online-learning efficiency。**
-
-当前顺序：
-
-```text
-Gate 0 trustworthy B0
-   ↓
-B1 + transition loss
-   ↓
-B2 + physics loss
-   ↓
-matched online actor-critic
-   ↓
-physical/contact shift
-   ↓
-held-out model / robot
-   ↓
-Streaming RL / uncertainty-aware update（后续）
-```
-
-Streaming Actor-Critic、batch≈1、无 replay、uncertainty-aware learning rate、安全 fallback 继续保留，但不是第一组 Physical Token 实验必须同时引入的变量。
+“Universal”当前只表示 shared token shape + shared objective + lightweight adapters，是待验证 hypothesis。
 
 ---
 
-## 9. 当前执行 Gate
+## 10. RoboDojo 的位置
 
-### Gate 0 · Baseline Recovery【当前】
+RoboDojo 继续作为第二平台：
 
-- 新 Stage1 从 generic base 做 20k joint training；
-- H50/C50 固定 seed 闭环评测 `2k/4k/.../20k`；
-- 与 SFT20k 做 paired success / completion-time / failure-stage 对照；
-- 不按最低 train loss 选 checkpoint；
-- 冻结一个有闭环能力证据的 Stage1 reference；
-- 重新建立可解释 B0 online baseline。
+- D0–D2 complete；
+- D4 CPU protocol complete；
+- D3 B300 renderer pending；
+- D5–D10 pending。
 
-### Gate A · Baseline / extraction
-
-- B0 可重复；
-- 明确 action-head feature tap；
-- 明确 robot history / executed action contract；
-- action-head vs backbone tap 对照可跑。
-
-### Gate B · Transition grounding
-
-- B0/B1 token capacity matched；
-- held-out transition prediction 有稳定差异；
-- 不存在 future leakage；
-- actual/executed action 与 target 时间对齐。
-
-### Gate C · Physics grounding
-
-- 只加入有严格定义与有效量纲的 constraints；
-- B2 相对 B1 的增益可独立归因；
-- 同时报告 physical violation，不只报告 success。
-
-### Gate D · Online adaptation
-
-- frozen base/head/token；
-- actor/critic 真正更新；
-- 使用 actual executed action 与 reward；
-- matched interaction budget；
-- old-task retention 可测。
-
-### Gate E · Universal hypothesis
-
-- 当前模型/机器人上先成立；
-- 再 held-out head family；
-- 再 held-out embodiment。
+它不阻塞 Hammer 上的 Gate 0 与 Physical Token 核心假设验证。
 
 ---
 
-## 10. 当前禁止的过度表述
+## 11. Streaming / WAM / Agent 的触发条件
 
-没有实验前，不写：
+- **Streaming RL**：B0/B1/B2 表示问题先成立，再研究 replay efficiency；
+- **Full WAM**：局部 consequence prediction 已证明长期规划确有价值后再启动；
+- **Agent/Harness**：失败主要来自任务拆解/skill orchestration，而非局部物理执行时再考虑；
+- **Foundation consolidation**：轻量适应已经持续产生稳定、高质量新经验后再考虑写回大模型。
 
-- “Physical Token 已经提升成功率”；
-- “学会物理规律”；
-- “Universal 已跨模型/跨本体成立”；
-- “接触/摩擦定律已显式建模”；
-- “机器人已实现开放环境无限自进化”；
-- “Streaming 一定优于 replay”；
-- “旧 Stage2 success=0 证明缺少 physics”；
-- “Stage1 训练预算已经被证明是唯一根因”。
-
-当前最准确的研究表述：
-
-> **提出一个 action-head Universal Physical Token 假设：以 measured transition prediction 和有效 physics constraints grounding compact readout，再通过轻量在线 learner，在冻结 action model 的条件下适应变化的接触动力学。当前先完成可信 RL Token baseline recovery。**
+这些不是当前必经路线。
 
 ---
 
-## 11. 知识库与主线的关系
+## 12. 当前禁止的过度表述
 
-RISE、Motus2、LWD、Zeva、Zetta、SmoothRL 等继续保留在 Frontier Knowledge Base。
+当前不能写：
 
-它们用于：
+- “Physical Token 已提升成功率”；
+- “机器人已经学会物理规律”；
+- “12k显著优于其它checkpoint”；
+- “clean500全部500条都适合训练”；
+- “contact=0等于没有接触”；
+- “数据扩充已带来最终性能提升”；
+- “Universal已跨模型/跨本体成立”；
+- “旧Stage2零成功证明RLT缺physics”。
 
-- 找 baseline；
-- 找创新边界；
-- 找实现技巧；
-- 解释结果。
+当前最准确表述：
 
-但不会自动改变上述 Physical Token 主规范。
-
-如果论文观点与领导主线冲突，默认：
-
-> **先按领导定义完成可验证实验，再把论文作为对照/扩展。**
+> **项目以 RLT 为 baseline，当前已建立部分可用的 Hammer Stage1 reference 能力曲线，并完成 clean500 全量质量审计与 clean490 数据准备。下一步先用 clean490 建立更可信 Stage1/B0；随后在 matched 条件下验证 action-side compact token 的 measured-transition / physics grounding 是否真正提高在线适应与最终任务成功率。**
