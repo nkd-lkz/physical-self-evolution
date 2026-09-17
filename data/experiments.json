@@ -1,6 +1,26 @@
 [
   {
     "date": "2026-09-17",
+    "title": "clean490 Stage1 正式启动，运行至约3.8k/30k",
+    "summary": "train450 + train-only norm 的新Stage1已从generic pi05_base正式启动，alpha1、H50、global batch64、双卡数据并行、最大30k steps、每5k保存。当前实时快照约3798/30000，仅说明训练在运行；首个有意义门槛是5k checkpoint后的固定eval40闭环评测，不能按train loss提前判断能力。"
+  },
+  {
+    "date": "2026-09-17",
+    "title": "H50/C50 B0 Stage2 正式启动，当前仍在warmup",
+    "summary": "冻结12k reference在统一20-seed H50/C50协议下为10/20成功。修复action space与observation字段传输后，相关CPU测试通过；新的4-env Stage2已启动，batch64，warmup目标512条transition并准备2000次critic更新，总预算3000轮。当前仍在收集warmup数据，尚无validated learner update、actor takeover或性能提升结论。"
+  },
+  {
+    "date": "2026-09-17",
+    "title": "RoboDojo contact-task 与 π0.5 reference 选型完成首轮审计",
+    "summary": "stack_bowls保持工程回归；推荐plug_in_charger作为精密接触主任务、push_T作为摩擦/动力学对照。公开RoboDojo仓库已核查到ARX X5 joint π0.5 step-59999 checkpoint candidates及14D norm，但尚未恢复/评测。正式D6/D7前还需核验近期RGB字节通道与get_obs一帧对齐修复的版本兼容性。"
+  },
+  {
+    "date": "2026-09-17",
+    "title": "RoboDojo reference I/O CPU边界扩展到45项测试",
+    "summary": "在独立bridge中补齐reference observation/action边界，覆盖三路RGB、instruction、14D state、绝对关节rad与gripper[0,1]动作语义等；schema/transition/reference合计45项CPU测试通过。该结果仍只是接口准备，不等于D6真实policy、D7多seed或D8真实transition通过。"
+  },
+  {
+    "date": "2026-09-17",
     "title": "RoboDojo D3 B300 headless RGB gate 通过",
     "summary": "在显式共享GPU授权下完成B300最小renderer实测。最终USD测试场景正常退出，RGB为240×320×3 uint8、动态范围约85–247，并通过人工可见性检查。此前近全黑run保留为失败证据，不计作通过。该结果证明当前节点存在可用的最小Isaac/USD/camera RGB路径，但不代表所有RoboDojo GPU功能已验证。"
   },
@@ -26,8 +46,8 @@
   },
   {
     "date": "2026-09-17",
-    "title": "clean490新Stage1 CPU准备完成，30k GPU run待启动",
-    "summary": "train450/eval40转换、train-only norm、OpenPI loader检查、Hydra train/eval dry-run与focused CPU tests已完成。新Stage1仍从generic pi05_base开始、alpha1、H50、global batch64，最新默认最多30k optimizer steps、warmup1k、每5k保存，并用eval40闭环能力选checkpoint；正式GPU训练尚未启动。"
+    "title": "clean490新Stage1 CPU准备完成【历史快照，现已启动】",
+    "summary": "train450/eval40转换、train-only norm、OpenPI loader检查、Hydra train/eval dry-run与focused CPU tests已完成。随后新Stage1已正式启动，本条仅保留启动前准备状态。"
   },
   {
     "date": "2026-09-16",
