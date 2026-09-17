@@ -1,6 +1,21 @@
 [
   {
     "date": "2026-09-17",
+    "title": "RoboDojo D3 B300 headless RGB gate 通过",
+    "summary": "在显式共享GPU授权下完成B300最小renderer实测。最终USD测试场景正常退出，RGB为240×320×3 uint8、动态范围约85–247，并通过人工可见性检查。此前近全黑run保留为失败证据，不计作通过。该结果证明当前节点存在可用的最小Isaac/USD/camera RGB路径，但不代表所有RoboDojo GPU功能已验证。"
+  },
+  {
+    "date": "2026-09-17",
+    "title": "RoboDojo D5 原生 stack_bowls 单集闭环通过",
+    "summary": "stack_bowls / ARX X5 / joint 单环境完成800-action原生episode与三路640×480、25FPS、801帧视频，result/video/client链路完整。debug policy输出近零目标，因此success=0/score=0只作为基础设施结果，不评价VLA/RLT能力。下一步进入D6 reference-only adapter，不能直接复用Hammer/ALOHA的14D checkpoint或norm。"
+  },
+  {
+    "date": "2026-09-17",
+    "title": "RoboDojo state/time contract 审核完成",
+    "summary": "ARX X5 arm joint state来自真实joint_pos，而gripper scalar来自previous control的command-derived state；14D proprio不能整体称为measured state。一次policy target还会被内部插值/hold执行，不等于一个physics tick。后续D8/RLT必须显式记录executed duration、terminal observation和success/timeout/failure语义。"
+  },
+  {
+    "date": "2026-09-17",
     "title": "Stage1 6k–12k 统一20-seed能力曲线完成",
     "summary": "在同一开发cohort、H50/C50 native_macro、固定training prompt与action-sampling seed下，6k/8k/10k/12k分别为8/20、7/20、8/20、10/20（40%/35%/40%/50%）。12k是当前最高开发候选，但曲线非单调且仍有10/20失败；不能宣布泛化问题解决或把训练量写成唯一根因。旧clean50长run最终停在约12.3k，因此20k目标未完成。"
   },
@@ -41,8 +56,8 @@
   },
   {
     "date": "2026-09-15",
-    "title": "RoboDojo D0–D2 与 D4 已通过，D3 renderer 待实测",
-    "summary": "RoboDojo 已完成固定源码/子模块/assets、独立 Isaac Sim/Isaac Lab runtime 与 XPolicyLab CPU WebSocket closed loop。D1 doctor=13 PASS/4 WARN/0 FAIL，D2 doctor=14 PASS/3 WARN/0 FAIL；D4 完成10×20=200 action steps，ARX X5 joint schema为14D float32、chunk length 2。B300 headless RGB renderer D3 尚未执行，因此仍无 renderer/device 兼容性结论，Dojo-Eval/Dojo-RL 也未开始。"
+    "title": "RoboDojo D0–D2 与 D4 已通过，D3 renderer 待实测【历史快照】",
+    "summary": "当时已完成固定源码/子模块/assets、独立runtime与XPolicyLab CPU WebSocket closed loop；D3尚未执行。2026-09-17已完成D3和D5，本条仅保留历史进度。"
   },
   {
     "date": "2026-09-15",
