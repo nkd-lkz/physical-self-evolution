@@ -1,6 +1,26 @@
 [
   {
     "date": "2026-09-17",
+    "decision": "RoboDojo D3 与 D5 现已通过；下一阶段固定为 D6 reference-only adapter，再做 D7 multi-seed Dojo-Eval，D7通过后才进入D8真实transition bridge。",
+    "reason": "当前已经有B300最小RGB renderer与官方原生单episode闭环证据，但还没有匹配ARX X5/task的RLinf reference，也没有真实逐transition接口。继续保持Gate分层可以避免把原生环境成功误写成Dojo-Eval或Dojo-RL。"
+  },
+  {
+    "date": "2026-09-17",
+    "decision": "RoboDojo的14D proprio按字段记录来源：arm joint视为measured joint_pos，gripper scalar视为command-derived state；不得整体标成measured state。",
+    "reason": "源码审核确认arm与gripper的state来源不同。后续Physical Token/B1 measured-transition若把14维统一当真实状态，会把控制命令信息与实际执行反馈混为一谈。"
+  },
+  {
+    "date": "2026-09-17",
+    "decision": "RoboDojo的一次policy action不按一个physics tick处理；D8/RLT必须记录真实executed duration/physics-step范围后再定义chunk C、discount和terminal语义。",
+    "reason": "原生take_action会把目标插值并hold多个内部控制项，名义约0.04秒但需runtime trace确认。直接照搬Hammer TOPP macro或ManiSkill固定频率C10会产生时间语义错配。"
+  },
+  {
+    "date": "2026-09-17",
+    "decision": "历史RoboDojo doctor的import PASS不再单独作为IsaacLab实际运行证据；关键runtime能力改用direct python import和真实D3/D5运行验收。",
+    "reason": "本机复核发现旧conda-run+stdin检查可能exit0但未真正执行marker，存在假阳性。D5所需运行路径已经通过明确direct import和真实原生episode补齐验证。"
+  },
+  {
+    "date": "2026-09-17",
     "decision": "clean500全量审计后不补采异常轨迹，正式候选数据改为clean490，并固定train450/eval40；norm stats只使用train450。",
     "reason": "500条导出完整不等于500条动作监督都合格。10条轨迹存在明显关节/TCP异常，应保留原始证据但从新训练候选排除；当前490条已足够形成独立train/eval开发划分。旧的train450/val50预案被本决策取代。"
   },
