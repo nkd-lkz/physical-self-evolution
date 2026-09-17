@@ -6,7 +6,7 @@
     {"value": "500 → 490", "label": "clean500 全量审计后排除10条强轨迹异常；原始证据全部保留"},
     {"value": "450/40", "label": "clean490 固定 train450 / eval40；norm只由train450计算"},
     {"value": "30k planned", "label": "新clean490 Stage1 CPU准备完成；正式GPU训练尚未启动"},
-    {"value": "D3 pending", "label": "RoboDojo B300 headless RGB renderer/device 仍待验收"}
+    {"value": "D0–D5", "label": "RoboDojo 原生平台链路推进到 D5；D6 reference adapter 是下一门槛"}
   ],
   "timeline": [
     {"title": "Stage1 统一能力曲线完成", "body": "同一20-seed开发cohort、H50/C50 native_macro、固定prompt/action seed下：6k=8/20、8k=7/20、10k=8/20、12k=10/20。12k是当前开发候选；曲线非单调且样本有限。"},
@@ -14,16 +14,19 @@
     {"title": "clean500全量质量审计完成", "body": "500条raw/main/physics/video完整，数值与全帧解码/对齐通过；识别10条强轨迹异常并从新训练候选排除，得到clean490。"},
     {"title": "contact标签引入validity mask", "body": "另有10条动作轨迹连续但contact/impulse证据偏弱；保留用于Stage1动作学习，contact/impulse辅助监督必须mask，不能把缺失冲量当作无接触。"},
     {"title": "新clean490 Stage1准备完成", "body": "train450/eval40转换、train-only norm、OpenPI loader检查、Hydra dry-run与CPU测试完成；默认30k、每5k保存，GPU训练尚未启动。"},
-    {"title": "Physical Token仍未进入正式消融", "body": "当前继续处于Gate 0。先锁定可信Stage1/B0，再做B1 measured transition与B2 valid physics。"},
-    {"title": "RoboDojo状态不变", "body": "D0–D2与D4已完成；D3 B300 renderer/device仍待执行，D5–D10未开始。"}
+    {"title": "RoboDojo D3 renderer gate 通过", "body": "B300共享验证下，最小USD场景的headless RGB路径已实测通过：240×320×3 uint8，像素动态范围充分，并完成人工可见性检查。此前黑图run保留为失败证据，不计作成功。"},
+    {"title": "RoboDojo D5 原生单集通过", "body": "stack_bowls / ARX X5 / joint 单环境完成原生800-action episode与三路640×480视频；demo policy为零目标所以任务失败属预期，只证明原生reset/action/video/result闭环，不评价VLA/RLT。"},
+    {"title": "RoboDojo 契约边界进一步明确", "body": "ARX X5 arm joint state来自真实joint_pos，但gripper scalar来自prev_control；一次policy action包含插值/hold，不等于一个physics tick。未来D8/RLT必须显式记录executed duration与terminal语义。"},
+    {"title": "Physical Token仍未进入正式消融", "body": "当前继续处于Gate 0。先锁定可信Stage1/B0，再做B1 measured transition与B2 valid physics。"}
   ],
   "plan": [
     {"priority": "P0", "action": "完成12k full-physics录像与failure-stage标注，结果与原20-env聚合评测分开保存", "evidence": "full physics video、chunk/physics trace、failure-stage summary"},
     {"priority": "P0", "action": "启动clean490新Stage1；按5k/10k/15k/20k/25k/30k做eval40闭环曲线", "evidence": "checkpoint、closed-loop success、completion time、failure stage"},
     {"priority": "P0", "action": "development-best checkpoint用封存独立reset seeds复核", "evidence": "independent success/CI、paired videos"},
     {"priority": "P1", "action": "冻结可信Stage1后重新建立H50/C50 native-macro B0 Stage2", "evidence": "execution/timing contract、positive-reward opportunity、replay/update trace"},
+    {"priority": "P1", "action": "RoboDojo 进入D6：先确定匹配ARX X5/task的checkpoint/processor/norm，再实现reference-only adapter", "evidence": "adapter manifest、action/state contract、one-episode reference result"},
+    {"priority": "P1", "action": "D6后做D7 multi-seed Dojo-Eval；D7通过后才进入D8真实transition trace", "evidence": "paired seeds、raw reward/success、terminal observation、executed duration"},
     {"priority": "P2", "action": "B0稳定后实现B1 measured-transition grounding；严格区分proposed/executed action与command/measured state", "evidence": "transition target audit、validity mask、held-out metrics"},
-    {"priority": "P2", "action": "B2只加入已验证physics constraints，contact/impulse标签按有效性mask使用", "evidence": "gradient audit、constraint metrics、matched-budget ablation"},
-    {"priority": "P1", "action": "RoboDojo有合适资源时继续D3 headless/RGB gate", "evidence": "renderer log、device info、RGB、stable exit"}
+    {"priority": "P2", "action": "B2只加入已验证physics constraints，contact/impulse标签按有效性mask使用", "evidence": "gradient audit、constraint metrics、matched-budget ablation"}
   ]
 }
