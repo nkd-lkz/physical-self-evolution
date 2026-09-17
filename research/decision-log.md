@@ -1,5 +1,72 @@
 # 科研决策日志
 
+## 2026-09-17 · RoboDojo D3 / D5 已通过，下一门槛固定为 D6 reference-only adapter
+
+**决定：**
+
+- D3 B300 headless RGB renderer 记为已完成；
+- D5 官方原生 `stack_bowls / ARX X5 / joint` 单 episode 记为已完成；
+- 下一步固定为 D6：先获得与 ARX X5 / 目标任务匹配的 checkpoint、processor、norm，再接 RLinf reference-only adapter；
+- D7 multi-seed Dojo-Eval 通过后才允许进入 D8 real transition bridge；
+- D9 只做 RLT L0 工程闭环，D10 才讨论算法效果。
+
+**原因：**
+
+当前已经有真实 renderer 与原生 task episode 的基础设施证据，但还没有匹配机器人/任务的 RLinf reference，也没有真实逐 transition 训练接口。继续按 Gate 推进可以避免把“原生环境可运行”误写成“RLinf/RLT 已接通”。
+
+---
+
+## 2026-09-17 · RoboDojo 14D state 按字段记录 measured / command provenance
+
+**决定：**
+
+RoboDojo / ARX X5 的 14D proprio 不再整体描述为 measured state：
+
+- arm joint state：来自实际 `joint_pos`，按 measured state 处理；
+- gripper scalar：来自 previous control 的反向映射，按 command-derived state 处理。
+
+未来 D6/D8 以及 Physical Token B1 的 schema 必须保留字段来源，不允许仅凭固定维度向量把全部 state 统一贴上“真实物理反馈”标签。
+
+**原因：**
+
+源码审核已经确认 arm 与 gripper 的状态来源不同。混用会把命令信息和实际执行反馈混为一谈，直接破坏 measured-transition grounding 的科学解释。
+
+---
+
+## 2026-09-17 · RoboDojo policy action 不按一个 physics tick 处理
+
+**决定：**
+
+后续 RoboDojo RLT / Physical Token 接入必须记录：
+
+- 每次 policy action 的实际执行长度；
+- physics steps / duration；
+- terminal observation；
+- success / timeout / task failure / simulator error 的终止类型。
+
+RLT 的 `C`、bootstrap discount、early termination 与 B1 measured-transition target 都按真实 executed interval 定义，不直接照搬 Hammer TOPP macro 或 ManiSkill 固定频率 C10。
+
+**原因：**
+
+原生 `take_action` 会把一个目标插值并保持多个内部控制项，因此一次 policy action 并不等于一个 physics tick。若不记录真实 duration，就无法定义一致的 transition 与折扣时间尺度。
+
+---
+
+## 2026-09-17 · 历史 doctor import PASS 不再作为 RoboDojo runtime 的充分证据
+
+**决定：**
+
+- 保留历史 doctor 14 PASS / 3 WARN 记录；
+- 关键 Python / IsaacLab runtime 能力以后使用 direct import 与真实任务运行验收；
+- 当前 D5 所需 runtime 已通过明确 direct import 和原生 episode 补齐；
+- 不宣称所有可选 IsaacLab 功能完整安装。
+
+**原因：**
+
+本机复核发现旧 doctor 的 `conda run ... python -` + stdin 方式可能出现 exit 0 但 Python marker 未执行的假阳性。真实运行证据优先级必须高于脚本表面的 PASS。
+
+---
+
 ## 2026-09-17 · clean500 全量审计后正式收敛为 clean490 / train450 / eval40
 
 **决定：**
@@ -124,25 +191,13 @@ Physical Token 的科学问题是 action consequence grounding。如果用命令
 
 ---
 
-## 2026-09-15 · RoboDojo 按 D0–D10 Gate 严格推进，D3 renderer 未通过前不跳到真实任务
+## 2026-09-15 · RoboDojo 按 D0–D10 Gate 严格推进【D3/D5 于 2026-09-17 已通过】
 
 **决定：**
 
-RoboDojo 当前采用分层验收：
+RoboDojo 采用分层验收：D0–D2 源码/资产/runtime，D3 renderer，D4 CPU protocol，D5 native episode，D6–D7 Dojo-Eval，D8–D9 Dojo-RL，D10 完整 baseline。
 
-- D0–D2：源码/资产/runtime；
-- D3：B300 headless app + RGB renderer；
-- D4：XPolicyLab CPU protocol；
-- D5：官方原生 task episode；
-- D6–D7：RLinf reference / Dojo-Eval；
-- D8–D9：training bridge / RLT L0；
-- D10：完整 baseline。
-
-截至当前：D0–D2 与 D4 已完成，D3 尚未执行。
-
-**原因：**
-
-Isaac Python import 成功不能替代真实 renderer/device 验收，XPolicyLab CPU closed loop 也不能替代 Dojo-Eval。保持 gate 分离可以避免把“环境能启动”“policy 协议能通信”“RLinf 已接入”“online RL 已跑通”混成一个结论。
+截至 2026-09-17，D3 和 D5 已通过；本条继续保留作为为何采用 Gate 制度的历史决策。
 
 ---
 
