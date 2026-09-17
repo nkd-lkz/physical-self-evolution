@@ -1,6 +1,26 @@
 [
   {
     "date": "2026-09-17",
+    "decision": "clean490 Stage1 已正式启动；继续采用generic pi05_base + alpha1 + H50、global batch64、最多30k steps、每5k保存，并按eval40闭环能力选checkpoint。",
+    "reason": "数据与train-only norm已完成审计，当前需要用更大且更干净的train450重新建立reference。实时约3798/30000只作为运行快照，不能提前当作能力结果。"
+  },
+  {
+    "date": "2026-09-17",
+    "decision": "新的B0 Stage2采用H50/C50先建立可解释online baseline；当前允许正式warmup/training，但在learner update、actor takeover和checkpoint验收前不讨论性能提升。",
+    "reason": "12k frozen reference在matched 20-seed协议下为10/20成功，已具备部分正奖励机会。先固定reference与execution semantics，再观察真实online learner，避免把旧C10工程结果或warmup阶段误写成算法效果。"
+  },
+  {
+    "date": "2026-09-17",
+    "decision": "RoboDojo科研任务优先审计plug_in_charger，push_T作为摩擦/动力学对照；stack_bowls保留为工程回归。D6优先恢复官方ARX X5 π0.5 reference candidate，不默认重新SFT。",
+    "reason": "plug_in_charger更直接覆盖精密接触与插入纠错，push_T覆盖action consequence与摩擦/滑动变化；公开仓库已确认存在ARX X5 joint π0.5 checkpoint和匹配14D norm，但尚未完成恢复与能力验收。"
+  },
+  {
+    "date": "2026-09-17",
+    "decision": "RoboDojo正式D6/D7前先做RGB channel与get_obs timing版本兼容核验，不自动把新数据/checkpoint与旧XPolicyLab组合混用。",
+    "reason": "上游近期修复了RGB字节流通道和一帧observation对齐；当前固定本地版本早于该修复。若直接混用，可能把颜色或时间错位误判成policy能力问题。"
+  },
+  {
+    "date": "2026-09-17",
     "decision": "RoboDojo D3 与 D5 现已通过；下一阶段固定为 D6 reference-only adapter，再做 D7 multi-seed Dojo-Eval，D7通过后才进入D8真实transition bridge。",
     "reason": "当前已经有B300最小RGB renderer与官方原生单episode闭环证据，但还没有匹配ARX X5/task的RLinf reference，也没有真实逐transition接口。继续保持Gate分层可以避免把原生环境成功误写成Dojo-Eval或Dojo-RL。"
   },
@@ -36,7 +56,7 @@
   },
   {
     "date": "2026-09-17",
-    "decision": "新的clean490 Stage1仍从generic pi05_base、rlt_alpha=1联合训练；默认最多30k optimizer steps、warmup1k、每5k保存，并用eval40闭环能力选checkpoint。正式GPU训练尚未启动。",
+    "decision": "新的clean490 Stage1默认30k/每5k保存【启动前决策，现已正式运行】。",
     "reason": "旧clean50长run未完成20k且数据重复高。train450显著扩大几何覆盖并完成质量过滤；30k约27个等效frame epochs，与clean50 20k约162遍不是同一重复风险。步数只是上限，连续checkpoint无改善时允许提前停止。"
   },
   {
