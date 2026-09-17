@@ -1,35 +1,61 @@
 # 实验日志
 
-## 2026-09-15 · 日报快照：Stage1 运行中 + clean500 + RoboDojo D0–D4
+## 2026-09-17 · Stage1 固定20-seed能力曲线 + clean500全量审计 + clean490准备
 
 ### 事实
 
-- 新的 `pi05_base + rlt_alpha=1 + 20k` hammer Stage1 已正式启动。13:29 UTC 快照为 `2459/20000`，`global_step_2000` 已保存；最近 `loss/rlt/vla/grad = 0.254/0.252/0.00251/1.27`，均为有限值。run 未结束，不能记为能力恢复完成。
-- clean500 成功示范采集已启动。快照时有 160/500 条成功 raw trajectories，其中 110 条为 clean50 之外的新增成功轨迹。最终 HDF5 / physics sidecar / video 尚未达到 160 份，因此不能写成“160 条最终数据完成”。
-- clean500 后处理已预先固定为 `train450/val50`，norm stats 只使用 train450。
-- RoboDojo D0–D2 已完成：固定源码/子模块、约66GB assets、独立 Isaac runtime 与 Isaac/IsaacLab import 均通过。D1 doctor 为 13 PASS / 4 WARN / 0 FAIL，D2 doctor 为 14 PASS / 3 WARN / 0 FAIL。
-- RoboDojo D4 已完成：XPolicyLab CPU WebSocket closed loop 完成 10 episodes × 20 action steps = 200 steps；ARX X5 joint action schema 为 14D float32，chunk length 2。
-- RoboDojo D3 尚未执行，因此还没有 B300 headless RGB renderer/device 的实验结论；D5 原生任务、D6–D7 Dojo-Eval、D8–D9 Dojo-RL、D10 baseline 均未开始。
-- 已发现 Isaac runtime 与 XPolicyLab policy 的 `websockets` 依赖冲突，目前采用独立 simulator / policy 环境；CPU bridge schema 4/4 tests 与 lint 检查通过，但尚未接真实 env。
+- 旧 clean50 `pi05_base + rlt_alpha=1` 长程 Stage1 最终停止在约 12.3k steps，没有完成原计划 20k；6k/8k/10k/12k 是本轮可完整验收的主要 checkpoint。
+- 在统一 20-seed 开发 cohort、固定 `H50/C50 native_macro`、固定 training prompt 与 action-sampling seed 下，四个 checkpoint 均正常结束：6k `8/20=40%`、8k `7/20=35%`、10k `8/20=40%`、12k `10/20=50%`。
+- 12k 是当前开发集上最高的 reference 候选，但曲线非单调、样本量有限且仍有 10/20 失败，不能宣布 Stage1 泛化问题已经解决，也不能把训练量/数据量/联合 loss 写成唯一根因。
+- 历史 8k 的 `5/20` 使用不同 prompt/noise 协议，继续保留为历史记录，不与本轮 `7/20` 混算。
+- 12k 同 cohort 的 full-physics video / chunk trace 入口已经准备并完成 CPU/dry-run 检查，但正式录像尚未执行；若单环境补录得到不同成功率，必须与原20环境聚合评测分开报告。
+- clean500 已完整导出 500 条 raw/main/physics/video 数据，episode 连续、500 个 seed 唯一。全量数值、四相机 RGB、MP4 和 transition 对齐审计未发现结构性错误，repository physics validator 对 500 条均通过。
+- 审计识别出 10 条强动作轨迹异常，主要表现为非初始关节目标分支跳变或异常初始绕转。原始文件保留，但从新 Stage1 动作监督和 train/eval candidate 中排除，形成 clean490。
+- 另有 10 条动作轨迹连续但 contact/impulse 证据偏弱；这些轨迹保留用于 Stage1 动作学习，但 contact/impulse-specific auxiliary supervision 必须使用 validity mask，不能把缺失冲量当作“无接触/失败”真值。
+- clean490 已固定为 `train450/eval40`：train450=70,640 indexes，eval40=6,238 indexes。norm stats 只由 train450 重新计算；eval40 是开发验证集，不是最终独立测试集。
+- 新 clean490 Stage1 的数据转换、train-only norm、OpenPI loader、Hydra train/eval dry-run 与 focused CPU tests 已完成。最新默认训练计划为 generic `pi05_base + alpha1 + H50`、global batch64、dual-GPU、最多30k optimizer steps、warmup1k、每5k保存；正式 GPU run 尚未启动。
 
 ### 解释
 
-今天三条线都属于 **Gate 0 / infrastructure strengthening**：
+今天把 Gate 0 从“长训练是否能救旧 Stage1”推进到了更可解释的状态：
 
-1. Stage1 20k 用于恢复更可信的 RL Token / RLT reference；
-2. clean500 用于降低 clean50 小数据重复和后期过拟合风险；
-3. RoboDojo 用于建立第二平台的可复现实验基础。
+1. 旧 Stage1 已证明具备部分闭环能力，但 12k 只是一项开发候选；
+2. 数据规模扩张本身不能替代质量审计，正式训练集必须使用 clean490；
+3. `contact=0` 与“没有真实接触”不是同义词，后续物理监督必须按标签有效性 mask；
+4. 新一轮 Stage1 使用更多、质量更可控的数据重新建立 reference，但在结果出来前不能把数据扩充写成性能提升。
 
-它们都不能提前写成 Physical Token 的算法收益。
+### 影响哪个研究假设
 
-### 下一步
+- 支持继续把 Hammer 作为 Gate 0 / representation-supervision feasibility 平台；
+- 强化 B1 的数据合同：必须区分 proposed/reference action、actual executed action、command state 和 measured state；
+- 强化 B2 的监督合同：物理标签按字段使用 validity mask，缺失/弱标签不能补零；
+- 仍没有 Physical Token 的正式算法收益证据。
 
-1. 保持 Stage1 20k 正常运行；结束后固定 seed + action seed 评测 `2k/4k/.../20k` 的 H50/C50 闭环能力。
-2. clean500 收满 500 raw success 后做完整性校验，再做 CPU-only `train450/val50` 转换和 train450-only norm stats。
-3. 等允许使用的 GPU 空闲后，RoboDojo 首先执行 D3 headless/RGB gate；通过后才跑 D5 原生 task，再进入 RLinf reference adapter。
-4. B0 稳定前不启动 B1/B2 大消融。
+### 下一步最便宜的证伪实验
 
-详细记录：`research/progress-2026-09-15.md` 与 `research/robodojo-b300-log.md`。
+1. 先完成 12k full-physics failure-stage 画像，判断 10/20 失败主要集中在哪个阶段。
+2. 启动 clean490 Stage1，按 `5k/10k/15k/20k/25k/30k` 做统一 eval40 能力曲线；连续多个 checkpoint 不改善时允许提前停。
+3. 选择 development-best checkpoint 后，使用独立封存 reset seeds 做最终 reference 验证。
+4. 只有 reference 与 B0 可解释后，再实现 B1/B2。
+
+详细记录：`research/progress-2026-09-17.md`。
+
+---
+
+## 2026-09-15 · 日报快照：Stage1 运行中 + clean500 + RoboDojo D0–D4【历史快照】
+
+### 事实
+
+- 新的 `pi05_base + rlt_alpha=1 + 20k` hammer Stage1 已正式启动。13:29 UTC 快照为 `2459/20000`，`global_step_2000` 已保存；最近 `loss/rlt/vla/grad = 0.254/0.252/0.00251/1.27`，均为有限值。该 run 后续在约12.3k停止，因此本条只保留为历史运行快照。
+- clean500 成功示范采集已启动。快照时有 160/500 条成功 raw trajectories，其中 110 条为 clean50 之外的新增成功轨迹。2026-09-17 已完成全500导出与审计，本条只保留为历史快照。
+- 当时预先规划为 `train450/val50`；该决策已被 2026-09-17 clean490 审计后的 `train450/eval40` 正式划分取代。
+- RoboDojo D0–D2 已完成：固定源码/子模块、约66GB assets、独立 Isaac runtime 与 Isaac/IsaacLab import 均通过。D1 doctor 为 13 PASS / 4 WARN / 0 FAIL，D2 doctor 为 14 PASS / 3 WARN / 0 FAIL。
+- RoboDojo D4 已完成：XPolicyLab CPU WebSocket closed loop 完成 10 episodes × 20 action steps = 200 steps；ARX X5 joint action schema 为 14D float32，chunk length 2。
+- RoboDojo D3 尚未执行，因此还没有 B300 headless RGB renderer/device 的实验结论；D5 原生任务、D6–D7 Dojo-Eval、D8–D9 Dojo-RL、D10 baseline 均未开始。
+
+### 解释
+
+该日三条线均属于 Gate 0 / infrastructure strengthening，不是 Physical Token 算法收益。
 
 ---
 
@@ -40,22 +66,13 @@
 - 旧 hammer Stage1 `base-init + rlt_alpha=1 + 2k` 已完成工程训练，但训练预算明显低于 standalone task-SFT20k：2k/global batch32 vs 20k/global batch64，样本槽位约相差 20×。
 - 离线动作误差检查显示旧 Stage1 的动作 MAE 约高于 SFT20k 4–5×；这支持“旧 Stage1 任务能力不足风险”，但尚不能把训练步数定义为唯一根因。
 - H/C 执行协议是另一个独立混杂变量：已有 H50 checkpoint 在 RoboTwin 原生整段 TOPP 下用 H50/C50 能成功；此前 H50/C10 会改变 TOPP 规划边界、物理时长和再观测分布，因此旧 C10 结果不能直接代表 Stage1 权重失效。
-- 固定 H50/C50 开发配对中，目前有一个 seed 两者都失败、一个 seed 为旧 Stage1 失败而 SFT20k 成功；另有一个额外正对照 seed 两者都成功。其余配对未完成的 seed 不计入结果。
-- 官方 expert 已在一个验证场景中完成任务，并沿 native→adapter 链路产生正 reward / success / terminated；因此目前没有证据支持“任务永远无法产生正奖励”。
-- 新 Stage1 决策为：从通用 `pi05_base` 开始，`rlt_alpha=1`，联合 VLA task adaptation + RLT reconstruction，20,000 optimizer steps，2-GPU data parallel，global batch64、micro batch2、每 rank gradient accumulation16、warmup1000、每2000步保存。
-- `SFT20k + alpha0 + 2k` 暂缓，保留为后续保能力 / 初始化方式对照。
+- 固定 H50/C50 开发配对中，当时已有一个 seed 两者都失败、一个 seed 为旧 Stage1 失败而 SFT20k 成功；另有一个额外正对照 seed 两者都成功。
+- 官方 expert 已在一个验证场景中完成任务，并沿 native→adapter 链路产生正 reward / success / terminated；因此没有证据支持“任务永远无法产生正奖励”。
+- 当时决策为：从通用 `pi05_base` 开始，`rlt_alpha=1`，联合 VLA task adaptation + RLT reconstruction，20,000 optimizer steps，2-GPU data parallel，global batch64、micro batch2、每 rank gradient accumulation16、warmup1000、每2000步保存。该 run 后续未完成20k，2026-09-17 已转向 clean490 新数据方案。
 
 ### 解释
 
-当前是领导版主线中的 **Gate 0 — Baseline Recovery**。需要严格区分 execution protocol 与 Stage1 capability；只有 B0 可解释后，B1 transition grounding / B2 physics grounding 才有因果意义。
-
-### 下一步
-
-1. 完成新的 `base + alpha1 + 20k` Stage1 joint training。
-2. 对 `2k/4k/.../20k` checkpoints 做固定 environment seed + action seed 的 H50/C50 闭环评测。
-3. 不按 train loss 最低选权重；按 success、completion time、failure stage 和配对稳定性选 Stage1 checkpoint。
-4. 冻结 Stage1 reference 后重新设计 Stage2 B0；旧 C10 Stage2 只保留为工程闭环证据。
-5. B0 稳定后再进入 B1 `+ measured transition` 与 B2 `+ valid physics`。
+该阶段定义了领导版主线中的 **Gate 0 — Baseline Recovery**。只有 B0 可解释后，B1 transition grounding / B2 physics grounding 才有因果意义。
 
 ---
 
