@@ -2,8 +2,8 @@
 
 > 当前角色：**Baseline / Initial Validation Protocol**  
 > 上位主线：[`physical-token-leadership-spec.md`](physical-token-leadership-spec.md)  
-> 当前执行：**Gate 0 — Baseline Recovery / Validation**  
-> 最新快照：[`progress-2026-09-17.md`](progress-2026-09-17.md)
+> 当前执行：**Gate 0 — B0 diagnosis / recovery**  
+> 最新快照：[`progress-2026-09-18.md`](progress-2026-09-18.md)
 
 ---
 
@@ -24,17 +24,9 @@ RLT 是当前项目的核心技术 baseline。Physical Token 的科学增量只�
 
 ## 1. Gate 0A · Stage1 reference capability
 
-### 1.1 当前能力锚点
+### 1.1 旧 clean50 reference
 
-RoboTwin native TOPP 下：
-
-- `H50/C50 native_macro`：当前已有 H50 reference 的能力锚点；
-- `H50/C10`：会改变 TOPP 重规划边界、物理时长和再观测分布，只作为执行协议诊断；
-- 论文式固定低层 `H10/C10`：需要单独控制接口/训练语义，不能只修改 YAML 数字冒充等价复现。
-
-### 1.2 2026-09-17 统一 20-seed 结果
-
-旧 clean50 `pi05_base + alpha1` Stage1 长 run 最终停止在约12.3k steps，没有完成原计划20k。已有完整 checkpoint 在统一协议下的开发结果为：
+统一20-seed、`H50/C50 native_macro`：
 
 | checkpoint | success | rate |
 |---|---:|---:|
@@ -43,35 +35,24 @@ RoboTwin native TOPP 下：
 | 10k | 8/20 | 40% |
 | 12k | 10/20 | 50% |
 
-固定条件：
+旧12k继续作为development anchor，不是最终reference。
 
-- same 20-seed development cohort；
-- `H50/C50 native_macro`；
-- same task prompt；
-- fixed action-sampling seed。
+### 1.2 新 train450 reference line
 
-解释边界：
+新clean490/train450 Stage1从generic `pi05_base`联合训练，主动停止在约10823/30000。完整checkpoint为5k与10k。
 
-- 12k 是当前 development candidate，不是 final reference；
-- 曲线非单调；
-- n=20 不足以证明统计稳定提升；
-- 12k 仍有10/20失败；
-- 当前 aggregate results 没有逐seed成功列表，不能分析哪些场景具体改善/退化；
-- 历史8k 5/20使用不同prompt/noise，不与本轮7/20混算。
+10k在同一eval40 / H50-C50 / prompt / action-seed协议下做两次独立设备评测：
 
-### 1.3 Failure-stage evidence
+> **22/40（55%） + 22/40（55%）**
 
-已准备对12k相同 cohort 做 full-physics video / chunk trace 补录，用于定位：
+注意：
 
-- grasp acquisition；
-- grasp retention / slip；
-- approach to block；
-- contact / impact；
-- terminal success。
+- 两次使用同一40个seeds，不合并为80个独立样本；
+- eval40中有19个seed属于旧development cohort；
+- 不能直接与旧12k的10/20做显著性结论；
+- reference success主要验证VLA闭环能力，不等于RLT latent已经更适合Q learning。
 
-该补录尚未正式执行；单环境采样与此前20环境批量评测的随机采样可能不同，因此不能用补录成功率覆盖原10/20结果。
-
----
+下一步需要failure-stage、matched-seed checkpoint comparison和independent-seed validation。
 
 ## 2. Gate 0B · Data quality contract
 
@@ -168,35 +149,44 @@ generic pi05_base
 
 ## 4. Gate 0C · B0 Online Baseline
 
-RLT 提供 compact readout + lightweight actor/critic 框架。B0 必须是一个可重复的 online baseline，而不是只证明代码能更新参数。
+### 4.1 首个H50/C50 B0结果：退化，已停止
 
-### 4.1 Baseline contract
+旧clean50/12k frozen reference 的matched acceptance为10/20（50%）。
 
-固定：
+Stage2设置包括：
 
-- Stage1/reference checkpoint；
-- H/C / execution mode；
-- action parameterization；
-- reward / terminal；
-- actor / critic capacity；
-- replay schema；
-- warmup / update budget；
-- seeds；
-- action sampling RNG。
+- H50/C50 native_macro；
+- direct normalized actor；
+- 4 training environments；
+- batch64；
+- replay warmup；
+- critic:actor update ratio 4:1；
+- macro gamma=0.90（尚未按真实duration严格校准）。
 
-### 4.2 旧 Stage2 的地位
+周期20-seed评测：
 
-历史 C10 Stage2 已证明：
+- rounds 200/300：约45%；
+- rounds 800/900：约15%。
 
-```text
-rollout → replay → actor/critic update → weight sync → checkpoint
-```
+因此该run已主动停止。低critic/BC loss不能证明Q准确或actor安全。
 
-工程链可运行，但其 zero-reward / H50-C10 execution setting 不能继续承担当前 B0 性能结论。
+当前结论：
 
-新的 B0 优先在 H50/C50 native-macro 语义下重新建立，或将固定低层H10/C10独立立项。
+> **这个B0配置不能稳定保持frozen reference，因此尚未达到trustworthy online baseline标准。**
 
----
+### 4.2 当前诊断合同
+
+下一轮先做：
+
+1. BC-only / reference-consistency；
+2. actor-reference action deviation；
+3. reference dropout；
+4. BC/Q weighting；
+5. critic calibration / target audit；
+6. macro execution duration与discount；
+7. actor takeover与checkpoint timing。
+
+在这些诊断完成前，不继续同配置加budget，也不进入B1/B2。
 
 ## 5. RLT / RL Token 与 Physical Token 正式比较
 
@@ -404,4 +394,4 @@ Universal 当前仅表示：
 9. repeated seeds + confidence intervals；
 10. deployable policy path without simulator-only privileged input。
 
-当前最近的实际动作仍是：**完成12k failure-stage画像，启动clean490新Stage1，冻结可信reference，再重建B0。**
+当前最近的实际动作是：**复盘新10k的18个失败episode，完成BC-only/reference-consistency与Q/actor诊断，使用独立seeds冻结可信reference，然后重建B0。**
