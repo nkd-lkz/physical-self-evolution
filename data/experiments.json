@@ -1,5 +1,25 @@
 [
   {
+    "date": "2026-09-18",
+    "title": "train450 Stage1 step10k eval40 双复测均为22/40",
+    "summary": "新clean490/train450 Stage1的10k checkpoint在相同H50/C50 native_macro、eval40、固定prompt/action seed协议下完成两次独立设备运行，均为22/40=55%，return约0.55、mean episode length约196.25。聚合一致支持当前开发协议下的可复现性，但不是80个独立seed，也不能与旧clean50/12k的10/20直接宣称显著提升。"
+  },
+  {
+    "date": "2026-09-18",
+    "title": "新train450 Stage1主动停止于约10823/30k",
+    "summary": "原计划30k的generic pi05_base + alpha1联合VLA/RLT Stage1因迁移安排主动停止，当前完整checkpoint为5k和10k。停止前loss/rlt_loss/vla_loss约0.05317/0.05236/0.000808；这些只作为训练健康度，不等价于闭环能力。"
+  },
+  {
+    "date": "2026-09-18",
+    "title": "旧clean50/12k B0 Stage2出现退化并停止",
+    "summary": "H50/C50 native_macro Stage2使用旧clean50/12k frozen reference。周期20-seed评测早期约45%，后期降至约15%，约985外层round后主动停止。最后critic/BC loss较低不能证明Q或actor正确；当前转入BC-only/reference-consistency、action deviation、dropout、BC/Q比例和critic calibration诊断。"
+  },
+  {
+    "date": "2026-09-18",
+    "title": "RoboDojo状态保持D0–D5完成",
+    "summary": "本日RoboDojo无新增算法结论：D3渲染与D5原生单集工程验收保持通过，D6 real reference、D7 Dojo-Eval、D8真实transition和online RLT仍待完成。"
+  },
+  {
     "date": "2026-09-17",
     "title": "clean490 Stage1 正式启动，运行至约3.8k/30k",
     "summary": "train450 + train-only norm 的新Stage1已从generic pi05_base正式启动，alpha1、H50、global batch64、双卡数据并行、最大30k steps、每5k保存。当前实时快照约3798/30000，仅说明训练在运行；首个有意义门槛是5k checkpoint后的固定eval40闭环评测，不能按train loss提前判断能力。"
