@@ -1,29 +1,96 @@
 {
-  "as_of": "2026-09-17",
+  "as_of": "2026-09-18",
   "metrics": [
-    {"value": "3798/30k", "label": "clean490 Stage1 联合训练实时快照；非最终结果"},
-    {"value": "10/20", "label": "旧clean50 Stage1 step12k 在统一 H50/C50 开发 cohort 上成功；当前reference候选"},
-    {"value": "450/40", "label": "clean490 固定 train450 / eval40；norm只由train450计算"},
-    {"value": "B0 Stage2 running", "label": "H50/C50 baseline 已启动；当前仍在warmup收集，learner尚未更新"},
-    {"value": "D0–D5", "label": "RoboDojo 原生平台链路已到D5；D6 reference-only adapter是下一门槛"},
-    {"value": "45 CPU tests", "label": "RoboDojo schema/transition/reference CPU边界测试通过；不等于真实D8 transition"}
+    {
+      "value": "22/40 ×2",
+      "label": "train450 Stage1 step10k 在同一 eval40 协议两次均为55%；聚合可复现，非独立80-seed结果"
+    },
+    {
+      "value": "10823/30k",
+      "label": "新 clean490 Stage1 主动停止前进度；5k/10k完整checkpoint已保存"
+    },
+    {
+      "value": "45% → 15%",
+      "label": "旧 clean50/12k B0 Stage2 周期评测出现退化；已停止并转入诊断"
+    },
+    {
+      "value": "B0 diagnosis",
+      "label": "下一步优先BC-only/reference consistency、actor deviation、dropout与BC/Q配比"
+    },
+    {
+      "value": "450/40",
+      "label": "clean490固定train450/eval40；norm仅由train450计算"
+    },
+    {
+      "value": "D0–D5",
+      "label": "RoboDojo工程Gate保持完成；D6 real reference adapter仍待验收"
+    }
   ],
   "timeline": [
-    {"title": "clean490 Stage1 已正式启动", "body": "generic pi05_base + alpha1 + H50 + train450 的联合 VLA/RLT Stage1 已运行；目标30k、global batch64、每5k保存。当前约3798/30000，仅作为实时快照，checkpoint能力仍需eval40闭环验证。"},
-    {"title": "旧12k reference 继续作为开发锚点", "body": "统一20-seed H50/C50协议下12k为10/20成功；6k/8k/10k/12k曲线为40%/35%/40%/50%。12k不是最终reference，只用于当前B0 Stage2基线与诊断。"},
-    {"title": "H50/C50 B0 Stage2 已启动", "body": "动作空间与观测字段传输修复后，20项CPU测试通过。4环境、batch64的正式Stage2已开始，warmup目标为512条transition/2000次critic更新、总预算3000轮；当前仍在收集warmup数据，尚无learner更新或性能提升结论。"},
-    {"title": "clean500审计收敛为clean490", "body": "500条原始数据完整审计后排除10条强轨迹异常，得到train450/eval40；另有10条contact/impulse弱标签轨迹保留动作监督，但相关物理辅助目标必须mask。"},
-    {"title": "RoboDojo D3/D5通过", "body": "B300最小headless RGB路径与原生stack_bowls/ARX X5单集工程闭环通过；debug policy的0成功只代表未完成任务，不评价VLA/RLT。"},
-    {"title": "RoboDojo科研任务与reference候选收敛", "body": "优先审计plug_in_charger作为精密接触任务，push_T作为摩擦/动力学对照。已核查到官方ARX X5 π0.5公开checkpoint与14D norm，但权重尚未恢复/验收；正式D6前还需处理RGB/get_obs版本兼容。"},
-    {"title": "Physical Token仍未进入正式消融", "body": "当前所有新增结果仍属于Gate 0/B0 baseline与第二平台准备。B1 measured transition和B2 valid physics尚未开始。"}
+    {
+      "title": "train450 Stage1 10k 双复测完成",
+      "body": "同一eval40、H50/C50 native_macro、固定prompt/action seed下，两次均22/40=55%，return约0.55、mean episode length约196.25。只能说明当前开发协议上的聚合可复现。"
+    },
+    {
+      "title": "新Stage1已主动停止",
+      "body": "原计划30k的联合VLA+RLT训练在约10823 steps停止，现有完整5k/10k checkpoint。停止并不等于30k训练完成。"
+    },
+    {
+      "title": "旧B0 Stage2发生性能退化并停止",
+      "body": "旧clean50/12k reference的Stage2早期20-seed评测约45%，后期约15%；不能以低critic/BC loss证明Q或actor正确，当前转入诊断。"
+    },
+    {
+      "title": "B0诊断优先于继续加预算",
+      "body": "优先BC-only/reference-consistency、actor deviation、reference dropout、BC/Q比和critic calibration；不盲目追加原配置online budget。"
+    },
+    {
+      "title": "clean490数据合同不变",
+      "body": "train450/eval40、train-only norm与per-label validity mask保持；B1继续区分proposed/executed action和command/measured state。"
+    },
+    {
+      "title": "RoboDojo状态保持",
+      "body": "D3/D5工程验收已通过；D6真实reference和online RL尚未完成。"
+    },
+    {
+      "title": "Physical Token仍未进入正式消融",
+      "body": "当前仍在可信B0基线构建与诊断阶段；B1 measured transition、B2 valid physics尚未开始。"
+    }
   ],
   "plan": [
-    {"priority": "P0", "action": "等待clean490 Stage1 5k checkpoint并运行固定eval40闭环评测", "evidence": "success、completion time、failure stage、RLT representation checks"},
-    {"priority": "P0", "action": "验收当前B0 Stage2首次learner更新、actor接管与checkpoint保存", "evidence": "warmup completion、actor/critic updates、sync/version、checkpoint、reward trace"},
-    {"priority": "P0", "action": "继续用独立seeds复核最终Stage1 reference，避免只在开发cohort选模", "evidence": "independent success/CI、paired videos"},
-    {"priority": "P1", "action": "RoboDojo先完成新旧RGB/get_obs版本兼容核验，再恢复官方ARX X5 π0.5 reference做D6/D7", "evidence": "version manifest、fixed-observation parity、reference multi-seed results"},
-    {"priority": "P1", "action": "plug_in_charger做精密接触主候选，push_T做动力学对照；先验收reference能力再决定online RL投入", "evidence": "task reward audit、reference success/failure recoverability、contact geometry review"},
-    {"priority": "P2", "action": "B0稳定后实现B1 measured-transition grounding；严格区分proposed/executed action与command/measured state", "evidence": "transition target audit、validity mask、held-out metrics"},
-    {"priority": "P2", "action": "B2只加入已验证physics constraints，contact/impulse标签按有效性mask使用", "evidence": "gradient audit、constraint metrics、matched-budget ablation"}
+    {
+      "priority": "P0",
+      "action": "复盘10k eval40的18个失败episode，并做同seed 5k/10k/旧12k对照",
+      "evidence": "episode-level success、failure stage、paired videos"
+    },
+    {
+      "priority": "P0",
+      "action": "运行BC-only/reference-consistency诊断，量化actor相对reference的动作偏移",
+      "evidence": "action deviation、success、BC-only stability、dropout ablation"
+    },
+    {
+      "priority": "P0",
+      "action": "审计BC/Q配比、critic calibration与macro discount时间语义后再决定B0重启配置",
+      "evidence": "Q calibration、target trace、duration/discount contract"
+    },
+    {
+      "priority": "P0",
+      "action": "用封存独立seeds复核development-best Stage1 reference",
+      "evidence": "independent success/CI、paired behavior"
+    },
+    {
+      "priority": "P1",
+      "action": "备份10k checkpoint、train450 norm、必要数据与评测contract，保证迁移可复现",
+      "evidence": "artifact manifest、hash/provenance、restore check"
+    },
+    {
+      "priority": "P1",
+      "action": "RoboDojo继续D6 reference-only adapter与D7 multi-seed Dojo-Eval",
+      "evidence": "version compatibility、reference episode、multi-seed results"
+    },
+    {
+      "priority": "P2",
+      "action": "可信B0稳定后再进入B1 measured-transition grounding与B2 valid physics",
+      "evidence": "matched-budget ablation、held-out transition metrics、physical violation metrics"
+    }
   ]
 }
