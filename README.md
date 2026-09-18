@@ -6,7 +6,7 @@ Living research website for **Universal Physical Token, robot self-improvement, 
 
 **https://nkd-lkz.github.io/physical-self-evolution/**
 
-## Current research mainline — 2026-09-17
+## Current research mainline — 2026-09-18
 
 The project is aligned to the leadership-defined research proposal:
 
@@ -42,29 +42,40 @@ Current source of truth:
 - [`research/physical-token-leadership-spec.md`](research/physical-token-leadership-spec.md)
 - [`research/master-roadmap.md`](research/master-roadmap.md)
 - [`research/rlt-multitask-benchmark.md`](research/rlt-multitask-benchmark.md)
-- [`research/progress-2026-09-17.md`](research/progress-2026-09-17.md) — latest execution snapshot
+- [`research/progress-2026-09-18.md`](research/progress-2026-09-18.md) — latest execution snapshot
+- [`research/progress-2026-09-17.md`](research/progress-2026-09-17.md) — previous detailed snapshot
 - [`research/robodojo-b300-log.md`](research/robodojo-b300-log.md) — second-platform bring-up / RLinf integration log
 - [`research/robodojo-contact-task-reference-selection-2026-09-17.md`](research/robodojo-contact-task-reference-selection-2026-09-17.md) — contact-task and reference selection
 
 ## Current execution gate: trustworthy B0 first
 
-Before B1/B2, the project remains in **Gate 0 — Baseline Recovery / Validation**, but B0 Stage2 has now entered real training:
+Before B1/B2, the project remains in **Gate 0 — Baseline Recovery / Validation**. A first H50/C50 B0 Stage2 run has now been stopped after online degradation, so the immediate task is **B0 diagnosis**, not Physical Token:
 
 ```text
-Recover usable Stage1 reference
+Recover / validate Stage1 reference
         ↓
 Fix execution / timing semantics
         ↓
-B0 online baseline  ← running
+B0 online baseline
+        ↓
+BC/reference/Q diagnosis  ← current
+        ↓
+trustworthy B0
         ↓
 B1 + measured transition loss
         ↓
 B2 + valid physics loss
 ```
 
+The current rule is simple: **do not interpret Stage2 parameter updates as algorithmic progress unless the trained actor at least preserves or improves the matched frozen reference.**
+
 ## Hammer Stage1 status
 
-The old clean50 `pi05_base + rlt_alpha=1` long Stage1 run stopped at about 12.3k steps. Complete 6k/8k/10k/12k checkpoints were evaluated using one unified 20-seed development cohort, `H50/C50 native_macro`, the same task prompt and fixed action-sampling seed:
+Two Stage1 lines are now tracked separately.
+
+### Old clean50 reference line
+
+The old clean50 `pi05_base + rlt_alpha=1` run stopped around 12.3k. On the unified 20-seed `H50/C50 native_macro` development cohort:
 
 | checkpoint | success | rate |
 |---|---:|---:|
@@ -73,91 +84,96 @@ The old clean50 `pi05_base + rlt_alpha=1` long Stage1 run stopped at about 12.3k
 | 10k | 8/20 | 40% |
 | 12k | 10/20 | 50% |
 
-`12k` is the current **development reference candidate**, not a final result. The curve is non-monotonic, the cohort is small, and 10/20 failures remain.
+The old 12k remains a development reference anchor, not a final reference.
+
+### New clean490 / train450 line
+
+A fresh generic-`pi05_base` joint VLA+RLT Stage1 run was launched on train450 and later stopped for migration at about **10823 / 30000** steps. Complete 5k and 10k checkpoints were preserved.
+
+The 10k checkpoint was evaluated twice under the same eval40 protocol on two allowed GPUs:
+
+> **22 / 40 = 55% success in both runs**
+
+The two runs also matched on aggregate return (~0.55) and mean episode length (~196.25). This supports aggregate reproducibility under the current development protocol, but it is **not** an independent 80-seed result and does not by itself prove that train450 is significantly better than the old clean50 line.
+
+The next reference work is failure-stage review, matched-seed checkpoint comparison and independent-seed validation.
 
 ## Hammer clean500 → clean490
 
-The original clean50 plus 450 newly collected successful demonstrations were fully exported: 500 raw/main/physics/video episodes with 500 unique seeds.
+The data contract remains:
 
-A full CPU-side quality audit found no structural, finite-value or alignment errors, but identified **10 strong action-trajectory anomalies**. Raw evidence is preserved; those 10 are excluded from new action supervision.
+- 500 raw demonstrations preserved;
+- 10 strong action-trajectory anomalies excluded from new supervision;
+- **clean490 = train450 + eval40**;
+- train450 provides 70,640 training indices;
+- eval40 provides 6,238 development-validation indices;
+- normalization uses train450 only;
+- another 10 trajectories remain valid for action learning but have weak contact/impulse labels, so contact-specific auxiliary targets require a validity mask.
 
-This yields **clean490**:
+The dataset audit strengthens supervision quality, but does not itself prove better task success.
 
-- 490 trajectory candidates;
-- `train450`: 70,640 train indices;
-- `eval40`: 6,238 development-validation indices;
-- norm stats computed from `train450` only.
+## New clean490 Stage1 — stopped after 10k checkpoint
 
-Another 10 trajectories have valid action continuity but weak contact/impulse evidence. They remain usable for Stage1 action learning, while contact/impulse-specific auxiliary supervision must use a validity mask.
+The fresh clean490 Stage1 run used:
 
-`eval40` is a development validation set, not the final independent test set.
-
-## New clean490 Stage1 — running
-
-A fresh Stage1 recovery run has now **started** from generic `pi05_base`:
-
+- generic `pi05_base`;
 - joint VLA task adaptation + RLT reconstruction;
 - `rlt_alpha=1`;
-- `H=50`;
-- global batch 64;
+- H50;
+- global batch64;
 - dual-GPU data parallel;
-- maximum 30k optimizer steps;
-- warmup 1k;
-- checkpoint every 5k;
-- checkpoint selection by fixed `eval40` closed-loop capability, not minimum training loss.
+- intended maximum 30k optimizer steps;
+- checkpoint every5k.
 
-Latest runtime snapshot:
+It was actively stopped at about **10823 steps** for migration. This is not a completed 30k run.
 
-> **~3798 / 30000 steps (about 12.7%)**
+Latest saved training-health values were approximately:
 
-This is a live snapshot, not a performance result. The next meaningful gate is the first 5k checkpoint followed by the fixed eval40 closed-loop evaluation.
+- total loss 0.05317;
+- RLT loss 0.05236;
+- VLA loss 0.000808.
 
-## B0 Stage2 — running
+Checkpoint choice remains based on closed-loop capability, not minimum training loss. The 10k checkpoint currently has the strongest new-line evidence: two eval40 runs at 22/40 each.
 
-A new H50/C50 Stage2 baseline has started using the current 12k frozen reference candidate.
+## B0 Stage2 — stopped after online degradation
 
-Current facts:
+The first new H50/C50 B0 Stage2 run used the old clean50/12k frozen reference.
 
-- action-space / observation-field transport fixes are in place;
-- focused CPU tests passed;
-- frozen 12k reference acceptance remains `10/20` on the matched H50/C50 development cohort;
-- formal Stage2 uses 4 environments and learner batch 64;
-- replay warmup target is 512 transitions;
-- warmup includes critic-update preparation before online actor takeover;
-- total training budget is 3000 rounds;
-- **current status: warmup data collection; learner has not yet produced validated online updates.**
+Reference anchor:
 
-Therefore there is currently **no Stage2 performance-improvement claim**. The next acceptance points are learner update, version sync, actor takeover, checkpoint integrity and paired success/reward curves.
+> **10 / 20 = 50%** on the matched development cohort.
+
+Stage2 used a direct normalized actor, 4 training environments, batch64, replay warmup and a 4:1 critic:actor update ratio. During periodic 20-seed evaluation:
+
+- around rounds 200/300: ~45%;
+- around rounds 800/900: ~15%.
+
+The run was actively stopped around outer round 985. The low final critic / BC losses are **not** accepted as evidence that Q-values or the actor are correct.
+
+Current interpretation:
+
+> **This B0 configuration degrades the frozen reference and is therefore not yet a trustworthy online baseline.**
+
+Next: BC-only / reference-consistency, action-deviation, reference-dropout, BC/Q-balance and critic-calibration diagnostics. No further budget is added to the same configuration until those checks are complete.
 
 ## RoboDojo second-platform status
 
-RoboDojo has advanced to **D0–D5 complete**:
+RoboDojo status is unchanged from the latest 9/17 validation:
 
-- source / assets / isolated runtime are fixed;
-- B300 minimal headless RGB renderer path is validated;
-- XPolicyLab CPU protocol is validated;
-- native `stack_bowls / ARX X5 / joint` single-episode execution and three-camera video path are validated;
-- D6–D10 remain pending: reference adapter, multi-seed Dojo-Eval, real transition bridge, RLT smoke and complete baseline.
+- D0–D5 complete at the infrastructure/native-task level;
+- D6 real reference-only adapter pending;
+- D7 multi-seed Dojo-Eval pending;
+- D8 real transition alignment pending;
+- online RLT not yet started.
 
-Two contract findings matter for later RLT / Physical Token work:
+Current task candidates remain:
 
-1. ARX X5 arm joint state is measured `joint_pos`, while the gripper scalar is command-derived from previous control state; the full 14D vector must not be called uniformly “measured state”.
-2. One policy target is internally interpolated / held across multiple simulator control items, so a policy action is **not** one physics tick. Future RLT discounting and measured-transition targets must use the real execution interval.
-
-### RoboDojo contact-task / dynamics candidates
-
-Current research-task recommendation:
-
-- `plug_in_charger`: primary precision-contact / insertion candidate;
-- `push_T`: friction / sliding-dynamics control task;
-- `insert_key` and `insert_tubes`: later contact-rich extensions;
+- `plug_in_charger`: primary precision-contact candidate;
+- `push_T`: friction / dynamics control;
+- `insert_key` / `insert_tubes`: later contact-rich extensions;
 - `stack_bowls`: engineering regression only.
 
-Official ARX X5 π0.5 checkpoint candidates and matching 14D norm stats have been verified to exist in the public RoboDojo data repository. They are currently **reference candidates only**: weights have not yet been restored and capability-tested on the selected contact tasks.
-
-A further prerequisite was identified: recent upstream fixes changed RGB byte-channel handling and observation-frame alignment. Before D6/D7, the pinned local stack must be checked against the fixed stack to prevent silent color/timing mismatches.
-
-RoboDojo remains a second platform and does not block the Hammer/RLT mainline.
+The official ARX X5 π0.5 candidates still require version compatibility checks, model restoration and actual capability evaluation before they can serve as D6 references.
 
 ## Core architecture
 
@@ -224,13 +240,13 @@ Cross-model / cross-robot claims require held-out tests.
 
 ## Existing evidence
 
-- Block-assembly and drawer-opening/placement clips are **RL Token qualitative reproduction**, not Physical Token results.
-- Old hammer Stage2 proves rollout → replay → actor/critic update → weight sync → checkpoint engineering, but not a usable B0 performance baseline.
-- The unified Stage1 20-seed curve demonstrates partial reference capability; 12k is only a development candidate.
-- clean490 strengthens data quality and supervision validity; it does not yet prove better task success.
-- New clean490 Stage1 and H50/C50 Stage2 are running, but neither has produced a validated performance-improvement result yet.
-- RoboDojo D3/D5 prove renderer + native-task infrastructure paths, **not** RLinf/RLT algorithm performance.
-- Astra / Harness / SHAPER results are planner/harness references, not direct evidence that the actor-side Physical Token hypothesis is correct.
+- Block-assembly and drawer-opening/placement clips remain **RL Token qualitative reproduction**, not Physical Token results.
+- Old clean50 Stage1 provides a partial reference capability curve; 12k reached 10/20 on its 20-seed development cohort.
+- New train450 Stage1 10k reached **22/40 twice** on eval40; this is development evidence, not a final independent comparison.
+- The first H50/C50 B0 Stage2 run **degraded** from about 45% periodic success to about 15% and was stopped; this is evidence that the current online learner configuration is not yet trustworthy.
+- clean490 strengthens data quality and label validity but does not itself prove task improvement.
+- RoboDojo D3/D5 prove renderer + native-task infrastructure paths, not RLinf/RLT algorithm performance.
+- **No validated online-RL gain and no Physical Token / physics-grounding gain exists yet.**
 
 ## Public repository policy
 
@@ -254,6 +270,7 @@ See [`research/knowledge-base-maintenance.md`](research/knowledge-base-maintenan
     ├── physical-token-leadership-spec.md
     ├── master-roadmap.md
     ├── rlt-multitask-benchmark.md
+    ├── progress-2026-09-18.md
     ├── progress-2026-09-17.md
     ├── robodojo-b300-log.md
     ├── robodojo-contact-task-reference-selection-2026-09-17.md
