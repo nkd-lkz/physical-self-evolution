@@ -1,5 +1,21 @@
 # 科研决策日志
 
+## 2026-09-18 · B0 Stage2退化后，先做reference-consistency诊断再重启online RL
+
+**决定：**
+
+- 新train450 Stage1 step10k当前作为 development candidate；双复测22/40仅记为聚合复现，不冻结成最终reference。
+- 旧clean50/12k reference上的当前Stage2配置已停止，不继续盲目追加训练预算。
+- 下一轮B0优先做 BC-only / reference-consistency、actor-reference action deviation、reference dropout、BC/Q配比、critic calibration 与 macro time/discount audit。
+- 只有online actor在matched条件下能稳定保持或改善frozen reference，才重新把该配置升级为可信B0。
+- 在此之前不启动Physical Token B1/B2正式消融。
+
+**原因：**
+
+Stage2周期评测从约45%退化到约15%。这说明“critic/actor更新发生”和“训练loss有限”并不等价于策略真正改进。当前根因可能同时涉及Q、BC anchoring、dropout、动作空间与时间折扣，不能提前锁定单一解释。
+
+---
+
 ## 2026-09-17 · RoboDojo D3 / D5 已通过，下一门槛固定为 D6 reference-only adapter
 
 **决定：**
