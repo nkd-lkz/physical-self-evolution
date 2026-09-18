@@ -1,9 +1,9 @@
 # Universal Physical Token：研究总路线
 
-> 版本：2026-09-17  
-> 当前状态：**领导主线不变；执行处于 Gate 0 — Baseline Recovery / Validation**  
+> 版本：2026-09-18  
+> 当前状态：**领导主线不变；执行处于 Gate 0 — trustworthy B0 diagnosis / recovery**  
 > 主规范：[`physical-token-leadership-spec.md`](physical-token-leadership-spec.md)  
-> 最新进展：[`progress-2026-09-17.md`](progress-2026-09-17.md)
+> 最新进展：[`progress-2026-09-18.md`](progress-2026-09-18.md)
 
 ---
 
@@ -40,25 +40,29 @@ actor / action-generation features
 
 ## 1. 当前执行门槛：Gate 0
 
-在 B1 / B2 前先建立可信 RLT / RL Token baseline：
+在 B1 / B2 前必须先建立可信 RLT / RL Token baseline。当前已经从“Stage1能否完成任务”推进到“B0 online learner能否至少保持reference”的诊断阶段：
 
 ```text
-Gate 0A  Recover & validate Stage1 reference
+Gate 0A  Validate Stage1 reference
        ↓
 Gate 0B  Fix execution / timing semantics
        ↓
-Gate 0C  Establish trustworthy B0 online baseline
+Gate 0C  Build B0 online baseline
+       ↓
+B0-Diag BC/reference/Q diagnosis  ← current
+       ↓
+trustworthy B0
        ↓
 B1      + measured transition grounding
        ↓
 B2      + valid physics grounding
 ```
 
-Gate 0 是因果归因的前置，不是新的算法主张。
+Gate 0 仍然只是因果归因前置，不是新的算法主张。
 
-### 1.1 2026-09-17 Stage1 证据
+### 1.1 旧 clean50 Stage1 证据
 
-旧 clean50 `pi05_base + alpha1` 长程 Stage1 未完成原计划20k，最终停止在约12.3k。统一协议下已完成 6k/8k/10k/12k 的固定20-seed开发评测：
+统一 20-seed、`H50/C50 native_macro` 协议下：
 
 | checkpoint | success | rate |
 |---|---:|---:|
@@ -67,17 +71,26 @@ Gate 0 是因果归因的前置，不是新的算法主张。
 | 10k | 8/20 | 40% |
 | 12k | 10/20 | 50% |
 
-协议固定为 `H50/C50 native_macro`、相同 task prompt、相同 action-sampling seed 和同一 cohort。
+12k仍只是旧数据路线的development anchor。
 
-当前结论：
+### 1.2 新 train450 Stage1 证据
 
-- Stage1 已证明具备部分闭环任务能力；
-- 12k 是当前 development candidate；
-- 曲线非单调、样本量有限且12k仍有10/20失败；
-- 不能宣布泛化问题解决，也不能把训练步数/数据量/联合loss写成唯一根因；
-- 需要完整物理视频、failure-stage分析和独立最终seeds继续验证。
+新clean490/train450 Stage1从generic `pi05_base`联合训练VLA+RLT，原计划30k，迁移前主动停止在约10823 steps，完整checkpoint为5k与10k。
 
----
+10k checkpoint 在相同eval40 / H50-C50 / fixed prompt/action seed协议下做两次独立设备运行：
+
+> **22/40 = 55% in both runs**
+
+这支持当前开发协议上的聚合可复现性，但不能解释为80个独立seeds，也不能直接与旧12k的10/20做显著性结论。最终reference仍需失败阶段分析、matched-seed对照和独立seeds复核。
+
+### 1.3 B0 Stage2 现状
+
+使用旧clean50/12k frozen reference的首个H50/C50 Stage2 run已经停止。周期20-seed评测：
+
+- 早期约45%；
+- 后期约15%。
+
+因此当前B0尚不可信。下一步不是继续加budget，而是BC-only/reference-consistency、actor deviation、reference dropout、BC/Q ratio、critic calibration与macro discount诊断。
 
 ## 2. 数据基座：clean500 → clean490
 
@@ -140,7 +153,7 @@ Measured transition 需要 actual qpos / EE / object consequence 等真实测量
 
 ## 3. 新 clean490 Stage1 baseline recovery
 
-下一轮 Stage1 从 generic `pi05_base` 重新开始：
+新 Stage1 已经从 generic `pi05_base` 启动并产生可评测 checkpoint：
 
 - joint VLA task adaptation + RLT reconstruction；
 - `rlt_alpha=1`；
@@ -148,17 +161,24 @@ Measured transition 需要 actual qpos / EE / object consequence 等真实测量
 - global batch64；
 - dual-GPU data parallel；
 - warmup1k；
-- default maximum 30k optimizer steps；
-- checkpoint every5k；
-- `5k/10k/15k/20k/25k/30k` 使用 eval40 做开发选择。
+- 原计划maximum30k；
+- checkpoint every5k。
 
-当前数据转换、train-only norm、loader、Hydra dry-run 与 CPU regression 已完成；**GPU正式训练尚未启动**。
+迁移前主动停止在约 **10823 / 30000**，因此不能写成30k完成。
 
-30k 是上限，不是必须跑满。选择依据仍然是 closed-loop capability，而不是最低训练 loss。
+当前完整保存点：
 
-最终 reference 需要在 development-best checkpoint 确定后，用未参与开发的独立 reset seeds 重新评估。
+- 5k；
+- 10k。
 
----
+10k在eval40上两次均为22/40（55%）。这使10k成为当前新数据路线的development candidate，但最终reference仍需要：
+
+1. 18个失败episode的failure-stage画像；
+2. 5k/10k/旧12k同seed对照；
+3. independent reset seeds复核；
+4. paired video / episode-level evidence。
+
+训练loss只作为健康度，不作为选模依据。
 
 ## 4. 核心结构
 
@@ -271,28 +291,44 @@ Action-head 更接近动作生成是研究假设，不是已知事实。
 
 ## 7. Online self-improvement
 
-在线阶段默认：
+在线阶段的理想默认仍是：
 
 - base model frozen；
 - action head frozen；
 - token encoder/readout frozen；
 - small actor/critic trainable；
 - learner 使用真实 executed actions 与 task rewards；
-- replay 与 outcome target 对齐真实执行时间。
+- replay / discount 与真实执行时间对齐。
 
-第一阶段 actor/critic 结构尽量沿用 matched RLT，先只更换表示，避免 learner 改动掩盖 representation 的贡献。
+但 2026-09-18 的首个 H50/C50 B0 Stage2 暴露了一个关键问题：
 
-后续可以单列：
+> **online parameter update ≠ policy improvement**
 
-- actor-only token use；
-- critic-only physical token；
-- both actor/critic；
-- Q-guided flow update；
-- streaming / low-replay。
+旧clean50/12k frozen reference 的 Stage2 周期成功率从约45%退化到约15%，因此已经停止。
 
-这些不是首轮 B1/B2 必须变量。
+当前必须先证明：
 
----
+```text
+actor ≈ reference under BC-only / anchoring
+        ↓
+Q signal is calibrated enough
+        ↓
+actor deviation is controlled
+        ↓
+online training preserves / improves success
+```
+
+下一轮B0诊断重点：
+
+- BC-only / reference consistency；
+- actor-reference action deviation；
+- reference dropout；
+- BC/Q weighting；
+- critic calibration；
+- macro execution duration / discount；
+- checkpoint / actor takeover timing。
+
+只有B0能够稳定保持或改善reference，才进入B1/B2。第一阶段仍尽量沿用matched RLT actor/critic，避免learner改动掩盖representation贡献。
 
 ## 8. 指标与证据链
 
@@ -347,16 +383,23 @@ better representation
 
 ## 10. RoboDojo 的位置
 
-RoboDojo 继续作为第二平台：
+RoboDojo继续作为第二平台，目前：
 
-- D0–D2 complete；
-- D4 CPU protocol complete；
-- D3 B300 renderer pending；
-- D5–D10 pending。
+- D0–D5 infrastructure / native task gates 已完成；
+- D6 real reference-only adapter pending；
+- D7 multi-seed Dojo-Eval pending；
+- D8 real transition alignment pending；
+- online RLT 尚未开始。
 
-它不阻塞 Hammer 上的 Gate 0 与 Physical Token 核心假设验证。
+科研任务候选：
 
----
+- `plug_in_charger`：精密接触 / insertion；
+- `push_T`：摩擦 / dynamics；
+- `insert_key` / `insert_tubes`：后续扩展。
+
+官方 ARX X5 π0.5 candidate 已确认存在，但在权重恢复、RGB/get_obs版本兼容和闭环能力验收完成前不能当作正式reference。
+
+RoboDojo不阻塞Hammer上的B0诊断与Physical Token主实验。
 
 ## 11. Streaming / WAM / Agent 的触发条件
 
@@ -384,4 +427,4 @@ RoboDojo 继续作为第二平台：
 
 当前最准确表述：
 
-> **项目以 RLT 为 baseline，当前已建立部分可用的 Hammer Stage1 reference 能力曲线，并完成 clean500 全量质量审计与 clean490 数据准备。下一步先用 clean490 建立更可信 Stage1/B0；随后在 matched 条件下验证 action-side compact token 的 measured-transition / physics grounding 是否真正提高在线适应与最终任务成功率。**
+> **项目以 RLT 为 baseline。当前新train450 Stage1 10k在eval40上两次均为22/40（55%），但旧clean50/12k上的首个B0 Stage2发生明显在线退化，因此主线已转入B0诊断。只有在BC/reference/Q与执行时间语义被证明可信后，才会进入B1 measured-transition与B2 physics-grounding实验。**
