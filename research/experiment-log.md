@@ -1,5 +1,34 @@
 # 实验日志
 
+## 2026-09-18 · train450 Stage1 10k复测 + B0 Stage2退化诊断
+
+### 事实
+
+- 新 clean490/train450 Stage1 在迁移前主动停止于约 10823/30000 steps；完整保存点为 5k 和 10k，不得写成“30k完成”。
+- step10k 在完全一致的 `H50/C50 native_macro + eval40 + fixed prompt/action seed` 协议下完成两次独立设备运行，均为 `22/40=55%`，return≈0.55，mean episode length≈196.25，eval正常退出。
+- 两次聚合一致只证明当前开发协议下的 aggregate reproducibility；使用的是同一40个seeds，不能当成80个独立样本。
+- eval40 与 train450 seeds 不重叠，但其中19个seed已用于旧development comparison，因此不能与旧clean50/12k的10/20直接宣称显著提升。
+- 旧 clean50/12k frozen reference 的 H50/C50 Stage2 周期评测从约45%下降到约15%，约985外层round后主动停止；最新完整checkpoint约900 round。
+- Stage2最后critic loss≈0.0206、BC loss≈0.00306，但这不能证明Q准确或actor闭环安全。当前证据只是：该B0配置相对reference明显退化。
+- RoboDojo本日状态保持D0–D5工程验收通过，D6真实reference与online RL仍待完成。
+
+### 解释
+
+今天最重要的结论不是“55%更强”，而是把两个问题进一步拆开：
+
+1. 新train450 Stage1 10k具有比旧line更好的开发候选证据，但仍需matched-seed与independent-seed验证；
+2. 旧B0 Stage2说明“online更新已经发生”远远不够，actor必须至少保持reference，否则不能作为Physical Token的公平baseline。
+
+### 下一步
+
+1. 复盘10k eval40的18个失败episode，并做5k/10k/旧12k同seed对照；
+2. 运行BC-only/reference-consistency诊断；
+3. 统计actor-reference action deviation，消融reference dropout与BC/Q配比；
+4. 审计critic calibration和macro discount的真实时间语义；
+5. 可信B0重建完成前，不进入B1/B2。
+
+---
+
 ## 2026-09-17 · RoboDojo D3/D5 真实验证完成
 
 ### 事实
