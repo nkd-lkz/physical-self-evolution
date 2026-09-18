@@ -1,5 +1,25 @@
 [
   {
+    "date": "2026-09-18",
+    "decision": "新train450 Stage1 step10k作为当前development candidate，但不冻结为最终reference；两次eval40均22/40只视为聚合复现证据。",
+    "reason": "两次运行使用同一40个seeds和同一协议，不能合并成80个独立样本；eval40还包含旧development cohort中的19个seed，不能直接与旧12k的10/20做显著性结论。最终reference仍需failure-stage分析和独立seeds复核。"
+  },
+  {
+    "date": "2026-09-18",
+    "decision": "旧clean50/12k reference的当前B0 Stage2配置停止继续加预算，先做BC-only/reference-consistency和Q/actor诊断。",
+    "reason": "周期评测从约45%退化到约15%，说明当前online learner未能稳定保持reference。低critic/BC loss不能证明Q准确或策略安全，因此继续同配置训练缺少科学依据。"
+  },
+  {
+    "date": "2026-09-18",
+    "decision": "B0诊断必须显式量化actor-reference action deviation、reference dropout、BC/Q配比、critic calibration和macro time/discount语义。",
+    "reason": "当前退化可能来自多个耦合因素，尚无证据支持把根因唯一归为Q overestimation或reference能力不足。先做单变量诊断才能为后续Physical Token B1/B2提供可信baseline。"
+  },
+  {
+    "date": "2026-09-18",
+    "decision": "迁移时需单独保留10k checkpoint、train450 norm、必要数据与最新eval40代码；此前迁移快照不能视为包含9/18全部结果。",
+    "reason": "原始数据、训练权重和replay不能假设未来可重新下载；最新10k eval代码与日报产生于早期迁移快照之后，必须单独保存才能复现实验能力。"
+  },
+  {
     "date": "2026-09-17",
     "decision": "clean490 Stage1 已正式启动；继续采用generic pi05_base + alpha1 + H50、global batch64、最多30k steps、每5k保存，并按eval40闭环能力选checkpoint。",
     "reason": "数据与train-only norm已完成审计，当前需要用更大且更干净的train450重新建立reference。实时约3798/30000只作为运行快照，不能提前当作能力结果。"
