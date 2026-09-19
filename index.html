@@ -23,6 +23,7 @@
       <a href="#logs">每日科研日志</a>
       <div class="nav-label">具身自进化知识库</div>
       <a href="#frontier">前沿工作地图</a>
+      <a href="#literature">文献阅读总账</a>
       <a href="#reading">每日论文计划</a>
       <a href="#papers">精读论文库</a>
       <a href="#perspectives">外部观点 / RSI</a>
@@ -31,49 +32,52 @@
       <a href="#archive">详细资料</a>
     </nav>
     <div class="side-note">
-      <b>当前 Source of Truth</b><br>
-      领导定义的主问题仍是：<b>Action-head Physical Token + measured transition / valid physics grounding + lightweight online adaptation</b>。<br><br>
-      <b>当前执行 Gate：</b>先恢复可信 RL Token / RLT baseline；在 B0 可解释之前，不把旧 Stage2 零成功归因于“缺 physics”。
+      <b>当前 Source of Truth · 2026-09-19</b><br>
+      主问题收敛为：<b>从 action-generation pathway 提取可迁移的 compact Physical Token，并用真实 executed-action consequence 与可靠 physics supervision 做 grounding。</b><br><br>
+      <b>本周研究重点：</b>先把 Physical Token 的定义、近邻工作与可证伪方案梳理清楚；RLT、RECAP、V-GPS/Q-VGM 等都只是可选 downstream learner / baseline，不再把 RLT 收敛作为故事成立前提。
     </div>
   </aside>
 
   <main class="main">
     <section id="home" class="hero">
-      <div class="kicker">Leadership-aligned Research Mainline · 2026-09-15</div>
+      <div class="kicker">Research Focus · 2026-09-19</div>
       <h1>Universal Physical Token<br/>for Robot Self-Evolution</h1>
       <p>核心问题：<b>能否从已有 action-generation head 读出一个紧凑表示，用 measured transition prediction 与有效 physics constraints 对其 grounding，并在在线阶段不重新训练 action model 的情况下适应变化的接触动力学？</b></p>
       <div class="callout">
-        <b>当前不是马上加 Physical Token。</b> 最新 hammer 证据显示，旧结果同时受到 Stage1 capability 与 RoboTwin H/C 执行协议影响。当前先完成 <b>Gate 0 — Baseline Recovery</b>：恢复可用 Stage1 reference → 固定 execution/timing semantics → 建立可信 B0，再进入 B1 transition grounding / B2 physics grounding。
+        <b>当前重点已经从“先把 RLT 调收敛”转为“先把 Physical Token 研究问题定义清楚”。</b>
+        现有 baseline 证据说明 online RLT 并不稳定，因此 Physical Token 不再绑定单一 learner。
+        当前优先回答三件事：<b>① action-side token 到底表示什么；② 哪些 physics / measured consequence 监督是真正可部署、可迁移的；③ 如何证明它比 backbone、history-only、action-only 等更有决策价值。</b>
       </div>
       <p>
         <a class="button" href="reader.html?path=research/physical-token-leadership-spec.md">打开领导版主规范</a>
-        <a class="button secondary" href="reader.html?path=research/progress-2026-09-15.md">打开 09-15 最新进展</a>
+        <a class="button secondary" href="reader.html?path=research/progress-2026-09-18.md">打开 09-18 实验进展</a>
+        <a class="button secondary" href="reader.html?path=research/literature/reading-ledger.md">打开 125 篇阅读总账</a>
       </p>
     </section>
 
     <section id="mainline">
       <div class="section-head">
-        <div><h2>01 · 当前科研主线</h2><p class="muted">研究问题不变；实验顺序增加 Gate 0，先把 baseline 变成可信测量工具。</p></div>
+        <div><h2>01 · 当前科研主线</h2><p class="muted">2026-09-19：暂停继续堆实验变量，先把 Physical Token 的定义、近邻论文、可落地方案与验证合同梳理清楚。</p></div>
       </div>
 
       <div class="steps">
-        <div class="step phase-current"><b>Gate 0 · Baseline Recovery</b><span>恢复 Stage1 闭环能力，固定 H/C、TOPP、seed、reward 与 transition 语义，建立可信 B0。</span></div>
-        <div class="step"><b>A · Baseline / Extraction</b><span>固定 RL Token / matched head-readout baseline，并做 backbone tap vs head tap。</span></div>
-        <div class="step"><b>B · Transition Grounding</b><span>加入 actual/executed-action conditioned measured transition prediction。</span></div>
-        <div class="step"><b>C · Physics Grounding</b><span>加入有效的 kinematic consistency 与 actuator feasibility。</span></div>
-        <div class="step phase-future"><b>D/E · Online Adaptation → Universal</b><span>matched-budget 在线适应；当前模型/机器人成立后再做 held-out head family / embodiment。</span></div>
+        <div class="step phase-current"><b>A · Define the Physical Token</b><span>明确 token 是 action-side physical consequence state，而不是把任意 action token / proprio latent 改名。</span></div>
+        <div class="step"><b>B · Collision Audit</b><span>精读 FLARE、Pri4R、AGRA、CometVLA、PAR、DyWA、RoboPack、MSDP 等最近邻，逐项排除撞车。</span></div>
+        <div class="step"><b>C · Three Candidate Routes</b><span>Representation-first / Physical Critic / WAM-compatible interface，分别给出最小实现和 No-Go 条件。</span></div>
+        <div class="step"><b>D · Grounding Contract</b><span>严格区分 proposed vs executed action、command vs measured state、known physics vs learned residual physics。</span></div>
+        <div class="step phase-future"><b>E · Learner-Agnostic Validation</b><span>RLT、RECAP、V-GPS/Q-VGM 或 WAM 都可作为 downstream；先证明 representation 本身有额外物理与决策价值。</span></div>
       </div>
 
       <div class="grid two">
         <article class="card">
-          <h3>领导定义的 Research Claim</h3>
-          <p><b>Action-head compact readout can be physically grounded.</b></p>
-          <p>要验证的是：measured transition 与有效 physics constraints 是否让 compact token 更适合在线适应，而不是笼统声称“模型学会物理规律”。</p>
+          <h3>当前 Research Claim</h3>
+          <p><b>Action-generation features may expose a compact, physically useful control interface.</b></p>
+          <p>要验证的是：在相同 history / proprio / capacity 下，action-side readout 是否比 backbone / history-only / action-only 更能编码真实 interaction consequence，并帮助后续决策。</p>
         </article>
         <article class="card">
-          <h3>当前工程解释边界</h3>
-          <p><b>旧 Stage2 zero-success ≠ “缺 physics”。</b></p>
-          <p class="muted">必须先排除 Stage1 能力、H/C 与 TOPP 执行语义、reward/transition 和 online learner 等基础变量。</p>
+          <h3>当前创新边界</h3>
+          <p><b>Compact token、future prediction、physics correction、multisensory latent、cross-head adapter 都已有强近邻。</b></p>
+          <p class="muted">因此创新不能只靠“加 token / 加 physics loss / 冻结大模型”；必须通过 matched ablation 证明 action-side physical representation 的独立价值。</p>
         </article>
       </div>
     </section>
@@ -213,6 +217,42 @@
         </select>
       </div>
       <div id="frontierGrid" class="frontier-grid"></div>
+    </section>
+
+    <section id="literature">
+      <div class="section-head">
+        <div>
+          <h2>知识库 · Physical Token 文献阅读总账</h2>
+          <p class="muted">检索到 ≠ 读懂。当前 125 项主表全部有检索 mini-note；真正精读后再升级状态。</p>
+        </div>
+        <a class="button" href="reader.html?path=research/literature/reading-ledger.md">打开阅读总账</a>
+      </div>
+      <div id="literatureMetrics" class="grid four metrics">
+        <article class="card"><div class="metric">125</div><div class="muted">当前主表文献总数</div></article>
+        <article class="card"><div class="metric">18</div><div class="muted">最高重合、防撞优先</div></article>
+        <article class="card"><div class="metric">—</div><div class="muted">已精读 / 专题阅读</div></article>
+        <article class="card"><div class="metric">—</div><div class="muted">待系统精读</div></article>
+      </div>
+      <div class="grid three" style="margin-top:14px">
+        <article class="card">
+          <h3>方向地图</h3>
+          <p>Action representation、hidden dynamics、force/tactile、analytic physics、WAM、value/RL、execution/harness、cross-head foundations。</p>
+          <div class="read-more"><a href="reader.html?path=research/literature/physical-token-direction-map.md">打开方向地图 →</a></div>
+        </article>
+        <article class="card">
+          <h3>125 项完整防撞审查</h3>
+          <p>每篇包含方法摘要、项目关系、核验边界与一手来源；用于判断“别人已经做到哪一步”。</p>
+          <div class="read-more"><a href="reader.html?path=research/literature/physical-token-literature-audit-2026-09-19.md">打开完整审查 →</a></div>
+        </article>
+        <article class="card">
+          <h3>独立精读笔记</h3>
+          <p>RLT、RISE、Motus2、LWD、Zeva、Zetta、SHAPER、PhysVLA、Harness VLA、ASPIRE、ENPIRE 等。</p>
+          <div class="read-more"><a href="reader.html?path=notes/README.md">打开 Notes Index →</a></div>
+        </article>
+      </div>
+      <div class="callout knowledge-callout" style="margin-top:14px">
+        <b>Wave 0 防撞优先：</b>RLT → FLARE → Pri4R → AGRA → CometVLA → PAR → DyWA → TACO → RoboPack → MSDP → exUMI → Spline Policy → LeTO → V-GPS → FlowDAgger → DSRL → HPT → GeoAAC。
+      </div>
     </section>
 
     <section id="reading">
