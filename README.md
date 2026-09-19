@@ -280,6 +280,19 @@ See [`research/knowledge-base-maintenance.md`](research/knowledge-base-maintenan
     └── reading-program.md
 ```
 
+## Literature map & reading ledger
+
+The Physical Token literature review is now maintained as a first-class research asset rather than an ad-hoc paper list:
+
+- **125-paper master audit:** [`research/literature/physical-token-literature-audit-2026-09-19.md`](research/literature/physical-token-literature-audit-2026-09-19.md)
+- **Read / unread / priority ledger:** [`research/literature/reading-ledger.md`](research/literature/reading-ledger.md)
+- **Machine-readable ledger:** [`data/literature-reading-ledger.json`](data/literature-reading-ledger.json)
+- **Deep-note index:** [`notes/README.md`](notes/README.md)
+
+Every catalogued paper has at least a **search/abstract mini-note** containing method, project relevance, verification boundary and first-party source. A paper is marked “read” or “deep-read” only after actual method/experiment review; the remaining entries stay explicitly queued rather than being treated as understood.
+
+Current reading priority is collision avoidance around **action-side representations, future/consequence supervision, hidden-dynamics adaptation, physical constraints, value guidance, WAM interfaces and cross-head transfer**.
+
 ## Knowledge-base rule
 
 The Frontier Knowledge Base continues to track RISE, Motus2, LWD, RLT, SmoothRL, Zeva, Zetta, Astra/Harness and related work. They inform baselines and innovation boundaries, but do not override the leadership-defined actor-side Physical Token experimental contract.
