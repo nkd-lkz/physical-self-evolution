@@ -1,9 +1,31 @@
-# 每日论文阅读计划：围绕 Universal Physical Token 服务当前科研主线
+# Physical Token 文献精读计划：从检索地图到逐篇读懂
 
-> 原则：论文用于找 baseline、边界和实现方法，不再用来每天扩展新的上位研究故事。  
-> 当前 Source of Truth：`research/physical-token-leadership-spec.md`。
+> 更新：2026-09-19  
+> 当前目标：**先把 Physical Token / action-side physical representation 的创新边界读透，再决定具体算法。RLT 只是 baseline / reference 之一，不再是阅读计划的唯一中心。**  
+> 阅读总账：[`literature/reading-ledger.md`](literature/reading-ledger.md)  
+> 125项防撞审查：[`literature/physical-token-literature-audit-2026-09-19.md`](literature/physical-token-literature-audit-2026-09-19.md)
+
+## 0. 当前阅读纪律
+
+1. **检索到 ≠ 读懂。** 摘要级条目只标“待精读/初读”，不能用于最终 novelty claim。
+2. **每篇至少保留两层笔记：**总表中的检索 mini-note + 精读后的独立 `notes/*.md`。
+3. **P0 高重合论文优先补正文、附录和代码。**先排除撞车，再扩展 idea。
+4. **不要求每篇都改变主线。**论文的价值可以只是：加 baseline、加 ablation、加 metric、否定一个假设。
+5. **负结果也升级知识库。**如果 history-only 已经等价 Physical Token、action-head 不优于 backbone，应直接记录并调整假设。
+
+### 阅读状态
+
+- 已精读/已有独立笔记
+- 已阅读/已有专题笔记
+- 已初读/讨论过，待系统精读
+- 待精读
+
+### 第一批必须啃完的防撞队列
+
+RLT、FLARE、Pri4R、AGRA、CometVLA、PAR、DyWA、TACO、RoboPack、MSDP、exUMI、Spline Policy、LeTO、V-GPS、FlowDAgger、DSRL、HPT、GeoAAC。
 
 ---
+
 
 ## 1. 每篇论文固定回答 7 个问题
 
@@ -216,3 +238,21 @@
 5. 实验事实直接否定当前领导方案中的某个假设。
 
 否则：归档、引用、用于讨论，但不改当前 Source of Truth。
+
+
+---
+
+## 精读完成的最低标准
+
+一篇论文只有满足以下条件，才从“初读”升级成“精读”：
+
+1. 能画出方法的数据流 / 网络图；
+2. 能说清输入、target、loss、冻参/更新参数；
+3. 能解释 action/state/time contract；
+4. 能指出至少一个最强 baseline 与关键 ablation；
+5. 能复述作者核心 evidence，而不是只记成功率；
+6. 能明确它与 Physical Token 的重合点和不重合点；
+7. 至少核查一个 appendix / code / config 级实现细节；
+8. 留下一条可执行的项目动作或“No action”。
+
+精读后优先在 `notes/` 新建独立文件，并更新 `literature/reading-ledger.md`。
