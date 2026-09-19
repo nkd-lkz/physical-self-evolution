@@ -284,6 +284,7 @@ See [`research/knowledge-base-maintenance.md`](research/knowledge-base-maintenan
 
 The Physical Token literature review is now maintained as a first-class research asset rather than an ad-hoc paper list:
 
+- **Direction map / mental model:** [`research/literature/physical-token-direction-map.md`](research/literature/physical-token-direction-map.md)
 - **125-paper master audit:** [`research/literature/physical-token-literature-audit-2026-09-19.md`](research/literature/physical-token-literature-audit-2026-09-19.md)
 - **Read / unread / priority ledger:** [`research/literature/reading-ledger.md`](research/literature/reading-ledger.md)
 - **Machine-readable ledger:** [`data/literature-reading-ledger.json`](data/literature-reading-ledger.json)
