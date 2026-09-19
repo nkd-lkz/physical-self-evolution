@@ -5,18 +5,20 @@ let papers=[];
 let frontier=[];
 async function init(){
   try{
-    const [basePapers,latestPapers,baseFrontier,frontierAdds,currentStatus]=await Promise.all([
+    const [basePapers,latestPapers,baseFrontier,frontierAdds,currentStatus,literatureLedger]=await Promise.all([
       loadJSON('data/papers.json'),
       loadJSONOptional('data/latest-readings.json'),
       loadJSON('data/frontier.json'),
       loadJSONOptional('data/frontier-additions.json'),
-      loadJSONOptional('data/current-status.json')
+      loadJSONOptional('data/current-status.json'),
+      loadJSONOptional('data/literature-reading-ledger.json')
     ]);
     papers=[...latestPapers,...basePapers.filter(p=>!latestPapers.some(x=>x.id===p.id))];
     frontier=[...frontierAdds,...baseFrontier.filter(p=>!frontierAdds.some(x=>x.id===p.id))];
     renderPapers();
     renderFrontier();
     renderCurrentStatus(currentStatus);
+    renderLiteratureStatus(literatureLedger);
     const logs=await loadJSON('data/experiments.json');
     document.getElementById('experimentList').innerHTML=logs.map(x=>'<div><b>'+esc(x.date)+' · '+esc(x.title)+'</b><p>'+esc(x.summary)+'</p></div>').join('');
   }catch(e){console.error(e)}
@@ -37,8 +39,21 @@ function renderCurrentStatus(s){
   }
   const statusHeading=document.querySelector('#status h2');
   if(statusHeading&&s.as_of){statusHeading.title='动态状态快照：'+s.as_of;}
-  const dojoCard=document.querySelector('a[href*="research/robodojo-b300-log.md"] p');
-  if(dojoCard){dojoCard.textContent='D0–D2 与 D4 已通过；D3 B300 headless RGB renderer/device 仍待验收，Dojo-Eval / Dojo-RL 尚未开始。';}
+}
+function renderLiteratureStatus(s){
+  if(!s||Array.isArray(s)||!s.status_counts)return;
+  const wrap=document.getElementById('literatureMetrics');
+  if(!wrap)return;
+  const counts=s.status_counts||{};
+  const deep=(counts['已精读/已有独立笔记']||0)+(counts['已阅读/已有专题笔记']||0);
+  const skim=(counts['已初读/讨论过，待系统精读']||0);
+  const unread=(counts['待精读']||0);
+  const total=Array.isArray(s.papers)?s.papers.length:(deep+skim+unread);
+  wrap.innerHTML=
+    '<article class="card"><div class="metric">'+esc(total)+'</div><div class="muted">当前主表文献总数</div></article>'+
+    '<article class="card"><div class="metric">18</div><div class="muted">最高重合、防撞优先</div></article>'+
+    '<article class="card"><div class="metric">'+esc(deep)+'</div><div class="muted">已精读 / 专题阅读</div></article>'+
+    '<article class="card"><div class="metric">'+esc(unread)+'</div><div class="muted">待系统精读（另有 '+esc(skim)+' 篇已初读）</div></article>';
 }
 function renderFrontier(){
   const q=(document.getElementById('frontierSearch')?.value||'').toLowerCase();
