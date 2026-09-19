@@ -1,96 +1,96 @@
 {
-  "as_of": "2026-09-18",
+  "as_of": "2026-09-19",
   "metrics": [
     {
+      "value": "125 papers",
+      "label": "Physical Token / action-side physics 主表；每篇已有检索 mini-note"
+    },
+    {
+      "value": "18 P0",
+      "label": "最高重合近邻，优先全文/附录/代码防撞"
+    },
+    {
       "value": "22/40 ×2",
-      "label": "train450 Stage1 step10k 在同一 eval40 协议两次均为55%；聚合可复现，非独立80-seed结果"
+      "label": "train450 Stage1 10k 当前开发参考；不是最终独立测试结论"
     },
     {
-      "value": "10823/30k",
-      "label": "新 clean490 Stage1 主动停止前进度；5k/10k完整checkpoint已保存"
+      "value": "B0 degraded",
+      "label": "旧RLT Stage2约45%→15%，说明 learner 不应绑架 Physical Token 故事"
     },
     {
-      "value": "45% → 15%",
-      "label": "旧 clean50/12k B0 Stage2 周期评测出现退化；已停止并转入诊断"
-    },
-    {
-      "value": "B0 diagnosis",
-      "label": "下一步优先BC-only/reference consistency、actor deviation、dropout与BC/Q配比"
-    },
-    {
-      "value": "450/40",
-      "label": "clean490固定train450/eval40；norm仅由train450计算"
+      "value": "3 routes",
+      "label": "Representation-first / Physical Critic / WAM-compatible interface"
     },
     {
       "value": "D0–D5",
-      "label": "RoboDojo工程Gate保持完成；D6 real reference adapter仍待验收"
+      "label": "RoboDojo工程Gate已到D5；真机同事继续推进任务/reference"
     }
   ],
   "timeline": [
     {
-      "title": "train450 Stage1 10k 双复测完成",
-      "body": "同一eval40、H50/C50 native_macro、固定prompt/action seed下，两次均22/40=55%，return约0.55、mean episode length约196.25。只能说明当前开发协议上的聚合可复现。"
+      "title": "今日转入科研思路深挖",
+      "body": "暂停继续堆代码与实验变量，优先梳理 Physical Token 的定义、近邻论文、创新边界和几套可证伪方案。"
     },
     {
-      "title": "新Stage1已主动停止",
-      "body": "原计划30k的联合VLA+RLT训练在约10823 steps停止，现有完整5k/10k checkpoint。停止并不等于30k训练完成。"
+      "title": "Physical Token 不再绑定 RLT",
+      "body": "RLT保留为 compact-readout baseline；RECAP、V-GPS/Q-VGM、offline/online RL、WAM都可以是 downstream learner。"
     },
     {
-      "title": "旧B0 Stage2发生性能退化并停止",
-      "body": "旧clean50/12k reference的Stage2早期20-seed评测约45%，后期约15%；不能以低critic/BC loss证明Q或actor正确，当前转入诊断。"
+      "title": "125项文献总账建立",
+      "body": "所有条目至少有检索级方法/项目关系/核验边界；精读与摘要阅读严格分开管理。"
     },
     {
-      "title": "B0诊断优先于继续加预算",
-      "body": "优先BC-only/reference-consistency、actor deviation、reference dropout、BC/Q比和critic calibration；不盲目追加原配置online budget。"
+      "title": "Wave 0 防撞优先",
+      "body": "先精读 FLARE、Pri4R、AGRA、CometVLA、PAR、DyWA、TACO、RoboPack、MSDP、exUMI、Spline Policy、LeTO、V-GPS、FlowDAgger、DSRL、HPT、GeoAAC 等。"
     },
     {
-      "title": "clean490数据合同不变",
-      "body": "train450/eval40、train-only norm与per-label validity mask保持；B1继续区分proposed/executed action和command/measured state。"
+      "title": "当前最强定义候选",
+      "body": "Physical Token 更适合定义成 action-side、action-consequence-sufficient control latent，而不是物理参数表或简单 proprio token。"
     },
     {
-      "title": "RoboDojo状态保持",
-      "body": "D3/D5工程验收已通过；D6真实reference和online RL尚未完成。"
+      "title": "真机数据合同反推方法",
+      "body": "优先让同事确认 actual q/qdot、EEF/object state、F/T/tactile、timestamps、applied command、controller delay/contact labels，再决定哪些 physics supervision 可落地。"
     },
     {
-      "title": "Physical Token仍未进入正式消融",
-      "body": "当前仍在可信B0基线构建与诊断阶段；B1 measured transition、B2 valid physics尚未开始。"
+      "title": "实验线仍保留",
+      "body": "Stage1 10k 的22/40×2、旧B0退化、RoboDojo D3/D5等事实继续作为实验背景，但不主导今日方法定义。"
     }
   ],
   "plan": [
     {
       "priority": "P0",
-      "action": "复盘10k eval40的18个失败episode，并做同seed 5k/10k/旧12k对照",
-      "evidence": "episode-level success、failure stage、paired videos"
+      "action": "精读18篇最高重合论文并逐篇补独立notes",
+      "evidence": "method/data/loss/freeze/inference/ablation/code audit"
     },
     {
       "priority": "P0",
-      "action": "运行BC-only/reference-consistency诊断，量化actor相对reference的动作偏移",
-      "evidence": "action deviation、success、BC-only stability、dropout ablation"
+      "action": "形成3套Physical Token候选方案并与两位同事讨论",
+      "evidence": "模块、监督、部署输入、强baseline、No-Go条件"
     },
     {
       "priority": "P0",
-      "action": "审计BC/Q配比、critic calibration与macro discount时间语义后再决定B0重启配置",
-      "evidence": "Q calibration、target trace、duration/discount contract"
-    },
-    {
-      "priority": "P0",
-      "action": "用封存独立seeds复核development-best Stage1 reference",
-      "evidence": "independent success/CI、paired behavior"
+      "action": "把Action Head vs Backbone vs History-only vs Action-only设为核心matched comparison",
+      "evidence": "相同输入历史/容量/监督预算下的representation与decision metrics"
     },
     {
       "priority": "P1",
-      "action": "备份10k checkpoint、train450 norm、必要数据与评测contract，保证迁移可复现",
-      "evidence": "artifact manifest、hash/provenance、restore check"
+      "action": "和真机同事冻结可获得的物理数据合同",
+      "evidence": "sensor/command/timestamp/controller/contact availability matrix"
     },
     {
       "priority": "P1",
-      "action": "RoboDojo继续D6 reference-only adapter与D7 multi-seed Dojo-Eval",
-      "evidence": "version compatibility、reference episode、multi-seed results"
+      "action": "优先评估Physical Critic / candidate ranking路径，避免先被online RL收敛绑死",
+      "evidence": "same candidate set下的ranking/calibration/closed-loop gain"
     },
     {
-      "priority": "P2",
-      "action": "可信B0稳定后再进入B1 measured-transition grounding与B2 valid physics",
-      "evidence": "matched-budget ablation、held-out transition metrics、physical violation metrics"
+      "priority": "P1",
+      "action": "明确WAM兼容接口与Universal层级",
+      "evidence": "flow/AR/WAM action module的readout convention与held-out transfer protocol"
+    },
+    {
+      "priority": "Later",
+      "action": "只有representation证据成立后再恢复大规模online RL与cross-embodiment实验",
+      "evidence": "matched ablation + physical shift + held-out transfer"
     }
   ]
 }
