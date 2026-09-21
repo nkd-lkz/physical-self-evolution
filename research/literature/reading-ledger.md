@@ -2,7 +2,7 @@
 
 > 建立日期：2026-09-19  
 > 更新日期：2026-09-21  
-> 范围：127 项论文/项目；其中 125 项为 09-19 原始检索，新增 ForceDelta-VLA 与 RPent 系统。  
+> 范围：129 项论文/项目；其中 125 项为 09-19 原始检索，09-21 新增 ForceDelta-VLA、RPent、XPACE 与 EmbodiedJev。  
 > 原则：**检索到 ≠ 读懂；摘要笔记 ≠ 全文精读。** 所有条目先保留检索笔记，只有完成方法、实验、附录/代码核验后才升级为“精读”。
 
 ## 0. 当前进度
@@ -10,10 +10,10 @@
 | 状态 | 数量 |
 |---|---:|
 | 已精读/已有独立笔记 | 8 |
-| 已阅读/已有专题笔记 | 6 |
+| 已阅读/已有专题笔记 | 8 |
 | 已初读/讨论过，待系统精读 | 12 |
 | 待精读 | 101 |
-| **总计** | **127** |
+| **总计** | **129** |
 
 完整检索工作稿：[`physical-token-literature-audit-2026-09-19.md`](physical-token-literature-audit-2026-09-19.md)。其中每篇至少有“方法摘要 + 与本项目关系 + 核验边界 + 一手来源”的**检索笔记**；这不等于已经全文精读。
 
@@ -245,3 +245,12 @@ SmoothRL、VLA-Corrector、BCP、GeoAAC、RL²-VLA、Zeva、Harness VLA、SHAPER
 | P127 | [RPent](https://github.com/RLinf/RPent) | P1 | 系统；已阅读/已有专题笔记 | [专题笔记](../../notes/rpent.md) |
 
 增量说明：125 项历史检索稿保持原样；新增条目的方法、证据与边界记录在独立笔记及 JSON 总账。RPent 与 P107 Harness VLA 通过关联记录区分。
+
+## 6. 2026-09-21 追加：恢复经验与物理判定
+
+| ID | 工作 | 优先级 | 类型与状态 | 笔记 |
+|---|---|---|---|---|
+| P128 | [XPACE](https://arxiv.org/abs/2609.17372) | P1 | 论文；已阅读/已有专题笔记 | [专题笔记](../../notes/xpace.md) |
+| P129 | [EmbodiedJev](https://github.com/FBddcz/embodied-jev) | P1 | 系统；已阅读/已有专题笔记 | [专题笔记](../../notes/embodied-jev.md) |
+
+[关联RLT的候选实验](../xpace-jev-rlt-ideas.md)：先做可恢复性probe，再以表示×恢复数据选择的2×2实验分离收益。此为未实施提案。

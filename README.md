@@ -13,9 +13,13 @@ Living research website for **Universal Physical Token, robot self-improvement, 
 
 ## Frontier update — 2026-09-21
 
+- [XPACE](notes/xpace.md): recovery supervision, failure-data routing, and limitations of visual consistency.
+- [EmbodiedJev](notes/embodied-jev.md): candidate decisions, physical verification, and calibration boundaries.
+- [RLT research ideas](research/xpace-jev-rlt-ideas.md): operational recoverability definition, deployment-input probes, and a representation × recovery-data experiment. Proposal only; no new experiment results.
+
 - [ForceDelta-VLA](notes/forcedelta-vla.md): teacher-defined force corrections, delay compensation, and the controls needed to distinguish representation gains from faster feedback. Distinct from FD-VLA.
 - [RPent](notes/rpent.md): agent infrastructure, frozen evaluation memory, and the boundary between experience reuse and online policy learning. System entry linked to the existing Harness VLA paper.
-- [Reading ledger](research/literature/reading-ledger.md): 127 literature/project entries, including the original 125-entry audit and these two additions. Both additions are topical readings, not independent reproductions.
+- [Reading ledger](research/literature/reading-ledger.md): 129 literature/project entries, including the original 125-entry audit and four September 21 additions. The additions are topical readings, not independent reproductions.
 
 ## Current research mainline — 2026-09-18
 

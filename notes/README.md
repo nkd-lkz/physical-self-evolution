@@ -1,6 +1,12 @@
 # Paper Notes Index
 
-> 规则：独立 notes 表示已经专题阅读/精读的论文或系统；127 项总账（含 09-21 新增两项）在 `research/literature/reading-ledger.md` 中维护，且每篇至少已有检索 mini-note。
+> 规则：独立 notes 表示已经专题阅读/精读的论文或系统；129 项总账（含 09-21 新增四项）在 `research/literature/reading-ledger.md` 中维护，且每篇至少已有检索 mini-note。
+
+## 2026-09-21 追加专题
+
+- [XPACE：恢复数据与监督分流](xpace.md)
+- [EmbodiedJev：物理判定与概率校准](embodied-jev.md)（系统）
+- [如何借鉴到 RLT：问题定义与五组实验](../research/xpace-jev-rlt-ideas.md)（研究提案）
 
 ## 2026-09-21 新增专题
 
@@ -28,7 +34,7 @@
 
 ## 阅读总账
 
-- [127 项阅读状态与目录](../research/literature/reading-ledger.md)
+- [129 项阅读状态与目录](../research/literature/reading-ledger.md)
 - [125 项检索与防撞审查](../research/literature/physical-token-literature-audit-2026-09-19.md)
 
 升级为“精读”时，优先新建独立 note，并在 reading ledger 中更新状态。

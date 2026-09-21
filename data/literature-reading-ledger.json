@@ -4,7 +4,7 @@
     "已精读/已有独立笔记": 8,
     "已初读/讨论过，待系统精读": 12,
     "待精读": 101,
-    "已阅读/已有专题笔记": 6
+    "已阅读/已有专题笔记": 8
   },
   "papers": [
     {
@@ -1910,6 +1910,36 @@
       "source_url": "https://github.com/RLinf/RPent",
       "read_status": "已阅读/已有专题笔记",
       "note_path": "notes/rpent.md",
+      "note_level": "topic-note"
+    },
+    {
+      "id": "P128",
+      "short_title": "XPACE",
+      "title": "XPACE: Joint World and Action Modeling from Heterogeneous Experience",
+      "priority": "P1",
+      "category": "世界模型与世界动作模型",
+      "venue": "arXiv 2026",
+      "method_note": "失败数据仅进入模拟监督；SGF适配自生成上下文；从偏离终点裁剪恢复训练样本；8%恢复混合，模拟器与策略后训练分叉。",
+      "project_note": "先在RoboTwin验证真实物理恢复数据价值；补充等更新量原数据、随机恢复与定向恢复对照，分离表示与数据效应。",
+      "verification_boundary": "不等于开放世界RSI；视觉一致不保证接触状态可续接；恢复动作由规则提供。与WM-DAgger重合，需要独立创新证据。 本轮为专题阅读，未独立复现。",
+      "source_url": "https://arxiv.org/abs/2609.17372",
+      "read_status": "已阅读/已有专题笔记",
+      "note_path": "notes/xpace.md",
+      "note_level": "topic-note"
+    },
+    {
+      "id": "P129",
+      "short_title": "EmbodiedJev（系统）",
+      "title": "EmbodiedJev · 行知：Robot Decision Workbench",
+      "priority": "P1",
+      "category": "执行时序、失败恢复与非参数自进化",
+      "venue": "开源系统与开发实验；不是独立学术论文",
+      "method_note": "模型选子目标和动作通道；控制程序决定步长并执行；仿真副本检查配置的风险，物理状态独立判定终态。",
+      "project_note": "借鉴动作后果证据链与概率校准；先用部署可得输入做可恢复性probe，再考虑恢复选择器，不直接引入云端Jev改变RLT主线。",
+      "verification_boundary": "候选概率不是动作成功概率；oracle仿真预演、程序任务知识不计作模型能力；闭环反馈本身不证明自进化。 本轮为专题阅读，未独立复现。",
+      "source_url": "https://github.com/FBddcz/embodied-jev",
+      "read_status": "已阅读/已有专题笔记",
+      "note_path": "notes/embodied-jev.md",
       "note_level": "topic-note"
     }
   ]

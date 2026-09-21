@@ -1,5 +1,66 @@
 [
   {
+    "id": "xpace",
+    "title": "XPACE: Joint World and Action Modeling from Heterogeneous Experience",
+    "year": "2026",
+    "layer": "Joint World–Action Model / Recovery Data",
+    "theme": "physical",
+    "status": "正文专题阅读 · 2026-09-21；未复现",
+    "tags": [
+      "RLT",
+      "Recovery",
+      "Action Consequence",
+      "Sample Efficiency",
+      "World Model",
+      "Heterogeneous Data",
+      "SGF"
+    ],
+    "one": "共享视频骨干支持动作生成与给定骨架条件的视觉模拟；在示范附近生成恢复片段，筛选后辅助策略微调。正文数据规模约5000小时。",
+    "method": [
+      "失败数据仅进入模拟监督；SGF适配自生成上下文；从偏离终点裁剪恢复训练样本；8%恢复混合，模拟器与策略后训练分叉。"
+    ],
+    "evidence": "官方三任务恢复增强前后61.7%→86.7%，每方法每任务20次；包含额外微调预算，不能把全部增益归因于合成数据。",
+    "project": "先在RoboTwin验证真实物理恢复数据价值；补充等更新量原数据、随机恢复与定向恢复对照，分离表示与数据效应。",
+    "boundary": "不等于开放世界RSI；视觉一致不保证接触状态可续接；恢复动作由规则提供。与WM-DAgger重合，需要独立创新证据。",
+    "questions": [
+      "在匹配历史、容量和执行时序后，表示能否预测可恢复偏差？",
+      "相同预算下定向恢复经验是否优于随机恢复？"
+    ],
+    "note": "reader.html?path=notes/xpace.md",
+    "url": "https://arxiv.org/abs/2609.17372"
+  },
+  {
+    "id": "embodied-jev",
+    "title": "EmbodiedJev · 行知：Robot Decision Workbench",
+    "year": "2026",
+    "layer": "Decision Interface / Physics Verification",
+    "theme": "harness",
+    "status": "文档与关键源码专题阅读 · 2026-09-21；未运行",
+    "tags": [
+      "RLT",
+      "Recovery",
+      "Action Consequence",
+      "Sample Efficiency",
+      "Jev",
+      "MuJoCo",
+      "Verification",
+      "Calibration"
+    ],
+    "one": "以MuJoCo工作台比较技能、短步XYZ与分层候选决策；Jev文本输入、程序几何/IK与物理预演的作用明确分开。",
+    "method": [
+      "模型选子目标和动作通道；控制程序决定步长并执行；仿真副本检查配置的风险，物理状态独立判定终态。"
+    ],
+    "evidence": "官方Meta-World三任务×两seed开发集：Jev与Astra各5/6；结构化特权输入，旧直接控制组预算不同，不能作单因素或通用排名证据。",
+    "project": "借鉴动作后果证据链与概率校准；先用部署可得输入做可恢复性probe，再考虑恢复选择器，不直接引入云端Jev改变RLT主线。",
+    "boundary": "候选概率不是动作成功概率；oracle仿真预演、程序任务知识不计作模型能力；闭环反馈本身不证明自进化。",
+    "questions": [
+      "在匹配历史、容量和执行时序后，表示能否预测可恢复偏差？",
+      "相同预算下定向恢复经验是否优于随机恢复？"
+    ],
+    "note": "reader.html?path=notes/embodied-jev.md",
+    "url": "https://github.com/FBddcz/embodied-jev"
+  },
+  {
     "id": "forcedelta-vla",
     "title": "ForceDelta-VLA: Distilling Force-Conditioned Action Corrections for Contact-Rich Manipulation",
     "year": "2026",
