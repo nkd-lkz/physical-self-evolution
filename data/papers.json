@@ -1,5 +1,61 @@
 [
   {
+    "id": "forcedelta-vla",
+    "title": "ForceDelta-VLA: Distilling Force-Conditioned Action Corrections for Contact-Rich Manipulation",
+    "year": "2026",
+    "layer": "Force-Conditioned Correction / Asynchronous Execution",
+    "theme": "physical",
+    "status": "专题阅读 · 2026-09-21；附录/代码待核查",
+    "tags": [
+      "Contact-Rich",
+      "Force Feedback",
+      "Distillation",
+      "Delay Correction",
+      "RLT"
+    ],
+    "one": "缓存参考动作上分别预测力修正与延迟修正，让快速反馈无需等待完整 VLA 重新生成动作。",
+    "method": [
+      "时序力教师 → 无力参考模式 → 成对教师修正目标 → 异步时序回放蒸馏 → 参考与修正组合执行。缺失力条件不等于零力。"
+    ],
+    "evidence": "论文九个真机任务、每方法每任务20次：82.2%，时序教师70.6%，ForceVLA54.4%。峰值力仅统计成功试验；本项目未复现。",
+    "project": "补充同观测历史、同容量、同反馈频率与缓存年龄对照；区分教师修正差监督和真实动作后果监督。",
+    "boundary": "与FD-VLA 2602.02142不同；部署需要实时wrench估计；没有证明在线自进化或通用物理规律。RLT仍为在线学习主基线。",
+    "questions": [
+      "收益是否超过同容量、同历史、同时序的强基线？",
+      "真实动作后果监督与教师修正差各自提供什么信息？"
+    ],
+    "note": "reader.html?path=notes/forcedelta-vla.md",
+    "url": "https://arxiv.org/abs/2609.18242"
+  },
+  {
+    "id": "rpent",
+    "title": "RPent: Agentic Infrastructure for the Physical World",
+    "year": "2026",
+    "layer": "Agent Infrastructure / Memory / Execution",
+    "theme": "harness",
+    "status": "官方文档专题阅读 · 2026-09-21；未复现",
+    "tags": [
+      "Harness",
+      "Memory",
+      "RoboTwin",
+      "Flash",
+      "Harness VLA"
+    ],
+    "one": "连接规划器、VLA/解析技能、环境接口与记忆的开源系统；关联论文为已有Harness VLA，不重复计作另一篇论文。",
+    "method": [
+      "Planner调度局部技能并读取经验；global/suite/task_only记忆；Flash通过当前视觉重定位锚点后执行既有计划。"
+    ],
+    "evidence": "官方RoboTwin C2R：GPT-5.5与LingBot-VLA，50任务×5回合，156/250成功；专家筛选seed，clean经验用于randomized场景。",
+    "project": "借鉴执行证据链、经验来源版本和探索/评测隔离；未来用policy×memory对照分离策略学习与系统恢复收益。",
+    "boundary": "当前Exploration仅支持LIBERO，不能据RoboTwin榜单宣称测试中持续学习。Flash的计时口径不同，不照搬附件加速倍数。",
+    "questions": [
+      "测试期间究竟更新了哪些对象？",
+      "新任务迁移是否排除了同任务recipe与额外探索预算？"
+    ],
+    "note": "reader.html?path=notes/rpent.md",
+    "url": "https://github.com/RLinf/RPent"
+  },
+  {
     "id": "lwd",
     "title": "Learning While Deploying: Fleet-Scale Reinforcement Learning for Generalist Robot Policies",
     "year": "2026",

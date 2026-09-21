@@ -1,12 +1,76 @@
 [
   {
+    "id": "forcedelta-vla",
+    "title": "ForceDelta-VLA: Distilling Force-Conditioned Action Corrections for Contact-Rich Manipulation",
+    "year": "2026",
+    "layer": "Force-Conditioned Correction / Asynchronous Execution",
+    "theme": "physical",
+    "status": "专题阅读 · 2026-09-21；附录/代码待核查",
+    "tags": [
+      "Contact-Rich",
+      "Force Feedback",
+      "Distillation",
+      "Delay Correction",
+      "RLT"
+    ],
+    "one": "缓存参考动作上分别预测力修正与延迟修正，让快速反馈无需等待完整 VLA 重新生成动作。",
+    "method": [
+      "时序力教师 → 无力参考模式 → 成对教师修正目标 → 异步时序回放蒸馏 → 参考与修正组合执行。缺失力条件不等于零力。"
+    ],
+    "evidence": "论文九个真机任务、每方法每任务20次：82.2%，时序教师70.6%，ForceVLA54.4%。峰值力仅统计成功试验；本项目未复现。",
+    "project": "补充同观测历史、同容量、同反馈频率与缓存年龄对照；区分教师修正差监督和真实动作后果监督。",
+    "boundary": "与FD-VLA 2602.02142不同；部署需要实时wrench估计；没有证明在线自进化或通用物理规律。RLT仍为在线学习主基线。",
+    "questions": [
+      "收益是否超过同容量、同历史、同时序的强基线？",
+      "真实动作后果监督与教师修正差各自提供什么信息？"
+    ],
+    "note": "reader.html?path=notes/forcedelta-vla.md",
+    "url": "https://arxiv.org/abs/2609.18242"
+  },
+  {
+    "id": "rpent",
+    "title": "RPent: Agentic Infrastructure for the Physical World",
+    "year": "2026",
+    "layer": "Agent Infrastructure / Memory / Execution",
+    "theme": "harness",
+    "status": "官方文档专题阅读 · 2026-09-21；未复现",
+    "tags": [
+      "Harness",
+      "Memory",
+      "RoboTwin",
+      "Flash",
+      "Harness VLA"
+    ],
+    "one": "连接规划器、VLA/解析技能、环境接口与记忆的开源系统；关联论文为已有Harness VLA，不重复计作另一篇论文。",
+    "method": [
+      "Planner调度局部技能并读取经验；global/suite/task_only记忆；Flash通过当前视觉重定位锚点后执行既有计划。"
+    ],
+    "evidence": "官方RoboTwin C2R：GPT-5.5与LingBot-VLA，50任务×5回合，156/250成功；专家筛选seed，clean经验用于randomized场景。",
+    "project": "借鉴执行证据链、经验来源版本和探索/评测隔离；未来用policy×memory对照分离策略学习与系统恢复收益。",
+    "boundary": "当前Exploration仅支持LIBERO，不能据RoboTwin榜单宣称测试中持续学习。Flash的计时口径不同，不照搬附件加速倍数。",
+    "questions": [
+      "测试期间究竟更新了哪些对象？",
+      "新任务迁移是否排除了同任务recipe与额外探索预算？"
+    ],
+    "note": "reader.html?path=notes/rpent.md",
+    "url": "https://github.com/RLinf/RPent"
+  },
+  {
     "id": "astra-robodojo",
     "title": "GPT-6 Astra × RoboDojo: Direct Control, π0.5 Hybrid and Feedback Adaptation",
     "year": "2026",
     "layer": "General Reasoning / Execution-Harness",
     "theme": "harness",
     "status": "已读 · 2026-09-16",
-    "tags": ["GPT-6 Astra", "RoboDojo", "π0.5", "Hybrid Policy", "Sparse Intervention", "Action-Outcome", "Safety"],
+    "tags": [
+      "GPT-6 Astra",
+      "RoboDojo",
+      "π0.5",
+      "Hybrid Policy",
+      "Sparse Intervention",
+      "Action-Outcome",
+      "Safety"
+    ],
     "one": "一手技术报告显示：在 RoboDojo 10-task subset 上，π0.5 提供熟练动作先验、Astra 只在少量关键步骤审核/修正；Hybrid 48% success、62.60 Score，Direct 26%/37.81，且 Astra 只替换 14.4% executed control steps。",
     "method": [
       "π0.5 每轮生成 H50 candidate joint trajectory；Astra 基于当前观测、history 与 FK trajectory 选择接受 1–15 步或做 bounded 1–5 步 EEF correction",
@@ -32,7 +96,15 @@
     "layer": "Foundation World Model / Physical Representation",
     "theme": "physical",
     "status": "已读 · 2026-09-16",
-    "tags": ["World Model", "Physical Agents", "Action Decoder", "Cross-Embodiment", "Frozen Backbone", "Recovery", "PROWL"],
+    "tags": [
+      "World Model",
+      "Physical Agents",
+      "Action Decoder",
+      "Cross-Embodiment",
+      "Frozen Backbone",
+      "Recovery",
+      "PROWL"
+    ],
     "one": "Odyssey 官方把同一个 autoregressive diffusion-transformer world model 作为共享 foundation representation，再用较小的 system-specific action decoder / policy 适配机器人、Humanoid、车辆、无人机和游戏。",
     "method": [
       "大规模世界视觉观测预训练 shared world representation",
@@ -58,7 +130,14 @@
     "layer": "Skill / Harness Evolution",
     "theme": "harness",
     "status": "已读 · 2026-09-16",
-    "tags": ["Train-free", "Frozen Model", "Skill Evolution", "Context Harness", "Textual Gradient", "Validation Gate"],
+    "tags": [
+      "Train-free",
+      "Frozen Model",
+      "Skill Evolution",
+      "Context Harness",
+      "Textual Gradient",
+      "Validation Gate"
+    ],
     "one": "冻结 planner 与 executor，通过 target-environment rollouts 做局部 action-effect 诊断和 episode summarization，先演化 reusable skill，再演化 context-code harness，实现 non-parametric self-improvement。",
     "method": [
       "Agent factorization：frozen planner + frozen executor + textual skill + context-code harness",
@@ -85,7 +164,15 @@
     "layer": "World Model / Policy Evolution",
     "theme": "physical",
     "status": "已读 · 2026-09-12",
-    "tags": ["General World Model", "MBRL", "Best-of-N", "Value Model", "Memory", "Tactile", "Ego Data"],
+    "tags": [
+      "General World Model",
+      "MBRL",
+      "Best-of-N",
+      "Value Model",
+      "Memory",
+      "Tactile",
+      "Ego Data"
+    ],
     "one": "把 WAM policy、action-conditioned world model 和 value model 做成同一共享参数模型的三个因果接口，再用预测后果与价值反馈做 Best-of-N planning 和 DiffusionNFT policy update。",
     "method": [
       "Action-first mask：Action 看不到对应 future video/value，保证 A→Future→Value 的因果信息流",

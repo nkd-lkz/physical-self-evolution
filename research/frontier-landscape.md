@@ -4,6 +4,20 @@
 > 定位：这是 **知识库 / 灵感地图**，不是当前项目 Roadmap。  
 > 当前项目主线仍然是 **Phase 0 — RLT Multi-task Benchmark**。新论文先进入这里，只有实验或强近邻证据足以改变判断时，才进入主线。
 
+
+## 2026-09-21 增量：ForceDelta-VLA 与 RPent
+
+此次更新属于知识库；以下是研究分析与待验证实验，不是实验结果或主线切换。
+
+| 新工作 | 核心机制与证据来源 | 对当前研究的具体影响 |
+|---|---|---|
+| [ForceDelta-VLA](https://arxiv.org/html/2609.18242v1) | 教师成对预测差监督力修正，另建延迟补偿；九项真机实验 | 强近邻：增加同传感器、同历史、同容量、同时序对照；区分教师差与实测后果 |
+| [RPent](https://github.com/RLinf/RPent) | Planner/技能/环境/持久记忆；关联已有Harness VLA | 系统层：探索与评测分离；当前文档仅LIBERO支持Exploration，不用RoboTwin榜单证明持续学习 |
+
+完整专题：[ForceDelta-VLA](../notes/forcedelta-vla.md)、[RPent](../notes/rpent.md)。ForceDelta-VLA 不等于 FD-VLA（2602.02142）；RPent 是系统条目，不重复算作另一篇 Harness VLA。
+
+候选科学问题进一步收敛为：**相同观测历史、参考策略、容量与执行时序下，真实动作后果监督的紧凑状态能否降低接触条件变化后的在线适应成本？** 先做时序/感知归因，再做后果监督与冻结更新对照，最后才检验新任务适应及旧任务保留。
+
 ---
 
 ## 0. 为什么要单独维护这张地图？

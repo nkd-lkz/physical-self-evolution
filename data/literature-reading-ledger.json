@@ -1,10 +1,10 @@
 {
-  "as_of": "2026-09-19",
+  "as_of": "2026-09-21",
   "status_counts": {
     "已精读/已有独立笔记": 8,
     "已初读/讨论过，待系统精读": 12,
     "待精读": 101,
-    "已阅读/已有专题笔记": 4
+    "已阅读/已有专题笔记": 6
   },
   "papers": [
     {
@@ -1881,6 +1881,36 @@
       "read_status": "待精读",
       "note_path": "",
       "note_level": "search-note"
+    },
+    {
+      "id": "P126",
+      "short_title": "ForceDelta-VLA",
+      "title": "ForceDelta-VLA: Distilling Force-Conditioned Action Corrections for Contact-Rich Manipulation",
+      "priority": "P0",
+      "category": "力触觉、接触与多模态物理监督",
+      "venue": "arXiv 2026",
+      "method_note": "时序力教师 → 无力参考模式 → 成对教师修正目标 → 异步时序回放蒸馏 → 参考与修正组合执行。缺失力条件不等于零力。",
+      "project_note": "补充同观测历史、同容量、同反馈频率与缓存年龄对照；区分教师修正差监督和真实动作后果监督。",
+      "verification_boundary": "正文方法与主实验/消融已核查；附录、训练配置及代码复现待完成。",
+      "source_url": "https://arxiv.org/abs/2609.18242",
+      "read_status": "已阅读/已有专题笔记",
+      "note_path": "notes/forcedelta-vla.md",
+      "note_level": "topic-note"
+    },
+    {
+      "id": "P127",
+      "short_title": "RPent（系统）",
+      "title": "RPent: Agentic Infrastructure for the Physical World",
+      "priority": "P1",
+      "category": "执行时序、失败恢复与非参数自进化",
+      "venue": "开源系统；关联论文Harness VLA已单列P107",
+      "method_note": "Planner调度局部技能并读取经验；global/suite/task_only记忆；Flash通过当前视觉重定位锚点后执行既有计划。",
+      "project_note": "借鉴执行证据链、经验来源版本和探索/评测隔离；未来用policy×memory对照分离策略学习与系统恢复收益。",
+      "verification_boundary": "官方README与Memory/Flash/RoboTwin/榜单文档已核查；未独立运行。系统单列，不重复计作Harness VLA论文。",
+      "source_url": "https://github.com/RLinf/RPent",
+      "read_status": "已阅读/已有专题笔记",
+      "note_path": "notes/rpent.md",
+      "note_level": "topic-note"
     }
   ]
 }

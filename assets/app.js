@@ -51,7 +51,7 @@ function renderLiteratureStatus(s){
   const total=Array.isArray(s.papers)?s.papers.length:(deep+skim+unread);
   wrap.innerHTML=
     '<article class="card"><div class="metric">'+esc(total)+'</div><div class="muted">当前主表文献总数</div></article>'+
-    '<article class="card"><div class="metric">18</div><div class="muted">最高重合、防撞优先</div></article>'+
+    '<article class="card"><div class="metric">18</div><div class="muted">09-19 批次防撞优先</div></article>'+
     '<article class="card"><div class="metric">'+esc(deep)+'</div><div class="muted">已精读 / 专题阅读</div></article>'+
     '<article class="card"><div class="metric">'+esc(unread)+'</div><div class="muted">待系统精读（另有 '+esc(skim)+' 篇已初读）</div></article>';
 }

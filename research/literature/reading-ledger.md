@@ -1,7 +1,8 @@
 # Physical Token 文献阅读总账
 
 > 建立日期：2026-09-19  
-> 范围：当前系统检索的 125 项主表。  
+> 更新日期：2026-09-21  
+> 范围：127 项论文/项目；其中 125 项为 09-19 原始检索，新增 ForceDelta-VLA 与 RPent 系统。  
 > 原则：**检索到 ≠ 读懂；摘要笔记 ≠ 全文精读。** 所有条目先保留检索笔记，只有完成方法、实验、附录/代码核验后才升级为“精读”。
 
 ## 0. 当前进度
@@ -9,10 +10,10 @@
 | 状态 | 数量 |
 |---|---:|
 | 已精读/已有独立笔记 | 8 |
-| 已阅读/已有专题笔记 | 4 |
+| 已阅读/已有专题笔记 | 6 |
 | 已初读/讨论过，待系统精读 | 12 |
 | 待精读 | 101 |
-| **总计** | **125** |
+| **总计** | **127** |
 
 完整检索工作稿：[`physical-token-literature-audit-2026-09-19.md`](physical-token-literature-audit-2026-09-19.md)。其中每篇至少有“方法摘要 + 与本项目关系 + 核验边界 + 一手来源”的**检索笔记**；这不等于已经全文精读。
 
@@ -25,7 +26,11 @@
 
 ## 2. 近期阅读顺序
 
-### Wave 0 · 防撞优先（先把创新边界搞清楚）
+### 09-21 增量
+
+ForceDelta-VLA 列为新增 P0 强近邻，先核验监督来源和时序/感知归因；RPent 列为 P1 系统专题，关联 P107 Harness VLA，不作为第二篇同名论文。两项均为专题阅读，未升级全文/代码精读。
+
+### Wave 0 · 防撞优先（09-19 批次）
 
 RLT → FLARE → Pri4R → AGRA → CometVLA → PAR → DyWA → TACO → RoboPack → MSDP → exUMI → Spline Policy → LeTO → V-GPS → FlowDAgger → DSRL → HPT → GeoAAC。
 
@@ -58,7 +63,7 @@ SmoothRL、VLA-Corrector、BCP、GeoAAC、RL²-VLA、Zeva、Harness VLA、SHAPER
 9. 哪个点可以借，哪个点必须避免重复？
 10. 读完后对我们的实验产生什么具体 action：baseline / ablation / metric / no-action？
 
-## 4. 125 项目录
+## 4. 原始 125 项目录（09-19 快照）
 
 ### 动作侧表征与最邻近工作
 
@@ -231,3 +236,12 @@ SmoothRL、VLA-Corrector、BCP、GeoAAC、RL²-VLA、Zeva、Harness VLA、SHAPER
 - 从“初读”升级到“已阅读”：必须能解释最关键 loss / data / inference contract，并完成项目重合判断。
 - 从“已阅读”升级到“精读”：必须读实验与附录，核查至少一个关键实现或公开代码路径，并能写出 reviewer 可能质疑的点。
 - 对 P0 最近邻，正式写论文前应额外完成 code / appendix audit；仅靠摘要不得形成 novelty claim。
+
+## 5. 2026-09-21 新增专题
+
+| ID | 工作 | 优先级 | 类型与状态 | 笔记 |
+|---|---|---|---|---|
+| P126 | [ForceDelta-VLA](https://arxiv.org/abs/2609.18242) | P0 | 论文；已阅读/已有专题笔记 | [专题笔记](../../notes/forcedelta-vla.md) |
+| P127 | [RPent](https://github.com/RLinf/RPent) | P1 | 系统；已阅读/已有专题笔记 | [专题笔记](../../notes/rpent.md) |
+
+增量说明：125 项历史检索稿保持原样；新增条目的方法、证据与边界记录在独立笔记及 JSON 总账。RPent 与 P107 Harness VLA 通过关联记录区分。

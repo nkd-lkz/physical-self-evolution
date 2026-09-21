@@ -10,6 +10,13 @@ Living research website for **Universal Physical Token, robot self-improvement, 
 
 **https://nkd-lkz.github.io/physical-self-evolution/**
 
+
+## Frontier update — 2026-09-21
+
+- [ForceDelta-VLA](notes/forcedelta-vla.md): teacher-defined force corrections, delay compensation, and the controls needed to distinguish representation gains from faster feedback. Distinct from FD-VLA.
+- [RPent](notes/rpent.md): agent infrastructure, frozen evaluation memory, and the boundary between experience reuse and online policy learning. System entry linked to the existing Harness VLA paper.
+- [Reading ledger](research/literature/reading-ledger.md): 127 literature/project entries, including the original 125-entry audit and these two additions. Both additions are topical readings, not independent reproductions.
+
 ## Current research mainline — 2026-09-18
 
 The project is aligned to the leadership-defined research proposal:
