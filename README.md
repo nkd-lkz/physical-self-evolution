@@ -2,6 +2,10 @@
 
 Living research website for **Universal Physical Token, robot self-improvement, VLA / action models, Online RL and embodied physical adaptation**.
 
+## RSI survey literature
+
+[具身 / 机器人 RSI 综述调研](survey-rsi/README.md) — 每日增量、原图阅读卡片、去重索引和证据核查，与实验主线分别维护。
+
 ## Website
 
 **https://nkd-lkz.github.io/physical-self-evolution/**

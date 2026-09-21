@@ -1,0 +1,1932 @@
+[
+  {
+    "title": "The Last AI Built by Humans: Toward Genuine Recursive Self-Improvement",
+    "short": "The Last AI Built by Humans",
+    "arxiv_ids": [
+      "2609.11873"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2609.11873v2/Fig3loop_ver9.10.png",
+      "https://arxiv.org/abs/2609.11873",
+      "https://arxiv.org/pdf/2609.11873v2"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Self-Evolving AI for Humanoids: Mechanisms, Safety, and Evaluation of Post-Deployment Self-Improvement",
+    "short": "Self-Evolving AI for Humanoids",
+    "arxiv_ids": [
+      "2609.13236"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2609.13236v1/Presentation1.png",
+      "https://arxiv.org/abs/2609.13236",
+      "https://arxiv.org/pdf/2609.13236v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "From AGI to ASI",
+    "short": "From AGI to ASI",
+    "arxiv_ids": [
+      "2606.12683"
+    ],
+    "urls": [
+      "https://arxiv.org/abs/2606.12683",
+      "https://arxiv.org/pdf/2606.12683v2"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "A Comprehensive Survey of Self-Evolving AI Agents: A New Paradigm Bridging Foundation Models and Lifelong Agentic Systems",
+    "short": "Comprehensive Self-Evolving Agents Survey",
+    "arxiv_ids": [
+      "2508.07407"
+    ],
+    "urls": [
+      "https://arxiv.org/pdf/2508.07407#page=5",
+      "https://arxiv.org/abs/2508.07407",
+      "https://arxiv.org/pdf/2508.07407v2"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Autonomous Research Agents: A Survey of AI Scientists and the Verification Gap",
+    "short": "Autonomous Research Agents and Verification Gap",
+    "arxiv_ids": [
+      "2608.05179"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2608.05179v1/figures/autoresearch_evolution_tree.png",
+      "https://arxiv.org/abs/2608.05179",
+      "https://arxiv.org/pdf/2608.05179v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "A Survey on Self-Improving Test-Time Intelligence: Feedback-Driven Adapting, Learning, and Scaling at Inference",
+    "short": "Self-Improving Test-Time Intelligence Survey",
+    "arxiv_ids": [
+      "2609.01679"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2609.01679v1/tti_ttl_tts_6.png",
+      "https://arxiv.org/abs/2609.01679",
+      "https://arxiv.org/pdf/2609.01679v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Recursive Self-Improvement in AI: From Bounded Self-Refinement to Autonomous Research Loops",
+    "short": "RSI Survey",
+    "arxiv_ids": [
+      "2607.07663"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2607.07663v2/figures/Figure1.png",
+      "https://arxiv.org/abs/2607.07663",
+      "https://arxiv.org/pdf/2607.07663v2"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Self-evolving Embodied AI",
+    "short": "Self-evolving Embodied AI",
+    "arxiv_ids": [
+      "2602.04411"
+    ],
+    "urls": [
+      "https://arxiv.org/pdf/2602.04411#page=2",
+      "https://arxiv.org/abs/2602.04411",
+      "https://arxiv.org/pdf/2602.04411v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Weights or Skills? A Survey of Robot-Learning Techniques: from Action-Predicting Weights to Robots that Write their Own Skills",
+    "short": "Weights or Skills",
+    "arxiv_ids": [
+      "2608.01851"
+    ],
+    "urls": [
+      "https://arxiv.org/pdf/2608.01851#page=3",
+      "https://arxiv.org/abs/2608.01851",
+      "https://arxiv.org/pdf/2608.01851v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "World-Action Models for Robot Learning and Control: A Survey",
+    "short": "World-Action Models Survey",
+    "arxiv_ids": [
+      "2609.16074"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2609.16074v1/wam_background.png",
+      "https://arxiv.org/abs/2609.16074",
+      "https://arxiv.org/pdf/2609.16074v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "World Model for Robot Learning: A Comprehensive Survey",
+    "short": "World Model Survey",
+    "arxiv_ids": [
+      "2605.00080"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2605.00080v1/intro2_crop.png",
+      "https://arxiv.org/abs/2605.00080",
+      "https://arxiv.org/pdf/2605.00080v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Self-Evolving Coding Agents",
+    "short": "Self-Evolving Coding Agents",
+    "arxiv_ids": [
+      "2608.03392"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2608.03392v3/self-evolving-code-agent.png",
+      "https://arxiv.org/abs/2608.03392",
+      "https://arxiv.org/pdf/2608.03392v3"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Co-Evolution in Agentic Systems: Toward Self-Directed Evolution Beyond Human Design",
+    "short": "Co-Evolution in Agentic Systems",
+    "arxiv_ids": [
+      "2608.10299"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2608.10299v1/figure1_progressive_taxonomy.png",
+      "https://arxiv.org/abs/2608.10299",
+      "https://arxiv.org/pdf/2608.10299v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Lifelong Representations: A Survey on Continual Self-Supervised Learning for Vision Models",
+    "short": "Lifelong Representations",
+    "arxiv_ids": [
+      "2607.09785"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2607.09785v1/src/figures/fig_sslcs_3.png",
+      "https://arxiv.org/abs/2607.09785",
+      "https://arxiv.org/pdf/2607.09785v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Deep Reinforcement Learning for Robotics: A Survey of Real-World Successes",
+    "short": "Real-World RL Survey",
+    "arxiv_ids": [
+      "2408.03539"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2408.03539v3/taxonomy_complete.png",
+      "https://arxiv.org/abs/2408.03539",
+      "https://arxiv.org/pdf/2408.03539v3"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Large VLM-based Vision-Language-Action Models for Robotic Manipulation: A Survey",
+    "short": "Large VLM-based VLA Survey",
+    "arxiv_ids": [
+      "2508.13073"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2508.13073v3/figs/intro.png",
+      "https://arxiv.org/abs/2508.13073",
+      "https://arxiv.org/pdf/2508.13073v3"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Large Model Empowered Embodied AI: A Survey on Decision-Making and Embodied Learning",
+    "short": "Large Model Empowered Embodied AI",
+    "arxiv_ids": [
+      "2508.10399"
+    ],
+    "urls": [
+      "https://arxiv.org/pdf/2508.10399#page=10",
+      "https://arxiv.org/abs/2508.10399",
+      "https://arxiv.org/pdf/2508.10399v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Zetta ζ: An Efficient Closed-Loop Embodied Harness for Self-Evolving Physical Intelligence",
+    "short": "Zetta ζ",
+    "arxiv_ids": [
+      "2608.16590"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2608.16590v1/agent_framework_v2.png",
+      "https://arxiv.org/abs/2608.16590",
+      "https://arxiv.org/pdf/2608.16590v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Harness VLA: Steering Frozen VLAs into Reliable Manipulation Primitives via Memory-Guided Agents",
+    "short": "Harness VLA",
+    "arxiv_ids": [
+      "2607.08448"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2607.08448v4/figures/scheme.png",
+      "https://arxiv.org/abs/2607.08448",
+      "https://arxiv.org/pdf/2607.08448v4"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Agentic Skill Discovery",
+    "short": "Agentic Skill Discovery  ASD",
+    "arxiv_ids": [
+      "2405.15019"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2405.15019v2/skill.png",
+      "https://arxiv.org/abs/2405.15019",
+      "https://arxiv.org/pdf/2405.15019v2"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Growing with Your Embodied Agent: A Human-in-the-Loop Lifelong Code Generation Framework for Long-Horizon Manipulation Skills",
+    "short": "LYRA",
+    "arxiv_ids": [
+      "2509.18597"
+    ],
+    "urls": [
+      "https://arxiv.org/pdf/2509.18597#page=4",
+      "https://arxiv.org/abs/2509.18597",
+      "https://arxiv.org/pdf/2509.18597v2"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "ViReSkill: Vision-Grounded Replanning with Skill Memory for LLM-Based Planning in Lifelong Robot Learning",
+    "short": "ViReSkill",
+    "arxiv_ids": [
+      "2509.24219"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2509.24219v1/figure/overview1.png",
+      "https://arxiv.org/abs/2509.24219",
+      "https://arxiv.org/pdf/2509.24219v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Uni-Skill: Building Self-Evolving Skill Repository for Generalizable Robotic Manipulation",
+    "short": "Uni-Skill",
+    "arxiv_ids": [
+      "2603.02623"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2603.02623v1/fig1_final.png",
+      "https://arxiv.org/abs/2603.02623",
+      "https://arxiv.org/pdf/2603.02623v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "GaP: A Graph-as-Policy Multi-Agent Self-Learning Harness For Variational Automation Tasks",
+    "short": "Graph-as-Policy  GaP",
+    "arxiv_ids": [
+      "2607.05369"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2607.05369v1/figures/rehearsal-new.png",
+      "https://arxiv.org/abs/2607.05369",
+      "https://arxiv.org/pdf/2607.05369v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "ASPIRE: Agentic /Skills Discovery for Robotics",
+    "short": "ASPIRE",
+    "arxiv_ids": [
+      "2607.00272"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2607.00272v1/system_design.png",
+      "https://arxiv.org/abs/2607.00272",
+      "https://arxiv.org/pdf/2607.00272v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "ENPIRE: Agentic Robot Policy Self-Improvement in the Real World",
+    "short": "ENPIRE",
+    "arxiv_ids": [
+      "2606.19980"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2606.19980v1/figure-v4.png",
+      "https://arxiv.org/abs/2606.19980",
+      "https://arxiv.org/pdf/2606.19980v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "RoboClaw: An Agentic Framework for Scalable Long-Horizon Robotic Tasks",
+    "short": "RoboClaw",
+    "arxiv_ids": [
+      "2603.11558"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2603.11558v3/figure/RoboClaw.png",
+      "https://arxiv.org/abs/2603.11558",
+      "https://arxiv.org/pdf/2603.11558v3"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "PhyAgentOS: A Self-Evolving Operating System for Embodied Agents with Decoupled Cognitive Planning and Physical Execution",
+    "short": "PhyAgentOS",
+    "arxiv_ids": [
+      "2607.16636"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2607.16636v1/paos.png",
+      "https://arxiv.org/abs/2607.16636",
+      "https://arxiv.org/pdf/2607.16636v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "CaP-X: A Framework for Benchmarking and Improving Coding Agents for Robot Manipulation",
+    "short": "CaP-X",
+    "arxiv_ids": [
+      "2603.22435"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2603.22435v2/assets/figures/splash_figure_v3.png",
+      "https://arxiv.org/abs/2603.22435",
+      "https://arxiv.org/pdf/2603.22435v2"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Lifelong Robot Library Learning: Bootstrapping Composable and Generalizable Skills for Embodied Control with Language Models",
+    "short": "Lifelong Robot Library Learning",
+    "arxiv_ids": [
+      "2406.18746"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2406.18746v2/img/fig2.png",
+      "https://arxiv.org/abs/2406.18746",
+      "https://arxiv.org/pdf/2406.18746v2"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "EmbodiSkill: Skill-Aware Reflection for Self-Evolving Embodied Agents",
+    "short": "EmbodiSkill",
+    "arxiv_ids": [
+      "2605.10332"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2605.10332v2/fig2.png",
+      "https://arxiv.org/abs/2605.10332",
+      "https://arxiv.org/pdf/2605.10332v2"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "PRACTICE: From Experience to Expertise in Self-Evolving Embodied Agents",
+    "short": "PRACTICE",
+    "arxiv_ids": [
+      "2608.30760"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2608.30760v1/teaser_v2.png",
+      "https://arxiv.org/abs/2608.30760",
+      "https://arxiv.org/pdf/2608.30760v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "VASO: Formally Verifiable Self-Evolving Skills for Physical AI Agents",
+    "short": "VASO",
+    "arxiv_ids": [
+      "2606.05395"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2606.05395v1/corl/figures/pipeline.png",
+      "https://arxiv.org/abs/2606.05395",
+      "https://arxiv.org/pdf/2606.05395v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Self-Evolving Embodied Agents via Skill-Harness Evolution",
+    "short": "SHAPER",
+    "arxiv_ids": [
+      "2608.11350"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2608.11350v2/figures/main.png",
+      "https://arxiv.org/abs/2608.11350",
+      "https://arxiv.org/pdf/2608.11350v2"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Agentic Self-Evolutionary Replanning for Embodied Navigation",
+    "short": "SERP",
+    "arxiv_ids": [
+      "2603.02772"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2603.02772v1/fig2.png",
+      "https://arxiv.org/abs/2603.02772",
+      "https://arxiv.org/pdf/2603.02772v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Autonomous Integration and Improvement of Robotic Assembly using Skill Graph Representations",
+    "short": "Skill Graph Assembly",
+    "arxiv_ids": [
+      "2603.12649"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2603.12649v1/overview_new.png",
+      "https://arxiv.org/abs/2603.12649",
+      "https://arxiv.org/pdf/2603.12649v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "The Robot's Inner Critic: Self-Refinement of Social Behaviors through VLM-based Replanning",
+    "short": "CRISP",
+    "arxiv_ids": [
+      "2603.20164"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2603.20164v1/overview_new.png",
+      "https://arxiv.org/abs/2603.20164",
+      "https://arxiv.org/pdf/2603.20164v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "RISE: Self-Improving Robot Policy with Compositional World Model",
+    "short": "RISE",
+    "arxiv_ids": [
+      "2602.11075"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2602.11075v2/pipeline_v2.png",
+      "https://arxiv.org/abs/2602.11075",
+      "https://arxiv.org/pdf/2602.11075v2"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Motus2: A Self-Evolving General World Model for Dexterous Manipulation",
+    "short": "Motus2",
+    "arxiv_ids": [
+      "2608.30237"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2608.30237v2/motus2_overview.png",
+      "https://arxiv.org/abs/2608.30237",
+      "https://arxiv.org/pdf/2608.30237v2"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "VLAW: Iterative Co-Improvement of Vision-Language-Action Policy and World Model",
+    "short": "VLAW",
+    "arxiv_ids": [
+      "2602.12063"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2602.12063v2/fig5-2.png",
+      "https://arxiv.org/abs/2602.12063",
+      "https://arxiv.org/pdf/2602.12063v2"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "World-VLA-Loop: Closed-Loop Learning of Video World Model and VLA Policy",
+    "short": "World-VLA-Loop",
+    "arxiv_ids": [
+      "2602.06508"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2602.06508v2/pipeline-v4.png",
+      "https://arxiv.org/abs/2602.06508",
+      "https://arxiv.org/pdf/2602.06508v2"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Robot Self-Improvement via Human-Video Dynamics Models",
+    "short": "Human-Video Dynamics and DGAC",
+    "arxiv_ids": [
+      "2606.21406"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2606.21406v1/pipeline.png",
+      "https://arxiv.org/abs/2606.21406",
+      "https://arxiv.org/pdf/2606.21406v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Self-Improving Embodied Foundation Models",
+    "short": "Self-Improving Embodied Foundation Models",
+    "arxiv_ids": [
+      "2509.15155"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2509.15155v1/final_arxiv_method_figure.png",
+      "https://arxiv.org/abs/2509.15155",
+      "https://arxiv.org/pdf/2509.15155v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Beyond Imitation: Self-Improving Robot Policies via Off-Policy Q-Planning",
+    "short": "Off-Policy Q-Planning",
+    "arxiv_ids": [
+      "2608.21204"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2608.21204v1/img/qplanning_teaser.png",
+      "https://arxiv.org/abs/2608.21204",
+      "https://arxiv.org/pdf/2608.21204v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Self-Improving Loops for Visual Robotic Planning",
+    "short": "SILVR",
+    "arxiv_ids": [
+      "2506.06658"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2506.06658v3/silvr_teaser_figure_resized_new.png",
+      "https://arxiv.org/abs/2506.06658",
+      "https://arxiv.org/pdf/2506.06658v3"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Embodied-R1.5: Evolving Physical Intelligence via Embodied Foundation Models",
+    "short": "Embodied-R1.5",
+    "arxiv_ids": [
+      "2606.11324"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2606.11324v2/model.png",
+      "https://arxiv.org/abs/2606.11324",
+      "https://arxiv.org/pdf/2606.11324v2"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "GR-RL: Going Dexterous and Precise for Long-Horizon Robotic Manipulation",
+    "short": "GR-RL",
+    "arxiv_ids": [
+      "2512.01801"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2512.01801/x2.png",
+      "https://arxiv.org/abs/2512.01801",
+      "https://arxiv.org/pdf/2512.01801v3"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "IG-RFT: An Interaction-Guided RL Framework for VLA Models in Long-Horizon Robotic Manipulation",
+    "short": "IG-RFT",
+    "arxiv_ids": [
+      "2602.20715"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2602.20715v1/fig/overview.png",
+      "https://arxiv.org/abs/2602.20715",
+      "https://arxiv.org/pdf/2602.20715v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "CO-RFT: Efficient Fine-Tuning of Vision-Language-Action Models through Chunked Offline Reinforcement Learning",
+    "short": "CO-RFT",
+    "arxiv_ids": [
+      "2508.02219"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2508.02219v1/overview.png",
+      "https://arxiv.org/abs/2508.02219",
+      "https://arxiv.org/pdf/2508.02219v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Reflection-Based Task Adaptation for Self-Improving VLA",
+    "short": "Reflective Self-Adaptation",
+    "arxiv_ids": [
+      "2510.12710"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2510.12710v3/figs/pipeline.png",
+      "https://arxiv.org/abs/2510.12710",
+      "https://arxiv.org/pdf/2510.12710v3"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Vision-Language-Action Jump-Starting for Reinforcement Learning Robotic Agents",
+    "short": "VLAJS",
+    "arxiv_ids": [
+      "2604.13733"
+    ],
+    "urls": [
+      "https://arxiv.org/pdf/2604.13733#page=1",
+      "https://arxiv.org/abs/2604.13733",
+      "https://arxiv.org/pdf/2604.13733v2"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "WoVR: World Models as Reliable Simulators for Post-Training VLA Policies with RL",
+    "short": "WoVR",
+    "arxiv_ids": [
+      "2602.13977"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2602.13977v2/overview_zhao_re.png",
+      "https://arxiv.org/abs/2602.13977",
+      "https://arxiv.org/pdf/2602.13977v2"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Towards Practical World Model-based Reinforcement Learning for Vision-Language-Action Models",
+    "short": "VLA-MBPO",
+    "arxiv_ids": [
+      "2603.20607"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2603.20607v1/vla_mbpo_overall.png",
+      "https://arxiv.org/abs/2603.20607",
+      "https://arxiv.org/pdf/2603.20607v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "VLA-RFT: Vision-Language-Action Reinforcement Fine-tuning with Verified Rewards in World Simulators",
+    "short": "VLA-RFT",
+    "arxiv_ids": [
+      "2510.00406"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2510.00406v1/Figure1_9_30.png",
+      "https://arxiv.org/abs/2510.00406",
+      "https://arxiv.org/pdf/2510.00406v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "PlayWorld: Learning Robot World Models from Autonomous Play",
+    "short": "PlayWorld",
+    "arxiv_ids": [
+      "2603.09030"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2603.09030v3/images/banner_figure/top.png",
+      "https://arxiv.org/abs/2603.09030",
+      "https://arxiv.org/pdf/2603.09030v3"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Scaling Sim-to-Real Reinforcement Learning for Robot VLAs with Generative 3D Worlds",
+    "short": "Generative 3D Worlds",
+    "arxiv_ids": [
+      "2603.18532"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2603.18532v2/images/embodied_gen_fig.png",
+      "https://arxiv.org/abs/2603.18532",
+      "https://arxiv.org/pdf/2603.18532v2"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "IRL-VLA: Training an Vision-Language-Action Policy via Reward World Model",
+    "short": "IRL-VLA",
+    "arxiv_ids": [
+      "2508.06571"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2508.06571v3/Figs/01_overall_framework.png",
+      "https://arxiv.org/abs/2508.06571",
+      "https://arxiv.org/pdf/2508.06571v3"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Self-adapting Robotic Agents through Online Continual Reinforcement Learning with World Model Feedback",
+    "short": "World Model Feedback Adaptation",
+    "arxiv_ids": [
+      "2603.04029"
+    ],
+    "urls": [
+      "https://arxiv.org/pdf/2603.04029#page=4",
+      "https://arxiv.org/abs/2603.04029",
+      "https://arxiv.org/pdf/2603.04029v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Self-Aware Active Learning Enables Continual Improvement in Autonomous Driving",
+    "short": "SAGE",
+    "arxiv_ids": [
+      "2608.29772"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2608.29772v1/Fig/Framework.png",
+      "https://arxiv.org/abs/2608.29772",
+      "https://arxiv.org/pdf/2608.29772v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Zeva: In-Context Causal Learning for Generalizable Embodied Manipulation",
+    "short": "Zeva",
+    "arxiv_ids": [
+      "2608.30880"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2608.30880v1/zeva_v2.png",
+      "https://arxiv.org/abs/2608.30880",
+      "https://arxiv.org/pdf/2608.30880v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "AGM: Achievement-Grounded Memory for Closed-Loop Agents with Frozen VLA Policies",
+    "short": "AGM",
+    "arxiv_ids": [
+      "2608.29537"
+    ],
+    "urls": [
+      "https://arxiv.org/pdf/2608.29537#page=3",
+      "https://arxiv.org/abs/2608.29537",
+      "https://arxiv.org/pdf/2608.29537v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Eureka: Human-Level Reward Design via Coding Large Language Models",
+    "short": "Eureka",
+    "arxiv_ids": [
+      "2310.12931"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2310.12931v2/figures/eureka.png",
+      "https://arxiv.org/abs/2310.12931",
+      "https://arxiv.org/pdf/2310.12931v2"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "RoboReward: General-Purpose Vision-Language Reward Models for Robotics",
+    "short": "RoboReward",
+    "arxiv_ids": [
+      "2601.00675"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2601.00675v2/roboreward_approach.png",
+      "https://arxiv.org/abs/2601.00675",
+      "https://arxiv.org/pdf/2601.00675v2"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Robo-Dopamine: General Process Reward Modeling for High-Precision Robotic Manipulation",
+    "short": "Robo-Dopamine",
+    "arxiv_ids": [
+      "2512.23703"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2512.23703v1/dp_method.png",
+      "https://arxiv.org/abs/2512.23703",
+      "https://arxiv.org/pdf/2512.23703v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Robo-Dopamine 2.0: History-Conditioned and OOD-Aware Process Reward Modeling for Robotic Manipulation",
+    "short": "Robo-Dopamine 2.0",
+    "arxiv_ids": [
+      "2608.15680"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2608.15680v1/0729main_vector_text_aaai.png",
+      "https://arxiv.org/abs/2608.15680",
+      "https://arxiv.org/pdf/2608.15680v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Large Reward Models: Generalizable Online Robot Reward Generation with Vision-Language Models",
+    "short": "Large Reward Models",
+    "arxiv_ids": [
+      "2603.16065"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2603.16065v2/images/method.jpg",
+      "https://arxiv.org/abs/2603.16065",
+      "https://arxiv.org/pdf/2603.16065v2"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Visual Verification Enables Inference-time Steering and Autonomous Policy Improvement",
+    "short": "VERITAS",
+    "arxiv_ids": [
+      "2606.18247"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2606.18247v1/teaser_veritas.png",
+      "https://arxiv.org/abs/2606.18247",
+      "https://arxiv.org/pdf/2606.18247v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Intrinsic Robot Rewarding: Reusing VLA Representations for Autonomous Evaluation and Policy Improvement",
+    "short": "Intrinsic Robot Rewarding",
+    "arxiv_ids": [
+      "2609.17115"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2609.17115v1/img/demonstrator.png",
+      "https://arxiv.org/abs/2609.17115",
+      "https://arxiv.org/pdf/2609.17115v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Learning While Deploying: Fleet-Scale Reinforcement Learning for Generalist Robot Policies",
+    "short": "Learning While Deploying  LWD",
+    "arxiv_ids": [
+      "2605.00416"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2605.00416v4/method.png",
+      "https://arxiv.org/abs/2605.00416",
+      "https://arxiv.org/pdf/2605.00416v4"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "π*0.6: a VLA That Learns From Experience",
+    "short": "π*0.6 与 RECAP",
+    "arxiv_ids": [
+      "2511.14759"
+    ],
+    "urls": [
+      "https://arxiv.org/pdf/2511.14759v2#page=1",
+      "https://arxiv.org/abs/2511.14759",
+      "https://arxiv.org/pdf/2511.14759v2",
+      "https://www.pi.website/blog/pistar06"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "RoboCat: A Self-Improving Generalist Agent for Robotic Manipulation",
+    "short": "RoboCat",
+    "arxiv_ids": [
+      "2306.11706"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2306.11706v2/robocat_fig_TMLR.png",
+      "https://arxiv.org/abs/2306.11706",
+      "https://arxiv.org/pdf/2306.11706v2"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "So You Think You Can Scale Up Autonomous Robot Data Collection?",
+    "short": "Autonomous Data Collection Study",
+    "arxiv_ids": [
+      "2411.01813"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2411.01813v1/figures/env-progression.png",
+      "https://arxiv.org/abs/2411.01813",
+      "https://arxiv.org/pdf/2411.01813v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "RADAR: Closed-Loop Robotic Data Generation via Semantic Planning and Autonomous Causal Environment Reset",
+    "short": "RADAR",
+    "arxiv_ids": [
+      "2603.11811"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2603.11811v2/whole_logic.png",
+      "https://arxiv.org/abs/2603.11811",
+      "https://arxiv.org/pdf/2603.11811v2"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "RECALL: Recovery Experience Collection for Active Lifelong Learning in Vision-Language-Action Models",
+    "short": "RECALL",
+    "arxiv_ids": [
+      "2606.23617"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2606.23617v1/figures/results/rq3_new_only_forgetting.png",
+      "https://arxiv.org/abs/2606.23617",
+      "https://arxiv.org/pdf/2606.23617v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Reset-Free Reinforcement Learning for Real-World Agile Driving: An Empirical Study",
+    "short": "Reset-Free Agile Driving",
+    "arxiv_ids": [
+      "2604.07672"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2604.07672v1/overview.png",
+      "https://arxiv.org/abs/2604.07672",
+      "https://arxiv.org/pdf/2604.07672v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Simple Recipe Works: Vision-Language-Action Models are Natural Continual Learners with Reinforcement Learning",
+    "short": "Natural Continual Learners",
+    "arxiv_ids": [
+      "2603.11653"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2603.11653v3/pull_draft_v5.png",
+      "https://arxiv.org/abs/2603.11653",
+      "https://arxiv.org/pdf/2603.11653v3"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "CRL-VLA: Continual Vision-Language-Action Learning",
+    "short": "CRL-VLA",
+    "arxiv_ids": [
+      "2602.03445"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2602.03445v1/CRL_VLA.png",
+      "https://arxiv.org/abs/2602.03445",
+      "https://arxiv.org/pdf/2602.03445v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Towards Long-Lived Robots: Continual Learning VLA Models via Reinforcement Fine-Tuning",
+    "short": "LifeLong-RFT",
+    "arxiv_ids": [
+      "2602.10503"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2602.10503v2/Method.png",
+      "https://arxiv.org/abs/2602.10503",
+      "https://arxiv.org/pdf/2602.10503v2"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "On-the-Fly VLA Adaptation via Test-Time Reinforcement Learning",
+    "short": "TT-VLA",
+    "arxiv_ids": [
+      "2601.06748"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2601.06748v3/main3.png",
+      "https://arxiv.org/abs/2601.06748",
+      "https://arxiv.org/pdf/2601.06748v3"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "TTT-Parkour: Rapid Test-Time Training for Perceptive Robot Parkour",
+    "short": "TTT-Parkour",
+    "arxiv_ids": [
+      "2602.02331"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2602.02331v1/framework-main.png",
+      "https://arxiv.org/abs/2602.02331",
+      "https://arxiv.org/pdf/2602.02331v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Self-Improving Robots: End-to-End Autonomous Visuomotor Reinforcement Learning",
+    "short": "MEDAL++",
+    "arxiv_ids": [
+      "2303.01488"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2303.01488v1/images/training_overview.png",
+      "https://arxiv.org/abs/2303.01488",
+      "https://arxiv.org/pdf/2303.01488v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Robot Fine-Tuning Made Easy: Pre-Training Rewards and Policies for Autonomous Real-World Reinforcement Learning",
+    "short": "RoboFuME",
+    "arxiv_ids": [
+      "2310.15145"
+    ],
+    "urls": [
+      "https://arxiv.org/pdf/2310.15145#page=1",
+      "https://arxiv.org/abs/2310.15145",
+      "https://arxiv.org/pdf/2310.15145v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "SELFI: Autonomous Self-Improvement with Reinforcement Learning for Social Navigation",
+    "short": "SELFI",
+    "arxiv_ids": [
+      "2403.00991"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2403.00991v2/fig/overview_method_v6.jpg",
+      "https://arxiv.org/abs/2403.00991",
+      "https://arxiv.org/pdf/2403.00991v2"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "A Motivational Architecture for Open-Ended Learning Challenges in Robots",
+    "short": "H-GRAIL",
+    "arxiv_ids": [
+      "2506.18454"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2506.18454v1/Figures/HGRAIL_sketch.png",
+      "https://arxiv.org/abs/2506.18454",
+      "https://arxiv.org/pdf/2506.18454v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "SimWorld Studio: Automatic Environment Generation with Evolving Coding Agent for Embodied Agent Learning",
+    "short": "SimWorld Studio",
+    "arxiv_ids": [
+      "2605.09423"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2605.09423v2/RunningCase.png",
+      "https://arxiv.org/abs/2605.09423",
+      "https://arxiv.org/pdf/2605.09423v2"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "EnvGen: Generating and Adapting Environments via LLMs for Training Embodied Agents",
+    "short": "EnvGen",
+    "arxiv_ids": [
+      "2403.12014"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2403.12014v2/teaser2.png",
+      "https://arxiv.org/abs/2403.12014",
+      "https://arxiv.org/pdf/2403.12014v2"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Paired Open-Ended Trailblazer (POET): Endlessly Generating Increasingly Complex and Diverse Learning Environments and Their Solutions",
+    "short": "POET",
+    "arxiv_ids": [
+      "1901.01753"
+    ],
+    "urls": [
+      "https://arxiv.org/html/1901.01753v3/figures/new_banner2.png",
+      "https://arxiv.org/abs/1901.01753",
+      "https://arxiv.org/pdf/1901.01753v3"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "OMNI-EPIC: Open-endedness via Models of human Notions of Interestingness with Environments Programmed in Code",
+    "short": "OMNI-EPIC",
+    "arxiv_ids": [
+      "2405.15568"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2405.15568v3/architecture.png",
+      "https://arxiv.org/abs/2405.15568",
+      "https://arxiv.org/pdf/2405.15568v3"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Self-Evolving Scientific Agent Designs Physically Reasoned White-Box Fluid Control",
+    "short": "Scientific Agent for Fluid Control",
+    "arxiv_ids": [
+      "2606.08405"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2606.08405v4/figure_01_scientific_agent_framework.png",
+      "https://arxiv.org/abs/2606.08405",
+      "https://arxiv.org/pdf/2606.08405v4"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Agentic LLM Reasoning in a Self-Driving Laboratory for Air-Sensitive Lithium Halide Spinel Conductors",
+    "short": "A-Lab GPSS",
+    "arxiv_ids": [
+      "2604.11957"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2604.11957v1/fig1.png",
+      "https://arxiv.org/abs/2604.11957",
+      "https://arxiv.org/pdf/2604.11957v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Interpreting Physics in Video World Models",
+    "short": "Interpreting Physics in Video World Models",
+    "arxiv_ids": [
+      "2602.07050"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2602.07050v1/figures/intphys/intphys_encoder_performance.png",
+      "https://arxiv.org/abs/2602.07050",
+      "https://arxiv.org/pdf/2602.07050v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "An autonomous laboratory for the accelerated synthesis of inorganic materials",
+    "short": "A-Lab and 2026 Correction",
+    "arxiv_ids": [],
+    "urls": [
+      "https://www.nature.com/articles/s41586-023-06734-w/figures/1",
+      "https://www.nature.com/articles/s41586-023-06734-w",
+      "https://www.nature.com/articles/s41586-023-06734-w.pdf",
+      "https://www.nature.com/articles/s41586-025-09992-y"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "When Search Becomes Memory: Turning Robot Design Trials into Transferable Skills",
+    "short": "Auto-Robotist",
+    "arxiv_ids": [
+      "2605.25832"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2605.25832v1/autorobotist-pipeline.png",
+      "https://arxiv.org/abs/2605.25832",
+      "https://arxiv.org/pdf/2605.25832v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "RoboMoRe: LLM-based Robot Co-design via Joint Optimization of Morphology and Reward",
+    "short": "RoboMoRe",
+    "arxiv_ids": [
+      "2506.00276"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2506.00276v1/Figure-2.jpg",
+      "https://arxiv.org/abs/2506.00276",
+      "https://arxiv.org/pdf/2506.00276v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Evolving Embodied Intelligence: Graph Neural Network--Driven Co-Design of Morphology and Control in Soft Robotics",
+    "short": "GAT Co-Design",
+    "arxiv_ids": [
+      "2603.19582"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2603.19582v1/Inheritance.png",
+      "https://arxiv.org/abs/2603.19582",
+      "https://arxiv.org/pdf/2603.19582v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "SwarmCoDe: A Scalable Co-Design Framework for Heterogeneous Robot Swarms via Dynamic Speciation",
+    "short": "SwarmCoDe",
+    "arxiv_ids": [
+      "2603.26240"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2603.26240v2/figures/swarm_overview_figure.png",
+      "https://arxiv.org/abs/2603.26240",
+      "https://arxiv.org/pdf/2603.26240v2"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "DrEureka: Language Model Guided Sim-To-Real Transfer",
+    "short": "DrEureka",
+    "arxiv_ids": [
+      "2406.01967"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2406.01967v1/figures/concept/concept.png",
+      "https://arxiv.org/abs/2406.01967",
+      "https://arxiv.org/pdf/2406.01967v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Self-Taught Optimizer (STOP): Recursively Self-Improving Code Generation",
+    "short": "STOP",
+    "arxiv_ids": [
+      "2310.02304"
+    ],
+    "urls": [
+      "https://arxiv.org/pdf/2310.02304#page=3",
+      "https://arxiv.org/abs/2310.02304",
+      "https://arxiv.org/pdf/2310.02304v3"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Gödel Agent: A Self-Referential Agent Framework for Recursive Self-Improvement",
+    "short": "Gödel Agent",
+    "arxiv_ids": [
+      "2410.04444"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2410.04444v4/method_1.png",
+      "https://arxiv.org/abs/2410.04444",
+      "https://arxiv.org/pdf/2410.04444v4"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Darwin Godel Machine: Open-Ended Evolution of Self-Improving Agents",
+    "short": "Darwin Gödel Machine",
+    "arxiv_ids": [
+      "2505.22954"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2505.22954v3/conceptual.png",
+      "https://arxiv.org/abs/2505.22954",
+      "https://arxiv.org/pdf/2505.22954v3"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "The Red Queen Gödel Machine: Co-Evolving Agents and Their Evaluators",
+    "short": "Red Queen Gödel Machine",
+    "arxiv_ids": [
+      "2606.26294"
+    ],
+    "urls": [
+      "https://arxiv.org/pdf/2606.26294#page=4",
+      "https://arxiv.org/abs/2606.26294",
+      "https://arxiv.org/pdf/2606.26294v2"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "HELIX: Model-Harness Co-evolution for Recursive Self-Improvement",
+    "short": "HELIX",
+    "arxiv_ids": [
+      "2608.13951"
+    ],
+    "urls": [
+      "https://arxiv.org/pdf/2608.13951#page=1",
+      "https://arxiv.org/abs/2608.13951",
+      "https://arxiv.org/pdf/2608.13951v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Escher-Loop: Mutual Evolution by Closed-Loop Self-Referential Optimization",
+    "short": "Escher-Loop",
+    "arxiv_ids": [
+      "2604.23472"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2604.23472v2/escher-loop_framework.png",
+      "https://arxiv.org/abs/2604.23472",
+      "https://arxiv.org/pdf/2604.23472v2"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "EVOM: Agentic Meta-Evolution of Actor-Critic Architectures for Reinforcement Learning",
+    "short": "EVOM",
+    "arxiv_ids": [
+      "2606.26327"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2606.26327v1/evom.png",
+      "https://arxiv.org/abs/2606.26327",
+      "https://arxiv.org/pdf/2606.26327v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "SkillSmith: Co-Evolving Skills and Tools for Self-Improving Agent Systems",
+    "short": "SkillSmith",
+    "arxiv_ids": [
+      "2606.01314"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2606.01314v1/fig/main.png",
+      "https://arxiv.org/abs/2606.01314",
+      "https://arxiv.org/pdf/2606.01314v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Evo-Harness: Context-to-Harness Skill Compilation for Self-Evolving Agents",
+    "short": "Evo-Harness",
+    "arxiv_ids": [
+      "2608.15071"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2608.15071v2/setting.png",
+      "https://arxiv.org/abs/2608.15071",
+      "https://arxiv.org/pdf/2608.15071v2"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Voyager: An Open-Ended Embodied Agent with Large Language Models",
+    "short": "Voyager",
+    "arxiv_ids": [
+      "2305.16291"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2305.16291v2/figures/main_experiment_fig.png",
+      "https://arxiv.org/abs/2305.16291",
+      "https://arxiv.org/pdf/2305.16291v2"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Dream-RSI: Recursive Self-Improvement through Evolving Worlds",
+    "short": "Dream-RSI",
+    "arxiv_ids": [
+      "2609.14858"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2609.14858v1/Dream-RSI-latest.png",
+      "https://arxiv.org/abs/2609.14858",
+      "https://arxiv.org/pdf/2609.14858v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "RSIAgent: Autonomous Exploration for Recursive Self-improvement in New Environments",
+    "short": "RSIAgent",
+    "arxiv_ids": [
+      "2609.15364"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2609.15364v1/RSIAgent.png",
+      "https://arxiv.org/abs/2609.15364",
+      "https://arxiv.org/pdf/2609.15364v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "SkillFlow:Benchmarking Lifelong Skill Discovery and Evolution for Autonomous Agents",
+    "short": "SkillFlow",
+    "arxiv_ids": [
+      "2604.17308"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2604.17308v1/skillflow.png",
+      "https://arxiv.org/abs/2604.17308",
+      "https://arxiv.org/pdf/2604.17308v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "You Don't Need To Stay in The Loop: An Agentic Robotics Loop for Robot-Policy Improvement",
+    "short": "AgenticRobotics",
+    "arxiv_ids": [
+      "2608.07555"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2608.07555v1/agenticrobotics_pipeline.png",
+      "https://arxiv.org/abs/2608.07555",
+      "https://arxiv.org/pdf/2608.07555v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Harness Updating Is Not Harness Benefit: Disentangling Evolution Capabilities in Self-Evolving LLM Agents",
+    "short": "Harness Updating Is Not Harness Benefit",
+    "arxiv_ids": [
+      "2605.30621"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2605.30621v1/fig_intro_findings_v2.png",
+      "https://arxiv.org/abs/2605.30621",
+      "https://arxiv.org/pdf/2605.30621v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Library Drift: Diagnosing and Fixing a Silent Failure Mode in Self-Evolving LLM Skill Libraries",
+    "short": "Library Drift",
+    "arxiv_ids": [
+      "2605.19576"
+    ],
+    "urls": [
+      "https://arxiv.org/abs/2605.19576",
+      "https://arxiv.org/pdf/2605.19576v3"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Repeated post-training is not Self-improving: Diagnosing Scientific Amnesia in Continual DPO Pipelines",
+    "short": "Scientific Amnesia in Continual DPO",
+    "arxiv_ids": [
+      "2606.21089"
+    ],
+    "urls": [
+      "https://arxiv.org/abs/2606.21089",
+      "https://arxiv.org/pdf/2606.21089v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Self-Improvement Can Self-Regress: The Rise-and-Collapse Failure Mode of LLM Self-Training",
+    "short": "Self-Improvement Can Self-Regress",
+    "arxiv_ids": [
+      "2606.21090"
+    ],
+    "urls": [
+      "https://arxiv.org/abs/2606.21090",
+      "https://arxiv.org/pdf/2606.21090v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "SEA-Eval: A Benchmark for Evaluating Self-Evolving Agents Beyond Episodic Assessment",
+    "short": "SEA-Eval",
+    "arxiv_ids": [
+      "2604.08988"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2604.08988v3/sea_eval_design.png",
+      "https://arxiv.org/abs/2604.08988",
+      "https://arxiv.org/pdf/2604.08988v3"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "SEAGym: An Evaluation Environment for Self-Evolving LLM Agents",
+    "short": "SEAGym",
+    "arxiv_ids": [
+      "2606.17546"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2606.17546v1/assets/seagym.png",
+      "https://arxiv.org/abs/2606.17546",
+      "https://arxiv.org/pdf/2606.17546v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "ASI-Bench: At the Dawn of Artificial Superintelligence",
+    "short": "ASI-Bench",
+    "arxiv_ids": [
+      "2608.17271"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2608.17271v1/overview_results.png",
+      "https://arxiv.org/abs/2608.17271",
+      "https://arxiv.org/pdf/2608.17271v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "ESI-Bench: Towards Embodied Spatial Intelligence that Closes the Perception-Action Loop",
+    "short": "ESI-Bench",
+    "arxiv_ids": [
+      "2605.18746"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2605.18746v2/esi_teaser_v13.png",
+      "https://arxiv.org/abs/2605.18746",
+      "https://arxiv.org/pdf/2605.18746v2"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "EmbodiedGovBench: A Benchmark for Governance, Recovery, and Upgrade Safety in Embodied Agent Systems",
+    "short": "EmbodiedGovBench",
+    "arxiv_ids": [
+      "2604.11174"
+    ],
+    "urls": [
+      "https://arxiv.org/pdf/2604.11174#page=9",
+      "https://arxiv.org/abs/2604.11174",
+      "https://arxiv.org/pdf/2604.11174v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Introducing AutoEngineering for Robotics",
+    "short": "General Robotics AutoEngineering",
+    "arxiv_ids": [],
+    "urls": [
+      "https://www.generalrobotics.company/post/introducing-auto-engineering-for-robotics"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "RoboRSI Robot-agent harness and research preview",
+    "short": "RoboRSI",
+    "arxiv_ids": [],
+    "urls": [
+      "https://github.com/nssmd/RoboRSI",
+      "https://github.com/nssmd/RoboRSI/blob/main/docs/EVALUATION.md",
+      "https://github.com/nssmd/RoboRSI/commit/ae2bc840f02ff85ca18eac9766bfeeb0f0a381cf",
+      "https://robo-rsi.com/blog/2-roborsi/"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "PhysEvo Astra can act let it",
+    "short": "PhysEvo",
+    "arxiv_ids": [],
+    "urls": [
+      "https://anonymous-report-777.github.io/",
+      "https://robodojo-benchmark.com/report/gpt-6-astra-eval"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Building Physical RSI Beyond the Known World",
+    "short": "MirroS",
+    "arxiv_ids": [],
+    "urls": [
+      "https://mirros.ai/blog/building-physical-rsi-beyond-the-known-world"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "AI agents running research on single-GPU nanochat training automatically",
+    "short": "autoresearch",
+    "arxiv_ids": [],
+    "urls": [
+      "https://github.com/karpathy/autoresearch",
+      "https://github.com/karpathy/autoresearch/blob/master/program.md",
+      "https://github.com/karpathy/autoresearch/commit/228791fb499afffb54b46200aca536f79142f117"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Self-Evolving Foundation Models and ApexResearch reports",
+    "short": "Apex Intelligence",
+    "arxiv_ids": [
+      "2608.17271"
+    ],
+    "urls": [
+      "https://www.apexin.ai/",
+      "https://www.apexin.ai/assets/papers/apex-research-2026.pdf",
+      "https://www.apexin.ai/assets/papers/what-happens-when-ai-starts-improving-ai.pdf",
+      "https://arxiv.org/abs/2608.17271"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "When AI builds itself and Automated Weak-to-Strong Researcher",
+    "short": "Anthropic RSI essay and AAR",
+    "arxiv_ids": [],
+    "urls": [
+      "https://www.anthropic.com/institute/recursive-self-improvement",
+      "https://alignment.anthropic.com/2026/automated-w2s-researcher/",
+      "https://github.com/safety-research/automated-w2s-research"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Building Worlds That Train Robots",
+    "short": "World Labs R2S2R",
+    "arxiv_ids": [],
+    "urls": [
+      "https://www.worldlabs.ai/blog/real-to-sim-to-real"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Maestro: Orchestrating Robotics Modules with Vision-Language Models for Zero-Shot Generalist Robots",
+    "short": "Maestro",
+    "arxiv_ids": [
+      "2511.00917"
+    ],
+    "urls": [
+      "https://maestro-robot.github.io/",
+      "https://arxiv.org/abs/2511.00917",
+      "https://maestro-robot.github.io/static/Maestro.pdf"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "RICL: Adding In-Context Adaptability to Pre-Trained Vision-Language-Action Models",
+    "short": "RICL",
+    "arxiv_ids": [
+      "2508.02062"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2508.02062v1/regentic-pi0-arch.png",
+      "https://arxiv.org/abs/2508.02062",
+      "https://arxiv.org/pdf/2508.02062v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "In-Context World Modeling for Robotic Control",
+    "short": "ICWM",
+    "arxiv_ids": [
+      "2606.26025"
+    ],
+    "urls": [
+      "https://arxiv.org/pdf/2606.26025v3",
+      "https://arxiv.org/abs/2606.26025"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Q-VGM: Q-Guided Value-Gradient Matching for Offline-to-Online RL of Flow-Matching VLA Policies",
+    "short": "Q-VGM",
+    "arxiv_ids": [
+      "2606.08015"
+    ],
+    "urls": [
+      "https://arxiv.org/pdf/2606.08015v5",
+      "https://arxiv.org/abs/2606.08015"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "RedFlow: Redirect Failure into Action-Level Corrections for Flow-matching VLA Policy",
+    "short": "RedFlow",
+    "arxiv_ids": [
+      "2607.27782"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2607.27782v1/method.png",
+      "https://arxiv.org/abs/2607.27782",
+      "https://arxiv.org/pdf/2607.27782v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Harness Engineering for Physical AI: Robot Middleware Is the Harness Layer",
+    "short": "Harness Engineering",
+    "arxiv_ids": [
+      "2606.09416"
+    ],
+    "urls": [
+      "https://arxiv.org/html/2606.09416v1/figure1.png",
+      "https://arxiv.org/abs/2606.09416",
+      "https://arxiv.org/pdf/2606.09416v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "SAC Flow",
+    "short": "SAC Flow",
+    "arxiv_ids": [
+      "2509.25756"
+    ],
+    "urls": [
+      "https://arxiv.org/abs/2509.25756v3"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "DSWAM",
+    "short": "DSWAM",
+    "arxiv_ids": [
+      "2607.04927"
+    ],
+    "urls": [
+      "https://arxiv.org/abs/2607.04927v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "HarmoWAM",
+    "short": "HarmoWAM",
+    "arxiv_ids": [
+      "2605.10942"
+    ],
+    "urls": [
+      "https://arxiv.org/abs/2605.10942v1"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Introducing S1: In-Context Learning for Robotics；Skild 的 RSI 路线说明",
+    "short": "Skild S1 与部署闭环",
+    "arxiv_ids": [],
+    "urls": [
+      "https://www.skild.ai/blogs/s1",
+      "https://www.skild.ai/blogs/skild-crosses-100m-arr"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "GPT-6 Astra on robotic manipulation",
+    "short": "Robocurve 机器人操作测评",
+    "arxiv_ids": [],
+    "urls": [
+      "https://openai.robocurve.org/gpt-6-astra/"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Robot-Use Agents",
+    "short": "Isola 的 robot use 观点",
+    "arxiv_ids": [],
+    "urls": [
+      "https://web.mit.edu/phillipi/www/writing/robot-use-agents.html",
+      "https://say-can.github.io/",
+      "https://code-as-policies.github.io/"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  },
+  {
+    "title": "Previewing the Model Hardware Standard",
+    "short": "Model Hardware Standard",
+    "arxiv_ids": [],
+    "urls": [
+      "https://www.anthropic.com/news/model-hardware-standard-research-preview"
+    ],
+    "status": "existing_report_not_new",
+    "read_status": "沿用既有报告条目；本轮没有重新审核全部内容"
+  }
+]

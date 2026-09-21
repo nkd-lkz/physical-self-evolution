@@ -1,0 +1,304 @@
+[
+  {
+    "cited_by": "https://arxiv.org/html/2609.09250v1",
+    "reference": "S. Cabi, S. G. Colmenarejo, A. Novikov, K. Konyushova, S. Reed, R. Jeong, et al. (2020) Scaling data-driven robotics with reward sketching and batch reinforcement learning . In Proceedings of Robotics: Science and Systems (RSS) , Cited by: Figure 1 , 1st item , Table 1 , §2.2 .",
+    "urls": [],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.09250v1",
+    "reference": "S. Chen, C. Harrison, Y. Lee, A. J. Yang, Z. Ren, L. J. Ratliff, J. Duan, D. Fox, et al. (2026) TOPReward: Token Probabilities as Hidden Zero-Shot Rewards for Robotics . arXiv preprint arXiv:2602.19313 . Cited by: Figure 1 , 3rd item , Table 1 , §1 , §1 , §4.1 , Table 3 , §6.1 , Table 6 .",
+    "urls": [
+      "https://arxiv.org/abs/2602.19313"
+    ],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.09250v1",
+    "reference": "M. Dai, L. Liu, Y. Bai, Y. Liu, Z. Wang, R. SU, C. Chen, L. Lin, et al. (2025) RoVer: Robot Reward Model as Test-Time Verifier for Vision-Language-Action Model . arXiv preprint arXiv:2510.10975 . Cited by: §4.2 , Table 3 .",
+    "urls": [
+      "https://arxiv.org/abs/2510.10975"
+    ],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.09250v1",
+    "reference": "Y. Du, K. Konyushkova, M. Denil, A. Raju, J. Landon, F. Hill, N. de Freitas, S. Cabi, et al. (2023) Vision-Language Models as Success Detectors . In Proceedings of The 2nd Conference on Lifelong Learning Agents , Cited by: 3rd item , Table 1 , §4.1 .",
+    "urls": [],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.09250v1",
+    "reference": "Z. Duan, G. Rong, Z. Li, B. Chen, M. Zhou, and D. Guo (2026) Mitigating Reward Hacking in RLHF via Bayesian Non-negative Reward Modeling . In Proceedings of the International Conference on Machine Learning (ICML) , Cited by: §6.3 .",
+    "urls": [],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.09250v1",
+    "reference": "A. Escontrela, A. Adeniji, W. Yan, A. Jain, X. B. Peng, K. Goldberg, et al. (2023) Video Prediction Models as Rewards for Reinforcement Learning . In Advances in Neural Information Processing Systems (NeurIPS) , Cited by: Figure 1 , Table 1 , §5.2 .",
+    "urls": [],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.09250v1",
+    "reference": "Y. Feng, H. Shi, H. Li, X. Guo, Y. Wang, C. Zhang, J. Zhang, X. Zhang, et al. (2026) ProcVLM: Learning Procedure-Grounded Progress Rewards for Robotic Manipulation . arXiv preprint arXiv:2605.08774 . Cited by: §4.1 .",
+    "urls": [
+      "https://arxiv.org/abs/2605.08774"
+    ],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.09250v1",
+    "reference": "L. Gao, J. Schulman, and J. Hilton (2023) Scaling Laws for Reward Model Overoptimization . In Proceedings of the International Conference on Machine Learning (ICML) , Cited by: §6.3 .",
+    "urls": [],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.09250v1",
+    "reference": "L. Helff, Q. Delfosse, D. Steinmann, R. Härle, H. Shindo, P. Schramowski, et al. (2026) LLMs Gaming Verifiers: RLVR can Lead to Reward Hacking . arXiv preprint arXiv:2604.15149 . Cited by: §3.2 .",
+    "urls": [
+      "https://arxiv.org/abs/2604.15149"
+    ],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.09250v1",
+    "reference": "T. Huang, G. Jiang, Y. Ze, and H. Xu (2024) Diffusion Reward: Learning Rewards via Conditional Video Diffusion . In Proceedings of the European Conference on Computer Vision (ECCV) , Cited by: Figure 1 , §5.2 .",
+    "urls": [],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.09250v1",
+    "reference": "S. Jang, D. Kim, C. Kim, Y. Kim, and J. Shin (2026) Verifier-free Test-Time Sampling for Vision-Language-Action Models . In International Conference on Learning Representations (ICLR) , Cited by: Figure 1 , 4th item , Table 1 , §1 , §1 , §5.1 .",
+    "urls": [],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.09250v1",
+    "reference": "J. Kwok, C. Agia, R. Sinha, M. Foutter, S. Li, I. Stoica, A. Mirhoseini, M. Pavone, et al. (2025) RoboMonkey: Scaling Test-Time Sampling and Verification for Vision-Language-Action Models . In Proceedings of the Conference on Robot Learning (CoRL) , Cited by: Table 1 , §1 , §4.2 , Table 3 .",
+    "urls": [],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.09250v1",
+    "reference": "P. Li, Z. Lin, Q. Wu, Y. Lv, F. Wang, S. You, et al. (2026) Reward as An Agent for Embodied World Models . arXiv preprint arXiv:2606.19990 . Cited by: §6.3 .",
+    "urls": [
+      "https://arxiv.org/abs/2606.19990"
+    ],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.09250v1",
+    "reference": "A. Liang, Y. Korkmaz, J. Zhang, M. Hwang, A. Anwar, S. Kaushik, A. Shah, A. S. Huang, et al. (2026) Robometer: Scaling General-Purpose Robotic Reward Models via Trajectory Comparisons . In Proceedings of Robotics: Science and Systems (RSS) , Cited by: Figure 1 , Table 1 , §1 , §1 , §4.1 , Table 3 , §6.1 , Table 6 .",
+    "urls": [],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.09250v1",
+    "reference": "L. Lindemann, X. Qin, J. V. Deshmukh, and G. J. Pappas (2023) Conformal Prediction for STL Runtime Verification . In Proceedings of the ACM/IEEE 14th International Conference on Cyber-Physical Systems (ICCPS) , Cited by: Figure 1 , Table 1 , §3.1.1 , §3.1.1 , §3.1.1 , Table 2 .",
+    "urls": [],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.09250v1",
+    "reference": "B. Liu, Y. Zhu, C. Gao, Y. Feng, Q. Liu, Y. Zhu, and P. Stone (2023) LIBERO: Benchmarking Knowledge Transfer for Lifelong Robot Learning . In Advances in Neural Information Processing Systems (NeurIPS), Datasets and Benchmarks Track , Cited by: Figure 1 , §3.2 , Table 2 .",
+    "urls": [],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.09250v1",
+    "reference": "Y. J. Ma, V. Kumar, A. Zhang, O. Bastani, and D. Jayaraman (2023) LIV: Language-Image Representations and Rewards for Robotic Control . In Proceedings of the International Conference on Machine Learning (ICML) , Cited by: Figure 1 , §1 , §4.1 .",
+    "urls": [],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.09250v1",
+    "reference": "Y. J. Ma, S. Sodhani, D. Jayaraman, O. Bastani, V. Kumar, and A. Zhang (2023) VIP: Towards Universal Visual Reward and Representation via Value-Implicit Pre-Training . In International Conference on Learning Representations (ICLR) , Cited by: Figure 1 , Table 1 , §1 , §4.1 , Table 3 .",
+    "urls": [],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.09250v1",
+    "reference": "A. Mahmoud, M. Rezaei, Z. Wang, A. Gunjal, B. Liu, Y. He, et al. (2026) Reward Hacking in Rubric-Based Reinforcement Learning . arXiv preprint arXiv:2605.12474 . Cited by: §6.3 , Table 7 .",
+    "urls": [
+      "https://arxiv.org/abs/2605.12474"
+    ],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.09250v1",
+    "reference": "Y. Miao, S. Zhang, L. Ding, R. Bao, L. Zhang, and D. Tao (2024) InfoRM: Mitigating Reward Hacking in RLHF via Information-Theoretic Reward Modeling . In Advances in Neural Information Processing Systems (NeurIPS) , Cited by: §6.3 .",
+    "urls": [],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.09250v1",
+    "reference": "P. Pan, Y. Liang, and S. Lin (2026) Reward Modeling for Reinforcement Learning-Based LLM Reasoning: Design, Challenges, and Evaluation . Transactions on Machine Learning Research . Cited by: §6.3 .",
+    "urls": [],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.09250v1",
+    "reference": "J. Ray (2026) Before the model learns the bug: fuzzing RLVR verifiers . External Links: 2606.01066 Cited by: Table 7 .",
+    "urls": [
+      "https://arxiv.org/abs/2606.01066"
+    ],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.09250v1",
+    "reference": "J. Rocamonde, V. Montesinos, E. Nava, E. Perez, and D. Lindner (2024) Vision-language models are zero-shot reward models for reinforcement learning . In International Conference on Learning Representations (ICLR) , Cited by: Figure 1 , §4.1 .",
+    "urls": [],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.09250v1",
+    "reference": "J. Skalse, N. H. R. Howe, D. Krasheninnikov, and D. Krueger (2022) Defining and Characterizing Reward Gaming . In Advances in Neural Information Processing Systems (NeurIPS) , Cited by: §3.2 .",
+    "urls": [],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.09250v1",
+    "reference": "D. C. H. Tan, F. Acero, R. McCarthy, D. Kanoulas, and Z. Li (2023) Value Functions are Control Barrier Functions: Verification of Safe Policies using Control Theory . arXiv preprint arXiv:2306.04026 . Cited by: §3.3 .",
+    "urls": [
+      "https://arxiv.org/abs/2306.04026"
+    ],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.09250v1",
+    "reference": "R. Wang, Q. Liu, Y. Deng, G. Liu, Z. Liu, and K. Jia (2026) EVA: aligning video world models with executable robot actions via inverse dynamics rewards . External Links: 2603.17808 Cited by: §4.3 .",
+    "urls": [
+      "https://arxiv.org/abs/2603.17808"
+    ],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.09250v1",
+    "reference": "T. Xie, S. Zhao, C. H. Wu, Y. Liu, Q. Luo, V. Zhong, Y. Yang, T. Yu, et al. (2024) Text2Reward: Reward Shaping with Language Models for Reinforcement Learning . In International Conference on Learning Representations (ICLR) , Cited by: §3.1.3 .",
+    "urls": [],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.09250v1",
+    "reference": "W. Yu, N. Gileadi, C. Fu, S. Kirmani, K. Lee, M. G. Arenas, H. L. Chiang, T. Erez, et al. (2023) Language to Rewards for Robotic Skill Synthesis . In Proceedings of the Conference on Robot Learning (CoRL) , Cited by: §3.1.3 .",
+    "urls": [],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.09250v1",
+    "reference": "B. Yue, S. Guo, K. Hu, C. Wang, B. Wang, K. Jia, and G. Liu (2025) Real-Time Verification of Embodied Reasoning for Generative Skill Acquisition . arXiv preprint arXiv:2505.11175 . Cited by: Table 1 , §4.3 .",
+    "urls": [
+      "https://arxiv.org/abs/2505.11175"
+    ],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.09250v1",
+    "reference": "R. Zeng, D. Zhou, Q. Liang, J. Liu, H. Li, C. Huang, J. Li, X. Hu, et al. (2024) Video2Reward: Generating Reward Function from Videos for Legged Robot Behavior Learning . In Proceedings of the 27th European Conference on Artificial Intelligence (ECAI 2024) , Cited by: Table 1 , §3.1.3 .",
+    "urls": [],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.09250v1",
+    "reference": "Y. Zhang, M. Huo, M. Zhu, M. Zhang, and N. Jiang (2026) Beyond Semantic Manipulation: Token-Space Attacks on Reward Models . arXiv preprint arXiv:2604.02686 . Cited by: §6.3 .",
+    "urls": [
+      "https://arxiv.org/abs/2604.02686"
+    ],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.09250v1",
+    "reference": "S. Zhao, S. Zhang, S. Yang, W. Zhao, S. Wang, and X. Ji (2026) TapSampling: Inference-Time Sampling with a Task-Progress-Understanding Verifier for Robotic Manipulation . In Proceedings of the International Conference on Machine Learning (ICML) , Cited by: §4.2 .",
+    "urls": [],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.09250v1",
+    "reference": "Y. Zhao, B. Hoxha, G. Fainekos, J. V. Deshmukh, and L. Lindemann (2024) Robust Conformal Prediction for STL Runtime Verification under Distribution Shift . In 2024 ACM/IEEE 15th International Conference on Cyber-Physical Systems (ICCPS) , Cited by: §3.1.1 .",
+    "urls": [],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.09250v1",
+    "reference": "Y. Zhao, E. Zhu, B. Hoxha, G. Fainekos, J. V. Deshmukh, L. Lindemann, et al. (2025) Distributionally Robust Predictive Runtime Verification under Spatio-Temporal Logic Specifications . ACM Transactions on Cyber-Physical Systems . Cited by: §3.1.1 , §3.1.1 .",
+    "urls": [],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.16697v1",
+    "reference": "A. Escontrela, A. Adeniji, W. Yan, A. Jain, X. B. Peng, K. Goldberg, Y. Lee, D. Hafner, and P. Abbeel (2023) Video prediction models as rewards for reinforcement learning . In Advances in Neural Information Processing Systems , A. Oh, T. Naumann, A. Globerson, K. Saenko, M. Hardt, and S. Levine (Eds.) , Vol. 36 , pp. 68760–68783 . External Links: Document , Link Cited by: §6.1 .",
+    "urls": [
+      "https://dx.doi.org/10.52202/075280-3009",
+      "https://proceedings.neurips.cc/paper_files/paper/2023/file/d9042abf40782fbce28901c1c9c0e8d8-Paper-Conference.pdf"
+    ],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.16697v1",
+    "reference": "T. Feng, X. Wang, Z. Zhou, R. Wang, Y. Zhan, G. Li, Q. Li, and W. Zhu (2025) EvolvingAgent: curriculum self-evolving agent with continual world model for long-horizon tasks . arXiv preprint arXiv:2502.05907 . Cited by: §6.1 .",
+    "urls": [
+      "https://arxiv.org/abs/2502.05907"
+    ],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.16697v1",
+    "reference": "B. Liu, Y. Zhu, C. Gao, Y. Feng, Q. Liu, Y. Zhu, and P. Stone (2023) LIBERO: benchmarking knowledge transfer for lifelong robot learning . In Advances in Neural Information Processing Systems , A. Oh, T. Naumann, A. Globerson, K. Saenko, M. Hardt, and S. Levine (Eds.) , Vol. 36 , pp. 44776–44791 . External Links: Document , Link Cited by: §9.1 , Table 4 , Table 4 .",
+    "urls": [
+      "https://dx.doi.org/10.52202/075280-1939",
+      "https://proceedings.neurips.cc/paper_files/paper/2023/file/8c3c666820ea055a77726d66fc7d447f-Paper-Datasets_and_Benchmarks.pdf"
+    ],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.16697v1",
+    "reference": "Y. Liu, F. Feng, L. Kong, W. Lu, J. Tang, K. Zhang, K. Murphy, C. Finn, and Y. Du (2026) World action verifier: self-improving world models via forward-inverse asymmetry . arXiv preprint arXiv:2604.01985 . Cited by: §10.5 , §7.4 , Table 3 .",
+    "urls": [
+      "https://arxiv.org/abs/2604.01985"
+    ],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.16697v1",
+    "reference": "Y. Liu, P. Sun, X. Chao, Z. Yang, Y. Xie, L. Zhang, S. Li, C. Tang, F. Chen, X. Zhang, et al. (2026) CheckVLA: execution-time verification with action-conditioned world model for long-horizon mobile manipulation . arXiv preprint arXiv:2607.26789 . Cited by: §1 , §1 , §6.4 .",
+    "urls": [
+      "https://arxiv.org/abs/2607.26789"
+    ],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.16697v1",
+    "reference": "T. Wu, S. Yang, R. Po, Y. Xu, Z. Liu, D. Lin, and G. Wetzstein (2025) Video world models with long-term spatial memory . In Advances in Neural Information Processing Systems , D. Belgrave, C. Zhang, H. Lin, R. Pascanu, P. Koniusz, M. Ghassemi, and N. Chen (Eds.) , Vol. 38, Main Conference , pp. 49371–49393 . External Links: Document , Link Cited by: §10.1 , §4.4 .",
+    "urls": [
+      "https://dx.doi.org/10.52202/085713-1651",
+      "https://proceedings.neurips.cc/paper_files/paper/2025/file/467655d26fcc207bca08915dc91964c6-Paper-Conference.pdf"
+    ],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.16697v1",
+    "reference": "Z. Zheng, J. Yu, X. Peng, M. Li, C. Zhang, W. Li, D. Wang, H. Lu, X. Jia, et al. (2026) Mem-world: memory-augmented action-conditioned world models for persistent robot manipulation . arXiv preprint arXiv:2606.18960 . Cited by: §5.4 .",
+    "urls": [
+      "https://arxiv.org/abs/2606.18960"
+    ],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.19906v1",
+    "reference": "T. Kagaya, S. Lakshmi, Y. Lou, T. J. Yuan, J. Karlekar, S. Pranata, N. Murakami, A. Kinose, and Y. You (2025) Memory transfer planning: LLM-driven context-aware code adaptation for robot manipulation . arXiv preprint arXiv:2509.24160 . External Links: Link Cited by: §I , §II-C .",
+    "urls": [
+      "https://arxiv.org/abs/2509.24160"
+    ],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.19906v1",
+    "reference": "I. Berlot-Attwell, T. Sesterhenn, F. Rudzicz, and X. Si (2026) Is this LLM library learning? evaluation must account for compute and behaviour . In Proceedings of the 19th Conference of the European Chapter of the Association for Computational Linguistics (Volume 1: Long Papers) , pp. 3534–3568 . External Links: Document , Link Cited by: §IV-D .",
+    "urls": [
+      "https://dx.doi.org/10.18653/v1/2026.eacl-long.163",
+      "https://aclanthology.org/2026.eacl-long.163/"
+    ],
+    "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  }
+]

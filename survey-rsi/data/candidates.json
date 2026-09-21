@@ -1,0 +1,236 @@
+[
+  {
+    "title": "LIBERO-RECOVER: Beyond Task Success Towards Failure Recovery in Robotic Manipulation Models",
+    "arxiv_id": "2609.05178",
+    "url": "https://arxiv.org/abs/2609.05178",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "失败恢复基准；核查四级恢复定义、真实失败如何注入仿真，以及重试预算。",
+    "discovered": "2026-09-21"
+  },
+  {
+    "title": "VLA-Corrector: Stage-Aware Observable State Understanding for Prompt-Based Closed-Loop Recovery of Vision-Language-Action Policies",
+    "arxiv_id": "2609.06508",
+    "url": "https://arxiv.org/abs/2609.06508",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "冻结VLA加可观测验证器；查多轮累计指标与跨episode保留，防止把提示恢复当持续学习。",
+    "discovered": "2026-09-21"
+  },
+  {
+    "title": "MEMOBench: A Process Level Memory Benchmark for Robotic Manipulation",
+    "arxiv_id": "2609.07047",
+    "url": "https://arxiv.org/abs/2609.07047",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "记忆存储/更新/压缩的过程指标；查检查点与最终成功的对应关系。",
+    "discovered": "2026-09-21"
+  },
+  {
+    "title": "EvoNav-Bench: Benchmarking Lifelong Navigation in Evolving Environments",
+    "arxiv_id": "2609.08292",
+    "url": "https://arxiv.org/abs/2609.08292",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "环境变化使旧记忆过期；查跨任务留存和失效更新机制。",
+    "discovered": "2026-09-21"
+  },
+  {
+    "title": "Towards Embodied Air-Ground Cooperative Object Search: Benchmark, Dataset and Agentic Method",
+    "arxiv_id": "2609.08402",
+    "url": "https://arxiv.org/abs/2609.08402",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "暂不纳入主线",
+    "next_check": "空地合作搜索为主，摘要未显示持久改进；仅在群体智能分区扩展时考虑。",
+    "discovered": "2026-09-21"
+  },
+  {
+    "title": "GTA-2: A Multi-VLM Framework for Synthesizing Robot Manipulation Skills via Grounded Task Axes",
+    "arxiv_id": "2609.09808",
+    "url": "https://arxiv.org/abs/2609.09808",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "次优先",
+    "next_check": "多VLM生成技能并接受定点人工反馈；查修改是否保留、改进由谁触发。",
+    "discovered": "2026-09-21"
+  },
+  {
+    "title": "ReactHuman: A Physics-Grounded Benchmark for Human-Like Reactive Decision-Making in Embodied Multimodal LLMs",
+    "arxiv_id": "2609.10895",
+    "url": "https://arxiv.org/abs/2609.10895",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "次优先",
+    "next_check": "物理危险反应评价，可用于验证覆盖；不是自我进化机制。",
+    "discovered": "2026-09-21"
+  },
+  {
+    "title": "Harness Robotic OS: A Unified Embodied-Agent Runtime for Closed-Loop Quadruped Inspection",
+    "arxiv_id": "2609.11225",
+    "url": "https://arxiv.org/abs/2609.11225",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "声称安全门控和版本化自进化；需把已部署巡检结果与尚未实证的演化环节分开。",
+    "discovered": "2026-09-21"
+  },
+  {
+    "title": "2AM: Grounding Agent-Side Memory as Guidance for Steerable Action Models in Long-Horizon Manipulation",
+    "arxiv_id": "2609.11308",
+    "url": "https://arxiv.org/abs/2609.11308",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "agent侧记忆与单一动作模型分离；查完成率、宽松成功、严格成功三个口径。",
+    "discovered": "2026-09-21"
+  },
+  {
+    "title": "Memory as Plans: World-Action Modeling with Memory-Grounded Planning",
+    "arxiv_id": "2609.11561",
+    "url": "https://arxiv.org/abs/2609.11561",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "记忆编译为计划；查记忆是否跨任务、是否仅是长序列推理接口。",
+    "discovered": "2026-09-21"
+  },
+  {
+    "title": "ORCH: Organizational Principles Enable Collective Intelligence in Embodied AI",
+    "arxiv_id": "2609.11737",
+    "url": "https://arxiv.org/abs/2609.11737",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "次优先",
+    "next_check": "组织结构改变群体表现；查是否根据反馈迭代组织，而非一次生成。",
+    "discovered": "2026-09-21"
+  },
+  {
+    "title": "AnchorVLN: Geometry-Anchored Vision-Language Grounding Reasoning for Open-Vocabulary Navigation",
+    "arxiv_id": "2609.12285",
+    "url": "https://arxiv.org/abs/2609.12285",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "暂不纳入主线",
+    "next_check": "语义与几何接口为主，摘要未显示经验累积带来的长期收益。",
+    "discovered": "2026-09-21"
+  },
+  {
+    "title": "Agent as Policy for Robotic Manipulation",
+    "arxiv_id": "2609.12541",
+    "url": "https://arxiv.org/abs/2609.12541",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "次优先",
+    "next_check": "robot-use策略接口线索；待全文核查更新对象和经验保留。",
+    "discovered": "2026-09-21"
+  },
+  {
+    "title": "Bridging Thought and Action: Taming Long-Horizon Instability in Open-Source LLM Agents with a MetaTool-Enhanced ROS Framework",
+    "arxiv_id": "2609.13335",
+    "url": "https://arxiv.org/abs/2609.13335",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "暂不纳入主线",
+    "next_check": "任务内计划草稿与工具执行稳定性，未证明跨任务学习。",
+    "discovered": "2026-09-21"
+  },
+  {
+    "title": "HarnessVLN: Unifying Training-Free Embodied Navigation through an Agent Harness",
+    "arxiv_id": "2609.15195",
+    "url": "https://arxiv.org/abs/2609.15195",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "次优先",
+    "next_check": "导航harness和图记忆；需查持续状态与能力改进的边界。",
+    "discovered": "2026-09-21"
+  },
+  {
+    "title": "ManiSkillFormer: Demonstration-Free Compositional Manipulation via Task-Conditioned Geometric Contracts",
+    "arxiv_id": "2609.16331",
+    "url": "https://arxiv.org/abs/2609.16331",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "次优先",
+    "next_check": "几何契约与技能复用；查技能库固定还是自动修订。",
+    "discovered": "2026-09-21"
+  },
+  {
+    "title": "Auto-HSI: Personalized human control of a robot swarm on demand by using LLMs for online automatic code generation",
+    "arxiv_id": "2609.16346",
+    "url": "https://arxiv.org/abs/2609.16346",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "暂不纳入主线",
+    "next_check": "人工定制群体控制接口；自主改进关联较弱。",
+    "discovered": "2026-09-21"
+  },
+  {
+    "title": "FluxVLA Engine: A One-Stop VLA Engineering Platform for Embodied Intelligence",
+    "arxiv_id": "2609.17210",
+    "url": "https://arxiv.org/abs/2609.17210",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "次优先",
+    "next_check": "训练—部署—人工纠正平台；查开源实现与闭环数据接口，可列工程支持。",
+    "discovered": "2026-09-21"
+  },
+  {
+    "title": "WetRobo: A Reproducible Robot Kit for Coding Agents in Biological Laboratories",
+    "arxiv_id": "2609.18435",
+    "url": "https://arxiv.org/abs/2609.18435",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "跨实验室编码代理适应；查成功展示的试验次数和程序迭代过程。",
+    "discovered": "2026-09-21"
+  },
+  {
+    "title": "AeroWeaver: An Embodied-Agent Harness for Weaving Aerial Skills into Distributed, Adaptive Swarm Execution",
+    "arxiv_id": "2609.18520",
+    "url": "https://arxiv.org/abs/2609.18520",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "角色索引经验驱动在线技能选择；查训练free含义、反馈与长期收益。",
+    "discovered": "2026-09-21"
+  },
+  {
+    "title": "KINO: A Keyframe Interface for VLM Planning and Whole-Body Control in Humanoid Loco-Manipulation",
+    "arxiv_id": "2609.18869",
+    "url": "https://arxiv.org/abs/2609.18869",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "暂不纳入主线",
+    "next_check": "VLM关键帧加全身控制，摘要主要为预训练策略与层级控制。",
+    "discovered": "2026-09-21"
+  },
+  {
+    "title": "In-Context Robot Learning with VLM Agents",
+    "arxiv_id": "2609.19138",
+    "url": "https://arxiv.org/abs/2609.19138",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "真实机器人ICL；与持久自进化分开，查上下文重置和梯度更新边界。",
+    "discovered": "2026-09-21"
+  },
+  {
+    "title": "GAVEL: Graph World Models for Verified and Efficient Long-Horizon LLM Task Planning",
+    "arxiv_id": "2609.19315",
+    "url": "https://arxiv.org/abs/2609.19315",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "次优先",
+    "next_check": "图世界模型验证和修复规划；查世界模型是否会从执行中持续更新。",
+    "discovered": "2026-09-21"
+  },
+  {
+    "title": "VABench: Measuring Embodied Spatial Intelligence through Visual Demonstrations, Active Perception, and Metric Control",
+    "arxiv_id": "2609.19554",
+    "url": "https://arxiv.org/abs/2609.19554",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "主动感知—执行诊断基准；查严格长程成功与部分进度的差距。",
+    "discovered": "2026-09-21"
+  },
+  {
+    "title": "MAGMA-GEN: Validated Recovery Supervision from Ambiguous Failures via Counterfactual Re-Execution",
+    "arxiv_id": "2609.20056",
+    "url": "https://arxiv.org/abs/2609.20056",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "失败反事实重执行筛出恢复监督；HTML暂不可用，下一步读PDF核实真机协议、特权coach与指标。",
+    "discovered": "2026-09-21"
+  },
+  {
+    "title": "Coding Agents with an Obstacle-Aware Harness for Safe Robot Manipulation",
+    "arxiv_id": "2609.20822",
+    "url": "https://arxiv.org/abs/2609.20822",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "安全harness；查无harness对照、碰撞规避与任务成功指标，以及固定设计边界。",
+    "discovered": "2026-09-21"
+  }
+]
