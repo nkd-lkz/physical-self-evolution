@@ -17,4 +17,4 @@
 
 ## 引文追踪
 
-本轮从No Free Checker、World Models for Embodied Intelligence和Learning and Transferring Closed-Loop Robot Software的参考文献中，按奖励、验证、自我改进、记忆、终身学习等关键词抽取，再与原报告进行ID/题名去重，保留 **43 条待核查引文线索**。见[data/reference-frontier.json](data/reference-frontier.json)。部分引文没有直接链接，保留来源综述页面用于回查；不把它们算作新增论文。未声称遍历完所有参考文献。
+当前共 **52 条待核查引文线索**，见[data/reference-frontier.json](data/reference-frontier.json)。2026-09-22从FAN、组合式持续世界模型和MEMOBench继续回溯出VLA持续学习、模块化世界模型与机器人记忆基准入口；只定位到原始入口的条目仍不算正式卡片。此前线索来自No Free Checker、World Models for Embodied Intelligence和Learning and Transferring Closed-Loop Robot Software。未声称遍历完全部参考文献。

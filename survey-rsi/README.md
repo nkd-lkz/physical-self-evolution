@@ -2,14 +2,19 @@
 
 按论文题名检索，优先说明**问题 → 方法 → 结果 → 综述用途**，附原图和证据边界。本目录用于综述资料积累；仓库其他目录继续服务Physical Token实验项目。
 
-**最近更新：2026-09-21** · [今天的增量](daily/2026-09-21.md) · [候选文献](candidates.md) · [调研模板](templates/paper.md) · [来源与引文追踪](sources.md)
+**最近更新：2026-09-22** · [今天的增量](daily/2026-09-22.md) · [候选文献](candidates.md) · [调研模板](templates/paper.md) · [来源与引文追踪](sources.md)
 
-## 新增阅读卡片
+## 阅读卡片
 
-10篇已读方法和指定实验/表格的增量卡片，均未复现。下表可直接按题名、短名或标签搜索。
+15篇已读方法和指定实验/表格的卡片，均未复现。下表可直接按题名、短名或标签搜索。
 
 | 工作 | 综述定位 | 阅读入口 |
 |---|---|---|
+| FAN | 核心持续改进 / VLA持续学习 / 动作归一化 / 真机 | [固定模板卡片](papers/fan.md) · [原文](https://arxiv.org/abs/2609.21358) |
+| Compositional Continual World Models | 评价框架 / 世界模型 / 持续学习 / 仿真 | [固定模板卡片](papers/compositional-continual-world-models.md) · [原文](https://arxiv.org/abs/2609.22055) |
+| LEMCA | 核心改进器 / 代码演化 / 控制架构 / 仿真 | [固定模板卡片](papers/lemca.md) · [原文](https://arxiv.org/abs/2609.21319) |
+| AgenticRL | 核心策略改进 / 奖励代码自精炼 / 仿真到真机 / 版本修订 | [固定模板卡片](papers/agenticrl.md) · [原文](https://arxiv.org/abs/2606.03963) |
+| MEMOBench | 评价框架 / 跨时段记忆 / 过程指标 / 仿真 | [固定模板卡片](papers/memobench.md) · [原文](https://arxiv.org/abs/2609.07047) |
 | Learning and Transferring Closed-Loop Robot Software | 核心自我改进 / 代码演化 / 跨任务迁移 / 仿真 | [固定模板卡片](papers/learning-transferring-robot-software.md) · [原文](https://arxiv.org/abs/2609.19906) |
 | MessyMem | 核心持续改进 / 持久记忆 / 移动操作 / 仿真与真机 | [固定模板卡片](papers/messymem.md) · [原文](https://arxiv.org/abs/2609.15976) |
 | SRPO | 核心策略改进 / 自参考奖励 / VLA-RL / 旧文补漏 | [固定模板卡片](papers/srpo.md) · [原文](https://arxiv.org/abs/2511.15605) |
@@ -24,9 +29,9 @@
 ## 去重与后续更新
 
 - [原报告去重基线](data/baseline.json)：141个既有条目，只保存公开题名和来源；旧报告内容不视为本轮再次核查。
-- [新增文献结构化目录](data/catalog.json)：10篇卡片的版本、标签和阅读状态。
-- [候选目录](candidates.md)：26项仅摘要核查，未与正式卡片混算。
-- [引文追踪队列](data/reference-frontier.json)：43项尚未独立验证的引文线索，继续回原文。
+- [新增文献结构化目录](data/catalog.json)：15篇卡片的版本、标签和阅读状态。
+- [候选目录](candidates.md)：35项仅摘要核查，未与正式卡片混算。
+- [引文追踪队列](data/reference-frontier.json)：52项尚未独立全文验证的引文线索，继续回原文。
 - [每日维护规范](MAINTENANCE.md)：去重、检索、原图、证据核查和提交要求。
 
 每天分别记录新收录、旧文补漏、版本修订和待核查项。计划运行区间为2026-09-21至2026-09-30；是否完成以daily日志与Git提交为准。不要求每天凑数，也不把“harness”“闭环”“自进化”等题名用词当成RSI实证。

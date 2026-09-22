@@ -313,5 +313,147 @@
       "Zhuang, Yueting"
     ],
     "citation_date": "2026/09/01"
+  },
+  {
+    "title": "FAN: Foresight Action Normalization for Continual Adaptation of Vision-Language-Action Models",
+    "short": "FAN",
+    "arxiv_id": "2609.21358",
+    "version": "v1",
+    "url": "https://arxiv.org/abs/2609.21358",
+    "added": "2026-09-22",
+    "updated": "2026-09-22",
+    "tags": [
+      "核心持续改进",
+      "VLA持续学习",
+      "动作归一化",
+      "真机"
+    ],
+    "read_status": "方法及指定实验/表格已核查；未复现",
+    "note": "papers/fan.md",
+    "evidence_locations": "§III–V；Figure 1、Table I、Figures 4–5。四条真机任务流，每个checkpoint–task 10次rollout。",
+    "figure_url": "https://arxiv.org/html/2609.21358v1/preface.png",
+    "authors": [
+      "Hong, Yijun",
+      "Zhu, Jiarun",
+      "Sun, Xiaoquan",
+      "Xu, Le",
+      "He, Qijun",
+      "Jin, Xin",
+      "Yuan, Mingqi",
+      "Zeng, Wenjun",
+      "Chen, Jiayu"
+    ],
+    "citation_date": "2026/09/18"
+  },
+  {
+    "title": "Benchmarking World Models for Continual Learning on Compositional Tasks",
+    "short": "Compositional Continual World Models",
+    "arxiv_id": "2609.22055",
+    "version": "v1",
+    "url": "https://arxiv.org/abs/2609.22055",
+    "added": "2026-09-22",
+    "updated": "2026-09-22",
+    "tags": [
+      "评价框架",
+      "世界模型",
+      "持续学习",
+      "仿真"
+    ],
+    "read_status": "方法及指定实验/表格已核查；未复现",
+    "note": "papers/compositional-continual-world-models.md",
+    "evidence_locations": "§III–V；Figures 1–5、Table III。六套课程、三随机种子；作者明确说明每任务约10^5–10^6环境步。",
+    "figure_url": "https://arxiv.org/html/2609.22055v1/teaser_figure.png",
+    "authors": [
+      "Zhou, Haoyu",
+      "Watson, Joe",
+      "Lei, Anson",
+      "Posner, Ingmar"
+    ],
+    "citation_date": "2026/09/18"
+  },
+  {
+    "title": "LEMCA: LLM-Guided Synthesis of Efficient Mode-Switching Control Architectures",
+    "short": "LEMCA",
+    "arxiv_id": "2609.21319",
+    "version": "v1",
+    "url": "https://arxiv.org/abs/2609.21319",
+    "added": "2026-09-22",
+    "updated": "2026-09-22",
+    "tags": [
+      "核心改进器",
+      "代码演化",
+      "控制架构",
+      "仿真"
+    ],
+    "read_status": "方法及指定实验/表格已核查；未复现",
+    "note": "papers/lemca.md",
+    "evidence_locations": "§2–3、Figure 2、Figures 4–6、Appendix A/E。性能带来自1000 rollouts；RF-DMC单次设计评估约0.5 L40 GPU小时。",
+    "figure_url": "https://arxiv.org/html/2609.21319v1/theme.svg",
+    "authors": [
+      "Krishna, Arjun",
+      "Pacelli, Vincent",
+      "Jayaraman, Dinesh"
+    ],
+    "citation_date": "2026/09/18"
+  },
+  {
+    "title": "AgenticRL: Agentic Reinforcement Learning with Self-Refinement for Complex UAV Navigation",
+    "short": "AgenticRL",
+    "arxiv_id": "2606.03963",
+    "version": "v4",
+    "url": "https://arxiv.org/abs/2606.03963",
+    "added": "2026-09-22",
+    "updated": "2026-09-22",
+    "tags": [
+      "核心策略改进",
+      "奖励代码自精炼",
+      "UAV",
+      "仿真到真机",
+      "版本修订"
+    ],
+    "read_status": "v4方法及指定实验/表格已核查；未复现",
+    "note": "papers/agenticrl.md",
+    "evidence_locations": "§III–VI；Figures 2、5、8–9；Tables II–V。八任务各100次仿真；五项线速度任务各10次真机。",
+    "figure_url": "https://arxiv.org/html/2606.03963v4/images/sys_arch_v2.png",
+    "authors": [
+      "Khan, Roohan Ahmed",
+      "Yaqoot, Yasheerah",
+      "Habel, Amir Atef",
+      "Mustafa, Muhammad Ahsan",
+      "Tsetserukou, Dzmitry"
+    ],
+    "citation_date": "v1 2026/06/02；采用v4 2026/09/18"
+  },
+  {
+    "title": "MEMOBench: A Process Level Memory Benchmark for Robotic Manipulation",
+    "short": "MEMOBench",
+    "arxiv_id": "2609.07047",
+    "version": "v1",
+    "url": "https://arxiv.org/abs/2609.07047",
+    "added": "2026-09-22",
+    "updated": "2026-09-22",
+    "tags": [
+      "评价框架",
+      "跨时段记忆",
+      "过程指标",
+      "仿真",
+      "旧候选补全"
+    ],
+    "read_status": "方法及指定实验/表格已核查；未复现；代码仓库已打开",
+    "note": "papers/memobench.md",
+    "evidence_locations": "§3–6；Figure 1、Tables 2–4、Limitations。30任务、1500示范、1500留出rollouts、4200检查点。",
+    "figure_url": "https://arxiv.org/html/2609.07047v1/teaser.png",
+    "authors": [
+      "Sun, Haiyang",
+      "Wang, Haoxiao",
+      "Chen, Junming",
+      "Fang, Weicheng",
+      "Su, Zihao",
+      "Yi, Jingkun",
+      "Yi, Wenyou",
+      "Chen, Hao",
+      "Zhao, Zhou"
+    ],
+    "citation_date": "2026/09/07"
   }
 ]

@@ -18,15 +18,6 @@
     "discovered": "2026-09-21"
   },
   {
-    "title": "MEMOBench: A Process Level Memory Benchmark for Robotic Manipulation",
-    "arxiv_id": "2609.07047",
-    "url": "https://arxiv.org/abs/2609.07047",
-    "status": "仅摘要已核查；不计正式卡片",
-    "priority": "优先",
-    "next_check": "记忆存储/更新/压缩的过程指标；查检查点与最终成功的对应关系。",
-    "discovered": "2026-09-21"
-  },
-  {
     "title": "EvoNav-Bench: Benchmarking Lifelong Navigation in Evolving Environments",
     "arxiv_id": "2609.08292",
     "url": "https://arxiv.org/abs/2609.08292",
@@ -232,5 +223,95 @@
     "priority": "优先",
     "next_check": "安全harness；查无harness对照、碰撞规避与任务成功指标，以及固定设计边界。",
     "discovered": "2026-09-21"
+  },
+  {
+    "title": "WM-VS: Progress-Aligned World Models for Closed-Loop Visual Servoing",
+    "arxiv_id": "2609.20892",
+    "url": "https://arxiv.org/abs/2609.20892",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "次优先",
+    "next_check": "世界模型给出进度对齐信号并支持反复纠错；查它是固定模型的闭环控制还是部署经验可持久更新。",
+    "discovered": "2026-09-22"
+  },
+  {
+    "title": "SPARROW: Survival-POMCP for Adaptive Robot Routing, Observation, and Waiting",
+    "arxiv_id": "2609.21008",
+    "url": "https://arxiv.org/abs/2609.21008",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "在线学习障碍清除生存模型且利用右删失数据；核查模型跨任务保存、物理试验次数与value-of-learning预算。",
+    "discovered": "2026-09-22"
+  },
+  {
+    "title": "Catch Me If You Can: Real-Time Feedback Denoising for Responsive VLAs",
+    "arxiv_id": "2609.21022",
+    "url": "https://arxiv.org/abs/2609.21022",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "次优先",
+    "next_check": "VLA-Feedback在动作执行前做高频纠正；属于任务内反馈控制，待确认没有跨episode参数更新。",
+    "discovered": "2026-09-22"
+  },
+  {
+    "title": "ProTracer: Proprioception-Guided Failure Diagnosis in Robot Manipulation",
+    "arxiv_id": "2609.21369",
+    "url": "https://arxiv.org/abs/2609.21369",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "失败检测、分类、解释与起始时刻定位；可作改进环的诊断器，需查FailTime规模和对恢复/学习的实际接口。",
+    "discovered": "2026-09-22"
+  },
+  {
+    "title": "When Should a Failing Robot Ask? Initiating Corrective Human-Robot Dialogue from Audited Sensor Evidence",
+    "arxiv_id": "2609.21942",
+    "url": "https://arxiv.org/abs/2609.21942",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "把动作/查传感器/问人建模为成本决策；查是否仅诊断基准，以及人类问答可靠度和泄漏控制。",
+    "discovered": "2026-09-22"
+  },
+  {
+    "title": "CARF: Contrastive Attraction-Repulsion of Failure-Guided Flow Matching",
+    "arxiv_id": "2609.21982",
+    "url": "https://arxiv.org/abs/2609.21982",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "从失败轨迹中区分可模仿进展段与应排斥关键失败段；核查数据规模、真机结果和失败标注来源。",
+    "discovered": "2026-09-22"
+  },
+  {
+    "title": "AnyviewMeter: Adapting Robotic Reward Models with Camera Geometry and Multi-View Attention",
+    "arxiv_id": "2609.20106",
+    "url": "https://arxiv.org/abs/2609.20106",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "任务局部奖励模型适配；核查训练预算、真机任务数、校准与泛化，作为奖励/验证器组件而非完整RSI。",
+    "discovered": "2026-09-22"
+  },
+  {
+    "title": "SeeQ: Training Generalist Value Functions for Long-Horizon Robotic Manipulation",
+    "arxiv_id": "2609.22085",
+    "url": "https://arxiv.org/abs/2609.22085",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "子任务Q函数为best-of-N策略提供方向；查四项真机任务的候选数、基线与是否用于持久策略更新。",
+    "discovered": "2026-09-22"
+  },
+  {
+    "title": "DexPIE: Stable Dexterous Policy Improvement from Real-World Experience",
+    "arxiv_id": "2606.09615",
+    "url": "https://arxiv.org/abs/2606.09615",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "版本修订；真机部署经验、干预式DAgger和连续最优性指标直接相关，需全文核查37.3%提升的口径与数据量。",
+    "discovered": "2026-09-22"
+  },
+  {
+    "title": "Evolving Skill Modules under a Fixed Planner: Versioning, Rollback, and Runtime Governance for Long-Lived Robot Systems",
+    "arxiv_id": "2604.07799",
+    "url": "https://arxiv.org/abs/2604.07799",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "版本修订；包含推广门、回滚与多项负结果，需核查66页全文、实现可得性及是否存在跨部署能力增长。",
+    "discovered": "2026-09-22"
   }
 ]

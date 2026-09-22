@@ -300,5 +300,77 @@
       "https://aclanthology.org/2026.eacl-long.163/"
     ],
     "status": "引文元数据线索；原始链接未逐项打开，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.21358v1",
+    "reference": "H. Liu, C. Kim, B. Liu, M. Liu, and Y. Zhu (2026) Pretrained Vision-Language-Action Models Are Surprisingly Resistant to Forgetting in Continual Learning.",
+    "urls": [
+      "https://arxiv.org/abs/2603.03818"
+    ],
+    "status": "引文元数据线索；已定位原始入口但未读全文，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.21358v1",
+    "reference": "J. Zhu et al. (2026) Can Vision-Language-Action Models Learn from Real-World Data Continually without Forgetting?",
+    "urls": [
+      "https://arxiv.org/abs/2605.26820"
+    ],
+    "status": "引文元数据线索；已定位原始入口但未读全文，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.21358v1",
+    "reference": "Z. Chen et al. (2026) PHASER: Phase-Aware and Semantic Experience Replay for Vision-Language-Action Models.",
+    "urls": [
+      "https://arxiv.org/abs/2606.03598"
+    ],
+    "status": "引文元数据线索；已定位原始入口但未读全文，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.21358v1",
+    "reference": "R. Römer et al. (2026) CLARE: Continual Learning for Vision-Language-Action Models via Autonomous Adapter Routing and Expansion.",
+    "urls": [
+      "https://doi.org/10.1109/LRA.2026.3693992"
+    ],
+    "status": "引文元数据线索；已定位原始入口但未读全文，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.22055v1",
+    "reference": "I. Posner, A. Lei, and B. Schölkopf (2026) From Observation to Insight: Mechanistic World Models and the Quest for Autonomous Discovery.",
+    "urls": [
+      "https://arxiv.org/abs/2607.12474"
+    ],
+    "status": "引文元数据线索；已定位原始入口但未读全文，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.22055v1",
+    "reference": "I. Momennejad and R. Raileanu (2026) A Compositional Framework for Open-Ended Intelligence.",
+    "urls": [
+      "https://arxiv.org/abs/2606.15386"
+    ],
+    "status": "引文元数据线索；已定位原始入口但未读全文，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.22055v1",
+    "reference": "M. Li et al. (2025) Prismatic World Model: Learning Compositional Dynamics for Planning in Hybrid Systems.",
+    "urls": [
+      "https://arxiv.org/abs/2512.08411"
+    ],
+    "status": "引文元数据线索；已定位原始入口但未读全文，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.07047v1",
+    "reference": "T. Chen et al. (2026) RMBench: Memory-Dependent Robotic Manipulation Benchmark with Insights into Policy Design.",
+    "urls": [
+      "https://arxiv.org/abs/2603.01229"
+    ],
+    "status": "引文元数据线索；已定位原始入口但未读全文，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.07047v1",
+    "reference": "Y. Dai et al. (2026) RoboMME: Benchmarking and Understanding Memory for Robotic Generalist Policies.",
+    "urls": [
+      "https://arxiv.org/abs/2603.04639"
+    ],
+    "status": "引文元数据线索；已定位原始入口但未读全文，不计已核查新增"
   }
 ]
