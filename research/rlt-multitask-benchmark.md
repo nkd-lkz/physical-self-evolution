@@ -3,7 +3,7 @@
 > 当前角色：**Baseline / Initial Validation Protocol**  
 > 上位主线：[`physical-token-leadership-spec.md`](physical-token-leadership-spec.md)  
 > 当前执行：**Gate 0 — B0 diagnosis / recovery**  
-> 最新快照：[`progress-2026-09-18.md`](progress-2026-09-18.md)
+> 最新证据补充：[`progress-2026-09-22.md`](progress-2026-09-22.md)；完整执行快照：[`progress-2026-09-18.md`](progress-2026-09-18.md)
 
 ---
 
@@ -52,6 +52,8 @@ RLT 是当前项目的核心技术 baseline。Physical Token 的科学增量只�
 - 不能直接与旧12k的10/20做显著性结论；
 - reference success主要验证VLA闭环能力，不等于RLT latent已经更适合Q learning。
 
+09-22截图再次报告GPU6的22/40、return=0.55、mean reward约0.00287、mean length=196.25/200，并说明与GPU7聚合一致。该截图作为已有复测证据补充；缺少新run ID，不增加运行/独立seed数。mean reward为按步平均；W&B 0 media不等于本地无视频。
+
 下一步需要failure-stage、matched-seed checkpoint comparison和independent-seed validation。
 
 ## 2. Gate 0B · Data quality contract
@@ -97,7 +99,7 @@ RLT 是当前项目的核心技术 baseline。Physical Token 的科学增量只�
 
 ## 3. 新 clean490 Stage1 recovery
 
-### 3.1 当前准备状态
+### 3.1 已完成的准备与训练状态
 
 已完成CPU侧：
 
@@ -108,9 +110,9 @@ RLT 是当前项目的核心技术 baseline。Physical Token 的科学增量只�
 - Hydra train/eval dry-run；
 - focused RLT tests。
 
-正式 GPU training **尚未启动**。
+正式GPU训练已于09-17启动，09-18记录主动停止于约10823/30000，完整checkpoint为5k和10k。09-22仅补充10k评测说明，未新增继续训练或30k完成证据。
 
-### 3.2 最新默认训练计划
+### 3.2 原始训练计划（历史；未完成30k）
 
 ```text
 generic pi05_base
@@ -124,7 +126,7 @@ generic pi05_base
 + checkpoint every 5k
 ```
 
-开发评测 checkpoint：
+原计划开发评测 checkpoint（当前完整保存点仅5k与10k）：
 
 ```text
 5k / 10k / 15k / 20k / 25k / 30k

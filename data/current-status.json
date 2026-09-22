@@ -1,17 +1,25 @@
 {
-  "as_of": "2026-09-19",
+  "as_of": "2026-09-22",
   "metrics": [
     {
+      "value": "22/40 · 55%",
+      "label": "train450 Stage1 10k；同cohort双复测聚合一致"
+    },
+    {
+      "value": "18/40",
+      "label": "失败仍待逐episode归因；未证明RLT表征收益"
+    },
+    {
+      "value": "196.25/200",
+      "label": "平均episode步数接近预算；成功/失败时长需分开"
+    },
+    {
       "value": "125 papers",
-      "label": "Physical Token / action-side physics 主表；每篇已有检索 mini-note"
+      "label": "09-19历史检索批次；当前文献总数见阅读总账"
     },
     {
       "value": "18 P0",
       "label": "最高重合近邻，优先全文/附录/代码防撞"
-    },
-    {
-      "value": "22/40 ×2",
-      "label": "train450 Stage1 10k 当前开发参考；不是最终独立测试结论"
     },
     {
       "value": "B0 degraded",
@@ -28,7 +36,19 @@
   ],
   "timeline": [
     {
-      "title": "今日转入科研思路深挖",
+      "title": "09-22评测证据补充 · train450 Stage1 10k",
+      "body": "用户截图报告GPU6 22/40成功、return=0.55、mean reward约0.00287，与此前GPU7聚合一致。与09-18已有记录关联；无新run ID，暂不新增运行次数或独立seed。"
+    },
+    {
+      "title": "指标与视频口径",
+      "body": "reward约0.00287是按步平均，不是成功奖励幅度；W&B已同步但0 media不能推出本地无视频。平均196.25/200步需拆分成功、失败与超时统计。"
+    },
+    {
+      "title": "当前科研结论",
+      "body": "55%是当前开发cohort闭环结果；未证明逐seed轨迹一致、优于旧clean50/12k的50%，也未证明RLT或Physical Token表征收益。"
+    },
+    {
+      "title": "09-19研究重点 · 科研思路深挖",
       "body": "暂停继续堆代码与实验变量，优先梳理 Physical Token 的定义、近邻论文、创新边界和几套可证伪方案。"
     },
     {
@@ -53,10 +73,20 @@
     },
     {
       "title": "实验线仍保留",
-      "body": "Stage1 10k 的22/40×2、旧B0退化、RoboDojo D3/D5等事实继续作为实验背景，但不主导今日方法定义。"
+      "body": "Stage1 10k同cohort双复测22/40、旧B0退化、RoboDojo D3/D5等既有事实继续保留；本次截图不增加独立评测样本。"
     }
   ],
   "plan": [
+    {
+      "priority": "P0",
+      "action": "对齐GPU6/GPU7 run来源并核对逐seed结果",
+      "evidence": "checkpoint/norm/config版本、seed列表、success/return/length/终止原因；相同cohort不重复计独立样本"
+    },
+    {
+      "priority": "P0",
+      "action": "复盘18个失败，分开报告成功/失败时长并准备同cohort对照",
+      "evidence": "视频/日志对应关系、失败阶段、timeout数量、5k/10k/旧12k匹配协议；本轮尚未执行"
+    },
     {
       "priority": "P0",
       "action": "精读18篇最高重合论文并逐篇补独立notes",

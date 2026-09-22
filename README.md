@@ -11,6 +11,12 @@ Living research website for **Universal Physical Token, robot self-improvement, 
 **https://nkd-lkz.github.io/physical-self-evolution/**
 
 
+## Latest experiment evidence — 2026-09-22
+
+[Detailed update](research/progress-2026-09-22.md): the supplied evaluation-summary screenshot reports train450 Stage1 10k at **22/40 success (55%)**, with 18 failures, return 0.55, mean step reward ≈0.00287, and mean episode length 196.25/200. GPU6 matches the prior GPU7 aggregate result. This supplements the existing September 18 repeat-evaluation record; no new independent run or seed count is added without a distinct run ID.
+
+The step-average reward is not the terminal success reward. W&B “0 media” does not establish that local videos are absent. Aggregate agreement does not establish per-seed trajectory agreement, superiority over old clean50/12k, or an RLT representation gain. The source is a user-supplied summary screenshot, not a new raw-log audit.
+
 ## Frontier update — 2026-09-21
 
 - [XPACE](notes/xpace.md): recovery supervision, failure-data routing, and limitations of visual consistency.
@@ -57,7 +63,8 @@ Current source of truth:
 - [`research/physical-token-leadership-spec.md`](research/physical-token-leadership-spec.md)
 - [`research/master-roadmap.md`](research/master-roadmap.md)
 - [`research/rlt-multitask-benchmark.md`](research/rlt-multitask-benchmark.md)
-- [`research/progress-2026-09-18.md`](research/progress-2026-09-18.md) — latest execution snapshot
+- [`research/progress-2026-09-22.md`](research/progress-2026-09-22.md) — latest evaluation evidence and counting boundaries
+- [`research/progress-2026-09-18.md`](research/progress-2026-09-18.md) — detailed execution snapshot
 - [`research/progress-2026-09-17.md`](research/progress-2026-09-17.md) — previous detailed snapshot
 - [`research/robodojo-b300-log.md`](research/robodojo-b300-log.md) — second-platform bring-up / RLinf integration log
 - [`research/robodojo-contact-task-reference-selection-2026-09-17.md`](research/robodojo-contact-task-reference-selection-2026-09-17.md) — contact-task and reference selection

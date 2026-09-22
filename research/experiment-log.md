@@ -1,5 +1,27 @@
 # 实验日志
 
+## 2026-09-22 · train450 Stage1 10k评测摘要补充（不新增独立样本）
+
+### 事实与来源
+
+- 用户提供的摘要截图报告：GPU6评测22/40成功（55%）、18/40失败；return=0.55，按步平均reward约0.00287，mean episode length=196.25，预算上限200步。
+- 截图报告与此前GPU7聚合结果完全一致，W&B已同步但显示“0 media”。本轮未直接读取原始评测日志、逐seed轨迹或本地视频。
+- 仓库09-18已记录同一train450 Stage1 10k、eval40双设备复测与相同聚合指标；本次未提供独立run ID，因此只补充证据与解释，不默认为第三次运行。入库日期不是新增评测执行日期。
+
+### 解释边界
+
+- reward约0.00287为按步平均值，不是任务成功时奖励幅度；return=0.55与成功时reward=1的稀疏设置相容。
+- 平均196.25接近200步上限，需分别查看成功/失败长度、timeout数量与真实执行时长；不能由总体均值推断全部成功很慢或全部失败超时。
+- 聚合一致支持当前固定seed/协议下的聚合复现，不证明逐seed/逐轨迹一致；重复cohort不合并为80个独立seed。
+- W&B“0 media”不代表本地没有视频；本地存在性与可播放性尚待核对。
+- 55%与旧clean50/12k的50%来自不同cohort，不直接宣称提升；reference闭环结果也不单独证明RLT latent收益。
+
+### 下一步（待执行）
+
+对齐run/config/checkpoint/norm版本 → 核对逐seed成败与终止原因 → 复盘18个失败 → 做同cohort checkpoint比较；训练规模及表征归因仍需匹配训练因素。完整说明：[09-22进展补充](https://nkd-lkz.github.io/physical-self-evolution/reader.html?path=research/progress-2026-09-22.md)。
+
+---
+
 ## 2026-09-18 · train450 Stage1 10k复测 + B0 Stage2退化诊断
 
 ### 事实

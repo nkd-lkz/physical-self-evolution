@@ -1,5 +1,10 @@
 [
   {
+    "date": "2026-09-22",
+    "title": "train450 Stage1 10k评测摘要补充：55%与复测统计边界",
+    "summary": "用户截图报告GPU6为22/40成功（55%）、18/40失败、return=0.55、按步平均reward约0.00287、平均episode length=196.25/200；与此前GPU7聚合结果一致。W&B已同步但0 media仅表示未上传媒体，不能推出本地无视频。该结果与09-18已有双复测记录一致；缺少新run ID，按证据补充入库，不追加独立运行/seed数。未证明逐seed轨迹一致、优于旧clean50/12k的50%，或RLT表征收益。"
+  },
+  {
     "date": "2026-09-18",
     "title": "train450 Stage1 step10k eval40 双复测均为22/40",
     "summary": "新clean490/train450 Stage1的10k checkpoint在相同H50/C50 native_macro、eval40、固定prompt/action seed协议下完成两次独立设备运行，均为22/40=55%，return约0.55、mean episode length约196.25。聚合一致支持当前开发协议下的可复现性，但不是80个独立seed，也不能与旧clean50/12k的10/20直接宣称显著提升。"

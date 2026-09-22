@@ -40,7 +40,7 @@
 
   <main class="main">
     <section id="home" class="hero">
-      <div class="kicker">Research Focus · 2026-09-19</div>
+      <div class="kicker">Research Focus · 2026-09-19 · 实验证据更新 2026-09-22</div>
       <h1>Universal Physical Token<br/>for Robot Self-Evolution</h1>
       <p>核心问题：<b>能否从已有 action-generation head 读出一个紧凑表示，用 measured transition prediction 与有效 physics constraints 对其 grounding，并在在线阶段不重新训练 action model 的情况下适应变化的接触动力学？</b></p>
       <div class="callout">
@@ -50,7 +50,7 @@
       </div>
       <p>
         <a class="button" href="reader.html?path=research/physical-token-leadership-spec.md">打开领导版主规范</a>
-        <a class="button secondary" href="reader.html?path=research/progress-2026-09-18.md">打开 09-18 实验进展</a>
+        <a class="button secondary" href="reader.html?path=research/progress-2026-09-22.md">打开 09-22 评测进展</a>
         <a class="button secondary" href="reader.html?path=research/literature/reading-ledger.md">打开 129 项阅读总账</a>
       </p>
     </section>
@@ -154,19 +154,27 @@
     <section id="status">
       <h2>05 · 当前证据与严格口径</h2>
       <div class="grid four metrics">
-        <article class="card"><div class="metric">H50/C50</div><div class="muted">当前 RoboTwin Stage1 原生能力锚点</div></article>
-        <article class="card"><div class="metric">20k</div><div class="muted">新 joint Stage1 计划；配置已 dry-run，正式训练待启动</div></article>
-        <article class="card"><div class="metric">S2-old</div><div class="muted">旧 Stage2 只保留工程闭环证据，不作为 B0 性能基线</div></article>
-        <article class="card"><div class="metric">B1/B2</div><div class="muted">Physical Token grounding 尚未进入正式实验</div></article>
+        <article class="card"><div class="metric">22/40 · 55%</div><div class="muted">train450 Stage1 10k；同cohort双复测聚合一致</div></article>
+        <article class="card"><div class="metric">18/40</div><div class="muted">失败仍待逐episode归因；未证明RLT表征收益</div></article>
+        <article class="card"><div class="metric">196.25/200</div><div class="muted">平均episode步数接近预算；成功/失败时长需分开</div></article>
+        <article class="card"><div class="metric">125 papers</div><div class="muted">09-19历史检索批次；当前文献总数见阅读总账</div></article>
+        <article class="card"><div class="metric">18 P0</div><div class="muted">最高重合近邻，优先全文/附录/代码防撞</div></article>
+        <article class="card"><div class="metric">B0 degraded</div><div class="muted">旧RLT Stage2约45%→15%，说明 learner 不应绑架 Physical Token 故事</div></article>
+        <article class="card"><div class="metric">3 routes</div><div class="muted">Representation-first / Physical Critic / WAM-compatible interface</div></article>
+        <article class="card"><div class="metric">D0–D5</div><div class="muted">RoboDojo工程Gate已到D5；真机同事继续推进任务/reference</div></article>
       </div>
 
       <div class="timeline">
-        <div><b>执行协议已拆开</b><p>历史 H50/C10 会改变 TOPP 规划边界与再观测分布；H50/C50 作为当前已有 H50 checkpoint 的原生能力锚点。未来论文式 C10 单独建控制/transition 适配。</p></div>
-        <div><b>Stage1 不是完全失效</b><p>H50/C50 下已有额外正对照场景，旧 Stage1 与 SFT20k 都能成功；因此不能把旧 0/4 简化成“Stage1 权重坏了”。</p></div>
-        <div><b>但存在 Stage1-specific gap</b><p>严格配对开发场景中已出现 SFT20k 成功而旧 Stage1 失败。旧 Stage1 的更小训练预算和更高离线动作误差是风险信号，但尚未被证明是唯一根因。</p></div>
-        <div><b>Reward 粗粒度链路可产生正样本</b><p>Expert probe 已有正 success/reward 证据；后续仍需继续验收 chunk timing / discount / learner target 语义。</p></div>
-        <div><b>新 Stage1 recovery</b><p>generic base + alpha1 + 20k、global batch64 的联合训练配置已 dry-run；完整 GPU 训练仍待实际完成。checkpoint 将按 H50/C50 闭环能力选，不按最低 train loss。</p></div>
-        <div><b>RoboDojo/B300</b><p>仍为独立支线且未开始本机兼容性实测；不从 RoboTwin/SAPIEN 结果推断 RoboDojo/Isaac Sim 兼容性。</p></div>
+        <div><b>09-22评测证据补充 · train450 Stage1 10k</b><p>用户截图报告GPU6 22/40成功、return=0.55、mean reward约0.00287，与此前GPU7聚合一致。与09-18已有记录关联；无新run ID，暂不新增运行次数或独立seed。</p></div>
+        <div><b>指标与视频口径</b><p>reward约0.00287是按步平均，不是成功奖励幅度；W&amp;B已同步但0 media不能推出本地无视频。平均196.25/200步需拆分成功、失败与超时统计。</p></div>
+        <div><b>当前科研结论</b><p>55%是当前开发cohort闭环结果；未证明逐seed轨迹一致、优于旧clean50/12k的50%，也未证明RLT或Physical Token表征收益。</p></div>
+        <div><b>09-19研究重点 · 科研思路深挖</b><p>暂停继续堆代码与实验变量，优先梳理 Physical Token 的定义、近邻论文、创新边界和几套可证伪方案。</p></div>
+        <div><b>Physical Token 不再绑定 RLT</b><p>RLT保留为 compact-readout baseline；RECAP、V-GPS/Q-VGM、offline/online RL、WAM都可以是 downstream learner。</p></div>
+        <div><b>125项文献总账建立</b><p>所有条目至少有检索级方法/项目关系/核验边界；精读与摘要阅读严格分开管理。</p></div>
+        <div><b>Wave 0 防撞优先</b><p>先精读 FLARE、Pri4R、AGRA、CometVLA、PAR、DyWA、TACO、RoboPack、MSDP、exUMI、Spline Policy、LeTO、V-GPS、FlowDAgger、DSRL、HPT、GeoAAC 等。</p></div>
+        <div><b>当前最强定义候选</b><p>Physical Token 更适合定义成 action-side、action-consequence-sufficient control latent，而不是物理参数表或简单 proprio token。</p></div>
+        <div><b>真机数据合同反推方法</b><p>优先让同事确认 actual q/qdot、EEF/object state、F/T/tactile、timestamps、applied command、controller delay/contact labels，再决定哪些 physics supervision 可落地。</p></div>
+        <div><b>实验线仍保留</b><p>Stage1 10k同cohort双复测22/40、旧B0退化、RoboDojo D3/D5等既有事实继续保留；本次截图不增加独立评测样本。</p></div>
       </div>
     </section>
 
@@ -176,13 +184,15 @@
         <table>
           <thead><tr><th>优先级</th><th>下一步</th><th>必须留下的证据</th></tr></thead>
           <tbody>
-            <tr><td>P0</td><td>完成新的 base + alpha1 + 20k joint Stage1</td><td>resolved config、loss/grad health、2k间隔 checkpoints、无错配/意外 resume</td></tr>
-            <tr><td>P0</td><td>固定 seed H50/C50 评测 2k/4k/.../20k</td><td>environment + action seeds、success、completion time、failure stage、视频</td></tr>
-            <tr><td>P0</td><td>冻结有闭环能力证据的 Stage1 reference，重新建立 B0 Stage2</td><td>execution/timing contract、positive reward opportunity、transition/replay/update trace</td></tr>
-            <tr><td>P1</td><td>固定 action-head extraction convention，做 backbone tap vs head tap</td><td>feature shape、sampling convention、matched token capacity、held-out probe</td></tr>
-            <tr><td>P1</td><td>实现 B1 measured transition decoder</td><td>actual/executed action 对齐、validity mask、unit normalization、held-out transition metrics</td></tr>
-            <tr><td>P2</td><td>实现 B2 kinematic + actuator constraints</td><td>frame/unit 审计、physical violation metrics、B1 vs B2 独立增益</td></tr>
-            <tr><td>Later</td><td>Physical/contact shift → held-out model/robot → Streaming RL</td><td>只有前述 gate 通过才启动</td></tr>
+            <tr><td>P0</td><td>对齐GPU6/GPU7 run来源并核对逐seed结果</td><td>checkpoint/norm/config版本、seed列表、success/return/length/终止原因；相同cohort不重复计独立样本</td></tr>
+            <tr><td>P0</td><td>复盘18个失败，分开报告成功/失败时长并准备同cohort对照</td><td>视频/日志对应关系、失败阶段、timeout数量、5k/10k/旧12k匹配协议；本轮尚未执行</td></tr>
+            <tr><td>P0</td><td>精读18篇最高重合论文并逐篇补独立notes</td><td>method/data/loss/freeze/inference/ablation/code audit</td></tr>
+            <tr><td>P0</td><td>形成3套Physical Token候选方案并与两位同事讨论</td><td>模块、监督、部署输入、强baseline、No-Go条件</td></tr>
+            <tr><td>P0</td><td>把Action Head vs Backbone vs History-only vs Action-only设为核心matched comparison</td><td>相同输入历史/容量/监督预算下的representation与decision metrics</td></tr>
+            <tr><td>P1</td><td>和真机同事冻结可获得的物理数据合同</td><td>sensor/command/timestamp/controller/contact availability matrix</td></tr>
+            <tr><td>P1</td><td>优先评估Physical Critic / candidate ranking路径，避免先被online RL收敛绑死</td><td>same candidate set下的ranking/calibration/closed-loop gain</td></tr>
+            <tr><td>P1</td><td>明确WAM兼容接口与Universal层级</td><td>flow/AR/WAM action module的readout convention与held-out transfer protocol</td></tr>
+            <tr><td>Later</td><td>只有representation证据成立后再恢复大规模online RL与cross-embodiment实验</td><td>matched ablation + physical shift + held-out transfer</td></tr>
           </tbody>
         </table>
       </div>
@@ -331,6 +341,7 @@
     <section id="archive">
       <h2>08 · 详细资料</h2>
       <div class="grid three">
+        <a class="card link-card" href="reader.html?path=research/progress-2026-09-22.md"><h3>2026-09-22 评测证据补充</h3><p>train450 Stage1 10k：22/40（55%）；reward、时长、视频与重复评测口径。</p></a>
         <a class="card link-card" href="reader.html?path=research/physical-token-leadership-spec.md"><h3>Leadership Physical Token Spec</h3><p>当前 Source of Truth：action-head interface、physical objectives、online update contract 与首轮实验。</p></a>
         <a class="card link-card" href="reader.html?path=research/progress-2026-09-15.md"><h3>2026-09-15 Baseline Recovery</h3><p>H/C 协议、Stage1 capability、20k joint recovery 和当前验收顺序。</p></a>
         <a class="card link-card" href="reader.html?path=research/master-roadmap.md"><h3>Research Roadmap</h3><p>按领导方案重写后的执行主线与 Gate。</p></a>
