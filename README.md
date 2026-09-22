@@ -11,6 +11,14 @@ Living research website for **Universal Physical Token, robot self-improvement, 
 **https://nkd-lkz.github.io/physical-self-evolution/**
 
 
+## Project-relevant readings — 2026-09-22
+
+- [UniIntervene](notes/uniintervene.md)：动作后果、时序价值与记忆恢复，是减少专家干预方向的 **P0 强近邻**；公开包目前提供离线流程，不含真机部署/HIL-SERL 集成。
+- [CLAP](notes/clap.md)：跨本体动作接口与世界模型，是物理后果及 Universal 证据的 **P1 参考**；不直接加入当前高频控制链路。
+- [与 Physical Token / RLT 的取舍](research/uniintervene-clap-project-implications.md)：只保留问题定义、可借鉴机制、已有创新边界与低成本验证启发。
+
+两项均已核对方法、实验、相关附录与官方 README，未复现；阅读总账增至 **131 项**。不新增实验成绩，不改变当前基线恢复与固定专家/门控的研究合同。
+
 ## Discussion update — 2026-09-22
 
 本轮把迁移恢复、RLT关键阶段与专家纠错、100/200步语义、TOPP恢复边界，以及“物理经验能否减少干预”的讨论整理为三个入口：
@@ -35,7 +43,7 @@ The step-average reward is not the terminal success reward. W&B “0 media” do
 
 - [ForceDelta-VLA](notes/forcedelta-vla.md): teacher-defined force corrections, delay compensation, and the controls needed to distinguish representation gains from faster feedback. Distinct from FD-VLA.
 - [RPent](notes/rpent.md): agent infrastructure, frozen evaluation memory, and the boundary between experience reuse and online policy learning. System entry linked to the existing Harness VLA paper.
-- [Reading ledger](research/literature/reading-ledger.md): 129 literature/project entries, including the original 125-entry audit and four September 21 additions. The additions are topical readings, not independent reproductions.
+- [Reading ledger](research/literature/reading-ledger.md): 131 literature/project entries, including the original 125-entry audit four September 21 additions and two September 22 additions. The additions are topical readings, not independent reproductions.
 
 ## Current research mainline — 2026-09-18
 
@@ -329,3 +337,4 @@ Current reading priority is collision avoidance around **action-side representat
 ## Knowledge-base rule
 
 The Frontier Knowledge Base continues to track RISE, Motus2, LWD, RLT, SmoothRL, Zeva, Zetta, Astra/Harness and related work. They inform baselines and innovation boundaries, but do not override the leadership-defined actor-side Physical Token experimental contract.
+

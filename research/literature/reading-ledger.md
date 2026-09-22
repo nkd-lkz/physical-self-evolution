@@ -1,8 +1,8 @@
 # Physical Token 文献阅读总账
 
 > 建立日期：2026-09-19  
-> 更新日期：2026-09-21  
-> 范围：129 项论文/项目；其中 125 项为 09-19 原始检索，09-21 新增 ForceDelta-VLA、RPent、XPACE 与 EmbodiedJev。  
+> 更新日期：2026-09-22  
+> 范围：131 项论文/项目；125 项为 09-19 原始检索，09-21 新增四项，09-22 新增 UniIntervene 与 CLAP。  
 > 原则：**检索到 ≠ 读懂；摘要笔记 ≠ 全文精读。** 所有条目先保留检索笔记，只有完成方法、实验、附录/代码核验后才升级为“精读”。
 
 ## 0. 当前进度
@@ -10,10 +10,10 @@
 | 状态 | 数量 |
 |---|---:|
 | 已精读/已有独立笔记 | 8 |
-| 已阅读/已有专题笔记 | 8 |
+| 已阅读/已有专题笔记 | 10 |
 | 已初读/讨论过，待系统精读 | 12 |
 | 待精读 | 101 |
-| **总计** | **129** |
+| **总计** | **131** |
 
 完整检索工作稿：[`physical-token-literature-audit-2026-09-19.md`](physical-token-literature-audit-2026-09-19.md)。其中每篇至少有“方法摘要 + 与本项目关系 + 核验边界 + 一手来源”的**检索笔记**；这不等于已经全文精读。
 
@@ -25,6 +25,10 @@
 - **待精读**：当前只有检索/摘要级 mini-note；正式写论文前必须继续读正文、实验、附录和代码。
 
 ## 2. 近期阅读顺序
+
+### 09-22 项目相关增量
+
+UniIntervene 为 P0 减干预强近邻，优先明确未来预测、时序价值与记忆恢复的既有边界；CLAP 为 P1 动作后果/跨本体接口参考。两项已核对方法、实验、相关附录与官方 README，未复现。保持[当前研究合同](../physical-experience-protocol-2026-09-22.md)，不新增完整世界模型或恢复大模型训练前置要求。
 
 ### 09-21 增量
 
@@ -254,3 +258,13 @@ SmoothRL、VLA-Corrector、BCP、GeoAAC、RL²-VLA、Zeva、Harness VLA、SHAPER
 | P129 | [EmbodiedJev](https://github.com/FBddcz/embodied-jev) | P1 | 系统；已阅读/已有专题笔记 | [专题笔记](../../notes/embodied-jev.md) |
 
 [关联RLT的候选实验](../xpace-jev-rlt-ideas.md)：先做可恢复性probe，再以表示×恢复数据选择的2×2实验分离收益。此为未实施提案。
+
+
+## 7. 09-22 增量：UniIntervene 与 CLAP
+
+| ID | 论文 | 优先级 | 阅读状态 | 笔记 |
+|---|---|---|---|---|
+| P130 | [UniIntervene](https://arxiv.org/html/2606.12372v1) | P0 | 已阅读/已有专题笔记；未复现 | [专题笔记](../../notes/uniintervene.md) |
+| P131 | [CLAP](https://arxiv.org/html/2608.27406v1) | P1 | 已阅读/已有专题笔记；未复现 | [专题笔记](../../notes/clap.md) |
+
+[对当前 Physical Token / RLT 的取舍](../uniintervene-clap-project-implications.md)：固定专家与 gate 的表示验证优先；完整视频模型、记忆扩张与学习门控分别作为后续变量。

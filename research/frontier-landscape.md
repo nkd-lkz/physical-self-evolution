@@ -1,10 +1,19 @@
 # 具身智能自进化前沿工作地图：别人正在做什么，我们能借什么
 
-> 更新：2026-09-11  
+> 更新：2026-09-22  
 > 定位：这是 **知识库 / 灵感地图**，不是当前项目 Roadmap。  
-> 当前项目主线仍然是 **Phase 0 — RLT Multi-task Benchmark**。新论文先进入这里，只有实验或强近邻证据足以改变判断时，才进入主线。
+> 当前顺序以[09-22 研究合同](physical-experience-protocol-2026-09-22.md)为准：恢复可信 reference、最小干预验收与后果 probe；正式在线比较需要可信 learner。以下保留历史调研，并按日期追加新证据。
 
 
+
+## 2026-09-22：UniIntervene 与 CLAP 的项目相关取舍
+
+| 工作 | 相关性 | 直接影响 |
+|---|---|---|
+| [UniIntervene](../notes/uniintervene.md) | P0；动作后果、时序价值、记忆恢复 | “预测未来+停滞触发+恢复”已存在；需隔离实测后果监督、专家能力与门控收益 |
+| [CLAP](../notes/clap.md) | P1；跨本体动作条件后果模型 | Universal 必须说明共享对象、本体条件和适配预算；前后帧潜动作不能直接做在线状态输入 |
+
+完整[项目取舍与创新边界](uniintervene-clap-project-implications.md)。两项均为方法/实验/相关附录及官方 README 专题核验，未复现。当前不引入完整视频生成模型或更强恢复模型改变已固定的专家/门控对照。
 
 ## 2026-09-21 追加：XPACE 与 EmbodiedJev
 
@@ -815,3 +824,4 @@ Read / To-read / Archived
 > **Embodied Self-Evolution Research Index + Decision Memory**
 
 而不是简单收藏夹。
+

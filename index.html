@@ -53,7 +53,7 @@
         <a class="button secondary" href="reader.html?path=research/progress-2026-09-22.md">打开 09-22 评测进展</a>
         <a class="button secondary" href="reader.html?path=research/migration-recovery-2026-09-22.md">小算力恢复入口</a>
         <a class="button secondary" href="#ideas">物理经验与减干预假设</a>
-        <a class="button secondary" href="reader.html?path=research/literature/reading-ledger.md">打开 129 项阅读总账</a>
+        <a class="button secondary" href="reader.html?path=research/literature/reading-ledger.md">打开 131 项阅读总账</a>
       </p>
     </section>
 
@@ -214,6 +214,10 @@
         <article class="card"><h3>World / Consequence</h3><p>RISE、Motus2、SR-WM：Action→Consequence 建模能否提供更好的决策反馈。</p></article>
         <article class="card"><h3>Execution / System</h3><p>SmoothRL、Zeva、Zetta：异步执行、memory、recovery 如何作为后续扩展。</p></article>
       </div>
+      <div class="grid two" style="margin-top:14px">
+        <article class="card"><h3>09-22 · UniIntervene</h3><p>减干预方向强近邻：未来后果、价值趋势与记忆恢复。先分清表示、门控和专家的贡献。</p><a href="reader.html?path=notes/uniintervene.md">项目相关笔记 →</a></article>
+        <article class="card"><h3>09-22 · CLAP</h3><p>物理后果与跨本体接口参考：共享知识仍需动作语义对齐；完整视频模型不进入首轮高频控制。</p><a href="reader.html?path=notes/clap.md">项目相关笔记 →</a></article>
+      </div>
       <div class="filters frontier-filters">
         <input id="frontierSearch" type="search" placeholder="搜索：physical token / transition / world model / streaming / recovery…"/>
         <select id="frontierFilter">
@@ -237,12 +241,12 @@
       <div class="section-head">
         <div>
           <h2>知识库 · Physical Token 文献阅读总账</h2>
-          <p class="muted">检索到 ≠ 读懂。当前 129 项论文/项目：125 项历史检索与 4 项新增专题；精读状态按实际核验范围记录。</p>
+          <p class="muted">检索到 ≠ 读懂。当前 131 项论文/项目：125 项历史检索与 6 项新增专题；精读状态按实际核验范围记录。</p>
         </div>
         <a class="button" href="reader.html?path=research/literature/reading-ledger.md">打开阅读总账</a>
       </div>
       <div id="literatureMetrics" class="grid four metrics">
-        <article class="card"><div class="metric">129</div><div class="muted">当前主表文献总数</div></article>
+        <article class="card"><div class="metric">131</div><div class="muted">当前主表文献总数</div></article>
         <article class="card"><div class="metric">18</div><div class="muted">09-19 批次防撞优先</div></article>
         <article class="card"><div class="metric">—</div><div class="muted">已精读 / 专题阅读</div></article>
         <article class="card"><div class="metric">—</div><div class="muted">待系统精读</div></article>
@@ -324,6 +328,7 @@
         <div><h2>知识库 · 当前研究假设池</h2><p class="muted">09-22讨论：从交互后果沉淀物理经验，能否在保留任务能力时减少专家依赖？以下均为待验证方案。</p></div>
         <a class="button" href="reader.html?path=research/physical-experience-protocol-2026-09-22.md">完整研究合同</a>
       </div>
+      <p><a class="button secondary" href="reader.html?path=research/uniintervene-clap-project-implications.md">UniIntervene × CLAP：与当前科研问题的关系</a></p>
       <div class="callout"><b>先拆开两个问题：</b>RLT 的 base→actor 是关键阶段切换，expert takeover 才是纠错；当前 Hammer 只接通了前者。原 RLT 也不能简单理解成“只有语义监督”，本项目检验的是显式 measured action-consequence grounding 的增量。</div>
       <div class="grid two">
         <article class="card"><h3>A · 固定门控，验证物理经验</h3><p>固定 base、专家、阶段规则和 learner，后果监督能否减少达到预设无专家成功率所需的累计专家控制时间？</p><span class="tag">主问题 · 先做缓存特征 probe</span></article>
@@ -384,3 +389,4 @@
   <script src="assets/app.js"></script>
 </body>
 </html>
+

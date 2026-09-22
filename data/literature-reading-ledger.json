@@ -1,10 +1,10 @@
 {
-  "as_of": "2026-09-21",
+  "as_of": "2026-09-22",
   "status_counts": {
     "已精读/已有独立笔记": 8,
     "已初读/讨论过，待系统精读": 12,
     "待精读": 101,
-    "已阅读/已有专题笔记": 8
+    "已阅读/已有专题笔记": 10
   },
   "papers": [
     {
@@ -1940,6 +1940,36 @@
       "source_url": "https://github.com/FBddcz/embodied-jev",
       "read_status": "已阅读/已有专题笔记",
       "note_path": "notes/embodied-jev.md",
+      "note_level": "topic-note"
+    },
+    {
+      "id": "P130",
+      "short_title": "UniIntervene",
+      "title": "UniIntervene: Agentic Intervention for Efficient Real-World Reinforcement Learning",
+      "priority": "P0",
+      "category": "执行时序、失败恢复与非参数自进化",
+      "venue": "CoRL 2026（官方项目标注）",
+      "method_note": "V-JEPA2 未来特征监督、离线 proxy value、TVR 时序风险与目标条件 FAST 恢复；恢复数据进入 replay。",
+      "project_note": "P0：先固定专家与 gate 验证实测后果表征；后单独比较门控，区分触发质量、可恢复性和专家时长。",
+      "verification_boundary": "未来预测+价值趋势+记忆恢复已被覆盖；视觉 latent 不等于可迁移物理规律。公开包仅离线流程，不含真机部署/HIL-SERL集成。 本轮方法/实验/相关附录及README专题核验，未代码复现。",
+      "source_url": "https://arxiv.org/html/2606.12372v1",
+      "read_status": "已阅读/已有专题笔记",
+      "note_path": "notes/uniintervene.md",
+      "note_level": "topic-note"
+    },
+    {
+      "id": "P131",
+      "short_title": "CLAP",
+      "title": "CLAP: Cross-Embodiment Video World Models are Zero-Shot Physical Simulators",
+      "priority": "P1",
+      "category": "WAM、世界模型与动作后果",
+      "venue": "arXiv 2026",
+      "method_note": "CLAP-CURR 先潜动作预训练，再更换动作条件接口并用 EE 标签训练；不同表示有各自动作语义与部署边界。",
+      "project_note": "P1：借动作映射、历史/时长条件与迁移验证原则；先做小模型后果 probe，完整视频模型留作后续对照。",
+      "verification_boundary": "共享规律不代表本体动力学相同；前后帧潜动作不是在线已知命令，视频逼真不保证接触正确；未复现RLinf/RoboTwin集成。 本轮方法/实验/相关附录及README专题核验，未代码复现。",
+      "source_url": "https://arxiv.org/html/2608.27406v1",
+      "read_status": "已阅读/已有专题笔记",
+      "note_path": "notes/clap.md",
       "note_level": "topic-note"
     }
   ]

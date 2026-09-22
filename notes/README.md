@@ -1,6 +1,14 @@
 # Paper Notes Index
 
-> 规则：独立 notes 表示已经专题阅读/精读的论文或系统；129 项总账（含 09-21 新增四项）在 `research/literature/reading-ledger.md` 中维护，且每篇至少已有检索 mini-note。
+> 规则：独立 notes 表示已经专题阅读/精读的论文或系统；131 项总账（含 09-21 新增四项及 09-22 新增两项）在 `research/literature/reading-ledger.md` 中维护，且每篇至少已有检索 mini-note。
+
+## 2026-09-22：只保留与当前项目相关的两项
+
+- [UniIntervene：动作后果、停滞判断与记忆恢复](uniintervene.md) — P0，减干预方向的创新边界。
+- [CLAP：可共享世界知识与本体动作接口](clap.md) — P1，物理后果与跨本体适配参考。
+- [两篇对 Physical Token / RLT 的实际取舍](../research/uniintervene-clap-project-implications.md) — 本组研究分析，未实施。
+
+本轮核验方法、实验、相关附录与官方 README；两项均未复现。
 
 ## 2026-09-21 追加专题
 
@@ -34,7 +42,8 @@
 
 ## 阅读总账
 
-- [129 项阅读状态与目录](../research/literature/reading-ledger.md)
+- [131 项阅读状态与目录](../research/literature/reading-ledger.md)
 - [125 项检索与防撞审查](../research/literature/physical-token-literature-audit-2026-09-19.md)
 
 升级为“精读”时，优先新建独立 note，并在 reading ledger 中更新状态。
+

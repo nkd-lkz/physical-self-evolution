@@ -1,5 +1,65 @@
 [
   {
+    "id": "uniintervene",
+    "title": "UniIntervene: Agentic Intervention for Efficient Real-World Reinforcement Learning",
+    "year": "2026",
+    "layer": "Future / Value Trend / Recovery",
+    "theme": "failure",
+    "status": "方法、实验与相关附录专题阅读 · 2026-09-22；未复现",
+    "tags": [
+      "RLT",
+      "Physical Token",
+      "Intervention",
+      "Action Consequence",
+      "Recovery",
+      "Memory",
+      "HiL-RL"
+    ],
+    "one": "动作条件未来特征与价值趋势判断停滞，检索恢复目标并生成纠正动作；是物理经验减少干预叙事的强近邻。",
+    "method": [
+      "V-JEPA2 未来特征监督、离线 proxy value、TVR 时序风险与目标条件 FAST 恢复；恢复数据进入 replay。"
+    ],
+    "evidence": "五项真机任务平均 SR 81%→88%；人工干预步数占比 34.3%→14.6%。SR 每任务20回合；IR 三次训练运行。",
+    "project": "P0：先固定专家与 gate 验证实测后果表征；后单独比较门控，区分触发质量、可恢复性和专家时长。",
+    "boundary": "未来预测+价值趋势+记忆恢复已被覆盖；视觉 latent 不等于可迁移物理规律。公开包仅离线流程，不含真机部署/HIL-SERL集成。",
+    "questions": [
+      "实测物理后果监督是否优于匹配的视觉未来监督？",
+      "减少人工接管是否也带来后续无专家能力提升？"
+    ],
+    "note": "reader.html?path=notes/uniintervene.md",
+    "url": "https://arxiv.org/html/2606.12372v1"
+  },
+  {
+    "id": "clap",
+    "title": "CLAP: Cross-Embodiment Video World Models are Zero-Shot Physical Simulators",
+    "year": "2026",
+    "layer": "Cross-Embodiment / Action-Conditioned World Model",
+    "theme": "physical",
+    "status": "方法、实验与相关附录专题阅读 · 2026-09-22；未复现",
+    "tags": [
+      "RLT",
+      "Physical Token",
+      "Universal",
+      "Action Interface",
+      "Latent Action",
+      "Action Consequence",
+      "World Model"
+    ],
+    "one": "通过潜动作、末端动作及课程式对齐训练跨本体世界模型；为共享后果接口与本体适配提供参考。",
+    "method": [
+      "CLAP-CURR 先潜动作预训练，再更换动作条件接口并用 EE 标签训练；不同表示有各自动作语义与部署边界。"
+    ],
+    "evidence": "DROID 视频预测及真机候选选择、YAM/G1少样本适配；零样本与适配分开。11帧/25次去噪下预测约1.49–3.24秒。",
+    "project": "P1：借动作映射、历史/时长条件与迁移验证原则；先做小模型后果 probe，完整视频模型留作后续对照。",
+    "boundary": "共享规律不代表本体动力学相同；前后帧潜动作不是在线已知命令，视频逼真不保证接触正确；未复现RLinf/RoboTwin集成。",
+    "questions": [
+      "哪些物理目标可共享，哪些信息必须保留本体条件？",
+      "留出物理条件后的真实后果与适应收益能否共同改善？"
+    ],
+    "note": "reader.html?path=notes/clap.md",
+    "url": "https://arxiv.org/html/2608.27406v1"
+  },
+  {
     "id": "xpace",
     "title": "XPACE: Joint World and Action Modeling from Heterogeneous Experience",
     "year": "2026",
