@@ -1,5 +1,13 @@
 # 实验日志
 
+## 2026-09-22 · 迁移核查与干预讨论整理（无新增GPU运行）
+
+归档元数据确认train450/eval40无seed交叉，最后Stage1日志为10823；迁移包缺历史权重和原始数据。旧12k物理诊断20回合与新10k eval40严格区分。旧Stage2配置expert=null、请求/干预摘要为0，尚无Hammer专家纠错闭环。
+
+新增[恢复入口](https://nkd-lkz.github.io/physical-self-evolution/reader.html?path=research/migration-recovery-2026-09-22.md)、[干预与时间语义](https://nkd-lkz.github.io/physical-self-evolution/reader.html?path=research/rlt-intervention-2026-09-22.md)、[物理经验研究合同](https://nkd-lkz.github.io/physical-self-evolution/reader.html?path=research/physical-experience-protocol-2026-09-22.md)及脱敏核查摘要。此项是资料核查与实验提案，不计作新训练、评测或Physical Token收益。以下早先入库的截图证据继续保留。
+
+---
+
 ## 2026-09-22 · train450 Stage1 10k评测摘要补充（不新增独立样本）
 
 ### 事实与来源

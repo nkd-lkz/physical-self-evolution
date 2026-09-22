@@ -1,5 +1,25 @@
 [
   {
+    "date": "2026-09-22",
+    "decision": "迁移后先恢复冻结train450/10k、验收少量闭环和一种专家纠错，再做缓存特征后果probe；暂缓全量Stage1与长程Stage2。",
+    "reason": "代码/元数据包未包含旧模型权重和完整数据。旧Stage2使用clean50/12k且未启用Hammer专家；现有22/40证据不是新机器的恢复验收。"
+  },
+  {
+    "date": "2026-09-22",
+    "decision": "关键阶段切换、专家纠错与终止/奖励分别建模；100步阈值只作Hammer历史工程基线。",
+    "reason": "H50/C50与200名义步下通常只剩两个actor chunk，不能直接照搬ManiSkill连续3个无进展chunk规则。TOPP不负责识别失败或选择恢复目标。"
+  },
+  {
+    "date": "2026-09-22",
+    "decision": "先固定expert与gate验证measured-consequence表示的增量，再单独研究预测式gate；主成本为累计专家控制时长。",
+    "reason": "同时改变表示、数据、专家、门控或chunk会混淆归因；事件数下降可能只是接管持续更久。必须分别报告无专家/辅助成功率、吞吐率和达到目标的各类成本。"
+  },
+  {
+    "date": "2026-09-22",
+    "decision": "保留state/history、原RLT/prefix、head readout、expert-only与同纠正数据BC/DAgger对照；多任务按留出物理条件→第二任务逐级验证。",
+    "reason": "RLT不是纯语义表示，风险门控也已有近邻；需要证明物理后果grounding的独立价值。以上是研究合同，未实现或运行。"
+  },
+  {
     "date": "2026-09-18",
     "decision": "新train450 Stage1 step10k作为当前development candidate，但不冻结为最终reference；两次eval40均22/40只视为聚合复现证据。",
     "reason": "两次运行使用同一40个seeds和同一协议，不能合并成80个独立样本；eval40还包含旧development cohort中的19个seed，不能直接与旧12k的10/20做显著性结论。最终reference仍需failure-stage分析和独立seeds复核。"

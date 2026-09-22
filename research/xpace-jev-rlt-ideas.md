@@ -2,6 +2,10 @@
 
 > 2026-09-21 · 研究提案，未实施、无实验结果。保留现有 RLT 复现与项目 gate；本文件是新增候选问题，不替换 master roadmap。
 
+## 2026-09-22 后续讨论
+
+本页保留09-21提案。新增[干预机制核查](https://nkd-lkz.github.io/physical-self-evolution/reader.html?path=research/rlt-intervention-2026-09-22.md)、[物理经验研究合同](https://nkd-lkz.github.io/physical-self-evolution/reader.html?path=research/physical-experience-protocol-2026-09-22.md)和[小算力恢复入口](https://nkd-lkz.github.io/physical-self-evolution/reader.html?path=research/migration-recovery-2026-09-22.md)。当前先固定expert/gate检验后果表示，预测式gate后置；下文多任务×多种子的完整矩阵为后续扩展，不是迁移阶段最低运行要求。没有新增实验结果。
+
 ## 1. 建议抓住的问题
 
 **固定观测、参考策略、执行接口和交互预算后，动作后果监督能否使紧凑状态更准确地识别接触偏差的可恢复性，并以更少经验改善在线策略？**

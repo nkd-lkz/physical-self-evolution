@@ -1,9 +1,9 @@
 # Universal Physical Token：研究总路线
 
-> 版本：2026-09-18  
-> 当前状态：**领导主线不变；执行处于 Gate 0 — trustworthy B0 diagnosis / recovery**  
-> 主规范：[`physical-token-leadership-spec.md`](physical-token-leadership-spec.md)  
-> 最新进展：[`progress-2026-09-18.md`](progress-2026-09-18.md)
+> 版本：2026-09-22<br>
+> 当前状态：**小算力恢复、最小干预闭环与离线表示probe；正式在线比较仍需可信matched B0**<br>
+> 主规范：[`physical-token-leadership-spec.md`](physical-token-leadership-spec.md)<br>
+> 最新评测口径：[09-22进展](https://nkd-lkz.github.io/physical-self-evolution/reader.html?path=research/progress-2026-09-22.md)；当前执行：[恢复入口](https://nkd-lkz.github.io/physical-self-evolution/reader.html?path=research/migration-recovery-2026-09-22.md)；研究设计：[干预合同](https://nkd-lkz.github.io/physical-self-evolution/reader.html?path=research/physical-experience-protocol-2026-09-22.md)
 
 ---
 
@@ -38,9 +38,15 @@ actor / action-generation features
 
 ---
 
+## 0.1 2026-09-22 · 物理经验与干预的可检验目标
+
+先固定专家、阶段/纠错门控、learner和预算，检验后果监督能否减少达到预设无专家成功率所需的累计专家控制时间；之后才单独比较预测式门控。成功率与吞吐率约束、expert-only/BC对照、标签与反事实边界见[完整合同](https://nkd-lkz.github.io/physical-self-evolution/reader.html?path=research/physical-experience-protocol-2026-09-22.md)。
+
+现有RLT不能归类为只有语义监督，prefix readout也不是action-head tap。最小脚本恢复是实验基础设施，其收益不直接算作Physical Token收益。当前优先恢复单个冻结reference与一种专家纠错，做缓存特征probe；此类离线表示研究不依赖大规模RLT收敛。
+
 ## 1. 当前执行门槛：Gate 0
 
-在 B1 / B2 前必须先建立可信 RLT / RL Token baseline。当前已经从“Stage1能否完成任务”推进到“B0 online learner能否至少保持reference”的诊断阶段：
+正式 B1 / B2 在线收益比较前必须先建立可信matched baseline。历史已推进到B0诊断；迁移后的即时工作回到reference资产恢复与干预接口验收，离线probe可以并行开展：
 
 ```text
 Gate 0A  Validate Stage1 reference
@@ -49,7 +55,7 @@ Gate 0B  Fix execution / timing semantics
        ↓
 Gate 0C  Build B0 online baseline
        ↓
-B0-Diag BC/reference/Q diagnosis  ← current
+B0-Diag BC/reference/Q diagnosis  ← online restart gate
        ↓
 trustworthy B0
        ↓
@@ -328,7 +334,7 @@ online training preserves / improves success
 - macro execution duration / discount；
 - checkpoint / actor takeover timing。
 
-只有B0能够稳定保持或改善reference，才进入B1/B2。第一阶段仍尽量沿用matched RLT actor/critic，避免learner改动掩盖representation贡献。
+只有B0能够稳定保持或改善reference，才将该RLT配置用于B1/B2正式在线比较。离线后果probe不受此门槛阻塞；首轮在线比较保持同一learner、expert与gate，避免控制基础设施改动掩盖representation贡献。
 
 ## 8. 指标与证据链
 
@@ -345,7 +351,15 @@ online training preserves / improves success
 - critic calibration / action discrimination；
 - token usage ablation。
 
-### 8.3 Online control evidence
+### 8.3 Intervention evidence（2026-09-22）
+
+- 无专家成功率与辅助成功率分开；
+- 实际干预回合比例、非expert→expert事件数、请求与执行次数；
+- 累计专家控制秒数，以及包含推理/规划/重置的墙钟吞吐率；
+- 达到预设成功率的交互、更新与时间成本；未达标按截尾报告；
+- 预测校准、误报与提前量；干预后不能把未执行学生动作标为失败。
+
+### 8.4 Online control evidence
 
 - success rate；
 - success-vs-interaction curve / AUC；
@@ -427,4 +441,4 @@ RoboDojo不阻塞Hammer上的B0诊断与Physical Token主实验。
 
 当前最准确表述：
 
-> **项目以 RLT 为 baseline。当前新train450 Stage1 10k在eval40上两次均为22/40（55%），但旧clean50/12k上的首个B0 Stage2发生明显在线退化，因此主线已转入B0诊断。只有在BC/reference/Q与执行时间语义被证明可信后，才会进入B1 measured-transition与B2 physics-grounding实验。**
+> **项目以 RLT 为 baseline。新train450 Stage1 10k的历史eval40双复测均为22/40（55%）；旧clean50/12k的B0 Stage2退化且未启用Hammer专家。迁移后先恢复冻结reference、验收最小干预并做离线后果probe；正式B1/B2在线归因仍需可信learner与执行时间语义。减干预与跨任务物理泛化尚无结果。**

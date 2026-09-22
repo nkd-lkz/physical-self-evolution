@@ -1,0 +1,121 @@
+{
+  "as_of": "2026-09-22",
+  "scope": "Redacted audit of migration metadata, archived logs and source; no new GPU training or evaluation.",
+  "split": {
+    "train_episodes": 450,
+    "eval_episodes": 40,
+    "train_frames": 70640,
+    "eval_frames": 6238,
+    "seed_overlap": [],
+    "excluded_episodes": [
+      58,
+      73,
+      148,
+      250,
+      336,
+      361,
+      374,
+      478,
+      485,
+      486
+    ],
+    "weak_contact_train": 10,
+    "weak_contact_eval": 0
+  },
+  "train450_latest_log": {
+    "step": 10823,
+    "train/grad_norm": 0.168,
+    "train/learning_rate": 1.86e-05,
+    "train/loss": 0.0532,
+    "train/rlt_loss": 0.0524,
+    "train/vla_loss": 0.000808
+  },
+  "train450_loss_precision": "Rounded launcher progress display, not full-precision training events.",
+  "train450_launcher_status": "stage1_exit=1",
+  "train450_eval40": {
+    "successes": 22,
+    "episodes": 40,
+    "reported_repeats_same_cohort": 2,
+    "source": "User evaluation-summary screenshot and public research/progress-2026-09-18.md",
+    "raw_result_found_in_migration": false,
+    "recomputed_in_this_audit": false,
+    "independent_seed_count_not_doubled": true
+  },
+  "old_clean50_eval20": [
+    {
+      "checkpoint_step": 10000,
+      "successes": 8,
+      "episodes": 20,
+      "protocol": "H50/C50 native_macro"
+    },
+    {
+      "checkpoint_step": 12000,
+      "successes": 10,
+      "episodes": 20,
+      "protocol": "H50/C50 native_macro"
+    },
+    {
+      "checkpoint_step": 6000,
+      "successes": 8,
+      "episodes": 20,
+      "protocol": "H50/C50 native_macro"
+    },
+    {
+      "checkpoint_step": 8000,
+      "successes": 7,
+      "episodes": 20,
+      "protocol": "H50/C50 native_macro"
+    }
+  ],
+  "old12k_physics": {
+    "episodes": 20,
+    "successes": 10,
+    "policy_chunks_observed": [
+      4
+    ],
+    "median_simulation_seconds": 7.726000366965309,
+    "warning": "This is old clean50/12k evidence, not train450/10k failures."
+  },
+  "old_clean50_12k_stage2": {
+    "reference": "old clean50 Stage1 12k, not train450/10k",
+    "expert_model": null,
+    "H": 50,
+    "C": 50,
+    "action_dim": 14,
+    "actor_start_step": 100,
+    "max_episode_steps": 200,
+    "step_lim": 200,
+    "max_steps_per_rollout_epoch": 200,
+    "warmup_post_collect_updates": 2000,
+    "last_logged_metrics": {
+      "train/replay/intervention_requested_rate": 0,
+      "train/replay/intervention_rate": 0,
+      "train/actor/human_mask_ratio": 0,
+      "eval/success_once": 0.15000000596046448
+    },
+    "metric_scope": "Last saved summary plus resolved config; zero metrics alone do not prove absence of need for help."
+  },
+  "migration_manifest": {
+    "checked_extensions": [
+      ".pt",
+      ".pth",
+      ".safetensors",
+      ".h5",
+      ".hdf5",
+      ".parquet",
+      ".npz"
+    ],
+    "matching_tensor_file_count": 0,
+    "meaning": "Code and metadata archive does not supply the historical checkpoints or full datasets."
+  },
+  "source_sha256_by_redacted_label": {
+    "split.json": "91b4c5c38bd8788db6af05338d33fff9d71b8dd1eda2167f11e29c33a2c52725",
+    "eval_seeds.json": "c0b3ae9547e454c75f7127ac7ef0e7f8133530b4e513bb271854377f76291a8b",
+    "norm_stats.json": "748bd1df77162b6db69def82e00eac055e4dde8497cbb498ee0164f88a363921",
+    "resolved_config.yaml": "2ef4e8d2c2ff9597a18296162bb034d2ed8668a80ce55c56ced1d64bd8f527a2",
+    "hammer_robotwin_env.py": "809a8072e05977b202de1150a9a97a3c7b51a4ad64799ea0e9061f12558aa509",
+    "old_clean50_12k_stage2_config.yaml": "d651d98c2b4e9e69150d8fc28082537f1351d043c6f2b201e0bb07fefb887479",
+    "old_clean50_12k_stage2_summary.json": "2b3502b88b50b3aa6c5763bf4b07abe657429b92242d260c7cd25e859f5339c8"
+  },
+  "provenance_note": "Local source paths, run-account identifiers and infrastructure details are intentionally omitted. Hashes identify archived source files; those private originals are not redistributed here."
+}

@@ -14,7 +14,7 @@
 
 VLA hidden states → compact RL representation。
 
-通过轻量 encoder / decoder 让一个小 representation 保留对控制有用的信息。
+通过轻量encoder/decoder保留VLA内部特征信息。RLinf的alpha>0配置还联合优化VLA动作目标；Stage1不等于全程冻结大模型。当前prefix/RLT特征可能已含几何和物理信息，不能称为只有语义监督。
 
 ### Stage 2
 
@@ -87,3 +87,9 @@ RLT 在我们的任务中失败时，不能直接说“它不懂物理”。
 3. critic 不会排名？
 4. failure data 不够？
 5. chunk 太长 / feedback 太慢？
+
+## 7. 2026-09-22 · 关键阶段与专家纠错核查
+
+原论文由操作员选择base VLA→actor的训练交接时刻，并允许独立的遥操作纠错；RLinf ManiSkill用任务几何phase gate和停滞gate模拟这两类决策，纠正动作来自另配SFT expert。Hammer保存运行只有名义步phase切换，尚未接通专家恢复。
+
+[完整机制、固定源码版本与100/200步解释](https://nkd-lkz.github.io/physical-self-evolution/reader.html?path=research/rlt-intervention-2026-09-22.md)包含：SFT数据来源与恢复能力边界、expert为何不替代所有RL研究、TOPP的职责、跨任务门控与ThriftyDAgger/LazyDAgger近邻。[研究合同](https://nkd-lkz.github.io/physical-self-evolution/reader.html?path=research/physical-experience-protocol-2026-09-22.md)进一步区分固定门控的表示比较和预测门控比较。本次为论文/代码解读，不是新增复现结果。

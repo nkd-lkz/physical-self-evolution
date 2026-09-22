@@ -1,5 +1,17 @@
 # 科研决策日志
 
+## 2026-09-22 · 干预研究合同与小算力恢复（待实施）
+
+- 当前入口改为冻结reference恢复、最小专家纠错和缓存特征probe；大规模RLT收敛不是离线表示研究的前提，正式在线归因仍需可信matched learner。
+- reference→actor关键阶段、expert纠错、terminal/reward分别记录；100/200是Hammer历史名义步协议，不是通用关键时刻或物理时间。
+- 先固定专家/门控验证后果监督，再单独改gate；不通过放宽阈值制造“干预减少”。主成本使用专家控制时长，并约束无专家成功率和吞吐率。
+- TOPP只完成路径时间参数化；脚本专家须先从学生偏离状态验证恢复。没有专家模型/适配时，不能宣称已有人工干预。
+- RLT不能定性成只有语义监督；保留state/history、prefix/head、expert-only、同纠正数据BC/DAgger等对照。多任务、物理规律迁移均为后续假设。
+
+依据与完整合同：[机制核查](https://nkd-lkz.github.io/physical-self-evolution/reader.html?path=research/rlt-intervention-2026-09-22.md)、[小算力入口](https://nkd-lkz.github.io/physical-self-evolution/reader.html?path=research/migration-recovery-2026-09-22.md)、[研究设计](https://nkd-lkz.github.io/physical-self-evolution/reader.html?path=research/physical-experience-protocol-2026-09-22.md)。本次不增加GPU实验或成功率结果。
+
+---
+
 ## 2026-09-18 · B0 Stage2退化后，先做reference-consistency诊断再重启online RL
 
 **决定：**

@@ -1,7 +1,7 @@
 # Universal Physical Token：领导约束后的研究主线
 
-> 版本：2026-09-17  
-> 状态：**当前项目主规范 / Source of Truth**  
+> 版本：2026-09-22（补充干预研究合同与迁移状态）<br>
+> 状态：**当前项目主规范 / Source of Truth**<br>
 > 说明：本页根据领导提供的 Physical Token 方案、后续讨论与最新实验事实持续维护。此前 Research OS 中更宽泛的 Physical Experience / Self-Evolution / Agent/Harness / World Model 路线只保留为历史与知识库背景。
 
 ---
@@ -36,9 +36,15 @@ Physical Token 是 **actor-side compact interface**，不是高层 planner，也
 
 ---
 
-## 0.1 当前工程前置：Gate 0 — Baseline Recovery / Validation
+## 0.1 2026-09-22 · 当前最小问题与执行约束
 
-领导定义的 B0/B1/B2 科学问题不变，但正式消融前必须先得到可信 RLT baseline：
+物理经验的当前操作化目标是：在固定reference、expert、phase/gate、learner与资源预算下，后果grounding能否减少达到预设无专家成功率所需的累计专家控制时间。预测式gate是后续独立比较；成功率/吞吐率约束、expert-only与BC对照、多层信号和反事实边界见[研究合同](https://nkd-lkz.github.io/physical-self-evolution/reader.html?path=research/physical-experience-protocol-2026-09-22.md)。
+
+RLT已有表示不应预设为纯语义；本地prefix readout与拟议action-head tap需要分别控制。最小恢复专家用于建立可测干预基线，TOPP不能单独完成纠错。当前低算力入口为[冻结reference恢复与离线probe](https://nkd-lkz.github.io/physical-self-evolution/reader.html?path=research/migration-recovery-2026-09-22.md)，没有新的干预训练或B1/B2结果。
+
+## 0.2 当前工程前置：Gate 0 — Baseline Recovery / Validation
+
+B0/B1/B2科学问题不变；正式在线消融需可信matched learner。冻结特征上的离线机制研究可以先做，不以大规模RLT收敛为前提：
 
 ```text
 Gate 0A  Recover & validate Stage1 reference
@@ -77,7 +83,7 @@ clean490
 
 norm 只使用 train450。
 
-下一轮 Stage1 仍保持论文/官方拓扑：generic `pi05_base + rlt_alpha=1`，H50、global64、dual-GPU，最新默认 max30k、warmup1k、每5k保存；正式GPU训练尚未启动。checkpoint 仍按闭环能力选择，不按最低 train loss。
+该Stage1已按generic `pi05_base + rlt_alpha=1`、H50、global64启动，原计划max30k、每5k保存，迁移前停在约10823。历史完整保存点为5k/10k；10k同eval40双复测22/40，仅为开发集聚合证据。当前迁移包缺权重，尚未在新机器恢复能力；checkpoint仍按闭环能力选择。
 
 Gate 0 是实验可解释性的前置，不改变 Physical Token 的科学主张。
 
@@ -406,7 +412,8 @@ Physical-aware critic 是有潜力的后续方向，但不应与第一轮表示�
 - old Stage2 C10：只证明工程闭环；
 - Stage1 6k–12k unified eval：证明部分 closed-loop capability；
 - clean500→clean490：证明数据质量与物理标签有效性需要分层审计；
-- new clean490 Stage1：CPU/data/config准备完成，GPU训练未启动。
+- new clean490 Stage1：历史训练停在约10823，10k双复测22/40；本机缺权重，当前未恢复该能力；
+- 旧clean50/12k Stage2：周期评测约45%→15%，未启用Hammer专家纠错。
 
 ### 当前没有的证据
 
@@ -440,11 +447,11 @@ Streaming、no-replay、batch≈1、uncertainty-aware update 都是后续 online
 ## 10. 当前执行顺序
 
 ```text
-12k full-physics failure analysis
+Recover frozen train450/10k + matched norm/resources
         ↓
-clean490 Stage1 30k-max training
+Single-observation / few-episode validation + old12k failure audit
         ↓
-5k...30k eval40 development curve
+Minimal validated intervention loop + cached-feature consequence probes
         ↓
 independent final reference validation
         ↓

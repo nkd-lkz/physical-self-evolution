@@ -32,15 +32,15 @@
       <a href="#archive">详细资料</a>
     </nav>
     <div class="side-note">
-      <b>当前 Source of Truth · 2026-09-19</b><br>
+      <b>当前 Source of Truth · 2026-09-22</b><br>
       主问题收敛为：<b>从 action-generation pathway 提取可迁移的 compact Physical Token，并用真实 executed-action consequence 与可靠 physics supervision 做 grounding。</b><br><br>
-      <b>本周研究重点：</b>先把 Physical Token 的定义、近邻工作与可证伪方案梳理清楚；RLT、RECAP、V-GPS/Q-VGM 等都只是可选 downstream learner / baseline，不再把 RLT 收敛作为故事成立前提。
+      <b>当前最小入口：</b>恢复冻结 reference，验收一类专家纠错，再做缓存特征后果预测。固定专家/门控检验表示，之后单独研究预测式门控；RLT 是可选 learner，尚无减干预结果。
     </div>
   </aside>
 
   <main class="main">
     <section id="home" class="hero">
-      <div class="kicker">Research Focus · 2026-09-19 · 实验证据更新 2026-09-22</div>
+      <div class="kicker">Research Focus · 2026-09-22 · 迁移恢复与干预研究合同</div>
       <h1>Universal Physical Token<br/>for Robot Self-Evolution</h1>
       <p>核心问题：<b>能否从已有 action-generation head 读出一个紧凑表示，用 measured transition prediction 与有效 physics constraints 对其 grounding，并在在线阶段不重新训练 action model 的情况下适应变化的接触动力学？</b></p>
       <div class="callout">
@@ -51,6 +51,8 @@
       <p>
         <a class="button" href="reader.html?path=research/physical-token-leadership-spec.md">打开领导版主规范</a>
         <a class="button secondary" href="reader.html?path=research/progress-2026-09-22.md">打开 09-22 评测进展</a>
+        <a class="button secondary" href="reader.html?path=research/migration-recovery-2026-09-22.md">小算力恢复入口</a>
+        <a class="button secondary" href="#ideas">物理经验与减干预假设</a>
         <a class="button secondary" href="reader.html?path=research/literature/reading-ledger.md">打开 129 项阅读总账</a>
       </p>
     </section>
@@ -156,7 +158,7 @@
       <div class="grid four metrics">
         <article class="card"><div class="metric">22/40 · 55%</div><div class="muted">train450 Stage1 10k；同cohort双复测聚合一致</div></article>
         <article class="card"><div class="metric">18/40</div><div class="muted">失败仍待逐episode归因；未证明RLT表征收益</div></article>
-        <article class="card"><div class="metric">196.25/200</div><div class="muted">平均episode步数接近预算；成功/失败时长需分开</div></article>
+        <article class="card"><div class="metric">196.25/200</div><div class="muted">名义episode步数；不等于物理时间或反馈次数</div></article>
         <article class="card"><div class="metric">125 papers</div><div class="muted">09-19历史检索批次；当前文献总数见阅读总账</div></article>
         <article class="card"><div class="metric">18 P0</div><div class="muted">最高重合近邻，优先全文/附录/代码防撞</div></article>
         <article class="card"><div class="metric">B0 degraded</div><div class="muted">旧RLT Stage2约45%→15%，说明 learner 不应绑架 Physical Token 故事</div></article>
@@ -165,6 +167,9 @@
       </div>
 
       <div class="timeline">
+        <div><b>09-22迁移与干预核查 · 未新增GPU实验</b><p>迁移包保留代码/元数据而缺历史权重与原始数据；当前先恢复冻结reference。旧clean50/12k Stage2的expert=null，请求与干预摘要均为0，Hammer纠错闭环尚未接通。</p></div>
+        <div><b>100/200是名义动作预算</b><p>H50/C50下，warmup通过后通常前两个chunk由reference控制，后两个由actor控制；不是100/200次物理步或闭环反馈。不能照搬连续3个停滞chunk的专家阈值。</p></div>
+        <div><b>把减干预变成可证伪问题</b><p>固定专家与门控先验证后果监督，之后单独研究预测式gate。分开统计无专家/辅助成功率、专家控制秒数、切换事件和墙钟吞吐率；全部仍为待验证方案。</p></div>
         <div><b>09-22评测证据补充 · train450 Stage1 10k</b><p>用户截图报告GPU6 22/40成功、return=0.55、mean reward约0.00287，与此前GPU7聚合一致。与09-18已有记录关联；无新run ID，暂不新增运行次数或独立seed。</p></div>
         <div><b>指标与视频口径</b><p>reward约0.00287是按步平均，不是成功奖励幅度；W&amp;B已同步但0 media不能推出本地无视频。平均196.25/200步需拆分成功、失败与超时统计。</p></div>
         <div><b>当前科研结论</b><p>55%是当前开发cohort闭环结果；未证明逐seed轨迹一致、优于旧clean50/12k的50%，也未证明RLT或Physical Token表征收益。</p></div>
@@ -184,15 +189,14 @@
         <table>
           <thead><tr><th>优先级</th><th>下一步</th><th>必须留下的证据</th></tr></thead>
           <tbody>
-            <tr><td>P0</td><td>对齐GPU6/GPU7 run来源并核对逐seed结果</td><td>checkpoint/norm/config版本、seed列表、success/return/length/终止原因；相同cohort不重复计独立样本</td></tr>
-            <tr><td>P0</td><td>复盘18个失败，分开报告成功/失败时长并准备同cohort对照</td><td>视频/日志对应关系、失败阶段、timeout数量、5k/10k/旧12k匹配协议；本轮尚未执行</td></tr>
-            <tr><td>P0</td><td>精读18篇最高重合论文并逐篇补独立notes</td><td>method/data/loss/freeze/inference/ablation/code audit</td></tr>
-            <tr><td>P0</td><td>形成3套Physical Token候选方案并与两位同事讨论</td><td>模块、监督、部署输入、强baseline、No-Go条件</td></tr>
-            <tr><td>P0</td><td>把Action Head vs Backbone vs History-only vs Action-only设为核心matched comparison</td><td>相同输入历史/容量/监督预算下的representation与decision metrics</td></tr>
-            <tr><td>P1</td><td>和真机同事冻结可获得的物理数据合同</td><td>sensor/command/timestamp/controller/contact availability matrix</td></tr>
-            <tr><td>P1</td><td>优先评估Physical Critic / candidate ranking路径，避免先被online RL收敛绑死</td><td>same candidate set下的ranking/calibration/closed-loop gain</td></tr>
-            <tr><td>P1</td><td>明确WAM兼容接口与Universal层级</td><td>flow/AR/WAM action module的readout convention与held-out transfer protocol</td></tr>
-            <tr><td>Later</td><td>只有representation证据成立后再恢复大规模online RL与cross-embodiment实验</td><td>matched ablation + physical shift + held-out transfer</td></tr>
+            <tr><td>P0</td><td>恢复train450/10k完整wrapper、匹配norm与Hammer资源</td><td>先单观测/单seed，再4–8个串行开发回合；迁移元数据已有，旧权重缺失，串行协议单独记录</td></tr>
+            <tr><td>P0</td><td>复盘已有旧12k视频，选择一种可恢复失败类型</td><td>旧20回合不冒充新10k的18次失败；记录阶段、实际时长与未知原因</td></tr>
+            <tr><td>P0</td><td>接通最小Hammer专家纠错与计时</td><td>固定phase/gate/expert；验证从当前状态恢复、实际动作、控制秒数、请求/执行/归还与terminal</td></tr>
+            <tr><td>P1</td><td>缓存少量交互特征，做后果预测对照</td><td>state/history vs 原RLT/prefix vs head；相同输入/容量/episode划分，真实执行后果与validity mask</td></tr>
+            <tr><td>P1</td><td>原eval40结果拿回后核对逐seed与失败视频</td><td>新10k 22/40仅沿用既有截图；不增加独立样本，不承诺串行重现同一聚合</td></tr>
+            <tr><td>P1</td><td>固定专家与gate，冻结成功率/吞吐率及成本合同</td><td>无专家/辅助评测分开；累计专家秒数为主成本，事件数和训练/交互/墙钟预算分别报告</td></tr>
+            <tr><td>P1</td><td>继续近邻防撞与可用物理数据合同</td><td>ThriftyDAgger/LazyDAgger门控近邻；head/prefix/history对照；传感器、单位与可部署输入</td></tr>
+            <tr><td>Later</td><td>可信小learner上比较B0/B1/B2，再独立比较预测式gate</td><td>专家、数据、动作时间语义和资源匹配；多任务从留出物理条件与第二任务开始</td></tr>
           </tbody>
         </table>
       </div>
@@ -311,16 +315,33 @@
       </div>
       <div class="grid two">
         <article class="card"><h3>当前自进化定义</h3><p>本项目当前不是开放世界无限自主学习；而是冻结 action model 后，由 compact physical interface + small learner 做局部在线适应。</p></article>
-        <article class="card"><h3>更强 RSI 作为后续</h3><p>World model、memory、recovery、fleet consolidation 只有在当前 Physical Token 主问题得到实验回答后再讨论。</p></article>
+        <article class="card"><h3>更强 RSI 作为后续</h3><p>完整 world model、memory、fleet consolidation 保留为后续；最小专家恢复现在作为可核验的干预基线，不能把更强专家带来的收益归给 Physical Token。</p></article>
       </div>
     </section>
 
     <section id="ideas">
       <div class="section-head">
-        <div><h2>知识库 · 当前研究假设池</h2><p class="muted">这里围绕领导定义的主问题组织，不再无限发散。</p></div>
+        <div><h2>知识库 · 当前研究假设池</h2><p class="muted">09-22讨论：从交互后果沉淀物理经验，能否在保留任务能力时减少专家依赖？以下均为待验证方案。</p></div>
+        <a class="button" href="reader.html?path=research/physical-experience-protocol-2026-09-22.md">完整研究合同</a>
       </div>
+      <div class="callout"><b>先拆开两个问题：</b>RLT 的 base→actor 是关键阶段切换，expert takeover 才是纠错；当前 Hammer 只接通了前者。原 RLT 也不能简单理解成“只有语义监督”，本项目检验的是显式 measured action-consequence grounding 的增量。</div>
+      <div class="grid two">
+        <article class="card"><h3>A · 固定门控，验证物理经验</h3><p>固定 base、专家、阶段规则和 learner，后果监督能否减少达到预设无专家成功率所需的累计专家控制时间？</p><span class="tag">主问题 · 先做缓存特征 probe</span></article>
+        <article class="card"><h3>B · 固定策略，验证预判门控</h3><p>在相同专家预算下，预测式 gate 能否比停滞/普通风险规则更早识别需要帮助的状态，并提高辅助成功率？</p><span class="tag">后续独立消融</span></article>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>讨论中的疑问</th><th>当前结论</th><th>验证边界</th></tr></thead>
+          <tbody>
+            <tr><td>100步接管、200步上限？</td><td>H50/C50名义waypoint预算；warmup后通常仅后两个chunk由actor控制。</td><td>工程基线，不是物理时间或最优阶段；3个停滞chunk门槛可能来不及。</td></tr>
+            <tr><td>TOPP能做人工纠错吗？</td><td>需要当前状态恢复策略＋IK/规划＋TOPP；TOPP只处理路径时间。</td><td>先验收一类学生偏离状态；原生play_once成功不证明任意失败可恢复。</td></tr>
+            <tr><td>如何证明减少干预？</td><td>同时记录无专家/辅助成功率、专家秒数、事件数和墙钟吞吐率。</td><td>门槛、专家和资源匹配；一次长期接管不能算作低成本。</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><a class="button secondary" href="reader.html?path=research/rlt-intervention-2026-09-22.md">RLT / ManiSkill / Hammer机制详解</a> <a class="button secondary" href="reader.html?path=research/migration-recovery-2026-09-22.md">小算力最简切入口</a></p>
       <div class="grid three">
-        <article class="card"><h3>H0 · Trustworthy Baseline</h3><p>先排除 Stage1 capability、H/C-TOPP 执行协议、reward/transition 等基础混杂。</p><span class="tag">当前 Gate 0</span></article>
+        <article class="card"><h3>H0 · Trustworthy Baseline</h3><p>恢复冻结reference；核对H/C-TOPP与实际时长，验收专家纠错和干预计数，再做受控比较。</p><span class="tag">当前 Gate 0</span></article>
         <article class="card"><h3>H1 · Head vs Backbone</h3><p>Action-head pre-output features 是否比 backbone features 更适合物理 adaptation readout？</p><span class="tag">首轮必须验证</span></article>
         <article class="card"><h3>H2 · Transition Grounding</h3><p>Measured action→outcome prediction 是否让 compact token 更适合在线 learner？</p><span class="tag">B1</span></article>
         <article class="card"><h3>H3 · Valid Physics</h3><p>Kinematic / actuator constraints 是否在 transition loss 之外提供独立增益？</p><span class="tag">B2</span></article>
@@ -341,6 +362,9 @@
     <section id="archive">
       <h2>08 · 详细资料</h2>
       <div class="grid three">
+        <a class="card link-card" href="reader.html?path=research/rlt-intervention-2026-09-22.md"><h3>RLT干预与100/200步</h3><p>原论文、ManiSkill专家、Hammer阶段切换与TOPP恢复边界。</p></a>
+        <a class="card link-card" href="reader.html?path=research/physical-experience-protocol-2026-09-22.md"><h3>物理经验与干预研究合同</h3><p>固定门控与预测门控分开验证，主指标、基线、反事实与多任务边界。</p></a>
+        <a class="card link-card" href="reader.html?path=research/migration-recovery-2026-09-22.md"><h3>迁移后的小算力入口</h3><p>缺失资产、冻结reference恢复、历史失败分析与缓存特征probe。</p></a>
         <a class="card link-card" href="reader.html?path=research/progress-2026-09-22.md"><h3>2026-09-22 评测证据补充</h3><p>train450 Stage1 10k：22/40（55%）；reward、时长、视频与重复评测口径。</p></a>
         <a class="card link-card" href="reader.html?path=research/physical-token-leadership-spec.md"><h3>Leadership Physical Token Spec</h3><p>当前 Source of Truth：action-head interface、physical objectives、online update contract 与首轮实验。</p></a>
         <a class="card link-card" href="reader.html?path=research/progress-2026-09-15.md"><h3>2026-09-15 Baseline Recovery</h3><p>H/C 协议、Stage1 capability、20k joint recovery 和当前验收顺序。</p></a>

@@ -11,7 +11,7 @@
     },
     {
       "value": "196.25/200",
-      "label": "平均episode步数接近预算；成功/失败时长需分开"
+      "label": "名义episode步数；不等于物理时间或反馈次数"
     },
     {
       "value": "125 papers",
@@ -35,6 +35,18 @@
     }
   ],
   "timeline": [
+    {
+      "title": "09-22迁移与干预核查 · 未新增GPU实验",
+      "body": "迁移包保留代码/元数据而缺历史权重与原始数据；当前先恢复冻结reference。旧clean50/12k Stage2的expert=null，请求与干预摘要均为0，Hammer纠错闭环尚未接通。"
+    },
+    {
+      "title": "100/200是名义动作预算",
+      "body": "H50/C50下，warmup通过后通常前两个chunk由reference控制，后两个由actor控制；不是100/200次物理步或闭环反馈。不能照搬连续3个停滞chunk的专家阈值。"
+    },
+    {
+      "title": "把减干预变成可证伪问题",
+      "body": "固定专家与门控先验证后果监督，之后单独研究预测式gate。分开统计无专家/辅助成功率、专家控制秒数、切换事件和墙钟吞吐率；全部仍为待验证方案。"
+    },
     {
       "title": "09-22评测证据补充 · train450 Stage1 10k",
       "body": "用户截图报告GPU6 22/40成功、return=0.55、mean reward约0.00287，与此前GPU7聚合一致。与09-18已有记录关联；无新run ID，暂不新增运行次数或独立seed。"
@@ -79,48 +91,43 @@
   "plan": [
     {
       "priority": "P0",
-      "action": "对齐GPU6/GPU7 run来源并核对逐seed结果",
-      "evidence": "checkpoint/norm/config版本、seed列表、success/return/length/终止原因；相同cohort不重复计独立样本"
+      "action": "恢复train450/10k完整wrapper、匹配norm与Hammer资源",
+      "evidence": "先单观测/单seed，再4–8个串行开发回合；迁移元数据已有，旧权重缺失，串行协议单独记录"
     },
     {
       "priority": "P0",
-      "action": "复盘18个失败，分开报告成功/失败时长并准备同cohort对照",
-      "evidence": "视频/日志对应关系、失败阶段、timeout数量、5k/10k/旧12k匹配协议；本轮尚未执行"
+      "action": "复盘已有旧12k视频，选择一种可恢复失败类型",
+      "evidence": "旧20回合不冒充新10k的18次失败；记录阶段、实际时长与未知原因"
     },
     {
       "priority": "P0",
-      "action": "精读18篇最高重合论文并逐篇补独立notes",
-      "evidence": "method/data/loss/freeze/inference/ablation/code audit"
-    },
-    {
-      "priority": "P0",
-      "action": "形成3套Physical Token候选方案并与两位同事讨论",
-      "evidence": "模块、监督、部署输入、强baseline、No-Go条件"
-    },
-    {
-      "priority": "P0",
-      "action": "把Action Head vs Backbone vs History-only vs Action-only设为核心matched comparison",
-      "evidence": "相同输入历史/容量/监督预算下的representation与decision metrics"
+      "action": "接通最小Hammer专家纠错与计时",
+      "evidence": "固定phase/gate/expert；验证从当前状态恢复、实际动作、控制秒数、请求/执行/归还与terminal"
     },
     {
       "priority": "P1",
-      "action": "和真机同事冻结可获得的物理数据合同",
-      "evidence": "sensor/command/timestamp/controller/contact availability matrix"
+      "action": "缓存少量交互特征，做后果预测对照",
+      "evidence": "state/history vs 原RLT/prefix vs head；相同输入/容量/episode划分，真实执行后果与validity mask"
     },
     {
       "priority": "P1",
-      "action": "优先评估Physical Critic / candidate ranking路径，避免先被online RL收敛绑死",
-      "evidence": "same candidate set下的ranking/calibration/closed-loop gain"
+      "action": "原eval40结果拿回后核对逐seed与失败视频",
+      "evidence": "新10k 22/40仅沿用既有截图；不增加独立样本，不承诺串行重现同一聚合"
     },
     {
       "priority": "P1",
-      "action": "明确WAM兼容接口与Universal层级",
-      "evidence": "flow/AR/WAM action module的readout convention与held-out transfer protocol"
+      "action": "固定专家与gate，冻结成功率/吞吐率及成本合同",
+      "evidence": "无专家/辅助评测分开；累计专家秒数为主成本，事件数和训练/交互/墙钟预算分别报告"
+    },
+    {
+      "priority": "P1",
+      "action": "继续近邻防撞与可用物理数据合同",
+      "evidence": "ThriftyDAgger/LazyDAgger门控近邻；head/prefix/history对照；传感器、单位与可部署输入"
     },
     {
       "priority": "Later",
-      "action": "只有representation证据成立后再恢复大规模online RL与cross-embodiment实验",
-      "evidence": "matched ablation + physical shift + held-out transfer"
+      "action": "可信小learner上比较B0/B1/B2，再独立比较预测式gate",
+      "evidence": "专家、数据、动作时间语义和资源匹配；多任务从留出物理条件与第二任务开始"
     }
   ]
 }

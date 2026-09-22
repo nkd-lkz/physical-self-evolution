@@ -11,6 +11,16 @@ Living research website for **Universal Physical Token, robot self-improvement, 
 **https://nkd-lkz.github.io/physical-self-evolution/**
 
 
+## Discussion update — 2026-09-22
+
+本轮把迁移恢复、RLT关键阶段与专家纠错、100/200步语义、TOPP恢复边界，以及“物理经验能否减少干预”的讨论整理为三个入口：
+
+- [迁移后最简切入口](research/migration-recovery-2026-09-22.md)：恢复冻结train450/10k与匹配norm；旧日志/视频分析 → 最小干预闭环 → 缓存特征probe。当前迁移包缺权重与原始数据，不等于已恢复55%能力。
+- [RLT干预机制与Hammer时间语义](research/rlt-intervention-2026-09-22.md)：base→actor与expert纠错分开；旧Stage2未启用Hammer专家；H50/C50下从名义100步起通常只剩两个actor chunk。TOPP仅是恢复专家的执行组件。
+- [物理经验与干预研究合同](research/physical-experience-protocol-2026-09-22.md)：固定专家/门控先验证后果监督，之后单独比较预测式门控；无专家成功率、专家控制时长与吞吐率分别统计。
+
+更新已同步到[网站研究假设池](https://nkd-lkz.github.io/physical-self-evolution/index.html#ideas)。本轮是代码/归档证据核查与实验设计，**没有新增GPU实验或已实现的Hammer干预功能**。现有RLT并非“只有语义监督”；研究增量是显式、可测的动作后果grounding。公开[脱敏核查摘要](data/recovery-audit-2026-09-22.json)保留来源哈希，内部原始日志留在本地。
+
 ## Latest experiment evidence — 2026-09-22
 
 [Detailed update](research/progress-2026-09-22.md): the supplied evaluation-summary screenshot reports train450 Stage1 10k at **22/40 success (55%)**, with 18 failures, return 0.55, mean step reward ≈0.00287, and mean episode length 196.25/200. GPU6 matches the prior GPU7 aggregate result. This supplements the existing September 18 repeat-evaluation record; no new independent run or seed count is added without a distinct run ID.
@@ -69,18 +79,18 @@ Current source of truth:
 - [`research/robodojo-b300-log.md`](research/robodojo-b300-log.md) — second-platform bring-up / RLinf integration log
 - [`research/robodojo-contact-task-reference-selection-2026-09-17.md`](research/robodojo-contact-task-reference-selection-2026-09-17.md) — contact-task and reference selection
 
-## Current execution gate: trustworthy B0 first
+## Current execution gate: small-resource recovery, then trustworthy online comparison
 
-Before B1/B2, the project remains in **Gate 0 — Baseline Recovery / Validation**. A first H50/C50 B0 Stage2 run has now been stopped after online degradation, so the immediate task is **B0 diagnosis**, not Physical Token:
+The immediate compute-limited entry is frozen-reference recovery, a validated minimal intervention loop, and cached-feature consequence probes. Offline representation research can proceed without a long RLT run. Formal B0/B1/B2 online claims still require a trustworthy matched learner; the earlier H50/C50 B0 Stage2 run was stopped after degradation:
 
 ```text
 Recover / validate Stage1 reference
         ↓
-Fix execution / timing semantics
+Fix execution / timing semantics + validate intervention instrumentation
         ↓
 B0 online baseline
         ↓
-BC/reference/Q diagnosis  ← current
+BC/reference/Q diagnosis  ← before restarting online comparison
         ↓
 trustworthy B0
         ↓

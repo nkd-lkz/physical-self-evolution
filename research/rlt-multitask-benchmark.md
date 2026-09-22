@@ -7,7 +7,11 @@
 
 ---
 
-## 0. 为什么现在还不能直接进入 B1 / B2？
+## 2026-09-22 补充：低算力与干预变量
+
+正式在线B0/B1/B2比较继续遵守本协议；离线表示probe可以先开展。当前最小路线与资产门槛见[恢复入口](https://nkd-lkz.github.io/physical-self-evolution/reader.html?path=research/migration-recovery-2026-09-22.md)。干预相关实验另外遵守[物理经验合同](https://nkd-lkz.github.io/physical-self-evolution/reader.html?path=research/physical-experience-protocol-2026-09-22.md)：固定expert/phase/gate，分别统计无专家/辅助成功率、专家控制时长和吞吐率；learned gate后置独立比较。小样本pilot不作为多任务、非劣或训练加速的结论。
+
+## 0. 为什么现在还不能直接进入正式在线 B1 / B2？
 
 RLT 是当前项目的核心技术 baseline。Physical Token 的科学增量只有在 reference、执行语义、数据质量和 Stage2 online baseline 都可信时才可解释。
 

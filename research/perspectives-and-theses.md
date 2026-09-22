@@ -1,5 +1,11 @@
 # 观点与研究框架：具身 RSI、Physical AI 与分层自进化
 
+## 2026-09-22 · 交互物理经验与减少干预
+
+长期愿景是从真实交互沉淀后果经验，提前预判、减少专家依赖并逐步迁移到多任务。首轮收紧为固定专家与门控下的表示增量，成功率/吞吐率作为明确约束；预测式gate、层级信号和泛化分别验证。完整讨论：[研究合同](https://nkd-lkz.github.io/physical-self-evolution/reader.html?path=research/physical-experience-protocol-2026-09-22.md)、[RLT/ManiSkill/Hammer边界](https://nkd-lkz.github.io/physical-self-evolution/reader.html?path=research/rlt-intervention-2026-09-22.md)。这些是研究假设，不能作为已有项目效果。
+
+---
+
 > 这部分收录“行业 / 研究者观点 + 我们自己的综合框架”。  
 > 它们用于建立长期问题意识，不当作项目实验事实，也不直接改变 Phase 0 主线。
 
