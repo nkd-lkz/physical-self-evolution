@@ -372,5 +372,69 @@
       "https://arxiv.org/abs/2603.04639"
     ],
     "status": "引文元数据线索；已定位原始入口但未读全文，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.22888v1",
+    "reference": "EXPO-FT: Sample-Efficient Reinforcement Learning Finetuning for Vision-Language-Action Models",
+    "urls": [
+      "https://arxiv.org/abs/2605.25477"
+    ],
+    "status": "引文元数据线索；已定位原始入口但未读全文，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.22888v1",
+    "reference": "ALOE: Action-Level Off-Policy Evaluation for Vision-Language-Action Model Post-Training",
+    "urls": [
+      "https://arxiv.org/abs/2602.12691"
+    ],
+    "status": "引文元数据线索；已定位原始入口但未读全文，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.22888v1",
+    "reference": "StructRL: Structured Action-Space Exploration for Flow-Based VLAs",
+    "urls": [
+      "https://arxiv.org/abs/2608.15139"
+    ],
+    "status": "引文元数据线索；已定位原始入口但未读全文，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.11308v1",
+    "reference": "Steerable Vision-Language-Action Policies for Embodied Reasoning and Hierarchical Control",
+    "urls": [
+      "https://arxiv.org/abs/2602.13193"
+    ],
+    "status": "引文元数据线索；已定位原始入口但未读全文，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.11308v1",
+    "reference": "FineVLA: Fine-Grained Instruction Alignment for Steerable Vision-Language-Action Policies",
+    "urls": [
+      "https://arxiv.org/abs/2605.27284"
+    ],
+    "status": "引文元数据线索；已定位原始入口但未读全文，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.11308v1",
+    "reference": "SparkVLA: Stop-Aware Hierarchical VLA with Adaptive Action Chunking for Long-Horizon Manipulation",
+    "urls": [
+      "https://arxiv.org/abs/2608.16172"
+    ],
+    "status": "引文元数据线索；已定位原始入口但未读全文，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.11308v1",
+    "reference": "Long-Horizon Manipulation via Trace-Conditioned VLA Planning",
+    "urls": [
+      "https://arxiv.org/abs/2604.21924"
+    ],
+    "status": "引文元数据线索；已定位原始入口但未读全文，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.11308v1",
+    "reference": "Goal2Skill: Long-Horizon Manipulation with Adaptive Planning and Reflection",
+    "urls": [
+      "https://arxiv.org/abs/2604.13942"
+    ],
+    "status": "引文元数据线索；已定位原始入口但未读全文，不计已核查新增"
   }
 ]

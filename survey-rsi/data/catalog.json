@@ -1,5 +1,199 @@
 [
   {
+    "title": "Stable and Efficient Real-World Online VLA Post-Training via Asynchronous Replay-Anchored Policy Improvement",
+    "short": "RAPolicy",
+    "arxiv_id": "2609.22888",
+    "version": "v1",
+    "url": "https://arxiv.org/abs/2609.22888",
+    "added": "2026-09-23",
+    "updated": "2026-09-23",
+    "tags": [
+      "核心自我改进",
+      "在线VLA-RL",
+      "异步真机学习",
+      "人在环"
+    ],
+    "read_status": "方法及指定实验/表格已核查；未复现",
+    "note": "papers/rapolicy.md",
+    "evidence_locations": "§III-A–D、§IV-A–D；Figures 2/4/5；Tables I/II。四个单任务各20次最终评测；五任务每任务10次。",
+    "figure_url": "https://arxiv.org/html/2609.22888v1/framework.png",
+    "authors": [
+      "Yang, Jiarui",
+      "Zhang, Jiajin",
+      "Zhu, Bin",
+      "Chen, Jingjing",
+      "Jiang, Yu-Gang"
+    ],
+    "citation_date": "2026/09/19"
+  },
+  {
+    "title": "ForceRFT: Refining VLA Actions through Force-Guided Residual Reinforcement Learning",
+    "short": "ForceRFT",
+    "arxiv_id": "2609.22840",
+    "version": "v1",
+    "url": "https://arxiv.org/abs/2609.22840",
+    "added": "2026-09-23",
+    "updated": "2026-09-23",
+    "tags": [
+      "核心自我改进",
+      "残差策略",
+      "力觉反馈",
+      "真机"
+    ],
+    "read_status": "方法及指定实验/表格已核查；未复现",
+    "note": "papers/forcerft.md",
+    "evidence_locations": "§III–V；Figure 1；Tables I/II。三任务每设置30次自主评测，在线交互30分钟。",
+    "figure_url": "https://arxiv.org/html/2609.22840v1/1.png",
+    "authors": [
+      "Wang, Yichen",
+      "Zhang, Chaoyang",
+      "Su, Xuqi",
+      "Ma, Jun",
+      "Zhu, Haiyue",
+      "Li, Xiaocong"
+    ],
+    "citation_date": "2026/09/19"
+  },
+  {
+    "title": "DexPIE: Stable Dexterous Policy Improvement from Real-World Experience",
+    "short": "DexPIE",
+    "arxiv_id": "2606.09615",
+    "version": "v2",
+    "url": "https://arxiv.org/abs/2606.09615",
+    "added": "2026-09-23",
+    "updated": "2026-09-23",
+    "tags": [
+      "核心自我改进",
+      "灵巧操作",
+      "真实部署经验",
+      "版本修订"
+    ],
+    "read_status": "v2方法及指定实验/表格已核查；未复现",
+    "note": "papers/dexpie.md",
+    "evidence_locations": "§IV-A–C、§V；Figures 1/2/5/7。三任务各50次测试；一轮采集—更新，总采集55.4分钟。",
+    "figure_url": "https://arxiv.org/html/2606.09615v2/teaser.png",
+    "authors": [
+      "Liao, Ruizhe",
+      "Chen, Wenrui",
+      "Zeng, Liangji",
+      "Lin, Haoran",
+      "Yang, Fan",
+      "Yang, Kailun",
+      "Wang, Yaonan"
+    ],
+    "citation_date": "2026/06/08"
+  },
+  {
+    "title": "SeeQ: Training Generalist Value Functions for Long-Horizon Robotic Manipulation",
+    "short": "SeeQ",
+    "arxiv_id": "2609.22085",
+    "version": "v1",
+    "url": "https://arxiv.org/abs/2609.22085",
+    "added": "2026-09-23",
+    "updated": "2026-09-23",
+    "tags": [
+      "支撑组件",
+      "价值函数",
+      "best-of-N",
+      "真机"
+    ],
+    "read_status": "方法及指定实验/表格已核查；未复现",
+    "note": "papers/seeq.md",
+    "evidence_locations": "§3、§4.1–4.4；Appendix A.1/A.3/A.4；Figure 1；Tables 1/3/5–7。四任务各24次。",
+    "figure_url": "https://arxiv.org/html/2609.22085v1/seeq_teaser.png",
+    "authors": [
+      "Singh, Saksham",
+      "Hu, Zheyuan",
+      "Mark, Max Sobol",
+      "Yu, Jeffrey",
+      "Erickson, Zackory",
+      "Kumar, Aviral"
+    ],
+    "citation_date": "2026/09/18"
+  },
+  {
+    "title": "LIBERO-RECOVER: Beyond Task Success Towards Failure Recovery in Robotic Manipulation Models",
+    "short": "LIBERO-RECOVER",
+    "arxiv_id": "2609.05178",
+    "version": "v1",
+    "url": "https://arxiv.org/abs/2609.05178",
+    "added": "2026-09-23",
+    "updated": "2026-09-23",
+    "tags": [
+      "评价框架",
+      "失败恢复",
+      "恢复数据",
+      "仿真"
+    ],
+    "read_status": "方法、基准统计及指定实验已核查；未复现",
+    "note": "papers/libero-recover.md",
+    "evidence_locations": "§3–5；Figures 1/3–10；Tables 1–3。2178场景、3184条恢复轨迹；每任务10次。",
+    "figure_url": "https://arxiv.org/html/2609.05178v1/motivationv3.png",
+    "authors": [
+      "Liu, Lin",
+      "Zhang, Lu",
+      "Lu, Huchuan",
+      "Yang, Wu",
+      "Tao, Shuai",
+      "Liu, Wulong",
+      "Song, Ziying",
+      "Bao, Zhicheng"
+    ],
+    "citation_date": "2026/09/04"
+  },
+  {
+    "title": "VLA-Corrector: Stage-Aware Observable State Understanding for Prompt-Based Closed-Loop Recovery of Vision-Language-Action Policies",
+    "short": "VLA-Corrector",
+    "arxiv_id": "2609.06508",
+    "version": "v1",
+    "url": "https://arxiv.org/abs/2609.06508",
+    "added": "2026-09-23",
+    "updated": "2026-09-23",
+    "tags": [
+      "边界案例",
+      "任务内恢复",
+      "可观测验证器",
+      "仿真与真机"
+    ],
+    "read_status": "方法及指定实验/表格已核查；未复现",
+    "note": "papers/vla-corrector.md",
+    "evidence_locations": "Problem/Method/Experimental/Results；Figure 1；Tables 1–3。仿真1000 episodes/条件，真机三任务各40次。",
+    "figure_url": "https://arxiv.org/html/2609.06508v1/VLA.drawio.png",
+    "authors": [
+      "Song, Chang",
+      "Qian, Bin",
+      "Feng, Yan",
+      "Song, Zhijie"
+    ],
+    "citation_date": "2026/09/06"
+  },
+  {
+    "title": "2AM: Grounding Agent-Side Memory as Guidance for Steerable Action Models in Long-Horizon Manipulation",
+    "short": "2AM",
+    "arxiv_id": "2609.11308",
+    "version": "v1",
+    "url": "https://arxiv.org/abs/2609.11308",
+    "added": "2026-09-23",
+    "updated": "2026-09-23",
+    "tags": [
+      "边界案例",
+      "agent侧记忆",
+      "任务内状态",
+      "仿真"
+    ],
+    "read_status": "方法及指定实验/表格已核查；未复现",
+    "note": "papers/2am.md",
+    "evidence_locations": "§2–4、§6；Figure 1；Tables 2/3。LIBERO-Mem十任务，分别报告完成/宽松/严格成功。",
+    "figure_url": "https://arxiv.org/html/2609.11308v1/figures/teaser.png",
+    "authors": [
+      "Hu, Yutong",
+      "Chen, Fengjiao",
+      "Cao, Xuezhi",
+      "Detry, Renaud"
+    ],
+    "citation_date": "2026/09/10"
+  },
+  {
     "title": "Learning and Transferring Closed-Loop Robot Software",
     "short": "Learning and Transferring Closed-Loop Robot Software",
     "arxiv_id": "2609.19906",

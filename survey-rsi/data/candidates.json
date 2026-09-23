@@ -1,23 +1,5 @@
 [
   {
-    "title": "LIBERO-RECOVER: Beyond Task Success Towards Failure Recovery in Robotic Manipulation Models",
-    "arxiv_id": "2609.05178",
-    "url": "https://arxiv.org/abs/2609.05178",
-    "status": "仅摘要已核查；不计正式卡片",
-    "priority": "优先",
-    "next_check": "失败恢复基准；核查四级恢复定义、真实失败如何注入仿真，以及重试预算。",
-    "discovered": "2026-09-21"
-  },
-  {
-    "title": "VLA-Corrector: Stage-Aware Observable State Understanding for Prompt-Based Closed-Loop Recovery of Vision-Language-Action Policies",
-    "arxiv_id": "2609.06508",
-    "url": "https://arxiv.org/abs/2609.06508",
-    "status": "仅摘要已核查；不计正式卡片",
-    "priority": "优先",
-    "next_check": "冻结VLA加可观测验证器；查多轮累计指标与跨episode保留，防止把提示恢复当持续学习。",
-    "discovered": "2026-09-21"
-  },
-  {
     "title": "EvoNav-Bench: Benchmarking Lifelong Navigation in Evolving Environments",
     "arxiv_id": "2609.08292",
     "url": "https://arxiv.org/abs/2609.08292",
@@ -60,15 +42,6 @@
     "status": "仅摘要已核查；不计正式卡片",
     "priority": "优先",
     "next_check": "声称安全门控和版本化自进化；需把已部署巡检结果与尚未实证的演化环节分开。",
-    "discovered": "2026-09-21"
-  },
-  {
-    "title": "2AM: Grounding Agent-Side Memory as Guidance for Steerable Action Models in Long-Horizon Manipulation",
-    "arxiv_id": "2609.11308",
-    "url": "https://arxiv.org/abs/2609.11308",
-    "status": "仅摘要已核查；不计正式卡片",
-    "priority": "优先",
-    "next_check": "agent侧记忆与单一动作模型分离；查完成率、宽松成功、严格成功三个口径。",
     "discovered": "2026-09-21"
   },
   {
@@ -288,30 +261,102 @@
     "discovered": "2026-09-22"
   },
   {
-    "title": "SeeQ: Training Generalist Value Functions for Long-Horizon Robotic Manipulation",
-    "arxiv_id": "2609.22085",
-    "url": "https://arxiv.org/abs/2609.22085",
-    "status": "仅摘要已核查；不计正式卡片",
-    "priority": "优先",
-    "next_check": "子任务Q函数为best-of-N策略提供方向；查四项真机任务的候选数、基线与是否用于持久策略更新。",
-    "discovered": "2026-09-22"
-  },
-  {
-    "title": "DexPIE: Stable Dexterous Policy Improvement from Real-World Experience",
-    "arxiv_id": "2606.09615",
-    "url": "https://arxiv.org/abs/2606.09615",
-    "status": "仅摘要已核查；不计正式卡片",
-    "priority": "优先",
-    "next_check": "版本修订；真机部署经验、干预式DAgger和连续最优性指标直接相关，需全文核查37.3%提升的口径与数据量。",
-    "discovered": "2026-09-22"
-  },
-  {
-    "title": "Evolving Skill Modules under a Fixed Planner: Versioning, Rollback, and Runtime Governance for Long-Lived Robot Systems",
+    "title": "Learning Without Losing Identity: Capability Evolution for Embodied Agents",
     "arxiv_id": "2604.07799",
     "url": "https://arxiv.org/abs/2604.07799",
+    "status": "全文已初读，题名已纠正；待证据审计，不计正式卡片",
+    "priority": "优先",
+    "next_check": "核查66页全文中的模拟结果、零成功项、峰值选择和不同seed对照；暂不按标题包装为技能版本治理实证。",
+    "discovered": "2026-09-22"
+  },
+  {
+    "title": "CHOREO: Every Humanoid Skill as a Trajectory",
+    "arxiv_id": "2609.22274",
+    "url": "https://arxiv.org/abs/2609.22274",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "次优先",
+    "next_check": "Unitree G1/MuJoCo中组合2950个资产；核查95.4%序列成功的任务分布，并保持其为固定技能组合而非在线学习的边界。",
+    "discovered": "2026-09-23"
+  },
+  {
+    "title": "When Does Test-Time Physical Diagnosis Pay? A Frozen Policy Buys Evidence It Never Reads",
+    "arxiv_id": "2609.22299",
+    "url": "https://arxiv.org/abs/2609.22299",
     "status": "仅摘要已核查；不计正式卡片",
     "priority": "优先",
-    "next_check": "版本修订；包含推广门、回滚与多项负结果，需核查66页全文、实现可得性及是否存在跨部署能力增长。",
-    "discovered": "2026-09-22"
+    "next_check": "冻结策略主动获取但未使用证据的诊断研究；核查任务数、干预成本和因果对照，作为“感知不等于改进”负证据。",
+    "discovered": "2026-09-23"
+  },
+  {
+    "title": "Embedding Physics Priors in Robot Learning: A Survey",
+    "arxiv_id": "2609.22319",
+    "url": "https://arxiv.org/abs/2609.22319",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "次优先",
+    "next_check": "物理先验综述；核查taxonomy和参考文献，重点溯源可在线更新的物理模型，而非泛化机器人学习。",
+    "discovered": "2026-09-23"
+  },
+  {
+    "title": "VLPSA: Vision-Language-Poisson-Safe Actions for Full-Body Safety of Learned Policies",
+    "arxiv_id": "2609.22462",
+    "url": "https://arxiv.org/abs/2609.22462",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "次优先",
+    "next_check": "SafeLIBERO碰撞规避23.1→91.2并有FR3演示；核查任务成功代价、真机协议及固定安全过滤器边界。",
+    "discovered": "2026-09-23"
+  },
+  {
+    "title": "FRAMES: Failure Recovery And Monitoring of Embodied Skills for Humanoid Loco-Manipulation",
+    "arxiv_id": "2609.22538",
+    "url": "https://arxiv.org/abs/2609.22538",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "次优先",
+    "next_check": "100次MuJoCo监控试验称94%准确；端到端恢复仍在进行，先核查失败类型与误报成本。",
+    "discovered": "2026-09-23"
+  },
+  {
+    "title": "StateMem: Single-State Residual Memory with Adaptive Inference for Vision-Language-Action Policies",
+    "arxiv_id": "2609.22684",
+    "url": "https://arxiv.org/abs/2609.22684",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "摘要报告LIBERO 97.6和真机六任务+21%；核查记忆是否每episode重置、训练数据和RoboMemArena指标分母。",
+    "discovered": "2026-09-23"
+  },
+  {
+    "title": "SmoLSTM: A Compact Vision-Language-Action Model with Recurrent Memory that Persists",
+    "arxiv_id": "2609.22854",
+    "url": "https://arxiv.org/abs/2609.22854",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "7461条示范/140任务，LIBERO-Mem成功率77.5%；核查reset-state对照7%的具体口径及记忆跨episode边界。",
+    "discovered": "2026-09-23"
+  },
+  {
+    "title": "PileBelief: Persistent Physical State for Interaction-Driven World Modeling",
+    "arxiv_id": "2609.22858",
+    "url": "https://arxiv.org/abs/2609.22858",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "固定权重下用交互更新物理belief；核查5步误差-10.8%与action regret -65.5%的基线、任务数和是否跨部署保存。",
+    "discovered": "2026-09-23"
+  },
+  {
+    "title": "Zeva-Ego: Egocentric Mid-Training with In-Context Causal Learning for Robot Manipulation",
+    "arxiv_id": "2609.24411",
+    "url": "https://arxiv.org/abs/2609.24411",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "摘要称ICCL在四次尝试内58→89且无参数更新；核查真机/仿真协议和上下文清空边界。",
+    "discovered": "2026-09-23"
+  },
+  {
+    "title": "ME-Brain-1.0: Memory, Cognition and Action for Evolving Embodied Intelligence",
+    "arxiv_id": "2609.24271",
+    "url": "https://arxiv.org/abs/2609.24271",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "直接声称无需重训的deploy-and-evolve；须核查作者/机构、实验分母、公开代码与长期保留，企业自述不作独立实证。",
+    "discovered": "2026-09-23"
   }
 ]

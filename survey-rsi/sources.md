@@ -17,4 +17,4 @@
 
 ## 引文追踪
 
-当前共 **52 条待核查引文线索**，见[data/reference-frontier.json](data/reference-frontier.json)。2026-09-22从FAN、组合式持续世界模型和MEMOBench继续回溯出VLA持续学习、模块化世界模型与机器人记忆基准入口；只定位到原始入口的条目仍不算正式卡片。此前线索来自No Free Checker、World Models for Embodied Intelligence和Learning and Transferring Closed-Loop Robot Software。未声称遍历完全部参考文献。
+当前共 **60 条待核查引文线索**，见[data/reference-frontier.json](data/reference-frontier.json)。2026-09-23从RAPolicy与2AM的参考文献继续回溯出VLA后训练、off-policy评估、结构化探索、steerable VLA、分层动作与反思规划入口；只定位到原始入口的条目仍不算正式卡片。此前线索来自FAN、组合式持续世界模型、MEMOBench、No Free Checker、World Models for Embodied Intelligence和Learning and Transferring Closed-Loop Robot Software。未声称遍历完全部参考文献。
