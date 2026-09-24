@@ -342,15 +342,6 @@
     "discovered": "2026-09-23"
   },
   {
-    "title": "Zeva-Ego: Egocentric Mid-Training with In-Context Causal Learning for Robot Manipulation",
-    "arxiv_id": "2609.24411",
-    "url": "https://arxiv.org/abs/2609.24411",
-    "status": "仅摘要已核查；不计正式卡片",
-    "priority": "优先",
-    "next_check": "摘要称ICCL在四次尝试内58→89且无参数更新；核查真机/仿真协议和上下文清空边界。",
-    "discovered": "2026-09-23"
-  },
-  {
     "title": "ME-Brain-1.0: Memory, Cognition and Action for Evolving Embodied Intelligence",
     "arxiv_id": "2609.24271",
     "url": "https://arxiv.org/abs/2609.24271",
@@ -358,5 +349,95 @@
     "priority": "优先",
     "next_check": "直接声称无需重训的deploy-and-evolve；须核查作者/机构、实验分母、公开代码与长期保留，企业自述不作独立实证。",
     "discovered": "2026-09-23"
+  },
+  {
+    "title": "Minimal Recurrent Behavioral Memory for Imitation under Partial Observability",
+    "arxiv_id": "2609.25757",
+    "url": "https://arxiv.org/abs/2609.25757",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "摘要给出部分可观测模仿中的最小记忆条件；核查操作任务、严格记忆消融及是否只在episode内保存。",
+    "discovered": "2026-09-24"
+  },
+  {
+    "title": "What is the Better Curriculum: Controller-Shaped Grasping Behavior for Contact Force-Sensitive Manipulation",
+    "arxiv_id": "2609.25887",
+    "url": "https://arxiv.org/abs/2609.25887",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "触觉反射教师塑造训练课程；核查ACT 95%与π0.5扰动失败的试验分母，以及部署仲裁器是否固定。",
+    "discovered": "2026-09-24"
+  },
+  {
+    "title": "MATES: Learning Multi-Agent Interactions by Transforming Observations for Frozen Single-Agent Policies",
+    "arxiv_id": "2609.26010",
+    "url": "https://arxiv.org/abs/2609.26010",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "次优先",
+    "next_check": "只训练3.5–7.3%参数的交互适配器并讨论lifelong任务；核查环境、序列协议和遗忘指标。",
+    "discovered": "2026-09-24"
+  },
+  {
+    "title": "NavSafe-∞: Benchmarking Closed-Loop Driving Safety in Photorealistic Environments",
+    "arxiv_id": "2609.26618",
+    "url": "https://arxiv.org/abs/2609.26618",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "280场景、28类事件、20个策略的闭环安全审计；核查在线RL奖励投机证据和可迁移到机器人RSI的独立验收指标。",
+    "discovered": "2026-09-24"
+  },
+  {
+    "title": "Dual-Frontier: When Can an Agent Trust Its World Model?",
+    "arxiv_id": "2609.26293",
+    "url": "https://arxiv.org/abs/2609.26293",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "用双frontier区分策略失败与世界模型失配并给出界；核查是否含机器人任务、在线更新以及界的假设条件。",
+    "discovered": "2026-09-24"
+  },
+  {
+    "title": "Toward User-Mediated Self-Repair in Ubiquitous Robots Through Goal-Oriented Agentic AI",
+    "arxiv_id": "2609.26157",
+    "url": "https://arxiv.org/abs/2609.26157",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "次优先",
+    "next_check": "摘要报告硬件与20名参与者、95%完成率；核查用户维修负担和是否只是诊断指导而非自主能力更新。",
+    "discovered": "2026-09-24"
+  },
+  {
+    "title": "VLAQuantBench: A Systematic Benchmark for Quantizing Vision-Language-Action Models",
+    "arxiv_id": "2609.25376",
+    "url": "https://arxiv.org/abs/2609.25376",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "次优先",
+    "next_check": "409组配置、94,574个仿真episode；核查闭环校准指标，作为部署与资源边界，不包装为RSI。",
+    "discovered": "2026-09-24"
+  },
+  {
+    "title": "Capability-Aware Arbitration for Semantic Intent-Based Shared Control",
+    "arxiv_id": "2609.25369",
+    "url": "https://arxiv.org/abs/2609.25369",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "次优先",
+    "next_check": "在线置信度仲裁并有12名参与者；核查92%指标分母、人工输入和是否存在任何跨任务学习。",
+    "discovered": "2026-09-24"
+  },
+  {
+    "title": "Touch2Robot: Robot Policy Learning with Simulated Target-Hand Contact Feedback",
+    "arxiv_id": "2609.24660",
+    "url": "https://arxiv.org/abs/2609.24660",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "次优先",
+    "next_check": "以模拟目标手接触反馈采集数据，摘要称四项真机任务37.9→72.1；核查数据量、基线与其作为自动数据闭环组件的边界。",
+    "discovered": "2026-09-24"
+  },
+  {
+    "title": "Rollback the World, Keep the Reflection: Failure-Aware Memory for Long-Horizon Agents",
+    "arxiv_id": "2609.18304",
+    "url": "https://arxiv.org/abs/2609.18304",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "回滚环境但保留反思记忆；核查三个长程基准是否含物理环境、记忆跨会话边界和失败污染控制。",
+    "discovered": "2026-09-24"
   }
 ]

@@ -436,5 +436,58 @@
       "https://arxiv.org/abs/2604.13942"
     ],
     "status": "引文元数据线索；已定位原始入口但未读全文，不计已核查新增"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.26499v1",
+    "reference": "L. Zha et al. (2023) Distilling and Retrieving Generalizable Knowledge for Robot Manipulation via Language Corrections (DROC).",
+    "urls": [
+      "https://arxiv.org/abs/2311.10678",
+      "https://sites.google.com/stanford.edu/droc"
+    ],
+    "status": "已定位arXiv与作者项目入口；未在本轮读全文，不计正式卡片"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.26467v1",
+    "reference": "J. Luo, C. Xu, J. Wu, and S. Levine (2024) Precise and Dexterous Robotic Manipulation via Human-in-the-Loop Reinforcement Learning (HIL-SERL).",
+    "urls": [
+      "https://arxiv.org/abs/2410.21845",
+      "https://hil-serl.github.io/"
+    ],
+    "status": "已定位arXiv与作者项目入口；未在本轮读全文，不计正式卡片"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.26567v1",
+    "reference": "O. Kwon, A. George, A. Bartsch, and A. B. Farimani (2025) RT-cache: Efficient Robot Trajectory Retrieval System.",
+    "urls": [
+      "https://arxiv.org/abs/2505.09040"
+    ],
+    "status": "已定位原始arXiv入口；未在本轮读全文，不计正式卡片"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2607.13049v2",
+    "reference": "M. Chen et al. (2024) AutoManual: Constructing Instruction Manuals by LLM Agents via Interactive Environmental Learning.",
+    "urls": [
+      "https://arxiv.org/abs/2405.16247",
+      "https://github.com/minghchen/automanual"
+    ],
+    "status": "已定位arXiv与代码入口；ALFWorld agent线索，未在本轮读全文，不计正式卡片"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2607.13049v2",
+    "reference": "B. Thananjeyan et al. (2020) Recovery RL: Safe Reinforcement Learning with Learned Recovery Zones.",
+    "urls": [
+      "https://arxiv.org/abs/2010.15920"
+    ],
+    "status": "已定位原始arXiv入口；未在本轮读全文，不计正式卡片"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.26567v1",
+    "reference": "H. Liu et al. (2024) Multi-Task Interactive Robot Fleet Learning with Visual World Models (Sirius-Fleet).",
+    "urls": [
+      "https://arxiv.org/abs/2410.22689",
+      "https://ut-austin-rpl.github.io/sirius-fleet/",
+      "https://github.com/UT-Austin-RPL/sirius-fleet"
+    ],
+    "status": "已定位arXiv、作者项目与代码入口；未在本轮读全文，不计正式卡片"
   }
 ]

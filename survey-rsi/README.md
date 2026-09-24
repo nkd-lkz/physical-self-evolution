@@ -2,14 +2,20 @@
 
 按论文题名检索，优先说明**问题 → 方法 → 结果 → 综述用途**，附原图和证据边界。本目录用于综述资料积累；仓库其他目录继续服务Physical Token实验项目。
 
-**最近更新：2026-09-23** · [今天的增量](daily/2026-09-23.md) · [候选文献](candidates.md) · [调研模板](templates/paper.md) · [来源与引文追踪](sources.md)
+**最近更新：2026-09-24** · [今天的增量](daily/2026-09-24.md) · [候选文献](candidates.md) · [调研模板](templates/paper.md) · [来源与引文追踪](sources.md)
 
 ## 阅读卡片
 
-22篇已读方法和指定实验/表格的卡片，均未复现。下表可直接按题名、短名或标签搜索。
+28篇已读方法和指定实验/表格的卡片，均未复现。下表可直接按题名、短名或标签搜索。
 
 | 工作 | 综述定位 | 阅读入口 |
 |---|---|---|
+| Local Coding Agent | 边界案例 / 编码代理 / 同任务会话复用 / 真机 | [固定模板卡片](papers/generalizing-manipulation-local-coding-agent.md) · [原文](https://arxiv.org/abs/2609.26499) |
+| RouteRLT | 支撑组件 / VLA-RL专家路由 / 部署期固定 / 真机 | [固定模板卡片](papers/routerlt.md) · [原文](https://arxiv.org/abs/2609.26467) |
+| Visual Experience Retrieval Audit | 评价框架 / 经验检索 / 因果审计 / 仿真 | [固定模板卡片](papers/beyond-end-task-success-audit.md) · [原文](https://arxiv.org/abs/2609.26567) |
+| Zeva-Ego | 边界案例 / 任务内ICL / 跨尝试记忆 / v2 | [固定模板卡片](papers/zeva-ego.md) · [原文](https://arxiv.org/abs/2609.24411) |
+| CLAW | 支撑组件 / 世界模型适配 / 上下文LoRA / 仿真 | [固定模板卡片](papers/claw.md) · [原文](https://arxiv.org/abs/2609.12278) |
+| SPINE | 支撑组件 / 具身harness / 诊断修复 / 真机 | [固定模板卡片](papers/spine.md) · [原文](https://arxiv.org/abs/2607.13049) |
 | RAPolicy | 核心自我改进 / 在线VLA-RL / 异步真机学习 | [固定模板卡片](papers/rapolicy.md) · [原文](https://arxiv.org/abs/2609.22888) |
 | ForceRFT | 核心自我改进 / 力觉残差RL / 人在环真机 | [固定模板卡片](papers/forcerft.md) · [原文](https://arxiv.org/abs/2609.22840) |
 | DexPIE | 核心自我改进 / 灵巧操作 / 真实部署经验 / v2 | [固定模板卡片](papers/dexpie.md) · [原文](https://arxiv.org/abs/2606.09615) |
@@ -36,9 +42,9 @@
 ## 去重与后续更新
 
 - [原报告去重基线](data/baseline.json)：141个既有条目，只保存公开题名和来源；旧报告内容不视为本轮再次核查。
-- [新增文献结构化目录](data/catalog.json)：22篇卡片的版本、标签和阅读状态。
-- [候选目录](candidates.md)：40项仅摘要核查或待证据审计，未与正式卡片混算。
-- [引文追踪队列](data/reference-frontier.json)：60项尚未独立全文验证的引文线索，继续回原文。
+- [新增文献结构化目录](data/catalog.json)：28篇卡片的版本、标签和阅读状态。
+- [候选目录](candidates.md)：49项仅摘要核查或待证据审计，未与正式卡片混算。
+- [引文追踪队列](data/reference-frontier.json)：66项尚未独立全文验证的引文线索，继续回原文。
 - [每日维护规范](MAINTENANCE.md)：去重、检索、原图、证据核查和提交要求。
 
 每天分别记录新收录、旧文补漏、版本修订和待核查项。计划运行区间为2026-09-21至2026-09-30；是否完成以daily日志与Git提交为准。不要求每天凑数，也不把“harness”“闭环”“自进化”等题名用词当成RSI实证。

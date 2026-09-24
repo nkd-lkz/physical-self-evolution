@@ -17,4 +17,4 @@
 
 ## 引文追踪
 
-当前共 **60 条待核查引文线索**，见[data/reference-frontier.json](data/reference-frontier.json)。2026-09-23从RAPolicy与2AM的参考文献继续回溯出VLA后训练、off-policy评估、结构化探索、steerable VLA、分层动作与反思规划入口；只定位到原始入口的条目仍不算正式卡片。此前线索来自FAN、组合式持续世界模型、MEMOBench、No Free Checker、World Models for Embodied Intelligence和Learning and Transferring Closed-Loop Robot Software。未声称遍历完全部参考文献。
+当前共 **66 条待核查引文线索**，见[data/reference-frontier.json](data/reference-frontier.json)。2026-09-24从Local Coding Agent、RouteRLT、Visual Experience Retrieval Audit与SPINE继续回溯，已定位DROC、HIL-SERL、RT-cache、AutoManual、Recovery RL和Sirius-Fleet的原始arXiv/作者项目/代码入口；这些线索尚未在本轮读完全文，不算正式卡片。此前线索来自RAPolicy、2AM、FAN、组合式持续世界模型、MEMOBench、No Free Checker、World Models for Embodied Intelligence和Learning and Transferring Closed-Loop Robot Software。未声称遍历完全部参考文献。

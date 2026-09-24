@@ -649,5 +649,172 @@
       "Zhao, Zhou"
     ],
     "citation_date": "2026/09/07"
+  },
+  {
+    "title": "Generalizing Manipulation Skills with a Local Coding Agent",
+    "short": "Local Coding Agent",
+    "arxiv_id": "2609.26499",
+    "version": "v1",
+    "url": "https://arxiv.org/abs/2609.26499",
+    "added": "2026-09-24",
+    "updated": "2026-09-24",
+    "tags": [
+      "边界案例",
+      "编码代理",
+      "harness",
+      "任务实例内复用",
+      "真机"
+    ],
+    "read_status": "方法及指定实验/表格已核查；项目页和会话日志入口已打开；未复现",
+    "note": "papers/generalizing-manipulation-local-coding-agent.md",
+    "evidence_locations": "§III–V；Figures 1–2；Tables I–V。UR3e上9任务×5次；二次尝试17组配对试验。",
+    "figure_url": "https://arxiv.org/html/2609.26499v1/figs/cell.jpg",
+    "authors": [
+      "Talwar, Raman",
+      "Nijs, Elias",
+      "Verleysen, Andreas",
+      "Wyffels, Francis"
+    ],
+    "citation_date": "2026/09/22"
+  },
+  {
+    "title": "RouteRLT: Learning When and Which RL Specialist Should Control a VLA Policy",
+    "short": "RouteRLT",
+    "arxiv_id": "2609.26467",
+    "version": "v1",
+    "url": "https://arxiv.org/abs/2609.26467",
+    "added": "2026-09-24",
+    "updated": "2026-09-24",
+    "tags": [
+      "支撑组件",
+      "VLA-RL",
+      "专家路由",
+      "真机",
+      "部署期不学习"
+    ],
+    "read_status": "方法及指定实验/表格已核查；未复现",
+    "note": "papers/routerlt.md",
+    "evidence_locations": "§III-A–E、§IV-A–B；deployment figure；Table II。仿真LIBERO多物体任务；真机线缆任务各基线30次、RouteRLT 20次。",
+    "figure_url": "https://arxiv.org/html/2609.26467v1/figures/routerlt_deployment.png",
+    "authors": [
+      "Zhu, Chongyu",
+      "Hinds, Jaden",
+      "Kim, Hyegang",
+      "Rojas, Juan Sebastian",
+      "Elmallah, Ramy",
+      "Lee, Chi-Guhn"
+    ],
+    "citation_date": "2026/09/22"
+  },
+  {
+    "title": "Beyond End-Task Success: How to Audit Visual Experience Retrieval in Robotics",
+    "short": "Visual Experience Retrieval Audit",
+    "arxiv_id": "2609.26567",
+    "version": "v1",
+    "url": "https://arxiv.org/abs/2609.26567",
+    "added": "2026-09-24",
+    "updated": "2026-09-24",
+    "tags": [
+      "评价框架",
+      "经验检索",
+      "因果审计",
+      "仿真"
+    ],
+    "read_status": "方法及指定实验/表格已核查；原文无框架图；未复现",
+    "note": "papers/beyond-end-task-success-audit.md",
+    "evidence_locations": "§§II–IX；Tables I–IV。40个查询状态、3/10/50规模经验库、5个随机种子，共114,500次带种子执行及250次基准重放。",
+    "figure_url": "",
+    "authors": [
+      "Pathak, Eshika",
+      "Krishna, Leela"
+    ],
+    "citation_date": "2026/09/22"
+  },
+  {
+    "title": "Zeva-Ego: Egocentric Mid-Training with In-Context Causal Learning for Robot Manipulation",
+    "short": "Zeva-Ego",
+    "arxiv_id": "2609.24411",
+    "version": "v2",
+    "url": "https://arxiv.org/abs/2609.24411",
+    "added": "2026-09-24",
+    "updated": "2026-09-24",
+    "tags": [
+      "边界案例",
+      "任务内ICL",
+      "跨尝试记忆",
+      "真机与仿真",
+      "版本修订",
+      "旧候选补全"
+    ],
+    "read_status": "v2方法及指定实验/表格已核查；项目页已打开；未复现",
+    "note": "papers/zeva-ego.md",
+    "evidence_locations": "Figure 1；§§3–5；Tables 1–3；Appendix A.2–A.3。RoboTwin2.0、LIBERO-PRO及ChemLab-Evo三项真机原子任务。",
+    "figure_url": "https://arxiv.org/html/2609.24411v2/zeva_ego_teaser.png",
+    "authors": [
+      "Huang, Bingjia",
+      "Ding, Xin",
+      "Chen, Fu",
+      "Li, Kun",
+      "Sun, Wei",
+      "Wu, Hao",
+      "Liu, Yunxin",
+      "Cao, Ting"
+    ],
+    "citation_date": "v1 2026/09/21；采用v2 2026/09/22"
+  },
+  {
+    "title": "Amortized Low-Rank Adaptation for Model-Based Reinforcement Learning",
+    "short": "CLAW",
+    "arxiv_id": "2609.12278",
+    "version": "v2",
+    "url": "https://arxiv.org/abs/2609.12278",
+    "added": "2026-09-24",
+    "updated": "2026-09-24",
+    "tags": [
+      "支撑组件",
+      "世界模型适配",
+      "上下文LoRA",
+      "仿真",
+      "版本修订"
+    ],
+    "read_status": "v2方法及指定实验/图表已核查；未复现；代码仅核到作者未来开放表述",
+    "note": "papers/claw.md",
+    "evidence_locations": "§§4–6；Table 1；Figures 2–8；Appendix B Tables 5–6。五类仿真环境，5个随机种子；测试时3条上下文episode。",
+    "figure_url": "https://arxiv.org/html/2609.12278v2/figures/exp1_all_families.png",
+    "authors": [
+      "Palafox, Fernando",
+      "Fridovich-Keil, David"
+    ],
+    "citation_date": "v1 2026/09/10；采用v2 2026/09/21"
+  },
+  {
+    "title": "SPINE: Bridging Cyber-Physical Gap with Agentic AI",
+    "short": "SPINE",
+    "arxiv_id": "2607.13049",
+    "version": "v2",
+    "url": "https://arxiv.org/abs/2607.13049",
+    "added": "2026-09-24",
+    "updated": "2026-09-24",
+    "tags": [
+      "支撑组件",
+      "具身harness",
+      "诊断与修复",
+      "真机",
+      "版本修订"
+    ],
+    "read_status": "v2方法及指定实验/表格已核查；项目页已打开；未复现",
+    "note": "papers/spine.md",
+    "evidence_locations": "§§III–VI；Figures 2–3；Tables I–III。DOBOT X-Trainer与AgileX PiPER共12个植入故障场景；主实验每场景3次。",
+    "figure_url": "https://arxiv.org/html/2607.13049v2/figures/spine_architecture.png",
+    "authors": [
+      "Ham, Minkyu",
+      "Kim, Dongho",
+      "Lee, Chan",
+      "Kim, Min Jun",
+      "Zhang, Yixi",
+      "Wang, Jiayi",
+      "Liu, Han"
+    ],
+    "citation_date": "v1 2026/06/29；采用v2 2026/09/21"
   }
 ]
