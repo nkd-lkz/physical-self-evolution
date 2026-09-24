@@ -816,5 +816,236 @@
       "Liu, Han"
     ],
     "citation_date": "v1 2026/06/29；采用v2 2026/09/21"
+  },
+  {
+    "title": "BEE: Intervention-Adaptive Real-World Reinforcement Learning with Vision-Language-Action Models",
+    "short": "BEE",
+    "arxiv_id": "2609.27450",
+    "version": "v1",
+    "url": "https://arxiv.org/abs/2609.27450",
+    "added": "2026-09-24",
+    "updated": "2026-09-24",
+    "tags": [
+      "核心自我改进",
+      "在线VLA-RL",
+      "人在环",
+      "真机与仿真"
+    ],
+    "read_status": "方法及指定实验/表格已核查；未复现",
+    "note": "papers/bee.md",
+    "evidence_locations": "§§III–V，Figure 1，Table I；Appendices A–F、Tables II–IV。",
+    "figure_url": "https://arxiv.org/html/2609.27450v1/teaser_tasks_norobot.png",
+    "authors": [
+      "Zhao, Weihui",
+      "Yan, Xiaohan",
+      "Wan, Zunian",
+      "Du, Xuan",
+      "Chi, Zhaozhan",
+      "Mao, Jianbo",
+      "Wu, Ruipu",
+      "Yang, Rushuai",
+      "Li, Houlin",
+      "Yang, Shukai",
+      "Wu, Jing",
+      "Yan, Yuxiang",
+      "Liu, Yongcheng",
+      "Li, Chuankang",
+      "Ren, Guanghui",
+      "Shan, Wei",
+      "Yao, Maoqing"
+    ],
+    "citation_date": "2026/09/23",
+    "summary": "把人类接管的不确定性变成逐维约束，保留在线学习的残差策略。",
+    "evidence": {
+      "update_object": "残差策略、critic、纠正分布、约束乘子",
+      "retention": "跨 episode 保留参数；同任务在线训练",
+      "feedback": "人类接管＋任务完成标签",
+      "platform": "三项真机＋一项仿真",
+      "limit": "阶段成功率与全任务成功率混合；依赖人工接管"
+    }
+  },
+  {
+    "title": "HiRE: Hindsight Reward Editing for Policy Finetuning",
+    "short": "HiRE",
+    "arxiv_id": "2609.27068",
+    "version": "v1",
+    "url": "https://arxiv.org/abs/2609.27068",
+    "added": "2026-09-24",
+    "updated": "2026-09-24",
+    "tags": [
+      "核心策略改进",
+      "奖励自适应",
+      "在线RL",
+      "真机与仿真"
+    ],
+    "read_status": "方法及指定实验/表格已核查；未复现",
+    "note": "papers/hire.md",
+    "evidence_locations": "§§3–5，Figures 1–3，Table 2；Appendices A–C。",
+    "figure_url": "https://arxiv.org/html/2609.27068v1/visualization/reward_score_plot/segment_focused_viz.png",
+    "authors": [
+      "Niu, Haoyi",
+      "Han, Zhengtao",
+      "Ji, Yufeng",
+      "Li, Zhongyu",
+      "Sreenath, Koushil"
+    ],
+    "citation_date": "2026/09/22",
+    "summary": "用成功与失败观测持续改写奖励，再在线微调策略。",
+    "evidence": {
+      "update_object": "奖励支持集、残差策略/价值函数",
+      "retention": "在线多轮采集与更新；同任务",
+      "feedback": "成功/失败标签＋视觉表征",
+      "platform": "四项仿真＋两项真机",
+      "limit": "真机成败由人标注；峰值与最终结果需分开"
+    }
+  },
+  {
+    "title": "Banana Kick: Response-Informed Skill Evolution for Humanoid Soccer",
+    "short": "Banana Kick / RISE",
+    "arxiv_id": "2609.27269",
+    "version": "v1",
+    "url": "https://arxiv.org/abs/2609.27269",
+    "added": "2026-09-24",
+    "updated": "2026-09-24",
+    "tags": [
+      "核心自我改进",
+      "目标演化",
+      "技能学习",
+      "仿真到真机"
+    ],
+    "read_status": "方法及指定实验/表格已核查；未复现",
+    "note": "papers/banana-kick.md",
+    "evidence_locations": "§III，§IV-A–D；Figure 2、Figures 4–11；Tables I–III。",
+    "figure_url": "https://arxiv.org/html/2609.27269v1/figures/fig_method_overview.jpg",
+    "authors": [
+      "Zhang, Hao E.",
+      "Geng, Ruize",
+      "Haque, Raihan",
+      "Zbiss, Khalil",
+      "Luo, Guanyang",
+      "Wang, Hui-ping",
+      "Tseng, H. Eric",
+      "Zhao, Ding"
+    ],
+    "citation_date": "2026/09/23",
+    "summary": "根据物理响应调整奖励目标，使普通踢球先验学出弧线球。",
+    "evidence": {
+      "update_object": "奖励权重/尺度与 PPO 策略",
+      "retention": "仿真迭代保留；硬件冻结策略",
+      "feedback": "接触/速度/旋转响应＋可靠性门槛",
+      "platform": "G1 人形机器人；仿真训练→真机",
+      "limit": "外层提议/验收规则固定；非真机在线自进化"
+    }
+  },
+  {
+    "title": "Dissecting Advantage-Guided Post-Training for Vision-Language-Action Policies",
+    "short": "Advantage-guided VLA audit",
+    "arxiv_id": "2609.28161",
+    "version": "v1",
+    "url": "https://arxiv.org/abs/2609.28161",
+    "added": "2026-09-24",
+    "updated": "2026-09-24",
+    "tags": [
+      "边界案例",
+      "离线后训练",
+      "优势估计",
+      "真机"
+    ],
+    "read_status": "方法及指定实验/表格已核查；未复现",
+    "note": "papers/advantage-guided-vla-post-training.md",
+    "evidence_locations": "§§III–V，Figure 2、Figures 3–5；Tables I–II。",
+    "figure_url": "https://arxiv.org/html/2609.28161v1/teaser-p6.svg",
+    "authors": [
+      "Cao, Jiahang",
+      "Zhao, Hanye",
+      "Lai, Hang",
+      "Zhang, Shenyu",
+      "Han, Xiaoshen",
+      "Li, Xinghang",
+      "Liu, Futeng",
+      "Peng, Wanli",
+      "Wang, Heyun",
+      "Wang, Yunhong",
+      "Li, Jason",
+      "Yu, Yong",
+      "Zhang, Weinan"
+    ],
+    "citation_date": "2026/09/23",
+    "summary": "把优势估计、校准和加权分开验证，给离线 VLA 改进提供强基线。",
+    "evidence": {
+      "update_object": "离线价值估计与 VLA 权重",
+      "retention": "固定部署数据上的一批后训练",
+      "feedback": "自主/人工接管轨迹＋过程标注",
+      "platform": "四项双臂真机任务",
+      "limit": "没有连续在线改进；不能用 Filter 冒充 RECAP"
+    }
+  },
+  {
+    "title": "Memory That Changes Action Is Not Memory That Guides It: Counterfactual Auditing of History-Conditioned Robot Policies",
+    "short": "CMA / Counterfactual Memory Audit",
+    "arxiv_id": "2609.27247",
+    "version": "v1",
+    "url": "https://arxiv.org/abs/2609.27247",
+    "added": "2026-09-24",
+    "updated": "2026-09-24",
+    "tags": [
+      "评价框架",
+      "记忆审计",
+      "因果干预",
+      "真机与仿真"
+    ],
+    "read_status": "方法及指定实验/表格已核查；未复现",
+    "note": "papers/counterfactual-memory-audit.md",
+    "evidence_locations": "§§III–IV，Figures 1–5，Tables 1–3，§V；主要与物理审计样本分别统计。",
+    "figure_url": "https://arxiv.org/html/2609.27247v1/fig2_cma_design.png",
+    "authors": [
+      "Zhang, Jiajie",
+      "Xiang, Yankai",
+      "Chen, Changhao"
+    ],
+    "citation_date": "2026/09/23",
+    "summary": "证明“动作因记忆变化”仍不足以说明机器人用对了记忆。",
+    "evidence": {
+      "update_object": "评测时干预历史/记忆；不训练改进器",
+      "retention": "episode 内记忆与恢复审计",
+      "feedback": "成对历史、分支选择与匹配物理执行",
+      "platform": "RMBench 仿真＋双臂 PiPER",
+      "limit": "故障后记忆恢复不等于持续学习；真机样本小"
+    }
+  },
+  {
+    "title": "RegenHarness: A Robot Agent Harness with Evidence-Gated Recursive Self-Improvement",
+    "short": "RegenHarness",
+    "arxiv_id": "2609.27612",
+    "version": "v1",
+    "url": "https://arxiv.org/abs/2609.27612",
+    "added": "2026-09-24",
+    "updated": "2026-09-24",
+    "tags": [
+      "支撑组件",
+      "harness演化协议",
+      "递归主张待证",
+      "真机案例"
+    ],
+    "read_status": "方法及指定实验/表格已核查；未复现",
+    "note": "papers/regenharness.md",
+    "evidence_locations": "§§4.1–4.9、§5；§6.2–6.8；Figures 1–4；§7。特别区分 §4.9 协议、§6 现场案例和 §6.8 待实施对照。",
+    "figure_url": "https://arxiv.org/html/2609.27612v1/fig01_architecture.png",
+    "authors": [
+      "Wang, Kailin",
+      "Jie, Haoxiang",
+      "Yan, Yaoyuan",
+      "Heng, Zhiyou",
+      "Li, Zhaosong"
+    ],
+    "citation_date": "2026/09/23",
+    "summary": "提出可追溯 harness 修订协议；现有真机案例未证明递归收益。",
+    "evidence": {
+      "update_object": "协议拟修改上下文/模板/路由/恢复配置",
+      "retention": "拟跨任务版本发布；现有展示为执行案例",
+      "feedback": "版本绑定证据＋固定回归检查",
+      "platform": "四足巡检真机案例",
+      "limit": "没有完成多轮演化收益对照；RSI 为作者主张"
+    }
   }
 ]

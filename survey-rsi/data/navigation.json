@@ -1,0 +1,130 @@
+[
+  {
+    "key": "policy",
+    "title": "策略与 VLA 强化学习",
+    "question": "机器人自己的执行经验，何时变成能留存的策略改进？",
+    "slugs": [
+      "bee",
+      "rapolicy",
+      "forcerft",
+      "dexpie",
+      "srpo",
+      "advantage-guided-vla-post-training",
+      "routerlt"
+    ]
+  },
+  {
+    "key": "world",
+    "title": "世界模型与模型—策略协同",
+    "question": "预测误差、控制收益和跨任务保持，是否同时得到验证？",
+    "slugs": [
+      "claw",
+      "compositional-continual-world-models",
+      "world-models-actionable-survey"
+    ]
+  },
+  {
+    "key": "skills",
+    "title": "技能、代码与 harness 演化",
+    "question": "改的是技能、控制程序、运行配置，还是生成它们的规则？",
+    "slugs": [
+      "banana-kick",
+      "lemca",
+      "learning-transferring-robot-software",
+      "generalizing-manipulation-local-coding-agent",
+      "regenharness",
+      "spine",
+      "show-harness",
+      "embodiedskills"
+    ]
+  },
+  {
+    "key": "memory",
+    "title": "记忆与上下文适应",
+    "question": "记忆保留到哪里，是否真正改善正确决策？",
+    "slugs": [
+      "messymem",
+      "zeva-ego",
+      "2am",
+      "safemem",
+      "counterfactual-memory-audit",
+      "beyond-end-task-success-audit",
+      "memobench"
+    ]
+  },
+  {
+    "key": "continual",
+    "title": "持续学习与部署后积累",
+    "question": "更新后能否保留旧能力，并让后续任务更容易？",
+    "slugs": [
+      "fan",
+      "messymem",
+      "rapolicy",
+      "compositional-continual-world-models",
+      "dexpie"
+    ]
+  },
+  {
+    "key": "feedback",
+    "title": "奖励、验证器与安全",
+    "question": "反馈是否可靠，系统是否在优化代理指标？",
+    "slugs": [
+      "hire",
+      "bee",
+      "no-free-checker",
+      "seeq",
+      "srpo",
+      "agenticrl",
+      "safemem",
+      "vla-corrector",
+      "regenharness"
+    ]
+  },
+  {
+    "key": "infrastructure",
+    "title": "复位、恢复与自动采集",
+    "question": "闭环中的人力、故障恢复和复位成本是否被计入？",
+    "slugs": [
+      "halter",
+      "libero-recover",
+      "vla-corrector",
+      "embodiedskills",
+      "spine"
+    ]
+  },
+  {
+    "key": "curriculum",
+    "title": "课程、任务与环境生成",
+    "question": "生成新任务是否扩展能力，是否保留独立评测？",
+    "slugs": [
+      "banana-kick",
+      "agenticrl",
+      "embodied-benchforge"
+    ]
+  },
+  {
+    "key": "improvers",
+    "title": "自动研究与改进器",
+    "question": "改进规则本身是否被修改，并改善后续改进效率？",
+    "slugs": [
+      "lemca",
+      "regenharness",
+      "learning-transferring-robot-software"
+    ]
+  },
+  {
+    "key": "surveys",
+    "title": "综述与评价方法",
+    "question": "用什么分类、对照和指标组织论证？",
+    "slugs": [
+      "no-free-checker",
+      "world-models-actionable-survey",
+      "counterfactual-memory-audit",
+      "beyond-end-task-success-audit",
+      "memobench",
+      "libero-recover",
+      "compositional-continual-world-models",
+      "embodied-benchforge"
+    ]
+  }
+]

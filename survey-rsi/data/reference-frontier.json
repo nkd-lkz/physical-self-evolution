@@ -489,5 +489,91 @@
       "https://github.com/UT-Austin-RPL/sirius-fleet"
     ],
     "status": "已定位arXiv、作者项目与代码入口；未在本轮读全文，不计正式卡片"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.27068v1",
+    "reference": "[3] O. Biza, T. Weng, L. Sun, K. Schmeckpeper, T. Kelestemur, Y. J. Ma, R. Platt, J. van de Meent, and L. L. Wong (2025) On-robot reinforcement learning with goal-contrastive rewards. In 2025 IEEE International Conference on Robotics and Automation (ICRA), pp. 4797–4805.",
+    "urls": [],
+    "status": "引文元数据线索；原始全文待核查，不计正式卡片",
+    "discovered": "2026-09-24"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.27068v1",
+    "reference": "[6] Q. Chen, J. Yu, M. Schwager, P. Abbeel, F. Shentu, and P. Wu (2026) SARM: stage-aware reward modeling for long horizon robot manipulation. In The Fourteenth International Conference on Learning Representations, External Links: Link",
+    "urls": [
+      "https://openreview.net/forum?id=aemqAxScl9"
+    ],
+    "status": "引文元数据线索；原始全文待核查，不计正式卡片",
+    "discovered": "2026-09-24"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.27068v1",
+    "reference": "[15] P. Krack, T. Jülg, W. Burgard, and F. Walter (2026) Rewarding dino: predicting dense rewards with vision foundation models. arXiv preprint arXiv:2603.16978.",
+    "urls": [
+      "https://arxiv.org/abs/2603.16978"
+    ],
+    "status": "引文元数据线索；原始全文待核查，不计正式卡片",
+    "discovered": "2026-09-24"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.27068v1",
+    "reference": "[27] A. Y. Ng, D. Harada, and S. J. Russell (1999) Policy invariance under reward transformations: theory and application to reward shaping. In Proceedings of the Sixteenth International Conference on Machine Learning, pp. 278–287.",
+    "urls": [],
+    "status": "引文元数据线索；原始全文待核查，不计正式卡片",
+    "discovered": "2026-09-24"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.27269v1",
+    "reference": "[11] R. Portelas, C. Colas, K. Hofmann, and P. Oudeyer (2020) Teacher algorithms for curriculum learning of deep RL in continuously parameterized environments. In Proceedings of the Conference on Robot Learning, Proceedings of Machine Learning Research, Vol. 100, pp. 835–853.",
+    "urls": [
+      "https://proceedings.mlr.press/v100/portelas20a.html"
+    ],
+    "status": "原始会议页与摘要已核查；全文待读；参考文献页码835–853已按PMLR修正",
+    "discovered": "2026-09-24"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.27269v1",
+    "reference": "[13] C. Romac, R. Portelas, C. Colas, K. Hofmann, and P. Oudeyer (2021) TeachMyAgent: a benchmark for automatic curriculum learning in deep RL. In Proceedings of the 38th International Conference on Machine Learning, Proceedings of Machine Learning Research, Vol. 139, pp. 9052–9063.",
+    "urls": [
+      "https://proceedings.mlr.press/v139/romac21a.html"
+    ],
+    "status": "原始会议页与摘要已核查；全文待读",
+    "discovered": "2026-09-24"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.27247v1",
+    "reference": "[25] Z. Zeng, F. Ding, H. Yang, and X. Li (2026) HELM: harness-enhanced long-horizon memory for vision-language-action manipulation. arXiv preprint arXiv:2604.18791. External Links: 2604.18791, Document",
+    "urls": [
+      "https://arxiv.org/abs/2604.18791",
+      "https://dx.doi.org/10.48550/arXiv.2604.18791"
+    ],
+    "status": "引文元数据线索；原始全文待核查，不计正式卡片",
+    "discovered": "2026-09-24"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.27612v1",
+    "reference": "[26] H. Zhang, S. Zhang, K. Li, C. Zhang, Y. Chen, Y. Zhang, L. Bai, and S. Hu (2026) Self-Harness: harnesses that improve themselves. arXiv preprint arXiv:2606.09498. External Links: Link",
+    "urls": [
+      "https://arxiv.org/abs/2606.09498",
+      "https://arxiv.org/abs/2606.09498v3"
+    ],
+    "status": "引文元数据线索；原始全文待核查，不计正式卡片",
+    "discovered": "2026-09-24"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.27612v1",
+    "reference": "[18] X. Ning, K. Tieu, D. Fu, T. Wei, Z. Li, Y. Bei, J. Zou, M. Ai, Z. Liu, T. Li, et al. (2026) Code as agent harness. arXiv preprint arXiv:2605.18747. External Links: Link",
+    "urls": [
+      "https://arxiv.org/abs/2605.18747"
+    ],
+    "status": "引文元数据线索；原始全文待核查，不计正式卡片",
+    "discovered": "2026-09-24"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2507.21046v4",
+    "reference": "Bengio et al. (2009) Y. Bengio, J. Louradour, R. Collobert, and J. Weston Curriculum learning. In Proceedings of the 26th annual international conference on machine learning, pp. 41–48.",
+    "urls": [],
+    "status": "引文元数据线索；原始全文待核查，不计正式卡片",
+    "discovered": "2026-09-24"
   }
 ]

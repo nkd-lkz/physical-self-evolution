@@ -1,54 +1,61 @@
-# 具身 / 机器人 RSI 综述调研
+<p align="center"><img src="assets/cover.svg" alt="Physical AI · Self-Improvement · Research Library" width="100%"></p>
 
-按论文题名检索，优先说明**问题 → 方法 → 结果 → 综述用途**，附原图和证据边界。本目录用于综述资料积累；仓库其他目录继续服务Physical Token实验项目。
+# 具身 / 机器人 RSI 研究库
 
-**最近更新：2026-09-24** · [今天的增量](daily/2026-09-24.md) · [候选文献](candidates.md) · [调研模板](templates/paper.md) · [来源与引文追踪](sources.md)
+面向综述写作，按 **问题 → 方法 → 结果 → 引用价值 → 证据边界** 阅读论文。持续区分任务内适应、可留存的自我改进，以及改进器自身的递归增强。
 
-## 阅读卡片
+<!-- stats:start -->
+**34 篇阅读卡片** · **141 项原报告条目** · **59 项待核查** · **76 条引文线索**
+<!-- stats:end -->
 
-28篇已读方法和指定实验/表格的卡片，均未复现。下表可直接按题名、短名或标签搜索。
+**最近更新：2026-09-24** · [本轮新增与勘误](daily/2026-09-24-follow-up.md) · [当天早间记录](daily/2026-09-24.md) · [历史日志](daily/)
 
-| 工作 | 综述定位 | 阅读入口 |
-|---|---|---|
-| Local Coding Agent | 边界案例 / 编码代理 / 同任务会话复用 / 真机 | [固定模板卡片](papers/generalizing-manipulation-local-coding-agent.md) · [原文](https://arxiv.org/abs/2609.26499) |
-| RouteRLT | 支撑组件 / VLA-RL专家路由 / 部署期固定 / 真机 | [固定模板卡片](papers/routerlt.md) · [原文](https://arxiv.org/abs/2609.26467) |
-| Visual Experience Retrieval Audit | 评价框架 / 经验检索 / 因果审计 / 仿真 | [固定模板卡片](papers/beyond-end-task-success-audit.md) · [原文](https://arxiv.org/abs/2609.26567) |
-| Zeva-Ego | 边界案例 / 任务内ICL / 跨尝试记忆 / v2 | [固定模板卡片](papers/zeva-ego.md) · [原文](https://arxiv.org/abs/2609.24411) |
-| CLAW | 支撑组件 / 世界模型适配 / 上下文LoRA / 仿真 | [固定模板卡片](papers/claw.md) · [原文](https://arxiv.org/abs/2609.12278) |
-| SPINE | 支撑组件 / 具身harness / 诊断修复 / 真机 | [固定模板卡片](papers/spine.md) · [原文](https://arxiv.org/abs/2607.13049) |
-| RAPolicy | 核心自我改进 / 在线VLA-RL / 异步真机学习 | [固定模板卡片](papers/rapolicy.md) · [原文](https://arxiv.org/abs/2609.22888) |
-| ForceRFT | 核心自我改进 / 力觉残差RL / 人在环真机 | [固定模板卡片](papers/forcerft.md) · [原文](https://arxiv.org/abs/2609.22840) |
-| DexPIE | 核心自我改进 / 灵巧操作 / 真实部署经验 / v2 | [固定模板卡片](papers/dexpie.md) · [原文](https://arxiv.org/abs/2606.09615) |
-| SeeQ | 支撑组件 / 通用价值函数 / best-of-N / 真机 | [固定模板卡片](papers/seeq.md) · [原文](https://arxiv.org/abs/2609.22085) |
-| LIBERO-RECOVER | 评价框架 / 失败恢复 / 恢复数据 / 仿真 | [固定模板卡片](papers/libero-recover.md) · [原文](https://arxiv.org/abs/2609.05178) |
-| VLA-Corrector | 边界案例 / 可观测验证器 / 任务内恢复 | [固定模板卡片](papers/vla-corrector.md) · [原文](https://arxiv.org/abs/2609.06508) |
-| 2AM | 边界案例 / agent侧记忆 / 任务内状态 | [固定模板卡片](papers/2am.md) · [原文](https://arxiv.org/abs/2609.11308) |
-| FAN | 核心持续改进 / VLA持续学习 / 动作归一化 / 真机 | [固定模板卡片](papers/fan.md) · [原文](https://arxiv.org/abs/2609.21358) |
-| Compositional Continual World Models | 评价框架 / 世界模型 / 持续学习 / 仿真 | [固定模板卡片](papers/compositional-continual-world-models.md) · [原文](https://arxiv.org/abs/2609.22055) |
-| LEMCA | 核心改进器 / 代码演化 / 控制架构 / 仿真 | [固定模板卡片](papers/lemca.md) · [原文](https://arxiv.org/abs/2609.21319) |
-| AgenticRL | 核心策略改进 / 奖励代码自精炼 / 仿真到真机 / 版本修订 | [固定模板卡片](papers/agenticrl.md) · [原文](https://arxiv.org/abs/2606.03963) |
-| MEMOBench | 评价框架 / 跨时段记忆 / 过程指标 / 仿真 | [固定模板卡片](papers/memobench.md) · [原文](https://arxiv.org/abs/2609.07047) |
-| Learning and Transferring Closed-Loop Robot Software | 核心自我改进 / 代码演化 / 跨任务迁移 / 仿真 | [固定模板卡片](papers/learning-transferring-robot-software.md) · [原文](https://arxiv.org/abs/2609.19906) |
-| MessyMem | 核心持续改进 / 持久记忆 / 移动操作 / 仿真与真机 | [固定模板卡片](papers/messymem.md) · [原文](https://arxiv.org/abs/2609.15976) |
-| SRPO | 核心策略改进 / 自参考奖励 / VLA-RL / 旧文补漏 | [固定模板卡片](papers/srpo.md) · [原文](https://arxiv.org/abs/2511.15605) |
-| HALTER | 闭环基础设施 / 自动复位 / 自主评价 / 真机 | [固定模板卡片](papers/halter.md) · [原文](https://arxiv.org/abs/2609.19413) |
-| No Free Checker | 重点综述 / 验证器 / 奖励可靠性 / 参考文献入口 | [固定模板卡片](papers/no-free-checker.md) · [原文](https://arxiv.org/abs/2609.09250) |
-| World Models: Plausible → Controllable → Actionable | 重点综述 / 世界模型 / 闭环效用 / 参考文献入口 | [固定模板卡片](papers/world-models-actionable-survey.md) · [原文](https://arxiv.org/abs/2609.16697) |
-| Embodied-BenchForge | 评价基础设施 / 基准生成 / 验证修复 / 仿真 | [固定模板卡片](papers/embodied-benchforge.md) · [原文](https://arxiv.org/abs/2609.13082) |
-| SafeMem | 边界案例 / 图记忆 / 风险验证 / 仿真与真机 | [固定模板卡片](papers/safemem.md) · [原文](https://arxiv.org/abs/2609.08444) |
-| Show-Harness | 边界案例 / 语义动作接口 / harness / 真机 | [固定模板卡片](papers/show-harness.md) · [原文](https://arxiv.org/abs/2609.10522) |
-| EmbodiedSkills | 边界案例 / 技能契约 / 验证与恢复 / 仿真 | [固定模板卡片](papers/embodiedskills.md) · [原文](https://arxiv.org/abs/2609.01281) |
+## 从这里开始
 
-## 去重与后续更新
+| 我想做什么 | 阅读入口 |
+| :--- | :--- |
+| 找某个方向的相关工作 | **[按主题浏览](topics.md)** — 策略、世界模型、技能、记忆、持续学习等 10 个入口 |
+| 判断一篇工作究竟证明了什么 | **[证据对照](evidence-map.md)** — 更新对象、保留范围、物理证据、关键限制 |
+| 开始组织综述章节 | **[综述提纲与分类轴](survey-outline.md)** — 章节问题、已有支撑和还缺的证据 |
+| 搜题名、短名或 arXiv ID | **[全部阅读卡片](papers/README.md)** · **[原报告 141 项](baseline.md)** |
+| 接着读下一批论文 | **[候选队列](candidates.md)** · **[引文溯源](references.md)** |
+| 导入文献管理器或 LaTeX | **[BibTeX](references.bib)** — 阅读卡片对应的 arXiv 元数据 |
 
-- [原报告去重基线](data/baseline.json)：141个既有条目，只保存公开题名和来源；旧报告内容不视为本轮再次核查。
-- [新增文献结构化目录](data/catalog.json)：28篇卡片的版本、标签和阅读状态。
-- [候选目录](candidates.md)：49项仅摘要核查或待证据审计，未与正式卡片混算。
-- [引文追踪队列](data/reference-frontier.json)：66项尚未独立全文验证的引文线索，继续回原文。
-- [每日维护规范](MAINTENANCE.md)：去重、检索、原图、证据核查和提交要求。
+## 本轮先读这三篇
 
-每天分别记录新收录、旧文补漏、版本修订和待核查项。计划运行区间为2026-09-21至2026-09-30；是否完成以daily日志与Git提交为准。不要求每天凑数，也不把“harness”“闭环”“自进化”等题名用词当成RSI实证。
+| 工作 | 为什么值得读 | 放到综述哪里 |
+| :--- | :--- | :--- |
+| **[BEE](papers/bee.md)** | 人类接管如何转化为可保留的在线策略更新；必须区分接触阶段与全任务成功率 | 策略自我改进、人类反馈、交互预算 |
+| **[Banana Kick / RISE](papers/banana-kick.md)** | 根据物理响应调整训练目标，让普通踢球先验学出弧线球；硬件端冻结策略 | 目标演化、课程、技能增长 |
+| **[Counterfactual Memory Audit](papers/counterfactual-memory-audit.md)** | 动作随历史变化，仍可能没有利用记忆选对目标 | 记忆评价、因果对照、证据标准 |
 
-## 用于综述组织的标签
+本轮另有 **[HiRE](papers/hire.md)** 的奖励编辑、**[优势引导 VLA 后训练分析](papers/advantage-guided-vla-post-training.md)** 的设计拆解，以及 **[RegenHarness](papers/regenharness.md)** 的演化协议审计。6 篇均为 9 月 22–23 日首次公开的预印本，方法及指定实验已核查，未复现。
 
-更新对象（策略/世界模型/奖励/记忆/技能/代码/数据/课程/改进器）；反馈来源；保留范围（任务内/跨任务/跨部署）；人工参与；仿真或真机；验收独立性；资源预算；证据强度；综述用途（核心机制/支撑组件/边界/综述/观点）。不同轴分别标记，不用一个等级替代所有判断。
+## 按综述主线浏览
+
+| 能力更新 | 反馈与运行条件 | 评价与组织 |
+| :--- | :--- | :--- |
+| [策略 / VLA-RL](topics.md#policy) | [奖励 / 验证 / 安全](topics.md#feedback) | [持续与部署学习](topics.md#continual) |
+| [世界模型](topics.md#world) | [复位 / 恢复 / 采集](topics.md#infrastructure) | [自动研究与改进器](topics.md#improvers) |
+| [技能 / 代码 / harness](topics.md#skills) | [课程 / 任务 / 环境](topics.md#curriculum) | [综述 / 评价方法](topics.md#surveys) |
+| [记忆 / 上下文](topics.md#memory) | | |
+
+## 阅读时保留的三个区别
+
+- **任务内适应**：重试、重规划或上下文更新帮助当前任务；需要说明重置边界。
+- **持久自我改进**：自身执行反馈形成可留存更新，并评估后续能力；不等于完全无人参与。
+- **改进器递归增强**：生成、选择或执行更新的机制本身被修改，且后续改进能力得到验证。标题出现 RSI 不足以证明这一点。
+
+[RegenHarness](papers/regenharness.md) 当前展示的是执行案例与版本化修订协议；[LEMCA](papers/lemca.md) 演化的是控制架构。两者都不应只凭“harness / 演化 / 改进器”用词升级为严格递归实证。
+
+<details>
+<summary><strong>证据、来源与维护</strong></summary>
+
+- 正式卡片：方法及指定实验/表格已核查，均未复现；原图注明版本和图号。
+- 原报告条目：保留公开题名和链接，未逐项重新核查，不与新增卡片混算。
+- 候选与引文：不等于全文已读；只读摘要时不填猜测结果。
+- [来源与 awesome 入口](sources.md) · [阅读模板](templates/paper.md) · [维护规范](MAINTENANCE.md)
+- [结构化目录](data/catalog.json) · [去重基线](data/baseline.json) · [候选数据](data/candidates.json) · [引文数据](data/reference-frontier.json)
+- 修改数据后运行 `python survey-rsi/scripts/build_index.py`；首页正文、论文卡片与历史日志保留人工编辑。
+
+</details>

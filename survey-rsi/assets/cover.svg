@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="252" viewBox="0 0 1200 252" role="img" aria-labelledby="title desc">
+<title id="title">Physical AI Self-Improvement Research Library</title>
+<desc id="desc">An editorial banner for the literature library. Read the mechanisms, compare the evidence, build the survey.</desc>
+<rect width="1200" height="252" rx="20" fill="#132d3b"/>
+<rect x="44" y="39" width="6" height="170" rx="3" fill="#7ed3ba"/>
+<text x="72" y="67" fill="#9ed9cb" font-size="16" letter-spacing="3" font-family="Arial, sans-serif">EMBODIED INTELLIGENCE / RESEARCH NOTES</text>
+<text x="70" y="127" fill="#f7f6ef" font-size="44" font-weight="700" font-family="Arial, sans-serif">Physical AI · Self-Improvement</text>
+<text x="73" y="169" fill="#bfd0d6" font-size="20" font-family="Arial, sans-serif">Read the mechanisms. Compare the evidence. Build the survey.</text>
+<path d="M73 192 H1125" stroke="#46616c"/>
+<text x="73" y="222" fill="#f7f6ef" font-size="15" letter-spacing="1" font-family="Arial, sans-serif">PAPERS</text>
+<text x="239" y="222" fill="#f7f6ef" font-size="15" letter-spacing="1" font-family="Arial, sans-serif">EVIDENCE</text>
+<text x="426" y="222" fill="#f7f6ef" font-size="15" letter-spacing="1" font-family="Arial, sans-serif">SYNTHESIS</text>
+<circle cx="209" cy="216" r="3" fill="#7ed3ba"/><circle cx="395" cy="216" r="3" fill="#7ed3ba"/>
+<text x="965" y="222" fill="#9ed9cb" font-size="14" font-family="Arial, sans-serif">LIVING LITERATURE</text>
+</svg>

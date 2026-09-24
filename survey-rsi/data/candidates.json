@@ -439,5 +439,292 @@
     "priority": "优先",
     "next_check": "回滚环境但保留反思记忆；核查三个长程基准是否含物理环境、记忆跨会话边界和失败污染控制。",
     "discovered": "2026-09-24"
+  },
+  {
+    "title": "InternW0: A Foundational Physical World Model for Efficient Real-World Interactions",
+    "arxiv_id": "2609.27656",
+    "url": "https://arxiv.org/abs/2609.27656",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "检查世界模型与动作专家是否依据部署经验持续更新；区分训练期联合建模、推理时上下文路由和权重改进。",
+    "discovered": "2026-09-24",
+    "authors": [
+      "Cai, Jisong",
+      "Mu, Yao",
+      "Yang, Ganlin",
+      "Cao, Zhe",
+      "Tu, Zhangzheng",
+      "Gao, Xing",
+      "Li, Kailin",
+      "Zhan, Xinyu",
+      "Yang, Lixin",
+      "Zhu, Yangkun",
+      "Ma, Haoxiang",
+      "Zhou, Ming",
+      "Yu, Qiaojun",
+      "Xue, Yufei",
+      "He, Liqun",
+      "Yao, Yifei",
+      "Zhu, Yifan",
+      "Ling, Long",
+      "Jiang, Bingqi",
+      "Guo, Haoyu",
+      "Zhu, Xueyue",
+      "Zhou, Bowen",
+      "Zhao, Bin",
+      "Xue, Tianfan",
+      "Shen, Chunhua",
+      "Zhang, Weinan"
+    ],
+    "citation_date": "2026/09/23",
+    "topics": [
+      "世界模型"
+    ],
+    "version": "v1"
+  },
+  {
+    "title": "MemBodied: Recurrent Associative Memory for Vision-Language-Action Models",
+    "arxiv_id": "2609.28256",
+    "url": "https://arxiv.org/abs/2609.28256",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "检查 episode 锚点和关联记忆的重置边界、绝对成功率及跨任务留存；不能从 recurrent memory 推断持续学习。",
+    "discovered": "2026-09-24",
+    "authors": [
+      "Pala, Tej Deep",
+      "Majumder, Navonil",
+      "Goh, Bryce",
+      "Yee, Raphael",
+      "Yang, Jianfei",
+      "Chen, Liming",
+      "Poria, Soujanya"
+    ],
+    "citation_date": "2026/09/23",
+    "topics": [
+      "记忆"
+    ],
+    "version": "v1"
+  },
+  {
+    "title": "Generalizable Robotic Insertion with World Models",
+    "arxiv_id": "2609.28258",
+    "url": "https://arxiv.org/abs/2609.28258",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "核查未见插入零样本结果、微调曲线、真机数据预算；区分泛化/适配与自主循环。",
+    "discovered": "2026-09-24",
+    "authors": [
+      "Hansen, Nicklas",
+      "Akinola, Iretiayo",
+      "Guo, Yijie",
+      "Xu, Jie",
+      "Tang, Bingjie",
+      "Su, Hao",
+      "Wang, Xiaolong",
+      "Gupta, Abhishek",
+      "Fox, Dieter",
+      "Narang, Yashraj"
+    ],
+    "citation_date": "2026/09/23",
+    "topics": [
+      "世界模型"
+    ],
+    "version": "v1"
+  },
+  {
+    "title": "X2Real: an eXtensive simulation benchmark for real-world generalist policies",
+    "arxiv_id": "2609.27449",
+    "url": "https://arxiv.org/abs/2609.27449",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "核查 sim-real 相关系数的样本单位、44任务及隔离协议；evolvable benchmark 不等于策略进化。",
+    "discovered": "2026-09-24",
+    "authors": [
+      "Ruan, Lian",
+      "Yang, Jade",
+      "Gao, Sherphylan",
+      "Gao, Felix",
+      "Liang, Kyson",
+      "Liu, Galen",
+      "Wu, Ligo",
+      "Jin, Lane",
+      "Gu, Guu",
+      "Xie, Bevan",
+      "Yan, Cloud",
+      "Yuan, Zongzi",
+      "Luo, Kino",
+      "Chen, Emma",
+      "Chen, Shuwen",
+      "Ping, Yang",
+      "Guo, Miles",
+      "Sun, Rain",
+      "Zhang, Kayden",
+      "Du, Alex",
+      "Wu, Ruihai",
+      "Hao, Liang",
+      "Li, Zhaoshuo",
+      "Gan, Roy",
+      "Wang, Hao",
+      "Wang, Qian"
+    ],
+    "citation_date": "2026/09/23",
+    "topics": [
+      "评价"
+    ],
+    "version": "v1"
+  },
+  {
+    "title": "The Gaussian Is Enough: Flow-Matching Priors Do Not Help When Fine-Tuning Large Behavior Models",
+    "arxiv_id": "2609.27070",
+    "url": "https://arxiv.org/abs/2609.27070",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "次优先",
+    "next_check": "负结果入口；核查1250次硬件试验分配和学习率对照，避免把离线微调写成在线RSI。",
+    "discovered": "2026-09-24",
+    "authors": [
+      "Xu, Chen",
+      "Shah, Rishi",
+      "Kress-Gazit, Hadas",
+      "Nishimura, Haruki",
+      "Itkina, Masha"
+    ],
+    "citation_date": "2026/09/22",
+    "topics": [
+      "策略"
+    ],
+    "version": "v1"
+  },
+  {
+    "title": "NavProbe: Evidence-Grounded Reasoning with Active Memory Retrieval for Zero-Shot Navigation",
+    "arxiv_id": "2609.27526",
+    "url": "https://arxiv.org/abs/2609.27526",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "次优先",
+    "next_check": "查索引更新是否跨任务保留，定性真机视频与定量仿真分开。",
+    "discovered": "2026-09-24",
+    "authors": [
+      "Liu, Jingyang",
+      "Yao, Sujia",
+      "Gu, Jiayuan",
+      "Xu, Lan"
+    ],
+    "citation_date": "2026/09/23",
+    "topics": [
+      "记忆"
+    ],
+    "version": "v1"
+  },
+  {
+    "title": "Harness as a Language: A Minimalist Agent Framework With Maximal Expressivity",
+    "arxiv_id": "2609.26891",
+    "url": "https://arxiv.org/abs/2609.26891",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "次优先",
+    "next_check": "纯软件JAZ/AppWorld；仅作harness表达能力与评测对照，不当机器人物理实证。",
+    "discovered": "2026-09-24",
+    "authors": [
+      "Li, Zhening",
+      "Liu, Joshua",
+      "Vukelic, Mateja",
+      "Shen, Nicole",
+      "Lall, Supriya",
+      "Thakur, Amitayush",
+      "Zhang, Alex",
+      "Khattab, Omar",
+      "Light, Jonathan",
+      "Solar-Lezama, Armando"
+    ],
+    "citation_date": "2026/09/22",
+    "topics": [
+      "改进器"
+    ],
+    "version": "v1"
+  },
+  {
+    "title": "Turning Safety into Competence: Minimally Exploitable Robot Policies via Safety-Filtered Reinforcement Learning",
+    "arxiv_id": "2609.27312",
+    "url": "https://arxiv.org/abs/2609.27312",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "次优先",
+    "next_check": "查安全过滤器训练/部署是否固定，定理假设与真人对手压力测试规模。",
+    "discovered": "2026-09-24",
+    "authors": [
+      "Wu, Ruihan",
+      "Yang, Rui",
+      "Oh, Donggeon David",
+      "Nguyen, Duy",
+      "Hu, Haimin"
+    ],
+    "citation_date": "2026/09/23",
+    "topics": [
+      "安全"
+    ],
+    "version": "v1"
+  },
+  {
+    "title": "Learning a Speed-adaptive Hip Exoskeleton Control Policy Via Sim-to-real Reinforcement Learning",
+    "arxiv_id": "2609.28027",
+    "url": "https://arxiv.org/abs/2609.28027",
+    "status": "仅摘要已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "外骨骼偏好学习；查受试人数、成对偏好预算、参数保留与个体迁移。",
+    "discovered": "2026-09-24",
+    "authors": [
+      "Li, Bin",
+      "Hou, Zhimin",
+      "Hou, Jiacheng",
+      "Liang, Zenian",
+      "Wu, Tong",
+      "Ma, Teng",
+      "Fu, Chenglong"
+    ],
+    "citation_date": "2026/09/23",
+    "topics": [
+      "部署学习"
+    ],
+    "version": "v1"
+  },
+  {
+    "title": "A Survey of Self-Evolving Agents: What, When, How, and Where to Evolve on the Path to Artificial Super Intelligence",
+    "arxiv_id": "2507.21046",
+    "url": "https://arxiv.org/abs/2507.21046",
+    "status": "摘要、框架及相关引文已抽查；未完成方法/实验核查，不计正式卡片",
+    "priority": "优先",
+    "next_check": "补读What/When/How/Where组织框架；已抽查参考文献到Voyager（原报告已有），不可当新机器人RSI实证。",
+    "discovered": "2026-09-24",
+    "authors": [
+      "Gao, Huan-ang",
+      "Geng, Jiayi",
+      "Hua, Wenyue",
+      "Hu, Mengkang",
+      "Juan, Xinzhe",
+      "Liu, Hongzhang",
+      "Liu, Shilong",
+      "Qiu, Jiahao",
+      "Qi, Xuan",
+      "Wu, Yiran",
+      "Wang, Hongru",
+      "Xiao, Han",
+      "Zhou, Yuhang",
+      "Zhang, Shaokun",
+      "Zhang, Jiayi",
+      "Xiang, Jinyu",
+      "Fang, Yixiong",
+      "Zhao, Qiwen",
+      "Liu, Dongrui",
+      "Ren, Qihan",
+      "Qian, Cheng",
+      "Wang, Zhenhailong",
+      "Hu, Minda",
+      "Wang, Huazheng",
+      "Wu, Qingyun",
+      "Ji, Heng",
+      "Wang, Mengdi"
+    ],
+    "citation_date": "2025/07/28",
+    "topics": [
+      "综述"
+    ],
+    "version": "v4"
   }
 ]
