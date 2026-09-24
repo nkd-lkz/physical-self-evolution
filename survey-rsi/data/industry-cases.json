@@ -1,0 +1,67 @@
+[
+  {
+    "id": "simate-autoresearch",
+    "title": "Simate AutoResearch / RoboScientist",
+    "kind": "enterprise_system",
+    "updated": "2026-09-24",
+    "note": "cases/simate-autoresearch.md",
+    "primary_sources": [
+      "https://mate-robot.cn/home/",
+      "https://mate-robot.cn/research/sinfra/",
+      "https://mate-robot.cn/research/RoboScientist/gallery/",
+      "https://mate-robot.cn/research/RoboScientist/gallery/cdn/index.json",
+      "https://robodojo-benchmark.com/leaderboard"
+    ],
+    "status": "Official product pages, leaderboard public data and gallery snapshot inspected; platform not used; causal attribution not reproduced",
+    "source_snapshot": {
+      "accessed": "2026-09-24",
+      "leaderboard_scope": "official published simulation leaderboard snapshot; not a uniform cross-report comparison",
+      "entries": [
+        {
+          "model": "Simate-beta",
+          "score": 33.95,
+          "success_rate_percent": 27.96
+        },
+        {
+          "model": "GPT-6-Astra",
+          "score": 28.97,
+          "success_rate_percent": 22.48
+        }
+      ],
+      "leaderboard_asset_url": "https://robodojo-benchmark.com/assets/index-oIWaVVE1.js",
+      "leaderboard_asset_sha256": "24d8f5d233f96768bee23391e27c807d729cacf1220454f3cc137ecb2a01dde7",
+      "gallery_exported_at": "2026-09-16T05:09:35.085Z",
+      "gallery_counts": {
+        "evolutionNodes": 16,
+        "experiments": 1,
+        "runs": 25,
+        "reports": 1
+      },
+      "gallery_snapshot_url": "https://mate-robot.cn/research/RoboScientist/gallery/cdn/snapshots/1a5d4fc3008cfe128eaab3848b8b5c0a79f59285046362611522f8e6a0bb9d6f/snapshot.json",
+      "gallery_snapshot_sha256": "9b1a8e106b2a51646449e09077b274fd244fc0a75022770705258bb7c210c7ac",
+      "limitation": "Published records do not establish causal attribution to AutoResearch or identity with leaderboard submission. Raw records containing personal paths are not republished."
+    }
+  },
+  {
+    "id": "skild-physical-self-play",
+    "title": "Skild Physical Self-Play",
+    "kind": "enterprise_blog",
+    "updated": "2026-09-24",
+    "note": "cases/skild-physical-self-play.md",
+    "primary_sources": [
+      "https://www.skild.ai/blogs/physical-self-play"
+    ],
+    "status": "Official blog read; policy/opponent self-play and sim-to-real claims; not reproduced"
+  },
+  {
+    "id": "knowin-glow",
+    "title": "Knowin GLOW",
+    "kind": "enterprise_technical_page",
+    "updated": "2026-09-24",
+    "note": "cases/knowin-glow.md",
+    "primary_sources": [
+      "https://knowinai.com/tech.html"
+    ],
+    "status": "Official technical page, evaluation footnotes and execution receipts read; not reproduced"
+  }
+]

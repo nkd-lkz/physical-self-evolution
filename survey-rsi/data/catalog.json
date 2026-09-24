@@ -746,9 +746,9 @@
       "版本修订",
       "旧候选补全"
     ],
-    "read_status": "v2方法及指定实验/表格已核查；项目页已打开；未复现",
+    "read_status": "v2方法及指定实验已核查；本轮勘误PIM清空边界、effect目标与跨尝试数字归属；未复现",
     "note": "papers/zeva-ego.md",
-    "evidence_locations": "Figure 1；§§3–5；Tables 1–3；Appendix A.2–A.3。RoboTwin2.0、LIBERO-PRO及ChemLab-Evo三项真机原子任务。",
+    "evidence_locations": "v2 §4.3.2（新实例清PIM）；§5.1.2（同初态4次尝试）；§5.4.1/Fig.11与§6（58→89的sim/real归属措辞不一致）；Appendix A.3（视觉差分effect监督）；Tables 1–3。",
     "figure_url": "https://arxiv.org/html/2609.24411v2/zeva_ego_teaser.png",
     "authors": [
       "Huang, Bingjia",
@@ -760,7 +760,8 @@
       "Liu, Yunxin",
       "Cao, Ting"
     ],
-    "citation_date": "v1 2026/09/21；采用v2 2026/09/22"
+    "citation_date": "2026/09/21",
+    "version_date": "2026-09-22"
   },
   {
     "title": "Amortized Low-Rank Adaptation for Model-Based Reinforcement Learning",

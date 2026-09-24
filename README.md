@@ -4,7 +4,7 @@ Living research website for **Universal Physical Token, robot self-improvement, 
 
 ## RSI survey literature
 
-[具身 / 机器人 RSI 综述调研](survey-rsi/README.md) — 每日增量、原图阅读卡片、去重索引和证据核查，与实验主线分别维护。
+[具身 / 机器人 RSI 综述调研](survey-rsi/README.md) — 每日增量、原图阅读卡片、去重索引和证据核查，与实验主线分别维护。新增：[Simate / Skild / Zeva-Ego / GLOW 综合分析](survey-rsi/discussions/physical-rsi-sept24.md)、[研究随想](survey-rsi/discussions/physical-experience-theses.md)与[RLT loss-first / 记忆实验提案](survey-rsi/experiments/rlt-contact-memory/README.md)（含数据合同与校验器，未训练）。
 
 ## Website
 

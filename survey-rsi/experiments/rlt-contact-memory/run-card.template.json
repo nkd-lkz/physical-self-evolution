@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "status": "proposal_not_executed",
+  "hypothesis": "Measured consequence grounding improves a matched compact representation",
+  "parent_run": null,
+  "single_change": null,
+  "code_sha": null,
+  "checkpoint_sha": null,
+  "environment_version": null,
+  "feature_tap": null,
+  "feature_version": null,
+  "action_space_contract": null,
+  "H": null,
+  "C_requested": null,
+  "control_dt_s": null,
+  "dataset_hash": null,
+  "split_manifest_hash": null,
+  "training_seeds": null,
+  "evaluation_seed_manifest_hash": null,
+  "fixed_components": [
+    "reference",
+    "expert",
+    "gate",
+    "reward",
+    "learner",
+    "normalization",
+    "evaluation predicates"
+  ],
+  "budgets": {
+    "executed_control_steps": null,
+    "expert_seconds": null,
+    "offline_episodes": null,
+    "learner_updates": null,
+    "gpu_hours": null,
+    "agent_tokens": null
+  },
+  "evaluation": {
+    "success_target": null,
+    "noninferiority_margin": null,
+    "throughput_floor": null,
+    "interval_control_steps": null,
+    "selection_rule": null,
+    "memory_reset_rule": null
+  },
+  "acceptance_rule": null,
+  "result": null,
+  "decision": null,
+  "failure_reason": null
+}
