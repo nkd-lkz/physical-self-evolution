@@ -9,13 +9,13 @@
 | 章节 | 核心问题 | 可以先用的材料 | 还需要补的证据 |
 | :--- | :--- | :--- | :--- |
 | 范围与定义 | 哪些是任务内适应、持久自我改进、改进器递归增强？ | [证据对照](evidence-map.md)；Zeva-Ego / MessyMem / RegenHarness 的差异 | 明确跨任务、会话、部署的重置边界；不要靠标题纳入 |
-| 策略与世界模型更新 | 执行经验怎样进入参数，模型想象何时可信？ | RAPolicy、ForceRFT、BEE、HiRE、CLAW；[世界模型主题](topics.md#world) | 世界模型误差、策略收益、数据来源与旧任务保持的联合评测 |
-| 记忆、技能与可执行代码 | 不改基础权重，系统还能更新什么？ | MessyMem、机器人软件学习与迁移、LEMCA、Banana Kick | 记忆/技能清空对照、跨任务迁移、库膨胀与退化 |
+| 策略与世界模型更新 | 执行经验怎样进入参数，模型想象何时可信？ | RAPolicy、ForceRFT、BEE、HiRE、CLAW、InternW0、The Gaussian Is Enough；[世界模型主题](topics.md#world) | 世界模型误差、策略收益、数据来源与旧任务保持的联合评测 |
+| 记忆、技能与可执行代码 | 不改基础权重，系统还能更新什么？ | MessyMem、MemBodied、机器人软件学习与迁移、LEMCA、Banana Kick | 记忆/技能清空对照、跨任务迁移、库膨胀与退化 |
 | 反馈、目标与自动课程 | 什么决定更新方向和接纳标准？ | No Free Checker、SRPO、AgenticRL、HiRE、Banana Kick | 固定验证器 vs 共同演化验证器；奖励投机与独立任务指标 |
 | 连续物理运行的条件 | 学习闭环在硬件上为什么难持续？ | HALTER、LIBERO-RECOVER、SPINE、RegenHarness | 人工接管/复位时长、失败损耗、全天运行与累计成本 |
 | 持续学习与跨部署积累 | 新能力增加后旧能力是否保持？ | FAN、MEMOBench、持续世界模型基准 | 多轮前向/后向迁移、场景漂移、旧数据依赖 |
 | 从自我改进到递归 | 学习/研究流程自身能否越来越有效？ | 原报告的 STOP、DGM、HELIX、Dream-RSI 等仅作待复核入口；[改进器主题](topics.md#improvers) | 机器人上的外层改进器更新、冻结外层对照与预算匹配 |
-| 评价与开放问题 | 什么证据足以支持“越部署越强”？ | CMA、经验检索审计、No Free Checker、LIBERO-RECOVER | 多轮改进曲线、独立验收、可复现数据与长期回滚审计 |
+| 评价与开放问题 | 什么证据足以支持“越部署越强”？ | CMA、MemBodied、X2Real、经验检索审计、No Free Checker、LIBERO-RECOVER | 多轮改进曲线、独立验收、可复现数据与长期回滚审计 |
 
 上述已审卡片均可从[主题页](topics.md)进入；原报告材料从[既有条目索引](baseline.md)进入，并须先补原文核查。
 
@@ -52,6 +52,8 @@
 
 ## 可以直接展开的综合论点
 
+- **世界模型、记忆和评测基础设施都可能被误写成RSI。** InternW0部署期只更新上下文，MemBodied主协议每次重置，X2Real更新的是任务与环境；三者应分别列为支撑组件、边界案例与评价基础设施。
+- **负结果应进入机制主线。** The Gaussian Is Enough提示复杂先验不一定带来更好微调；综述比较策略后训练时应把编码器可塑性和高斯强基线列为必要对照。
 - **持久性比“是否训练基础模型”更关键。** 用 MessyMem 与 2AM、Zeva-Ego 对比记忆的范围；再用 ForceRFT、BEE 展示冻结基础 VLA 下的可学习组件。证据不足的跨会话留存应保留为空。
 - **反馈也会成为需要适配的对象。** 用 HiRE、AgenticRL 和 Banana Kick 比较支持集编辑、奖励代码编辑和目标参数更新，但单独说明固定的外层规则。
 - **闭环可运行与闭环带来能力增长要分别证实。** 用 HALTER/恢复框架解释运行条件，用 RegenHarness 的案例边界说明发布协议还需要修订收益对照。

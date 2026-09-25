@@ -10,7 +10,8 @@
       "dexpie",
       "srpo",
       "advantage-guided-vla-post-training",
-      "routerlt"
+      "routerlt",
+      "gaussian-is-enough"
     ]
   },
   {
@@ -20,7 +21,8 @@
     "slugs": [
       "claw",
       "compositional-continual-world-models",
-      "world-models-actionable-survey"
+      "world-models-actionable-survey",
+      "internw0"
     ]
   },
   {
@@ -49,7 +51,8 @@
       "safemem",
       "counterfactual-memory-audit",
       "beyond-end-task-success-audit",
-      "memobench"
+      "memobench",
+      "membodied"
     ]
   },
   {
@@ -89,7 +92,8 @@
       "libero-recover",
       "vla-corrector",
       "embodiedskills",
-      "spine"
+      "spine",
+      "x2real"
     ]
   },
   {
@@ -124,7 +128,10 @@
       "memobench",
       "libero-recover",
       "compositional-continual-world-models",
-      "embodied-benchforge"
+      "embodied-benchforge",
+      "x2real",
+      "gaussian-is-enough",
+      "membodied"
     ]
   }
 ]

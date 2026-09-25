@@ -8,6 +8,10 @@
 
 | 工作 | 实际更新对象与保留范围 | 物理证据与人工条件 | 可以支持 / 不能支持 |
 | :--- | :--- | :--- | :--- |
+| [InternW0](papers/internw0.md) | 离线更新视频/动作专家；部署期只重路由上下文 | 5项真机、每项15次；混合成功/过程指标 | 世界模型支撑；不能支持部署期持久更新 |
+| [MemBodied](papers/membodied.md) | rollout内联想状态；主协议每次重置 | PiPER三任务、每策略每任务20次 | 任务内记忆；跨episode携带均值反降 |
+| [X2Real](papers/x2real.md) | 更新任务/环境/数据基础设施，不更新被测策略 | 44任务；8项sim-real对照为单模型 | RSI评价基础；“可演化基准”不等于递归策略 |
+| [Gaussian Is Enough](papers/gaussian-is-enough.md) | 离线动作先验/编码器微调 | >10万仿真＋1250双臂FR3真机rollout | 后训练强基线；不是在线自改进 |
 | [BEE](papers/bee.md) | 残差策略、纠正分布及约束；跨 episode 保留，基础 VLA 冻结 | 三项真机、一项仿真；接管与标签依赖人 | 接管驱动在线改进；不能称全自主或通用跨任务 RSI |
 | [HiRE](papers/hire.md) | 成败支持集编辑奖励，再训练策略 | 四项仿真、两项 YAM 真机；真机成败由人标注 | 奖励随经验适配；并未修改奖励编辑规则本身 |
 | [Banana Kick](papers/banana-kick.md) | 奖励目标参数与 PPO 策略迭代保留 | 仿真训练，G1 上 30 次冻结策略试验 | 新技能的目标—策略共同更新；不是真机在线学习 |
@@ -34,6 +38,8 @@
 | 记忆是否变成长期能力 | [MessyMem](papers/messymem.md)、[2AM](papers/2am.md)、[Zeva-Ego](papers/zeva-ego.md)、[CMA](papers/counterfactual-memory-audit.md) | 同实例跨尝试与跨任务不同；是否重置；记忆使用是否被干预验证 |
 | 代码是否真的累积改进 | [机器人软件学习与迁移](papers/learning-transferring-robot-software.md)、[LEMCA](papers/lemca.md)、[Local Coding Agent](papers/generalizing-manipulation-local-coding-agent.md) | 控制程序演化、同任务会话缓存、基础模型或外层搜索规则更新应分列 |
 | 不同反馈能否可信验收 | [No Free Checker](papers/no-free-checker.md)、[HiRE](papers/hire.md)、[SeeQ](papers/seeq.md)、[SRPO](papers/srpo.md) | 提议器与验证器共因错误、稀疏标签依赖、奖励投机、外部任务指标 |
+| 世界模型是否真的帮助控制 | [InternW0](papers/internw0.md)、[世界模型综述](papers/world-models-actionable-survey.md)、[持续世界模型基准](papers/compositional-continual-world-models.md) | 预测精度、动作收益、推理延迟、部署更新和旧能力保持应分开 |
+| 任务内记忆是否应跨episode保留 | [MemBodied](papers/membodied.md)、[Zeva-Ego](papers/zeva-ego.md)、[MessyMem](papers/messymem.md) | 明确重置边界；未经训练的携带可能负迁移 |
 | 进步是否伴随遗忘 | [FAN](papers/fan.md)、[持续世界模型基准](papers/compositional-continual-world-models.md)、[MEMOBench](papers/memobench.md) | 后向迁移、学习速度、旧能力保持与最终成功率不同 |
 | 系统能否连续自主运行 | [HALTER](papers/halter.md)、[LIBERO-RECOVER](papers/libero-recover.md)、[SPINE](papers/spine.md)、[RegenHarness](papers/regenharness.md) | 复位、恢复和验证的成本；演示可运行不等于自我改进有效 |
 

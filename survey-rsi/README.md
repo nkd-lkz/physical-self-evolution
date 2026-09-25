@@ -5,10 +5,10 @@
 面向综述写作，按 **问题 → 方法 → 结果 → 引用价值 → 证据边界** 阅读论文。持续区分任务内适应、可留存的自我改进，以及改进器自身的递归增强。
 
 <!-- stats:start -->
-**34 篇阅读卡片** · **141 项原报告条目** · **59 项待核查** · **76 条引文线索**
+**38 篇阅读卡片** · **141 项原报告条目** · **60 项待核查** · **80 条引文线索**
 <!-- stats:end -->
 
-**最近更新：2026-09-24** · [Physical RSI案例与实验提案](daily/2026-09-24-physical-rsi-cases.md) · [同日前轮新增](daily/2026-09-24-follow-up.md) · [当天早间记录](daily/2026-09-24.md) · [历史日志](daily/)
+**最近更新：2026-09-25** · [当日增量调研](daily/2026-09-25.md) · [9月24日专题与实验提案](daily/2026-09-24-physical-rsi-cases.md) · [历史日志](daily/)
 
 ## 新增专题：从 Physical RSI 线索到 RLT 可执行实验
 
@@ -38,11 +38,11 @@
 
 | 工作 | 为什么值得读 | 放到综述哪里 |
 | :--- | :--- | :--- |
-| **[BEE](papers/bee.md)** | 人类接管如何转化为可保留的在线策略更新；必须区分接触阶段与全任务成功率 | 策略自我改进、人类反馈、交互预算 |
-| **[Banana Kick / RISE](papers/banana-kick.md)** | 根据物理响应调整训练目标，让普通踢球先验学出弧线球；硬件端冻结策略 | 目标演化、课程、技能增长 |
-| **[Counterfactual Memory Audit](papers/counterfactual-memory-audit.md)** | 动作随历史变化，仍可能没有利用记忆选对目标 | 记忆评价、因果对照、证据标准 |
+| **[InternW0](papers/internw0.md)** | 联合视频—动作世界模型兼顾7,233.5小时预训练、接触后训练和60.73 ms动作关键路径；但部署权重固定 | 世界模型—策略协同、支撑组件、延迟口径 |
+| **[MemBodied](papers/membodied.md)** | episode内联想记忆均值50.0%；跨episode携带降到36.8%，直接揭示记忆持久化的负迁移风险 | 记忆边界、重置协议、任务内适应 |
+| **[X2Real](papers/x2real.md)** | 44任务、ID/OOD、DAG过程分和8任务sim-real对照，为“越部署越强”提供更细评测维度 | 评价框架、自动采集、sim-real证据 |
 
-本轮另有 **[HiRE](papers/hire.md)** 的奖励编辑、**[优势引导 VLA 后训练分析](papers/advantage-guided-vla-post-training.md)** 的设计拆解，以及 **[RegenHarness](papers/regenharness.md)** 的演化协议审计。6 篇均为 9 月 22–23 日首次公开的预印本，方法及指定实验已核查，未复现。
+本轮另有 **[The Gaussian Is Enough](papers/gaussian-is-enough.md)** 的负结果：在超过10万次仿真和1250次真机rollout的匹配比较中，复杂先验没有稳定优于高斯，编码器更新的影响更大。四项均为9月22–23日预印本，由9月24日候选池升级为全文核查卡片，未复现。
 
 ## 按综述主线浏览
 

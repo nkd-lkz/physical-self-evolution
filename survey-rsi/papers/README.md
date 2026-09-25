@@ -3,9 +3,9 @@
 
 # 全部阅读卡片
 
-**34 篇**。按完整题名字母顺序排列；浏览器搜索可查题名、短名或 arXiv ID。方法及指定实验已核查，均未复现。
+**38 篇**。按完整题名字母顺序排列；浏览器搜索可查题名、短名或 arXiv ID。方法及指定实验已核查，均未复现。
 
-[下载 BibTeX](../references.bib) · [原报告 141 项](../baseline.md) · [候选 59 项](../candidates.md)
+[下载 BibTeX](../references.bib) · [原报告 141 项](../baseline.md) · [候选 60 项](../candidates.md)
 
 ### [2AM: Grounding Agent-Side Memory as Guidance for Steerable Action Models in Long-Horizon Manipulation](2am.md)
 
@@ -71,6 +71,10 @@
 
 **HiRE** · `2609.27068v1` · 核心策略改进 / 奖励自适应 / 在线RL / 真机与仿真
 
+### [InternW0: A Foundational Physical World Model for Efficient Real-World Interactions](internw0.md)
+
+**InternW0** · `2609.27656v1` · 支撑组件 / 世界—动作模型 / 离线后训练 / 真机
+
 ### [Learning and Transferring Closed-Loop Robot Software](learning-transferring-robot-software.md)
 
 **Learning and Transferring Closed-Loop Robot Software** · `2609.19906v1` · 核心自我改进 / 代码演化 / 跨任务迁移 / 仿真
@@ -82,6 +86,10 @@
 ### [LIBERO-RECOVER: Beyond Task Success Towards Failure Recovery in Robotic Manipulation Models](libero-recover.md)
 
 **LIBERO-RECOVER** · `2609.05178v1` · 评价框架 / 失败恢复 / 恢复数据 / 仿真
+
+### [MemBodied: Recurrent Associative Memory for Vision-Language-Action Models](membodied.md)
+
+**MemBodied** · `2609.28256v1` · 边界案例 / episode内记忆 / VLA / 真机
 
 ### [MEMOBench: A Process Level Memory Benchmark for Robotic Manipulation](memobench.md)
 
@@ -131,6 +139,10 @@
 
 **RAPolicy** · `2609.22888v1` · 核心自我改进 / 在线VLA-RL / 异步真机学习 / 人在环
 
+### [The Gaussian Is Enough: Flow-Matching Priors Do Not Help When Fine-Tuning Large Behavior Models](gaussian-is-enough.md)
+
+**The Gaussian Is Enough** · `2609.27070v1` · 边界案例 / 负结果 / 离线微调 / 真机
+
 ### [VLA-Corrector: Stage-Aware Observable State Understanding for Prompt-Based Closed-Loop Recovery of Vision-Language-Action Policies](vla-corrector.md)
 
 **VLA-Corrector** · `2609.06508v1` · 边界案例 / 任务内恢复 / 可观测验证器 / 仿真与真机
@@ -139,6 +151,11 @@
 
 **World Models: Plausible → Controllable → Actionable** · `2609.16697v1` · 重点综述 / 世界模型 / 闭环效用 / 参考文献入口
 
+### [X2Real: an eXtensive simulation benchmark for real-world generalist policies](x2real.md)
+
+**X2Real** · `2609.27449v1` · 评价框架 / 仿真—真机 / 自动数据采集 / 企业技术报告
+
 ### [Zeva-Ego: Egocentric Mid-Training with In-Context Causal Learning for Robot Manipulation](zeva-ego.md)
 
 **Zeva-Ego** · `2609.24411v2` · 边界案例 / 任务内ICL / 跨尝试记忆 / 真机与仿真 / 版本修订 / 旧候选补全
+

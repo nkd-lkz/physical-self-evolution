@@ -20,6 +20,7 @@
 - [SRPO: Self-Referential Policy Optimization for Vision-Language-Action Models](papers/srpo.md) — 核心策略改进 / 自参考奖励 / VLA-RL / 旧文补漏
 - [Dissecting Advantage-Guided Post-Training for Vision-Language-Action Policies](papers/advantage-guided-vla-post-training.md) — 边界案例 / 离线后训练 / 优势估计 / 真机
 - [RouteRLT: Learning When and Which RL Specialist Should Control a VLA Policy](papers/routerlt.md) — 支撑组件 / VLA-RL / 专家路由 / 真机 / 部署期不学习
+- [The Gaussian Is Enough: Flow-Matching Priors Do Not Help When Fine-Tuning Large Behavior Models](papers/gaussian-is-enough.md) — 边界案例 / 负结果 / 离线微调 / 真机
 
 <a id="world"></a>
 
@@ -30,6 +31,7 @@
 - [Amortized Low-Rank Adaptation for Model-Based Reinforcement Learning](papers/claw.md) — 支撑组件 / 世界模型适配 / 上下文LoRA / 仿真 / 版本修订
 - [Benchmarking World Models for Continual Learning on Compositional Tasks](papers/compositional-continual-world-models.md) — 评价框架 / 世界模型 / 持续学习 / 仿真
 - [World Models for Embodied Intelligence: From Plausible to Controllable to Actionable](papers/world-models-actionable-survey.md) — 重点综述 / 世界模型 / 闭环效用 / 参考文献入口
+- [InternW0: A Foundational Physical World Model for Efficient Real-World Interactions](papers/internw0.md) — 支撑组件 / 世界—动作模型 / 离线后训练 / 真机
 
 <a id="skills"></a>
 
@@ -59,6 +61,7 @@
 - [Memory That Changes Action Is Not Memory That Guides It: Counterfactual Auditing of History-Conditioned Robot Policies](papers/counterfactual-memory-audit.md) — 评价框架 / 记忆审计 / 因果干预 / 真机与仿真
 - [Beyond End-Task Success: How to Audit Visual Experience Retrieval in Robotics](papers/beyond-end-task-success-audit.md) — 评价框架 / 经验检索 / 因果审计 / 仿真
 - [MEMOBench: A Process Level Memory Benchmark for Robotic Manipulation](papers/memobench.md) — 评价框架 / 跨时段记忆 / 过程指标 / 仿真 / 旧候选补全
+- [MemBodied: Recurrent Associative Memory for Vision-Language-Action Models](papers/membodied.md) — 边界案例 / episode内记忆 / VLA / 真机
 
 <a id="continual"></a>
 
@@ -99,6 +102,7 @@
 - [VLA-Corrector: Stage-Aware Observable State Understanding for Prompt-Based Closed-Loop Recovery of Vision-Language-Action Policies](papers/vla-corrector.md) — 边界案例 / 任务内恢复 / 可观测验证器 / 仿真与真机
 - [EmbodiedSkills: A Unified Framework for Orchestrating, Training, and Deploying VLA Agents](papers/embodiedskills.md) — 边界案例 / 技能契约 / 验证与恢复 / 仿真
 - [SPINE: Bridging Cyber-Physical Gap with Agentic AI](papers/spine.md) — 支撑组件 / 具身harness / 诊断与修复 / 真机 / 版本修订
+- [X2Real: an eXtensive simulation benchmark for real-world generalist policies](papers/x2real.md) — 评价框架 / 仿真—真机 / 自动数据采集 / 企业技术报告
 
 <a id="curriculum"></a>
 
@@ -134,6 +138,9 @@
 - [LIBERO-RECOVER: Beyond Task Success Towards Failure Recovery in Robotic Manipulation Models](papers/libero-recover.md) — 评价框架 / 失败恢复 / 恢复数据 / 仿真
 - [Benchmarking World Models for Continual Learning on Compositional Tasks](papers/compositional-continual-world-models.md) — 评价框架 / 世界模型 / 持续学习 / 仿真
 - [Embodied-BenchForge: A Closed-Loop Agentic Workflow for Embodied Benchmark Construction](papers/embodied-benchforge.md) — 评价基础设施 / 基准生成 / 验证修复 / 仿真
+- [X2Real: an eXtensive simulation benchmark for real-world generalist policies](papers/x2real.md) — 评价框架 / 仿真—真机 / 自动数据采集 / 企业技术报告
+- [The Gaussian Is Enough: Flow-Matching Priors Do Not Help When Fine-Tuning Large Behavior Models](papers/gaussian-is-enough.md) — 边界案例 / 负结果 / 离线微调 / 真机
+- [MemBodied: Recurrent Associative Memory for Vision-Language-Action Models](papers/membodied.md) — 边界案例 / episode内记忆 / VLA / 真机
 
 ## 原报告主线也要回看
 

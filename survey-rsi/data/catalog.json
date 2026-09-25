@@ -1048,5 +1048,140 @@
       "platform": "四足巡检真机案例",
       "limit": "没有完成多轮演化收益对照；RSI 为作者主张"
     }
+  },
+  {
+    "title": "InternW0: A Foundational Physical World Model for Efficient Real-World Interactions",
+    "short": "InternW0",
+    "arxiv_id": "2609.27656",
+    "version": "v1",
+    "url": "https://arxiv.org/abs/2609.27656",
+    "added": "2026-09-25",
+    "updated": "2026-09-25",
+    "tags": [
+      "支撑组件",
+      "世界—动作模型",
+      "离线后训练",
+      "真机"
+    ],
+    "read_status": "全文方法与指定实验/表格已核查；未复现",
+    "note": "papers/internw0.md",
+    "evidence_locations": "§§2–3、§4.1–4.2、§5.1、§6.1–6.2；Figures 2、5、7；Tables 1–7。",
+    "figure_url": "https://arxiv.org/html/2609.27656v1/w0_model_arch.png",
+    "authors": [
+      "Physical Intelligence Team",
+      "Shanghai AI Laboratory"
+    ],
+    "citation_date": "2026/09/23",
+    "summary": "异步联合视频—动作预测兼顾长时预测与快速闭环，但部署时权重固定。",
+    "evidence": {
+      "update_object": "离线更新视频专家、动作专家及接触后训练模块",
+      "retention": "训练后参数保留；部署期只更新上下文",
+      "feedback": "视频、动作与力/触觉序列",
+      "platform": "25域数据、LIBERO/RoboTwin仿真、5项真机",
+      "limit": "没有部署期持久更新或改进器递归；企业/机构技术报告"
+    }
+  },
+  {
+    "title": "MemBodied: Recurrent Associative Memory for Vision-Language-Action Models",
+    "short": "MemBodied",
+    "arxiv_id": "2609.28256",
+    "version": "v1",
+    "url": "https://arxiv.org/abs/2609.28256",
+    "added": "2026-09-25",
+    "updated": "2026-09-25",
+    "tags": [
+      "边界案例",
+      "episode内记忆",
+      "VLA",
+      "真机"
+    ],
+    "read_status": "全文方法与指定实验/表格已核查；未复现",
+    "note": "papers/membodied.md",
+    "evidence_locations": "§§3–5；Figures 1–3；Tables 1–2；Appendices B–D、Tables 5–6。",
+    "figure_url": "https://arxiv.org/html/2609.28256v1/membodied_architecture.svg",
+    "authors": [
+      "Pala, Tej Deep",
+      "Majumder, Navonil",
+      "Goh, Bryce",
+      "Yee, Raphael",
+      "Yang, Jianfei",
+      "Chen, Liming",
+      "Poria, Soujanya"
+    ],
+    "citation_date": "2026/09/23",
+    "summary": "固定容量联想状态提升任务内记忆决策；跨episode携带反而退化。",
+    "evidence": {
+      "update_object": "episode内联想状态与初始场景锚点",
+      "retention": "每次rollout重置；跨episode保留未经训练",
+      "feedback": "动作摘要与随后视觉后果",
+      "platform": "RMBench、LIBERO、双臂PiPER真机",
+      "limit": "不更新策略权重；跨episode均值50.0%降至36.8%"
+    }
+  },
+  {
+    "title": "X2Real: an eXtensive simulation benchmark for real-world generalist policies",
+    "short": "X2Real",
+    "arxiv_id": "2609.27449",
+    "version": "v1",
+    "url": "https://arxiv.org/abs/2609.27449",
+    "added": "2026-09-25",
+    "updated": "2026-09-25",
+    "tags": [
+      "评价框架",
+      "仿真—真机",
+      "自动数据采集",
+      "企业技术报告"
+    ],
+    "read_status": "全文方法与指定实验/表格已核查；未复现",
+    "note": "papers/x2real.md",
+    "evidence_locations": "§§2.1–2.4、§3、§4.1–4.3；Figures 1、19–23；Tables 1–3；Appendix A.1。",
+    "figure_url": "https://arxiv.org/html/2609.27449v1/final_figure_table/task_final_1_4k.png",
+    "authors": [
+      "X Square Robot"
+    ],
+    "citation_date": "2026/09/23",
+    "summary": "以44任务、ID/OOD与DAG过程分评估通用策略，是RSI评测基础设施而非自改进方法。",
+    "evidence": {
+      "update_object": "任务、环境、数据生成与评测基础设施",
+      "retention": "不更新被测策略；环境可扩展",
+      "feedback": "规则评估器、Task DAG、仿真/真机对照",
+      "platform": "44任务、四策略、8项sim-real对照",
+      "limit": "“可演化”指基准可扩展，不是策略递归；企业自述未独立复现"
+    }
+  },
+  {
+    "title": "The Gaussian Is Enough: Flow-Matching Priors Do Not Help When Fine-Tuning Large Behavior Models",
+    "short": "The Gaussian Is Enough",
+    "arxiv_id": "2609.27070",
+    "version": "v1",
+    "url": "https://arxiv.org/abs/2609.27070",
+    "added": "2026-09-25",
+    "updated": "2026-09-25",
+    "tags": [
+      "边界案例",
+      "负结果",
+      "离线微调",
+      "真机"
+    ],
+    "read_status": "全文方法与指定实验/表格已核查；未复现",
+    "note": "papers/gaussian-is-enough.md",
+    "evidence_locations": "§§IV–VII；Figures 2–6、11；Tables I–II；Appendices A、C、D，Tables III–VII。",
+    "figure_url": "https://arxiv.org/html/2609.27070v1/fig1_opener.svg",
+    "authors": [
+      "Xu, Chen",
+      "Shah, Rishi",
+      "Kress-Gazit, Hadas",
+      "Nishimura, Haruki",
+      "Itkina, Masha"
+    ],
+    "citation_date": "2026/09/22",
+    "summary": "大规模匹配对照显示非高斯动作先验不稳定优于高斯；编码器更新更关键。",
+    "evidence": {
+      "update_object": "离线微调的动作先验与观察编码器",
+      "retention": "一次离线微调后保留",
+      "feedback": "固定示范数据与闭环评测",
+      "platform": ">10万仿真rollout、1250次双臂FR3真机rollout",
+      "limit": "不是部署期学习；结论针对所测大行为模型与任务"
+    }
   }
 ]

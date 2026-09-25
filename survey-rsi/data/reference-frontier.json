@@ -575,5 +575,41 @@
     "urls": [],
     "status": "引文元数据线索；原始全文待核查，不计正式卡片",
     "discovered": "2026-09-24"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.27656v1",
+    "reference": "Cai et al. (2026), AHA-WAM: Asynchronous Horizon-Adaptive World-Action Modeling with Observation-Guided Context Routing, arXiv:2606.09811.",
+    "urls": [
+      "https://arxiv.org/abs/2606.09811"
+    ],
+    "status": "从InternW0的异步预测路径回溯；全文待核查，不计正式卡片",
+    "discovered": "2026-09-25"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.27656v1",
+    "reference": "Yuan et al. (2026), Fast-WAM: Do World Action Models Need Test-Time Future Imagination?, arXiv:2603.16666.",
+    "urls": [
+      "https://arxiv.org/abs/2603.16666"
+    ],
+    "status": "InternW0真机与延迟基线；全文待核查，不计正式卡片",
+    "discovered": "2026-09-25"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.28256v1",
+    "reference": "Wang et al. (2026), NativeMEM: Native Memory Compression for Long-Horizon Robotic Manipulation, arXiv:2607.06678.",
+    "urls": [
+      "https://arxiv.org/abs/2607.06678"
+    ],
+    "status": "MemBodied的长时记忆效率与成功率基线；全文待核查，不计正式卡片",
+    "discovered": "2026-09-25"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.27449v1",
+    "reference": "Chen et al. (2026), RoboDojo: A Unified Sim-and-Real Benchmark for Comprehensive Evaluation of Generalist Robot Manipulation Policies, arXiv:2607.04434.",
+    "urls": [
+      "https://arxiv.org/abs/2607.04434"
+    ],
+    "status": "X2Real引用的sim-real评测基线；原报告/仓库可能已有入口，升级前须合并去重",
+    "discovered": "2026-09-25"
   }
 ]

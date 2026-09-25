@@ -3,7 +3,27 @@
 
 # 引文溯源队列
 
-**76 条引文线索**，不是 76 篇已读论文。保留发现路径和原文定位；可能与原报告/候选重叠，升级前仍须按 ID、DOI、题名和作者合并。
+**80 条引文线索**，不是 80 篇已读论文。保留发现路径和原文定位；可能与原报告/候选重叠，升级前仍须按 ID、DOI、题名和作者合并。
+
+- **Cai et al. (2026), AHA-WAM: Asynchronous Horizon-Adaptive World-Action Modeling with Observation-Guided Context Routing, arXiv:2606.09811.**
+  - 发现于：[引用它的原文](https://arxiv.org/html/2609.27656v1)
+  - 从InternW0的异步预测路径回溯；全文待核查，不计正式卡片
+  - 原始入口：[来源](https://arxiv.org/abs/2606.09811)
+
+- **Yuan et al. (2026), Fast-WAM: Do World Action Models Need Test-Time Future Imagination?, arXiv:2603.16666.**
+  - 发现于：[引用它的原文](https://arxiv.org/html/2609.27656v1)
+  - InternW0真机与延迟基线；全文待核查，不计正式卡片
+  - 原始入口：[来源](https://arxiv.org/abs/2603.16666)
+
+- **Wang et al. (2026), NativeMEM: Native Memory Compression for Long-Horizon Robotic Manipulation, arXiv:2607.06678.**
+  - 发现于：[引用它的原文](https://arxiv.org/html/2609.28256v1)
+  - MemBodied的长时记忆效率与成功率基线；全文待核查，不计正式卡片
+  - 原始入口：[来源](https://arxiv.org/abs/2607.06678)
+
+- **Chen et al. (2026), RoboDojo: A Unified Sim-and-Real Benchmark for Comprehensive Evaluation of Generalist Robot Manipulation Policies, arXiv:2607.04434.**
+  - 发现于：[引用它的原文](https://arxiv.org/html/2609.27449v1)
+  - X2Real引用的sim-real评测基线；原报告/仓库可能已有入口，升级前须合并去重
+  - 原始入口：[来源](https://arxiv.org/abs/2607.04434)
 
 - **[3] O. Biza, T. Weng, L. Sun, K. Schmeckpeper, T. Kelestemur, Y. J. Ma, R. Platt, J. van de Meent, and L. L. Wong (2025) On-robot reinforcement learning with goal-contrastive rewards. In 2025 IEEE International Conference on Robotics and Automation (ICRA), pp. 4797–4805.**
   - 发现于：[引用它的原文](https://arxiv.org/html/2609.27068v1)
@@ -358,3 +378,4 @@
   - 发现于：[引用它的原文](https://arxiv.org/html/2609.26567v1)
   - 已定位arXiv、作者项目与代码入口；未在本轮读全文，不计正式卡片
   - 原始入口：[来源](https://arxiv.org/abs/2410.22689) · [来源](https://ut-austin-rpl.github.io/sirius-fleet/) · [来源](https://github.com/UT-Austin-RPL/sirius-fleet)
+

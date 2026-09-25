@@ -3,13 +3,21 @@
 
 # 候选与待核查
 
-**59 项**。下列条目未完成全文方法/结果核查，不计入正式卡片。优先级表示下一步阅读顺序，不能作为可信度评分。
+**60 项**。下列条目未完成全文方法/结果核查，不计入正式卡片。优先级表示下一步阅读顺序，不能作为可信度评分。
 
 ## 优先 · 31 项
 
-- **[X2Real: an eXtensive simulation benchmark for real-world generalist policies](https://arxiv.org/abs/2609.27449)**
-  - `2609.27449` · 发现 2026-09-24 · 仅摘要已核查；不计正式卡片
-  - 下一步：核查 sim-real 相关系数的样本单位、44任务及隔离协议；evolvable benchmark 不等于策略进化。
+- **[Watch, Recall, Act: Always-On Robots in Concurrent Embodied Streams](https://arxiv.org/abs/2609.28429)**
+  - `2609.28429` · 发现 2026-09-25 · 仅摘要与元数据已核查；不计正式卡片
+  - 下一步：全文核对ARMS数据规模、45%对28%的任务与rollout分母、状态/自历史模块消融，以及流式上下文是否跨episode保留。
+
+- **[TANDEM: Task and Motion Planning with As-Needed Demonstrations for Efficient Vision-Language-Action Model Fine-tuning](https://arxiv.org/abs/2609.28314)**
+  - `2609.28314` · 发现 2026-09-25 · 仅摘要与元数据已核查；不计正式卡片
+  - 下一步：全文核对5个长时任务、20条/任务数据、2.9倍演示产出分母、TAMP失败后的人工魔法操作与独立评测。
+
+- **[PointCast: One World Model for Rigid, Articulated, and Deformable Object Manipulation](https://arxiv.org/abs/2609.28393)**
+  - `2609.28393` · 发现 2026-09-25 · 仅摘要、项目入口与元数据已核查；不计正式卡片
+  - 下一步：全文核对四类对象、64个MPC episode、真实数据六类误差的分母；模型在MPC中冻结，先按世界模型支撑处理。
 
 - **[What is the Better Curriculum: Controller-Shaped Grasping Behavior for Contact Force-Sensitive Manipulation](https://arxiv.org/abs/2609.25887)**
   - `2609.25887` · 发现 2026-09-24 · 仅摘要已核查；不计正式卡片
@@ -27,17 +35,9 @@
   - `2609.25757` · 发现 2026-09-24 · 仅摘要已核查；不计正式卡片
   - 下一步：摘要给出部分可观测模仿中的最小记忆条件；核查操作任务、严格记忆消融及是否只在episode内保存。
 
-- **[MemBodied: Recurrent Associative Memory for Vision-Language-Action Models](https://arxiv.org/abs/2609.28256)**
-  - `2609.28256` · 发现 2026-09-24 · 仅摘要已核查；不计正式卡片
-  - 下一步：检查 episode 锚点和关联记忆的重置边界、绝对成功率及跨任务留存；不能从 recurrent memory 推断持续学习。
-
 - **[Learning a Speed-adaptive Hip Exoskeleton Control Policy Via Sim-to-real Reinforcement Learning](https://arxiv.org/abs/2609.28027)**
   - `2609.28027` · 发现 2026-09-24 · 仅摘要已核查；不计正式卡片
   - 下一步：外骨骼偏好学习；查受试人数、成对偏好预算、参数保留与个体迁移。
-
-- **[InternW0: A Foundational Physical World Model for Efficient Real-World Interactions](https://arxiv.org/abs/2609.27656)**
-  - `2609.27656` · 发现 2026-09-24 · 仅摘要已核查；不计正式卡片
-  - 下一步：检查世界模型与动作专家是否依据部署经验持续更新；区分训练期联合建模、推理时上下文路由和权重改进。
 
 - **[Generalizable Robotic Insertion with World Models](https://arxiv.org/abs/2609.28258)**
   - `2609.28258` · 发现 2026-09-24 · 仅摘要已核查；不计正式卡片
@@ -131,7 +131,15 @@
   - `2609.18520` · 发现 2026-09-21 · 仅摘要已核查；不计正式卡片
   - 下一步：角色索引经验驱动在线技能选择；查训练free含义、反馈与长期收益。
 
-## 次优先 · 23 项
+## 次优先 · 24 项
+
+- **[Frozen Flows Forget: Diagnosing and Restoring Lost Motion in a Latent-flow World Model](https://arxiv.org/abs/2609.28414)**
+  - `2609.28414` · 发现 2026-09-25 · 仅摘要与元数据已核查；不计正式卡片
+  - 下一步：全文核对DART训练预算、运动恢复指标、oracle插值参照与像素误差偏好静止预测的评测缺陷；不是部署期自改进。
+
+- **[EBRL: Asynchronous Embodied RL by Multi-Grained Resource Management](https://arxiv.org/abs/2609.27547)**
+  - `2609.27547` · 发现 2026-09-25 · 仅摘要与元数据已核查；不计正式卡片
+  - 下一步：核对四策略/四仿真基准、异步导致的策略滞后控制、吞吐与收敛时间定义；它是训练系统支撑，不预设为RSI机制。
 
 - **[VLAQuantBench: A Systematic Benchmark for Quantizing Vision-Language-Action Models](https://arxiv.org/abs/2609.25376)**
   - `2609.25376` · 发现 2026-09-24 · 仅摘要已核查；不计正式卡片
@@ -148,10 +156,6 @@
 - **[Touch2Robot: Robot Policy Learning with Simulated Target-Hand Contact Feedback](https://arxiv.org/abs/2609.24660)**
   - `2609.24660` · 发现 2026-09-24 · 仅摘要已核查；不计正式卡片
   - 下一步：以模拟目标手接触反馈采集数据，摘要称四项真机任务37.9→72.1；核查数据量、基线与其作为自动数据闭环组件的边界。
-
-- **[The Gaussian Is Enough: Flow-Matching Priors Do Not Help When Fine-Tuning Large Behavior Models](https://arxiv.org/abs/2609.27070)**
-  - `2609.27070` · 发现 2026-09-24 · 仅摘要已核查；不计正式卡片
-  - 下一步：负结果入口；核查1250次硬件试验分配和学习率对照，避免把离线微调写成在线RSI。
 
 - **[NavProbe: Evidence-Grounded Reasoning with Active Memory Retrieval for Zero-Shot Navigation](https://arxiv.org/abs/2609.27526)**
   - `2609.27526` · 发现 2026-09-24 · 仅摘要已核查；不计正式卡片
@@ -246,3 +250,4 @@
 - **[AnchorVLN: Geometry-Anchored Vision-Language Grounding Reasoning for Open-Vocabulary Navigation](https://arxiv.org/abs/2609.12285)**
   - `2609.12285` · 发现 2026-09-21 · 仅摘要已核查；不计正式卡片
   - 下一步：语义与几何接口为主，摘要未显示经验累积带来的长期收益。
+

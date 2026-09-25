@@ -441,71 +441,6 @@
     "discovered": "2026-09-24"
   },
   {
-    "title": "InternW0: A Foundational Physical World Model for Efficient Real-World Interactions",
-    "arxiv_id": "2609.27656",
-    "url": "https://arxiv.org/abs/2609.27656",
-    "status": "仅摘要已核查；不计正式卡片",
-    "priority": "优先",
-    "next_check": "检查世界模型与动作专家是否依据部署经验持续更新；区分训练期联合建模、推理时上下文路由和权重改进。",
-    "discovered": "2026-09-24",
-    "authors": [
-      "Cai, Jisong",
-      "Mu, Yao",
-      "Yang, Ganlin",
-      "Cao, Zhe",
-      "Tu, Zhangzheng",
-      "Gao, Xing",
-      "Li, Kailin",
-      "Zhan, Xinyu",
-      "Yang, Lixin",
-      "Zhu, Yangkun",
-      "Ma, Haoxiang",
-      "Zhou, Ming",
-      "Yu, Qiaojun",
-      "Xue, Yufei",
-      "He, Liqun",
-      "Yao, Yifei",
-      "Zhu, Yifan",
-      "Ling, Long",
-      "Jiang, Bingqi",
-      "Guo, Haoyu",
-      "Zhu, Xueyue",
-      "Zhou, Bowen",
-      "Zhao, Bin",
-      "Xue, Tianfan",
-      "Shen, Chunhua",
-      "Zhang, Weinan"
-    ],
-    "citation_date": "2026/09/23",
-    "topics": [
-      "世界模型"
-    ],
-    "version": "v1"
-  },
-  {
-    "title": "MemBodied: Recurrent Associative Memory for Vision-Language-Action Models",
-    "arxiv_id": "2609.28256",
-    "url": "https://arxiv.org/abs/2609.28256",
-    "status": "仅摘要已核查；不计正式卡片",
-    "priority": "优先",
-    "next_check": "检查 episode 锚点和关联记忆的重置边界、绝对成功率及跨任务留存；不能从 recurrent memory 推断持续学习。",
-    "discovered": "2026-09-24",
-    "authors": [
-      "Pala, Tej Deep",
-      "Majumder, Navonil",
-      "Goh, Bryce",
-      "Yee, Raphael",
-      "Yang, Jianfei",
-      "Chen, Liming",
-      "Poria, Soujanya"
-    ],
-    "citation_date": "2026/09/23",
-    "topics": [
-      "记忆"
-    ],
-    "version": "v1"
-  },
-  {
     "title": "Generalizable Robotic Insertion with World Models",
     "arxiv_id": "2609.28258",
     "url": "https://arxiv.org/abs/2609.28258",
@@ -528,69 +463,6 @@
     "citation_date": "2026/09/23",
     "topics": [
       "世界模型"
-    ],
-    "version": "v1"
-  },
-  {
-    "title": "X2Real: an eXtensive simulation benchmark for real-world generalist policies",
-    "arxiv_id": "2609.27449",
-    "url": "https://arxiv.org/abs/2609.27449",
-    "status": "仅摘要已核查；不计正式卡片",
-    "priority": "优先",
-    "next_check": "核查 sim-real 相关系数的样本单位、44任务及隔离协议；evolvable benchmark 不等于策略进化。",
-    "discovered": "2026-09-24",
-    "authors": [
-      "Ruan, Lian",
-      "Yang, Jade",
-      "Gao, Sherphylan",
-      "Gao, Felix",
-      "Liang, Kyson",
-      "Liu, Galen",
-      "Wu, Ligo",
-      "Jin, Lane",
-      "Gu, Guu",
-      "Xie, Bevan",
-      "Yan, Cloud",
-      "Yuan, Zongzi",
-      "Luo, Kino",
-      "Chen, Emma",
-      "Chen, Shuwen",
-      "Ping, Yang",
-      "Guo, Miles",
-      "Sun, Rain",
-      "Zhang, Kayden",
-      "Du, Alex",
-      "Wu, Ruihai",
-      "Hao, Liang",
-      "Li, Zhaoshuo",
-      "Gan, Roy",
-      "Wang, Hao",
-      "Wang, Qian"
-    ],
-    "citation_date": "2026/09/23",
-    "topics": [
-      "评价"
-    ],
-    "version": "v1"
-  },
-  {
-    "title": "The Gaussian Is Enough: Flow-Matching Priors Do Not Help When Fine-Tuning Large Behavior Models",
-    "arxiv_id": "2609.27070",
-    "url": "https://arxiv.org/abs/2609.27070",
-    "status": "仅摘要已核查；不计正式卡片",
-    "priority": "次优先",
-    "next_check": "负结果入口；核查1250次硬件试验分配和学习率对照，避免把离线微调写成在线RSI。",
-    "discovered": "2026-09-24",
-    "authors": [
-      "Xu, Chen",
-      "Shah, Rishi",
-      "Kress-Gazit, Hadas",
-      "Nishimura, Haruki",
-      "Itkina, Masha"
-    ],
-    "citation_date": "2026/09/22",
-    "topics": [
-      "策略"
     ],
     "version": "v1"
   },
@@ -726,5 +598,129 @@
       "综述"
     ],
     "version": "v4"
+  },
+  {
+    "title": "EBRL: Asynchronous Embodied RL by Multi-Grained Resource Management",
+    "arxiv_id": "2609.27547",
+    "url": "https://arxiv.org/abs/2609.27547",
+    "status": "仅摘要与元数据已核查；不计正式卡片",
+    "priority": "次优先",
+    "next_check": "核对四策略/四仿真基准、异步导致的策略滞后控制、吞吐与收敛时间定义；它是训练系统支撑，不预设为RSI机制。",
+    "discovered": "2026-09-25",
+    "authors": [
+      "Mi, Liang",
+      "Wang, Weijun",
+      "Gao, Bowen",
+      "Yu, Tianze",
+      "Hao, Zixu",
+      "Xiao, Han",
+      "Ding, Xin",
+      "Huang, Mingzhe",
+      "He, Xin",
+      "Shi, Lu",
+      "Wu, Hao",
+      "Dai, Haipeng",
+      "Chen, Guihai",
+      "Liu, Yunxin",
+      "Cao, Ting"
+    ],
+    "citation_date": "2026/09/23",
+    "topics": [
+      "系统",
+      "VLA-RL"
+    ],
+    "version": "v1"
+  },
+  {
+    "title": "TANDEM: Task and Motion Planning with As-Needed Demonstrations for Efficient Vision-Language-Action Model Fine-tuning",
+    "arxiv_id": "2609.28314",
+    "url": "https://arxiv.org/abs/2609.28314",
+    "status": "仅摘要与元数据已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "全文核对5个长时任务、20条/任务数据、2.9倍演示产出分母、TAMP失败后的人工魔法操作与独立评测。",
+    "discovered": "2026-09-25",
+    "authors": [
+      "Sahoo, Samrat",
+      "Ji, Liang",
+      "Silver, Tom",
+      "Huang, Yixuan"
+    ],
+    "citation_date": "2026/09/23",
+    "topics": [
+      "自动采集",
+      "人机协同",
+      "VLA微调"
+    ],
+    "version": "v1"
+  },
+  {
+    "title": "Watch, Recall, Act: Always-On Robots in Concurrent Embodied Streams",
+    "arxiv_id": "2609.28429",
+    "url": "https://arxiv.org/abs/2609.28429",
+    "status": "仅摘要与元数据已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "全文核对ARMS数据规模、45%对28%的任务与rollout分母、状态/自历史模块消融，以及流式上下文是否跨episode保留。",
+    "discovered": "2026-09-25",
+    "authors": [
+      "Yi, Ding",
+      "Sun, Peiwen",
+      "Rong, Chenchu",
+      "Wang, Jianan",
+      "Dai, Xili",
+      "Yue, Xiangyu",
+      "Lin, Xi"
+    ],
+    "citation_date": "2026/09/23",
+    "topics": [
+      "长期记忆",
+      "流式机器人"
+    ],
+    "version": "v1"
+  },
+  {
+    "title": "PointCast: One World Model for Rigid, Articulated, and Deformable Object Manipulation",
+    "arxiv_id": "2609.28393",
+    "url": "https://arxiv.org/abs/2609.28393",
+    "status": "仅摘要、项目入口与元数据已核查；不计正式卡片",
+    "priority": "优先",
+    "next_check": "全文核对四类对象、64个MPC episode、真实数据六类误差的分母；模型在MPC中冻结，先按世界模型支撑处理。",
+    "discovered": "2026-09-25",
+    "authors": [
+      "Ye, Hantao",
+      "Worobel, Ross",
+      "Xie, Zhuoli",
+      "Li, Mingen",
+      "Yu, Houjian",
+      "Hong, Youngjin",
+      "Choi, Changhyun"
+    ],
+    "citation_date": "2026/09/23",
+    "topics": [
+      "世界模型",
+      "规划"
+    ],
+    "version": "v1"
+  },
+  {
+    "title": "Frozen Flows Forget: Diagnosing and Restoring Lost Motion in a Latent-flow World Model",
+    "arxiv_id": "2609.28414",
+    "url": "https://arxiv.org/abs/2609.28414",
+    "status": "仅摘要与元数据已核查；不计正式卡片",
+    "priority": "次优先",
+    "next_check": "全文核对DART训练预算、运动恢复指标、oracle插值参照与像素误差偏好静止预测的评测缺陷；不是部署期自改进。",
+    "discovered": "2026-09-25",
+    "authors": [
+      "Chen, Xiwen",
+      "Li, Rigaudiere Z.",
+      "Zhou, Zhiruo",
+      "Zhu, Xiaojun",
+      "Liu, Houde"
+    ],
+    "citation_date": "2026/09/23",
+    "topics": [
+      "世界模型",
+      "评价"
+    ],
+    "version": "v1"
   }
 ]

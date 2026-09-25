@@ -28,3 +28,11 @@
 - 通用自进化综述：[A Survey of Self-Evolving Agents](https://arxiv.org/html/2507.21046v4)。本轮仅核对分类入口和相关引文，进入候选；其 Voyager 引文已回到[原始摘要](https://arxiv.org/abs/2305.16291)，原报告已有，不重复计新。
 - 奖励/课程追溯：HiRE → 奖励塑形、成功/失败对比奖励；Banana Kick → [ALP-GMM 的 CoRL 原始记录](https://proceedings.mlr.press/v100/portelas20a.html)与 [TeachMyAgent 的 ICML 原始记录](https://proceedings.mlr.press/v139/romac21a.html)。会议摘要已核对，实验全文仍待补读。
 - 所有线索的阅读状态和下一步问题见[候选队列](candidates.md)与[引文队列](references.md)。搜索不到或正文受限不等于没有相关工作。
+
+
+## 2026-09-25 扩展检索入口
+
+- 官方新稿列表：[cs.RO](https://arxiv.org/list/cs.RO/new)、[cs.AI](https://arxiv.org/list/cs.AI/new)、[cs.LG](https://arxiv.org/list/cs.LG/new)。北京时间9月25日早间仍显示“Thursday, 24 September 2026”，因此本轮没有把候选升级误计为9月25日新发表。
+- awesome 线索复查：[Embodied RSI](https://github.com/cocacola-lab/awesome-embodied-rsi)、[RL-VLA](https://github.com/Denghaoyuan123/Awesome-RL-VLA)、[Embodied Continual Learning](https://github.com/Songlin-Dong/Awesome-Embodied-Continual-Learning)、[World Models for Robotic Policy Learning](https://github.com/NTUMARS/Awesome-World-Model-for-Robotics-Policy)。这些集合用于发现和检查遗漏；本轮四张正式卡片均回到arXiv全文、作者项目或代码。
+- 全文升级：[InternW0](https://arxiv.org/html/2609.27656v1)、[MemBodied](https://arxiv.org/html/2609.28256v1)、[X2Real](https://arxiv.org/html/2609.27449v1)、[The Gaussian Is Enough](https://arxiv.org/html/2609.27070v1)。
+- OpenReview定向检索未得到可独立核验的9月25日机器人RSI新条目；这只记录本轮搜索结果，不代表平台上不存在相关投稿。
