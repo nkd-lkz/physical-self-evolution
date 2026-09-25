@@ -60,6 +60,26 @@ function buildToc(){
     tocLinks.appendChild(a);
   });
 }
+function resolveDocumentLinks(){
+  const siteBase=new URL('./',location.href);
+  const documentURL=new URL(path,siteBase);
+  content.querySelectorAll('a[href]').forEach(a=>{
+    const href=a.getAttribute('href');
+    if(!href||href.startsWith('#')||/^[a-z][a-z0-9+.-]*:/i.test(href)||href.startsWith('//'))return;
+    const resolved=new URL(href,documentURL);
+    const relative=resolved.pathname.startsWith(siteBase.pathname)?resolved.pathname.slice(siteBase.pathname.length):'';
+    if(resolved.origin===siteBase.origin&&/^(research|notes)\/[a-zA-Z0-9._\/-]+\.md$/.test(relative)){
+      const reader=new URL('reader.html',siteBase);
+      reader.searchParams.set('path',relative);
+      reader.hash=resolved.hash;
+      a.href=reader.href;
+    }else{a.href=resolved.href;}
+  });
+  content.querySelectorAll('img[src]').forEach(img=>{
+    const src=img.getAttribute('src');
+    if(src&&!/^[a-z][a-z0-9+.-]*:/i.test(src)&&!src.startsWith('//'))img.src=new URL(src,documentURL).href;
+  });
+}
 function clearHighlights(){
   content.querySelectorAll('mark.search-hit').forEach(mark=>{
     const parent=mark.parentNode;
@@ -102,7 +122,7 @@ if(!/^(research|notes)\/[a-zA-Z0-9._\/-]+\.md$/.test(path)){
   content.textContent='非法路径';
 }else{
   fetch(path).then(r=>r.ok?r.text():Promise.reject(new Error('HTTP '+r.status)))
-    .then(t=>{ content.innerHTML=marked.parse(normalizeMarkdown(t)); buildToc(); })
+    .then(t=>{ content.innerHTML=marked.parse(normalizeMarkdown(t)); resolveDocumentLinks(); buildToc(); })
     .catch(e=>{content.textContent='读取失败：'+path+' · '+e.message;});
 }
 let searchTimer;

@@ -1,8 +1,8 @@
 # Physical Token 文献阅读总账
 
 > 建立日期：2026-09-19  
-> 更新日期：2026-09-22  
-> 范围：131 项论文/项目；125 项为 09-19 原始检索，09-21 新增四项，09-22 新增 UniIntervene 与 CLAP。  
+> 更新日期：2026-09-25
+> 范围：132 项论文/项目，另列 1 项观点；09-25 补录已有 RSI 专区的 Knowin GLOW，并新增 Real2sim2real 观点专题。此前 131 项与阅读状态保留。
 > 原则：**检索到 ≠ 读懂；摘要笔记 ≠ 全文精读。** 所有条目先保留检索笔记，只有完成方法、实验、附录/代码核验后才升级为“精读”。
 
 ## 0. 当前进度
@@ -10,10 +10,12 @@
 | 状态 | 数量 |
 |---|---:|
 | 已精读/已有独立笔记 | 8 |
-| 已阅读/已有专题笔记 | 10 |
+| 已阅读/已有专题笔记 | 11 |
 | 已初读/讨论过，待系统精读 | 12 |
 | 待精读 | 101 |
-| **总计** | **131** |
+| **论文/项目总计** | **132** |
+
+另列 **1 项观点**，不混入论文阅读数量。
 
 完整检索工作稿：[`physical-token-literature-audit-2026-09-19.md`](physical-token-literature-audit-2026-09-19.md)。其中每篇至少有“方法摘要 + 与本项目关系 + 核验边界 + 一手来源”的**检索笔记**；这不等于已经全文精读。
 
@@ -25,6 +27,15 @@
 - **待精读**：当前只有检索/摘要级 mini-note；正式写论文前必须继续读正文、实验、附录和代码。
 
 ## 2. 近期阅读顺序
+
+### 09-25：GLOW 与 Real2sim2real
+
+| 条目 | 类型与状态 | 借鉴重点 |
+|---|---|---|
+| [Knowin GLOW](../../notes/knowin-glow.md) | P132；企业技术报告，已专题阅读、未复现；补录已有 RSI 案例 | 执行回执、经验监督分流、记忆有效性 |
+| [Real2sim2real——具身的 scaling 起点](../real2sim2real-scaling-perspective.md) | 观点；截图已梳理，作者与公开原文待核实；不计入论文数量 | 区分场景重建与动力学校准，明确 agent 的离线作用 |
+
+[三项可执行候选实验](../glow-real2sim2real-experiments.md)：同容量实测后果监督、同预算记忆检索、响应校准。全部未执行；按假设、标签、对照、指标和停止条件展开。
 
 ### 09-22 项目相关增量
 
@@ -73,7 +84,7 @@ SmoothRL、VLA-Corrector、BCP、GeoAAC、RL²-VLA、Zeva、Harness VLA、SHAPER
 
 | ID | 论文 | 优先级 | 阅读状态 | 笔记 |
 |---|---|---:|---|---|
-| P001 | [RLT](https://arxiv.org/abs/2604.23073) | P0 | 已精读/已有独立笔记 | [独立笔记](../notes/rlt.md) |
+| P001 | [RLT](https://arxiv.org/abs/2604.23073) | P0 | 已精读/已有独立笔记 | [独立笔记](../../notes/rlt.md) |
 | P002 | [Pri4R](https://arxiv.org/abs/2603.01549) | P0 | 已初读/讨论过，待系统精读 | [检索笔记](physical-token-literature-audit-2026-09-19.md) |
 | P003 | [FLARE](https://proceedings.mlr.press/v305/zheng25a.html) | P0 | 待精读 | [检索笔记](physical-token-literature-audit-2026-09-19.md) |
 | P004 | [AGRA](https://arxiv.org/abs/2606.12217) | P0 | 待精读 | [检索笔记](physical-token-literature-audit-2026-09-19.md) |
@@ -83,7 +94,7 @@ SmoothRL、VLA-Corrector、BCP、GeoAAC、RL²-VLA、Zeva、Harness VLA、SHAPER
 | P008 | [SA-VLA](https://arxiv.org/abs/2606.30113) | P1 | 待精读 | [检索笔记](physical-token-literature-audit-2026-09-19.md) |
 | P009 | [ActionPiece](https://arxiv.org/abs/2609.18487) | P1 | 待精读 | [检索笔记](physical-token-literature-audit-2026-09-19.md) |
 | P010 | [Spline Policy](https://arxiv.org/abs/2606.07386) | P0 | 待精读 | [检索笔记](physical-token-literature-audit-2026-09-19.md) |
-| P011 | [PhysVLA](https://arxiv.org/abs/2606.13886) | P1 | 已阅读/已有专题笔记 | [独立笔记](../notes/physvla.md) |
+| P011 | [PhysVLA](https://arxiv.org/abs/2606.13886) | P1 | 已阅读/已有专题笔记 | [独立笔记](../../notes/physvla.md) |
 | P012 | [MCF-Proto](https://arxiv.org/abs/2605.11809) | P1 | 待精读 | [检索笔记](physical-token-literature-audit-2026-09-19.md) |
 | P013 | [X-DiffVLA](https://arxiv.org/abs/2605.25044) | P1 | 待精读 | [检索笔记](physical-token-literature-audit-2026-09-19.md) |
 | P014 | [DyWA](https://openaccess.thecvf.com/content/ICCV2025/html/Lyu_DyWA_Dynamics-adaptive_World_Action_Model_for_Generalizable_Non-prehensile_Manipulation_ICCV_2025_paper.html) | P0 | 待精读 | [检索笔记](physical-token-literature-audit-2026-09-19.md) |
@@ -163,8 +174,8 @@ SmoothRL、VLA-Corrector、BCP、GeoAAC、RL²-VLA、Zeva、Harness VLA、SHAPER
 | P068 | [OA-WAM](https://arxiv.org/abs/2605.06481) | P1 | 待精读 | [检索笔记](physical-token-literature-audit-2026-09-19.md) |
 | P069 | [Riemann-1.0](https://arxiv.org/abs/2608.27033) | P1 | 待精读 | [检索笔记](physical-token-literature-audit-2026-09-19.md) |
 | P070 | [WAM-RL](https://arxiv.org/abs/2606.17906) | P1 | 待精读 | [检索笔记](physical-token-literature-audit-2026-09-19.md) |
-| P071 | [RISE](https://arxiv.org/abs/2602.11075) | P1 | 已精读/已有独立笔记 | [独立笔记](../notes/rise.md) |
-| P072 | [Motus2](https://arxiv.org/abs/2608.30237) | P1 | 已精读/已有独立笔记 | [独立笔记](../notes/motus2.md) |
+| P071 | [RISE](https://arxiv.org/abs/2602.11075) | P1 | 已精读/已有独立笔记 | [独立笔记](../../notes/rise.md) |
+| P072 | [Motus2](https://arxiv.org/abs/2608.30237) | P1 | 已精读/已有独立笔记 | [独立笔记](../../notes/motus2.md) |
 | P073 | [CauVA](https://www.roboticsproceedings.org/rss22/p016.html) | P1 | 待精读 | [检索笔记](physical-token-literature-audit-2026-09-19.md) |
 | P074 | [DINO-WM](https://proceedings.mlr.press/v267/zhou25t.html) | P1 | 待精读 | [检索笔记](physical-token-literature-audit-2026-09-19.md) |
 | P075 | [V-JEPA 2](https://arxiv.org/abs/2506.09985) | P1 | 待精读 | [检索笔记](physical-token-literature-audit-2026-09-19.md) |
@@ -181,7 +192,7 @@ SmoothRL、VLA-Corrector、BCP、GeoAAC、RL²-VLA、Zeva、Harness VLA、SHAPER
 | ID | 论文 | 优先级 | 阅读状态 | 笔记 |
 |---|---|---:|---|---|
 | P083 | [RECAP / π*0.6](https://arxiv.org/abs/2511.14759) | P0 | 已初读/讨论过，待系统精读 | [检索笔记](physical-token-literature-audit-2026-09-19.md) |
-| P084 | [LWD](https://arxiv.org/abs/2605.00416) | P1 | 已精读/已有独立笔记 | [独立笔记](../notes/lwd.md) |
+| P084 | [LWD](https://arxiv.org/abs/2605.00416) | P1 | 已精读/已有独立笔记 | [独立笔记](../../notes/lwd.md) |
 | P085 | [Q-VGM](https://arxiv.org/abs/2606.08015) | P0 | 已初读/讨论过，待系统精读 | [检索笔记](physical-token-literature-audit-2026-09-19.md) |
 | P086 | [V-GPS](https://proceedings.mlr.press/v270/nakamoto25a.html) | P0 | 已初读/讨论过，待系统精读 | [检索笔记](physical-token-literature-audit-2026-09-19.md) |
 | P087 | [RedFlow](https://arxiv.org/abs/2607.27782) | P1 | 待精读 | [检索笔记](physical-token-literature-audit-2026-09-19.md) |
@@ -202,18 +213,18 @@ SmoothRL、VLA-Corrector、BCP、GeoAAC、RL²-VLA、Zeva、Harness VLA、SHAPER
 
 | ID | 论文 | 优先级 | 阅读状态 | 笔记 |
 |---|---|---:|---|---|
-| P100 | [SmoothRL](https://arxiv.org/abs/2608.29768) | P1 | 已精读/已有独立笔记 | [独立笔记](../notes/smoothrl.md) |
+| P100 | [SmoothRL](https://arxiv.org/abs/2608.29768) | P1 | 已精读/已有独立笔记 | [独立笔记](../../notes/smoothrl.md) |
 | P101 | [VLA-Corrector](https://arxiv.org/abs/2607.01804) | P1 | 待精读 | [检索笔记](physical-token-literature-audit-2026-09-19.md) |
 | P102 | [BCP](https://arxiv.org/abs/2608.03483) | P1 | 待精读 | [检索笔记](physical-token-literature-audit-2026-09-19.md) |
 | P103 | [GeoAAC](https://arxiv.org/abs/2609.20776) | P0 | 待精读 | [检索笔记](physical-token-literature-audit-2026-09-19.md) |
 | P104 | [RL²-VLA](https://arxiv.org/abs/2607.26991) | P1 | 待精读 | [检索笔记](physical-token-literature-audit-2026-09-19.md) |
 | P105 | [FailSafe](https://arxiv.org/abs/2510.01642) | P2 | 待精读 | [检索笔记](physical-token-literature-audit-2026-09-19.md) |
-| P106 | [Zeva](https://arxiv.org/abs/2608.30880) | P0 | 已精读/已有独立笔记 | [独立笔记](../notes/zeva.md) |
-| P107 | [Harness VLA](https://arxiv.org/abs/2607.08448) | P1 | 已阅读/已有专题笔记 | [独立笔记](../notes/harness-vla.md) |
-| P108 | [SHAPER](https://arxiv.org/abs/2608.11350) | P1 | 已精读/已有独立笔记 | [独立笔记](../notes/shaper.md) |
-| P109 | [ASPIRE](https://arxiv.org/abs/2607.00272) | P1 | 已阅读/已有专题笔记 | [独立笔记](../notes/aspire.md) |
-| P110 | [ENPIRE](https://arxiv.org/abs/2606.19980) | P1 | 已阅读/已有专题笔记 | [独立笔记](../notes/enpire.md) |
-| P111 | [Zetta ζ](https://arxiv.org/abs/2608.16590) | P1 | 已精读/已有独立笔记 | [独立笔记](../notes/zetta.md) |
+| P106 | [Zeva](https://arxiv.org/abs/2608.30880) | P0 | 已精读/已有独立笔记 | [独立笔记](../../notes/zeva.md) |
+| P107 | [Harness VLA](https://arxiv.org/abs/2607.08448) | P1 | 已阅读/已有专题笔记 | [独立笔记](../../notes/harness-vla.md) |
+| P108 | [SHAPER](https://arxiv.org/abs/2608.11350) | P1 | 已精读/已有独立笔记 | [独立笔记](../../notes/shaper.md) |
+| P109 | [ASPIRE](https://arxiv.org/abs/2607.00272) | P1 | 已阅读/已有专题笔记 | [独立笔记](../../notes/aspire.md) |
+| P110 | [ENPIRE](https://arxiv.org/abs/2606.19980) | P1 | 已阅读/已有专题笔记 | [独立笔记](../../notes/enpire.md) |
+| P111 | [Zetta ζ](https://arxiv.org/abs/2608.16590) | P1 | 已精读/已有独立笔记 | [独立笔记](../../notes/zetta.md) |
 | P112 | [AGM](https://arxiv.org/abs/2608.29537) | P2 | 待精读 | [检索笔记](physical-token-literature-audit-2026-09-19.md) |
 | P113 | [ForeAct](https://openaccess.thecvf.com/content/CVPR2026/html/Zhang_ForeAct_Steering_Your_VLA_with_Efficient_Visual_Foresight_Planning_CVPR_2026_paper.html) | P1 | 待精读 | [检索笔记](physical-token-literature-audit-2026-09-19.md) |
 | P114 | [SEAM](https://ri.cuhk.edu.hk/en/research/projects/rethinking-intermediate-representation-for-vlm-based-robot-manipulation) | P2 | 待精读 | [检索笔记](physical-token-literature-audit-2026-09-19.md) |
@@ -268,3 +279,12 @@ SmoothRL、VLA-Corrector、BCP、GeoAAC、RL²-VLA、Zeva、Harness VLA、SHAPER
 | P131 | [CLAP](https://arxiv.org/html/2608.27406v1) | P1 | 已阅读/已有专题笔记；未复现 | [专题笔记](../../notes/clap.md) |
 
 [对当前 Physical Token / RLT 的取舍](../uniintervene-clap-project-implications.md)：固定专家与 gate 的表示验证优先；完整视频模型、记忆扩张与学习门控分别作为后续变量。
+
+## 8. 09-25 补录：企业系统与观点分开统计
+
+| ID / 类型 | 标题 | 优先级与状态 | 入口 |
+|---|---|---|---|
+| P132 / 企业系统 | [GLOW: A Generative Learning Framework for General-Purpose Embodied Intelligence](https://knowinai.com/tech.html) | P1；官方技术页专题阅读，未复现 | [独立笔记](../../notes/knowin-glow.md) |
+| 观点 / 不占论文编号 | Real2sim2real——具身的 scaling 起点 | 原文来源待核实；截图观点与本库分析分开 | [观点拆解](../real2sim2real-scaling-perspective.md) |
+
+GLOW 此前已有 RSI 专区案例，本次只补齐主知识库入口与实验关系，不新增第二个同名系统。Real2sim2real 观点关联原目录 P050 SAM-RL 与 P052 One-Shot Real-to-Sim；本轮仅核对相关公开摘要/项目说明，未提升这两篇的历史阅读等级。

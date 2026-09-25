@@ -1,10 +1,10 @@
 {
-  "as_of": "2026-09-22",
+  "as_of": "2026-09-25",
   "status_counts": {
     "已精读/已有独立笔记": 8,
     "已初读/讨论过，待系统精读": 12,
     "待精读": 101,
-    "已阅读/已有专题笔记": 10
+    "已阅读/已有专题笔记": 11
   },
   "papers": [
     {
@@ -1971,6 +1971,36 @@
       "read_status": "已阅读/已有专题笔记",
       "note_path": "notes/clap.md",
       "note_level": "topic-note"
+    },
+    {
+      "id": "P132",
+      "short_title": "Knowin GLOW",
+      "title": "GLOW: A Generative Learning Framework for General-Purpose Embodied Intelligence",
+      "priority": "P1",
+      "category": "物理经验、执行回执与系统闭环",
+      "venue": "企业技术报告 · 2026",
+      "method_note": "经验生成、动作后果、监督编译与执行反馈；主阅读总账补录，关联既有 RSI 案例。",
+      "project_note": "借执行回执的数据来源、时间对齐与监督分流；优先同容量 loss-first，再独立消融记忆。",
+      "verification_boundary": "核对官方技术页；未审计训练代码、权重或复现。企业整系统结果不证明模块因果贡献或递归改进。",
+      "source_url": "https://knowinai.com/tech.html",
+      "read_status": "已阅读/已有专题笔记",
+      "note_path": "notes/knowin-glow.md",
+      "note_level": "topic-note"
+    }
+  ],
+  "perspectives": [
+    {
+      "id": "real2sim2real-scaling-perspective",
+      "title": "Real2sim2real——具身的 scaling 起点",
+      "type": "观点文章 / 待验证架构假设",
+      "received_on": "2026-09-25",
+      "source_type": "用户提供的六页截图",
+      "source_url": null,
+      "author": null,
+      "publication_date": null,
+      "read_status": "截图内容已梳理；公开原文与演示协议待核实",
+      "note_path": "research/real2sim2real-scaling-perspective.md",
+      "verification_boundary": "单列观点，不计入论文/项目总数；不能当作已验证的迁移系统或架构优越性证据。"
     }
   ]
 }

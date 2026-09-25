@@ -75,7 +75,7 @@ function renderFrontier(){
       '<p class="paper-relation"><b>机制：</b>'+esc(w.mechanism)+'</p>'+
       '<p class="paper-relation"><b>可借鉴：</b>'+esc(w.borrow)+'</p>'+
       '<p class="paper-relation"><b>边界：</b>'+esc(w.boundary)+'</p>'+
-      '<div class="read-more"><a href="'+esc(w.url)+'" target="_blank" rel="noopener">原文 / 项目 ↗</a></div>';
+      '<div class="read-more"><a href="'+esc(w.url)+'" target="_blank" rel="noopener">'+esc(w.url_label||'原文 / 项目 ↗')+'</a>'+(w.note&&w.note!==w.url?' · <a href="'+esc(w.note)+'">专题分析 →</a>':'')+'</div>';
     grid.appendChild(a);
   });
 }

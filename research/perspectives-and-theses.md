@@ -1,5 +1,12 @@
 # 观点与研究框架：具身 RSI、Physical AI 与分层自进化
 
+## 2026-09-25 · 从“生成世界”收紧到“校验响应”
+
+新增[Real2sim2real 观点专题](real2sim2real-scaling-perspective.md)，并关联 [GLOW 的经验编译与执行回执](../notes/knowin-glow.md)。截图强调强模型、仿真、训练和部署闭环；本库保留这一问题意识，但不将未核实演示、AR 优越性或无限自进化当作事实。
+
+**候选 Idea Pool：** 先验证实测后果 loss；其次隔离记忆检索收益；最后比较响应校准与默认随机化。完整[实验规格](glow-real2sim2real-experiments.md)给出数据来源、对照组和停止条件，均未执行。视觉逼真、可执行仿真与可迁移动力学是不同验收对象；无真机闭环时明确称为 sim-to-sim。
+
+
 ## 2026-09-22 · 交互物理经验与减少干预
 
 长期愿景是从真实交互沉淀后果经验，提前预判、减少专家依赖并逐步迁移到多任务。首轮收紧为固定专家与门控下的表示增量，成功率/吞吐率作为明确约束；预测式gate、层级信号和泛化分别验证。完整讨论：[研究合同](https://nkd-lkz.github.io/physical-self-evolution/reader.html?path=research/physical-experience-protocol-2026-09-22.md)、[RLT/ManiSkill/Hammer边界](https://nkd-lkz.github.io/physical-self-evolution/reader.html?path=research/rlt-intervention-2026-09-22.md)。这些是研究假设，不能作为已有项目效果。

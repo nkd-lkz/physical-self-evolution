@@ -1,5 +1,34 @@
 [
   {
+    "id": "knowin-glow",
+    "title": "Knowin GLOW：执行回执与物理经验监督",
+    "year": "2026",
+    "layer": "企业系统 / 经验编译",
+    "theme": "physical",
+    "status": "专题阅读 · 2026-09-25；未复现",
+    "tags": [
+      "GLOW",
+      "Experience Compiler",
+      "Execution Receipt",
+      "Memory"
+    ],
+    "one": "从企业系统中提取执行回执、标签来源和监督分流；补齐主阅读总账，关联已有 RSI 案例。",
+    "method": [
+      "交互轨迹编译为多种监督",
+      "执行命令与实测响应分开",
+      "记忆与上下文适应"
+    ],
+    "evidence": "官方技术页专题核验；企业自评口径与限制见关联 RSI 案例。",
+    "project": "先比较同容量实测后果监督；记忆检索另做同预算消融。",
+    "boundary": "未复现；上下文适应不等于权重更新，整系统结果不证明递归改进。",
+    "questions": [
+      "经验来源和有效性如何保留？",
+      "接触响应检索是否超越语义与普通历史？"
+    ],
+    "note": "https://nkd-lkz.github.io/physical-self-evolution/reader.html?path=notes/knowin-glow.md",
+    "url": "https://knowinai.com/tech.html"
+  },
+  {
     "id": "uniintervene",
     "title": "UniIntervene: Agentic Intervention for Efficient Real-World Reinforcement Learning",
     "year": "2026",
