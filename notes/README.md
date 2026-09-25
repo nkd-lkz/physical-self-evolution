@@ -1,6 +1,12 @@
 # Paper Notes Index
 
-> 规则：独立 notes 表示已经专题阅读/精读的论文或系统；132 项论文/项目总账（另列 1 项观点）在 `research/literature/reading-ledger.md` 中维护，且每篇至少已有检索 mini-note。
+> 规则：独立 notes 表示已经专题阅读/精读的论文或系统；132 项论文/项目总账（另列 2 项观点）在 `research/literature/reading-ledger.md` 中维护，且每篇至少已有检索 mini-note。
+
+## 2026-09-25：六篇当日初读与 PI 演讲观点
+
+- [FLARE、Pri4R、AGRA、Spline Policy、CometVLA、PAR 六篇简要笔记](../research/literature/reading-notes-2026-09-25.md) — 原有 P002/3/4/5/6/10 的初读，未复现。
+- [Chelsea Finn 演讲整理核验](../research/chelsea-finn-physical-rsi-talk-2026-09-25.md) — 观点与二次来源，不作为新论文。
+- [FLARE × RLT：接触经验与在线 RL 实验](../research/flare-rlt-contact-experiments-2026-09-25.md) — 分阶段研究提案，未实施。
 
 ## 2026-09-25：GLOW 与 Real2sim2real
 
@@ -48,8 +54,7 @@
 
 ## 阅读总账
 
-- [132 项论文/项目与观点目录](../research/literature/reading-ledger.md)
+- [132 项论文/项目与 2 项观点目录](../research/literature/reading-ledger.md)
 - [125 项检索与防撞审查](../research/literature/physical-token-literature-audit-2026-09-19.md)
 
 升级为“精读”时，优先新建独立 note，并在 reading ledger 中更新状态。
-

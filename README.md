@@ -19,6 +19,13 @@ Living research website for **Universal Physical Token, robot self-improvement, 
 
 两项均已核对方法、实验、相关附录与官方 README，未复现；阅读总账增至 **131 项**。不新增实验成绩，不改变当前基线恢复与固定专家/门控的研究合同。
 
+## Reading and research update — 2026-09-25
+
+- [Six concise paper notes](research/literature/reading-notes-2026-09-25.md): FLARE, Pri4R, AGRA, Spline Policy, CometVLA and PAR; existing entries promoted to an initial discussion, no reproduction claimed.
+- [Chelsea Finn talk perspective](research/chelsea-finn-physical-rsi-talk-2026-09-25.md): distinguishes secondary talk coverage, PI primary RECAP / π0.7 evidence, and open verification questions.
+- [FLARE-inspired RLT experiments](research/flare-rlt-contact-experiments-2026-09-25.md): matched future/outcome loss controls, separate candidate-action screening, intervention accounting and held-out-task transfer; all are proposals.
+- [Reading ledger](research/literature/reading-ledger.md): 132 existing paper/project entries and 2 separately counted perspectives.
+
 ## Discussion update — 2026-09-22
 
 本轮把迁移恢复、RLT关键阶段与专家纠错、100/200步语义、TOPP恢复边界，以及“物理经验能否减少干预”的讨论整理为三个入口：
@@ -337,4 +344,3 @@ Current reading priority is collision avoidance around **action-side representat
 ## Knowledge-base rule
 
 The Frontier Knowledge Base continues to track RISE, Motus2, LWD, RLT, SmoothRL, Zeva, Zetta, Astra/Harness and related work. They inform baselines and innovation boundaries, but do not override the leadership-defined actor-side Physical Token experimental contract.
-

@@ -2,8 +2,8 @@
   "as_of": "2026-09-25",
   "status_counts": {
     "已精读/已有独立笔记": 8,
-    "已初读/讨论过，待系统精读": 12,
-    "待精读": 101,
+    "已初读/讨论过，待系统精读": 17,
+    "待精读": 96,
     "已阅读/已有专题笔记": 11
   },
   "papers": [
@@ -31,10 +31,10 @@
       "venue": "arXiv 2026；主表年份：2026。",
       "method_note": "以训练期未来3D点轨迹监督VLA表示，部署时不需要相同privileged标签。",
       "project_note": "未来几何/动力学辅助监督并非新点；需证明action-conditioned、compact readout及控制收益。",
-      "verification_boundary": "本轮为题录与摘要筛查，方法细节、消融和代码仍需逐篇精读。",
+      "verification_boundary": "2026-09-25 有初读与对 RLT 的对照判断；附录/代码与独立复现尚待完成。",
       "source_url": "https://arxiv.org/abs/2603.01549",
       "read_status": "已初读/讨论过，待系统精读",
-      "note_path": "",
+      "note_path": "research/literature/reading-notes-2026-09-25.md",
       "note_level": "discussion-note"
     },
     {
@@ -46,11 +46,11 @@
       "venue": "CoRL 2025；主表年份：2025。",
       "method_note": "使用少量额外token，将策略内部表示与未来观测潜变量对齐，进行隐式世界建模。",
       "project_note": "少量token + future latent prediction与方案高度相邻；必做同容量future-feature监督对照。",
-      "verification_boundary": "本轮为题录与摘要筛查，方法细节、消融和代码仍需逐篇精读。",
+      "verification_boundary": "2026-09-25 有初读与对 RLT 的对照判断；附录/代码与独立复现尚待完成。",
       "source_url": "https://proceedings.mlr.press/v305/zheng25a.html",
-      "read_status": "待精读",
-      "note_path": "",
-      "note_level": "search-note"
+      "read_status": "已初读/讨论过，待系统精读",
+      "note_path": "research/literature/reading-notes-2026-09-25.md",
+      "note_level": "discussion-note"
     },
     {
       "id": "P004",
@@ -61,11 +61,11 @@
       "venue": "arXiv 2026；主表年份：2026。",
       "method_note": "研究预测世界的特征为何未必适合动作解码，并通过Action-Grounded Representation Alignment改善对齐。",
       "project_note": "不能仅以future预测更好推导控制更好；需核验head特征、对齐目标和因果干预实验。",
-      "verification_boundary": "本轮为题录与摘要筛查，方法细节、消融和代码仍需逐篇精读。",
+      "verification_boundary": "2026-09-25 有初读与对 RLT 的对照判断；附录/代码与独立复现尚待完成。",
       "source_url": "https://arxiv.org/abs/2606.12217",
-      "read_status": "待精读",
-      "note_path": "",
-      "note_level": "search-note"
+      "read_status": "已初读/讨论过，待系统精读",
+      "note_path": "research/literature/reading-notes-2026-09-25.md",
+      "note_level": "discussion-note"
     },
     {
       "id": "P005",
@@ -76,11 +76,11 @@
       "venue": "arXiv 2026；主表年份：2026。",
       "method_note": "用紧凑Global Action Prior tokens连接物理常识、运动规律与动作生成，并进行多层次数据联合训练。",
       "project_note": "compact物理信息接口通向action head已有近邻；需区分后读出/冻结外挂与联合预训练。",
-      "verification_boundary": "本轮为题录与摘要筛查，方法细节、消融和代码仍需逐篇精读。",
+      "verification_boundary": "2026-09-25 有初读与对 RLT 的对照判断；附录/代码与独立复现尚待完成。",
       "source_url": "https://arxiv.org/abs/2608.30289",
-      "read_status": "待精读",
-      "note_path": "",
-      "note_level": "search-note"
+      "read_status": "已初读/讨论过，待系统精读",
+      "note_path": "research/literature/reading-notes-2026-09-25.md",
+      "note_level": "discussion-note"
     },
     {
       "id": "P006",
@@ -91,11 +91,11 @@
       "venue": "arXiv 2025；主表年份：2025。",
       "method_note": "把视频和动作组织成共享physical tokens，借助视频预训练进行连续自回归世界—动作建模。",
       "project_note": "Physical Token名称和联合物理token概念已出现，不能声称首创；本项目需区分生成token与控制读出latent。",
-      "verification_boundary": "与PhysGen具有作者/内容关联，应按关联工作核查，不能将其当作两个完全独立实验证据。",
+      "verification_boundary": "2026-09-25 有初读与对 RLT 的对照判断；PAR 与 PhysGen 的作者/内容关联仍需核查，附录/代码与复现尚待完成。",
       "source_url": "https://arxiv.org/abs/2508.09822",
-      "read_status": "待精读",
-      "note_path": "",
-      "note_level": "search-note"
+      "read_status": "已初读/讨论过，待系统精读",
+      "note_path": "research/literature/reading-notes-2026-09-25.md",
+      "note_level": "discussion-note"
     },
     {
       "id": "P007",
@@ -151,11 +151,11 @@
       "venue": "arXiv 2026；主表年份：2026。",
       "method_note": "用样条参数压缩动作轨迹，支持多种策略架构，并结合结构化轨迹约束。",
       "project_note": "多骨干共用紧凑动作接口已有；需把轨迹参数化与隐藏物理状态读出区别清楚。",
-      "verification_boundary": "本轮为题录与摘要筛查，方法细节、消融和代码仍需逐篇精读。",
+      "verification_boundary": "2026-09-25 有初读与对 RLT 的对照判断；附录/代码与独立复现尚待完成。",
       "source_url": "https://arxiv.org/abs/2606.07386",
-      "read_status": "待精读",
-      "note_path": "",
-      "note_level": "search-note"
+      "read_status": "已初读/讨论过，待系统精读",
+      "note_path": "research/literature/reading-notes-2026-09-25.md",
+      "note_level": "discussion-note"
     },
     {
       "id": "P011",
