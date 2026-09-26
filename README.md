@@ -10,6 +10,11 @@ Living research website for **Universal Physical Token, robot self-improvement, 
 
 **https://nkd-lkz.github.io/physical-self-evolution/**
 
+## Guided reading and prototype — 2026-09-26
+
+- [六篇联合导读：Zeva / Harness VLA / SHAPER / ASPIRE / ENPIRE / Zetta](research/six-papers-guided-reading-2026-09-26.md)：按自进化发生的位置选择实验。
+- [Zeva 精读及 RLT 最小实验方案](research/zeva-rlt-implementation-2026-09-26.md)：原论文与公开代码/权重的边界、等预算消融和停止条件。
+- [Completed-transition memory prototype](research/prototypes/zeva_rlt_memory/README.md)：标准库实现与时间隔离检查；还未接入 RLinf 或训练策略。
 
 ## Project-relevant readings — 2026-09-22
 

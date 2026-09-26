@@ -2,6 +2,12 @@
 
 > 规则：独立 notes 表示已经专题阅读/精读的论文或系统；132 项论文/项目总账（另列 2 项观点）在 `research/literature/reading-ledger.md` 中维护，且每篇至少已有检索 mini-note。
 
+## 2026-09-26：六篇联合导读与 Zeva 精读
+
+- [Zeva、Harness VLA、SHAPER、ASPIRE、ENPIRE、Zetta 联合导读](../research/six-papers-guided-reading-2026-09-26.md) — 一句话机制、阅读顺序及 RLT 取舍。
+- [Zeva v2 精读：论文/开放代码区别、RLT 记忆实验](../research/zeva-rlt-implementation-2026-09-26.md) — 设计与证据边界，尚未进行 RLinf 训练。
+- [已完成转移记忆原型](../research/prototypes/zeva_rlt_memory/README.md) — 时间隔离与 episode/attempt 作用域，非 Zeva 或 RLT 的完整实现。
+
 ## 2026-09-25：六篇当日初读与 PI 演讲观点
 
 - [FLARE、Pri4R、AGRA、Spline Policy、CometVLA、PAR 六篇简要笔记](../research/literature/reading-notes-2026-09-25.md) — 原有 P002/3/4/5/6/10 的初读，未复现。

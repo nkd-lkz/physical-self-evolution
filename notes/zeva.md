@@ -3,11 +3,13 @@
 > 阅读日期：2026-09-12（加深）  
 > 定位：Context Evolution；In-Context Causal Learning；Frozen Policy；Action–Effect Memory
 
+> **2026-09-26 校核：**以下“无需更新权重”只指**部署期**；CTE 和记忆条件动作策略曾在离线阶段训练。PIM 仅同一个 episode 跨 attempts 保留，跨任务长期库存储不是论文已实现机制。主文 v2 的 RoboCasa 76.8% 与公开 checkpoint 的固定无重试 78.0% 属不同评测合同；开放版 effect MSE 只记诊断，优化了对比及防塌缩等损失。具体代码路径与 RLT 对照参见 [Zeva 精读及最小接口](../research/zeva-rlt-implementation-2026-09-26.md)。
+
 ---
 
 ## 一句话
 
-Zeva 不通过 RL 或微调更新权重，而是把机器人刚刚执行过的 **Executed Action → Observed State Change** 写成 Causal Interaction Memory，再通过 Context 影响冻结 policy 的后续动作。
+Zeva 在**部署时**不通过 RL 或微调更新权重，而是把机器人刚刚执行过的 **Executed Action → Observed State Change** 写成 Causal Interaction Memory，再通过 Context 影响已经经过离线记忆条件训练的 policy 的后续动作。
 
 它属于：
 
@@ -149,7 +151,7 @@ Frozen Policy
 Better Next Action
 ```
 
-这里没有 gradient update。
+这里**部署时**没有 gradient update；policy 如何读取 prompt 已在离线训练中学过。
 
 ---
 
