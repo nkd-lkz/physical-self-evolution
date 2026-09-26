@@ -5,10 +5,10 @@
 面向综述写作，按 **问题 → 方法 → 结果 → 引用价值 → 证据边界** 阅读论文。持续区分任务内适应、可留存的自我改进，以及改进器自身的递归增强。
 
 <!-- stats:start -->
-**38 篇阅读卡片** · **141 项原报告条目** · **60 项待核查** · **80 条引文线索**
+**46 篇阅读卡片** · **141 项原报告条目** · **69 项待核查** · **85 条引文线索**
 <!-- stats:end -->
 
-**最近更新：2026-09-25** · [当日增量调研](daily/2026-09-25.md) · [9月24日专题与实验提案](daily/2026-09-24-physical-rsi-cases.md) · [历史日志](daily/)
+**最近更新：2026-09-26** · [当日增量调研](daily/2026-09-26.md) · [9月25日调研](daily/2026-09-25.md) · [9月24日专题与实验提案](daily/2026-09-24-physical-rsi-cases.md) · [历史日志](daily/)
 
 ## 新增专题：从 Physical RSI 线索到 RLT 可执行实验
 
@@ -38,11 +38,11 @@
 
 | 工作 | 为什么值得读 | 放到综述哪里 |
 | :--- | :--- | :--- |
-| **[InternW0](papers/internw0.md)** | 联合视频—动作世界模型兼顾7,233.5小时预训练、接触后训练和60.73 ms动作关键路径；但部署权重固定 | 世界模型—策略协同、支撑组件、延迟口径 |
-| **[MemBodied](papers/membodied.md)** | episode内联想记忆均值50.0%；跨episode携带降到36.8%，直接揭示记忆持久化的负迁移风险 | 记忆边界、重置协议、任务内适应 |
-| **[X2Real](papers/x2real.md)** | 44任务、ID/OOD、DAG过程分和8任务sim-real对照，为“越部署越强”提供更细评测维度 | 评价框架、自动采集、sim-real证据 |
+| **[KnowBody](papers/know-your-body.md)** | 冻结VLM，把身体关系与任务知识做成验证后发布的跨episode更新；固定预算真机为12/16，对照4/16 | 非参数持久改进、body model、发布门控 |
+| **[RACaP](papers/racap.md)** | 同时演化Policy API、ReAct harness与经验记忆；部署前后边界清楚，并报告proposal、episode、时延和成本 | 代码/harness演化、改进预算、非递归边界 |
+| **[Uncertainty-Gated Exploration](papers/uncertainty-gated-exploration.md)** | 门控探索减少单任务坍缩，但没有任何方案超过行为克隆起点；汇总成功率会掩盖遗忘 | 在线VLA-RL、保持—可塑性、负结果 |
 
-本轮另有 **[The Gaussian Is Enough](papers/gaussian-is-enough.md)** 的负结果：在超过10万次仿真和1250次真机rollout的匹配比较中，复杂先验没有稳定优于高斯，编码器更新的影响更大。四项均为9月22–23日预印本，由9月24日候选池升级为全文核查卡片，未复现。
+本轮另收录 [PACL](papers/pacl.md)、[Self-Adaptive VLA](papers/self-adaptive-vla.md)、[WAA](papers/world-action-agent.md)、[RoboRecover](papers/roborecover.md) 与 [world-model benchmark综述](papers/world-model-benchmarks-survey.md)。其中 Self-Adaptive VLA 是实例内上下文适应，RoboRecover 是评价基础设施；两者不因“自适应/恢复”措辞被升级为持久 RSI。全部结果均为作者报告，未复现。
 
 ## 按综述主线浏览
 

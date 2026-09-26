@@ -3,9 +3,25 @@
 
 # 候选与待核查
 
-**60 项**。下列条目未完成全文方法/结果核查，不计入正式卡片。优先级表示下一步阅读顺序，不能作为可信度评分。
+**69 项**。下列条目未完成全文方法/结果核查，不计入正式卡片。优先级表示下一步阅读顺序，不能作为可信度评分。
 
-## 优先 · 31 项
+## 优先 · 35 项
+
+- **[RAPID: Robot Agentic Programming from Demonstrations](https://arxiv.org/abs/2609.30249)**
+  - `2609.30249` · 发现 2026-09-26 · 摘要、元数据与全文入口已核查；尚未逐表审核，不计正式卡片
+  - 下一步：核对单视频如何自动推断规格/原语/验证环境、迭代代码修订次数与八项真机分母；判断代码是否跨任务留存。
+
+- **[Online Sim-to-Real Adaptation via Closed-Loop System Modeling](https://arxiv.org/abs/2609.28878)**
+  - `2609.28878` · 发现 2026-09-26 · 摘要、元数据与全文入口已核查；尚未逐表审核，不计正式卡片
+  - 下一步：核对在线真机交互量、模型finetune预算、biped velocity/loco-manipulation指标；区分参考命令适应与底层策略更新。
+
+- **[AdaHVLA: Adaptive Harnesses for Long-Horizon Vision-Language-Action Execution](https://arxiv.org/abs/2609.29204)**
+  - `2609.29204` · 发现 2026-09-26 · 摘要、元数据与全文入口已核查；尚未逐表审核，不计正式卡片
+  - 下一步：全文核对revision graph、替代harness保留与跨任务继续适应协议；重点核实NaVILA-LH 22.5%→57.5%、三backbone最高+30.8点的分母和真机量化。
+
+- **[AD-WM: Action-Discriminative World Models for Counterfactual Model Predictive Control](https://arxiv.org/abs/2609.30264)**
+  - `2609.30264` · 发现 2026-09-26 · 摘要、元数据与全文入口已核查；尚未逐表审核，不计正式卡片
+  - 下一步：核对matched LeWM、CEM elite regret、DROID post-training和Franka 42.2%→71.1%的分母；作为预测—行动桥梁而非RSI本体处理。
 
 - **[Watch, Recall, Act: Always-On Robots in Concurrent Embodied Streams](https://arxiv.org/abs/2609.28429)**
   - `2609.28429` · 发现 2026-09-25 · 仅摘要与元数据已核查；不计正式卡片
@@ -131,7 +147,23 @@
   - `2609.18520` · 发现 2026-09-21 · 仅摘要已核查；不计正式卡片
   - 下一步：角色索引经验驱动在线技能选择；查训练free含义、反馈与长期收益。
 
-## 次优先 · 24 项
+## 次优先 · 28 项
+
+- **[Streaming-WAM: Action-Conditioned World-Action Model for Asynchronous Robot Manipulation](https://arxiv.org/abs/2609.28927)**
+  - `2609.28927` · 发现 2026-09-26 · 摘要、元数据与全文入口已核查；尚未逐表审核，不计正式卡片
+  - 下一步：全文核对LIBERO 98.35%、相对Fast-WAM 2.93×、真机90 s→38 s的协议与异步公平对照；部署权重预计固定。
+
+- **[Rolling-WAM: World Action Models with Rolling Imagination](https://arxiv.org/abs/2609.30247)**
+  - `2609.30247` · 发现 2026-09-26 · 摘要、元数据与全文入口已核查；尚未逐表审核，不计正式卡片
+  - 下一步：全文核对4.5×稳态replanning speedup、LIBERO/RoboTwin/Unitree G1成功口径与rolling window消融；按固定世界模型支撑组件处理。
+
+- **[Representation World Model: Learning States, Transition and Executable Plans in Representation](https://arxiv.org/abs/2609.29171)**
+  - `2609.29171` · 发现 2026-09-26 · 仅摘要与元数据已核查；arXiv HTML暂不可用，不计正式卡片
+  - 下一步：取得PDF后核对latent path、inverse-dynamics supervision和机器人操纵实验；重点判断是否有闭环行动收益而非表示指标。
+
+- **[Direction-Scale Decomposition in Action Representation: Rethinking What to Tokenize for Vision-Language-Action Models](https://arxiv.org/abs/2609.28865)**
+  - `2609.28865` · 发现 2026-09-26 · 摘要、元数据与全文入口已核查；尚未逐表审核，不计正式卡片
+  - 下一步：核对混合数据训练、SimlerEnv +10.3点、真实机器人分母与normalization对照；与FAN共同讨论动作坐标接口。
 
 - **[Frozen Flows Forget: Diagnosing and Restoring Lost Motion in a Latent-flow World Model](https://arxiv.org/abs/2609.28414)**
   - `2609.28414` · 发现 2026-09-25 · 仅摘要与元数据已核查；不计正式卡片
@@ -229,7 +261,11 @@
   - `2609.12541` · 发现 2026-09-21 · 仅摘要已核查；不计正式卡片
   - 下一步：robot-use策略接口线索；待全文核查更新对象和经验保留。
 
-## 暂不纳入主线 · 5 项
+## 暂不纳入主线 · 6 项
+
+- **[Body-Grounded Replanning for Physically Adaptive Manipulation](https://arxiv.org/abs/2609.30024)**
+  - `2609.30024` · 发现 2026-09-26 · 摘要、元数据与全文入口已核查；尚未逐表审核，不计正式卡片
+  - 下一步：核对负载/活动度事件触发、执行统计和真机 reaching 分母；预计是任务内重规划边界而非持久改进。
 
 - **[Towards Embodied Air-Ground Cooperative Object Search: Benchmark, Dataset and Agentic Method](https://arxiv.org/abs/2609.08402)**
   - `2609.08402` · 发现 2026-09-21 · 仅摘要已核查；不计正式卡片
@@ -250,4 +286,3 @@
 - **[AnchorVLN: Geometry-Anchored Vision-Language Grounding Reasoning for Open-Vocabulary Navigation](https://arxiv.org/abs/2609.12285)**
   - `2609.12285` · 发现 2026-09-21 · 仅摘要已核查；不计正式卡片
   - 下一步：语义与几何接口为主，摘要未显示经验累积带来的长期收益。
-

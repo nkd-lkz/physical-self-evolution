@@ -11,7 +11,9 @@
       "srpo",
       "advantage-guided-vla-post-training",
       "routerlt",
-      "gaussian-is-enough"
+      "gaussian-is-enough",
+      "uncertainty-gated-exploration",
+      "pacl"
     ]
   },
   {
@@ -22,7 +24,8 @@
       "claw",
       "compositional-continual-world-models",
       "world-models-actionable-survey",
-      "internw0"
+      "internw0",
+      "world-model-benchmarks-survey"
     ]
   },
   {
@@ -37,7 +40,10 @@
       "regenharness",
       "spine",
       "show-harness",
-      "embodiedskills"
+      "embodiedskills",
+      "know-your-body",
+      "racap",
+      "world-action-agent"
     ]
   },
   {
@@ -52,7 +58,8 @@
       "counterfactual-memory-audit",
       "beyond-end-task-success-audit",
       "memobench",
-      "membodied"
+      "membodied",
+      "self-adaptive-vla"
     ]
   },
   {
@@ -64,7 +71,10 @@
       "messymem",
       "rapolicy",
       "compositional-continual-world-models",
-      "dexpie"
+      "dexpie",
+      "uncertainty-gated-exploration",
+      "pacl",
+      "know-your-body"
     ]
   },
   {
@@ -80,7 +90,10 @@
       "agenticrl",
       "safemem",
       "vla-corrector",
-      "regenharness"
+      "regenharness",
+      "know-your-body",
+      "racap",
+      "world-action-agent"
     ]
   },
   {
@@ -93,7 +106,8 @@
       "vla-corrector",
       "embodiedskills",
       "spine",
-      "x2real"
+      "x2real",
+      "roborecover"
     ]
   },
   {
@@ -123,6 +137,7 @@
     "slugs": [
       "no-free-checker",
       "world-models-actionable-survey",
+      "world-model-benchmarks-survey",
       "counterfactual-memory-audit",
       "beyond-end-task-success-audit",
       "memobench",
@@ -131,7 +146,9 @@
       "embodied-benchforge",
       "x2real",
       "gaussian-is-enough",
-      "membodied"
+      "membodied",
+      "roborecover",
+      "uncertainty-gated-exploration"
     ]
   }
 ]

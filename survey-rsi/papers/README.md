@@ -3,9 +3,9 @@
 
 # 全部阅读卡片
 
-**38 篇**。按完整题名字母顺序排列；浏览器搜索可查题名、短名或 arXiv ID。方法及指定实验已核查，均未复现。
+**46 篇**。按完整题名字母顺序排列；浏览器搜索可查题名、短名或 arXiv ID。方法及指定实验已核查，均未复现。
 
-[下载 BibTeX](../references.bib) · [原报告 141 项](../baseline.md) · [候选 60 项](../candidates.md)
+[下载 BibTeX](../references.bib) · [原报告 141 项](../baseline.md) · [候选 69 项](../candidates.md)
 
 ### [2AM: Grounding Agent-Side Memory as Guidance for Steerable Action Models in Long-Horizon Manipulation](2am.md)
 
@@ -43,6 +43,10 @@
 
 **Advantage-guided VLA audit** · `2609.28161v1` · 边界案例 / 离线后训练 / 优势估计 / 真机
 
+### [Do World Models Make Better Robots? A Survey of Evaluation Benchmarks for Predictive Embodied Intelligence](world-model-benchmarks-survey.md)
+
+**World-Model Benchmark Survey** · `2609.29669v1` · 综述 / 世界模型 / 闭环评价 / benchmark
+
 ### [Embodied-BenchForge: A Closed-Loop Agentic Workflow for Embodied Benchmark Construction](embodied-benchforge.md)
 
 **Embodied-BenchForge** · `2609.13082v1` · 评价基础设施 / 基准生成 / 验证修复 / 仿真
@@ -75,9 +79,17 @@
 
 **InternW0** · `2609.27656v1` · 支撑组件 / 世界—动作模型 / 离线后训练 / 真机
 
+### [Know Your Body: A Harness for Direct and Self-Improving Robot Control with VLMs](know-your-body.md)
+
+**KnowBody** · `2609.28530v1` · 核心自我改进 / harness / 身体模型 / 真机
+
 ### [Learning and Transferring Closed-Loop Robot Software](learning-transferring-robot-software.md)
 
 **Learning and Transferring Closed-Loop Robot Software** · `2609.19906v1` · 核心自我改进 / 代码演化 / 跨任务迁移 / 仿真
+
+### [Learning from Mixed-Quality Deployment Experience for Robot Manipulation](pacl.md)
+
+**PACL** · `2609.29000v1` · 部署后学习 / 混合质量经验 / 动作块critic / 真机
 
 ### [LEMCA: LLM-Guided Synthesis of Efficient Mode-Switching Control Architectures](lemca.md)
 
@@ -107,9 +119,17 @@
 
 **No Free Checker** · `2609.09250v1` · 重点综述 / 验证器 / 奖励可靠性 / 参考文献入口
 
+### [RACaP: Agentic Reasoning, Acting, and Coding as Policies for Evolvable Robot Learning](racap.md)
+
+**RACaP** · `2609.29394v1` · 代码与harness演化 / Policy API / 经验记忆 / 纯仿真
+
 ### [RegenHarness: A Robot Agent Harness with Evidence-Gated Recursive Self-Improvement](regenharness.md)
 
 **RegenHarness** · `2609.27612v1` · 支撑组件 / harness演化协议 / 递归主张待证 / 真机案例
+
+### [RoboRecover: Benchmarking Robot Policy Recovery under Execution Deviations](roborecover.md)
+
+**RoboRecover** · `2609.28952v1` · 恢复评测 / 执行偏差 / 支撑组件 / 纯仿真
 
 ### [RouteRLT: Learning When and Which RL Specialist Should Control a VLA Policy](routerlt.md)
 
@@ -122,6 +142,10 @@
 ### [SeeQ: Training Generalist Value Functions for Long-Horizon Robotic Manipulation](seeq.md)
 
 **SeeQ** · `2609.22085v1` · 支撑组件 / 价值函数 / best-of-N / 真机
+
+### [Self-Adaptive VLA for Robust Robot Deployment](self-adaptive-vla.md)
+
+**Self-Adaptive VLA** · `2609.30092v1` · 边界案例 / 测试时上下文适应 / 硬件偏移 / 真机
 
 ### [Show-Harness: Just a VLM Agent Can Play Robots](show-harness.md)
 
@@ -143,9 +167,17 @@
 
 **The Gaussian Is Enough** · `2609.27070v1` · 边界案例 / 负结果 / 离线微调 / 真机
 
+### [Uncertainty-Gated Exploration Noise Suppresses Task Collapse in Online RL Fine-Tuning of a Flow-Matching Vision-Language-Action Policy](uncertainty-gated-exploration.md)
+
+**Uncertainty-Gated Exploration** · `2609.28838v1` · 在线VLA-RL / 持续学习 / 负结果 / 纯仿真
+
 ### [VLA-Corrector: Stage-Aware Observable State Understanding for Prompt-Based Closed-Loop Recovery of Vision-Language-Action Policies](vla-corrector.md)
 
 **VLA-Corrector** · `2609.06508v1` · 边界案例 / 任务内恢复 / 可观测验证器 / 仿真与真机
+
+### [World Action Agent: Harnessing VLMs for Robot Manipulation via World Action Rehearsal](world-action-agent.md)
+
+**WAA** · `2609.29964v1` · 多模态技能演化 / 视觉harness / 蒸馏 / 纯仿真
 
 ### [World Models for Embodied Intelligence: From Plausible to Controllable to Actionable](world-models-actionable-survey.md)
 
@@ -158,4 +190,3 @@
 ### [Zeva-Ego: Egocentric Mid-Training with In-Context Causal Learning for Robot Manipulation](zeva-ego.md)
 
 **Zeva-Ego** · `2609.24411v2` · 边界案例 / 任务内ICL / 跨尝试记忆 / 真机与仿真 / 版本修订 / 旧候选补全
-

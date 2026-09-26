@@ -611,5 +611,40 @@
     ],
     "status": "X2Real引用的sim-real评测基线；原报告/仓库可能已有入口，升级前须合并去重",
     "discovered": "2026-09-25"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.28530v1",
+    "reference": "Li et al. (2026), PhysMem: Scaling Test-Time Memory for Embodied Physical Reasoning, arXiv:2602.20323v6.",
+    "urls": ["https://arxiv.org/abs/2602.20323"],
+    "status": "KnowBody引用的物理假设验证记忆；升级前核对test-time范围、跨任务保留与真实执行证据",
+    "discovered": "2026-09-26"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.28530v1",
+    "reference": "Lian et al. (2026), Reflective VLA: In-Context Action Consequences Make VLAs Generalize, arXiv:2606.25215.",
+    "urls": ["https://arxiv.org/abs/2606.25215"],
+    "status": "KnowBody引用的动作—后果上下文基线；待核对是否跨episode保留及硬件偏移协议",
+    "discovered": "2026-09-26"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.28530v1",
+    "reference": "Liu, Bahety, and Song (2023), REFLECT: Summarizing Robot Experiences for Failure Explanation and Correction, CoRL 2023 / PMLR 229.",
+    "urls": ["https://proceedings.mlr.press/v229/liu23g.html"],
+    "status": "失败解释与经验摘要的正式会议来源；回读任务内纠错、记忆留存和真机分母",
+    "discovered": "2026-09-26"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.28838v1",
+    "reference": "Zhang et al. (2025), ReinFlow: Fine-tuning Flow Matching Policy with Online Reinforcement Learning, NeurIPS 2025 / arXiv:2505.22094.",
+    "urls": ["https://arxiv.org/abs/2505.22094"],
+    "status": "不确定性门控论文的最近机制基线；其原实验为较小flow policy，不能直接当VLA规模证据",
+    "discovered": "2026-09-26"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.29394v1",
+    "reference": "Zhang et al. (2026), Playful Agentic Robot Learning, arXiv:2606.19419.",
+    "urls": ["https://arxiv.org/abs/2606.19419"],
+    "status": "RACaP与WAA共同引用的自指导play/code-skill基线；待核对play目标、下游迁移和预算匹配",
+    "discovered": "2026-09-26"
   }
 ]

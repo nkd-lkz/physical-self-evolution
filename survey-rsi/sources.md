@@ -17,7 +17,7 @@
 
 ## 引文追踪
 
-当前共 **66 条待核查引文线索**，见[data/reference-frontier.json](data/reference-frontier.json)。2026-09-24从Local Coding Agent、RouteRLT、Visual Experience Retrieval Audit与SPINE继续回溯，已定位DROC、HIL-SERL、RT-cache、AutoManual、Recovery RL和Sirius-Fleet的原始arXiv/作者项目/代码入口；这些线索尚未在本轮读完全文，不算正式卡片。此前线索来自RAPolicy、2AM、FAN、组合式持续世界模型、MEMOBench、No Free Checker、World Models for Embodied Intelligence和Learning and Transferring Closed-Loop Robot Software。未声称遍历完全部参考文献。
+当前数量以生成的[引文队列](references.md)和[data/reference-frontier.json](data/reference-frontier.json)为准。2026-09-26继续从KnowBody、门控在线RL、RACaP与WAA回溯 PhysMem、Reflective VLA、REFLECT、ReinFlow 和 Playful Agentic Robot Learning；这些线索尚未在本轮读完全文，不算正式卡片。未声称遍历完全部参考文献。
 
 
 
@@ -36,3 +36,10 @@
 - awesome 线索复查：[Embodied RSI](https://github.com/cocacola-lab/awesome-embodied-rsi)、[RL-VLA](https://github.com/Denghaoyuan123/Awesome-RL-VLA)、[Embodied Continual Learning](https://github.com/Songlin-Dong/Awesome-Embodied-Continual-Learning)、[World Models for Robotic Policy Learning](https://github.com/NTUMARS/Awesome-World-Model-for-Robotics-Policy)。这些集合用于发现和检查遗漏；本轮四张正式卡片均回到arXiv全文、作者项目或代码。
 - 全文升级：[InternW0](https://arxiv.org/html/2609.27656v1)、[MemBodied](https://arxiv.org/html/2609.28256v1)、[X2Real](https://arxiv.org/html/2609.27449v1)、[The Gaussian Is Enough](https://arxiv.org/html/2609.27070v1)。
 - OpenReview定向检索未得到可独立核验的9月25日机器人RSI新条目；这只记录本轮搜索结果，不代表平台上不存在相关投稿。
+
+## 2026-09-26 扩展检索入口
+
+- 官方列表已切换到“Friday, 25 September 2026”。本轮对该批次逐项按无版本arXiv ID、规范化题名和作者去重，并回读8篇全文；论文首次提交日期仍按各自submission history记录为9月22–24日，不能把列表日期当发表日期。
+- 全文入口：[KnowBody](https://arxiv.org/html/2609.28530v1)、[Uncertainty-Gated Exploration](https://arxiv.org/html/2609.28838v1)、[PACL](https://arxiv.org/html/2609.29000v1)、[Self-Adaptive VLA](https://arxiv.org/html/2609.30092v1)、[RACaP](https://arxiv.org/html/2609.29394v1)、[RoboRecover](https://arxiv.org/html/2609.28952v1)、[WAA](https://arxiv.org/html/2609.29964v1) 与 [world-model benchmark综述](https://arxiv.org/html/2609.29669v1)。
+- 同批只读摘要的OSRAM、AdaHVLA、Streaming/Rolling-WAM、AD-WM、DSD、RWM、RAPID和Body-Grounded Replanning进入候选队列，没有用题名补写结果。
+- awesome入口用于检查遗漏；正式卡片的题名、版本、图、样本量和结论均回到arXiv全文。OpenReview定向检索未得到比本轮arXiv全文更直接、且不与现有库重复的新增RSI实证。

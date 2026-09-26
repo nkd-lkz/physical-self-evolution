@@ -8,6 +8,14 @@
 
 | 工作 | 实际更新对象与保留范围 | 物理证据与人工条件 | 可以支持 / 不能支持 |
 | :--- | :--- | :--- | :--- |
+| [KnowBody](papers/know-your-body.md) | body model、知识规则与证据跨episode验证后保留；VLM冻结 | FR3四任务；固定预算32次；初始化轨迹＋后续执行证据 | 非参数持久改进；主对照关闭跨episode更新，持续曲线仅画成功回合 |
+| [Uncertainty-Gated Exploration](papers/uncertainty-gated-exploration.md) | 450M SmolVLA在线PPO；探索门控随状态/时间变化 | LIBERO-10七任务；每主臂3种子；纯仿真 | 抑制任务坍缩；没有方案超过BC起点，不能称能力持续增长 |
+| [PACL](papers/pacl.md) | critic与扩散策略在固定混合质量部署数据上后训练 | 四仿真任务×250次、三FR3任务×25次；不需新增纠正 | 利用失败/部分进展；批次离线更新，不是连续自主学习 |
+| [Self-Adaptive VLA](papers/self-adaptive-vla.md) | 当前部署实例内累加context token；权重不变 | 四真机任务；20个偏移环境、每环境最多6次 | 失败rollout驱动的测试时适应；不能支持跨环境持久更新 |
+| [RACaP](papers/racap.md) | 部署前演化Policy API、ReAct harness与经验；发布后冻结 | LIBERO/robosuite仿真；Phase 2为32 proposals/596 episodes | 可演化harness与预算；外层规则固定且无真机，不是严格递归 |
+| [WAA](papers/world-action-agent.md) | 审查后发布多模态技能；另将trace蒸馏到小VLM | LIBERO-Pro/robosuite仿真；依赖专家视频、人类教学和大VLM | 技能证据门控与双更新载体；不是部署期纯自主增长 |
+| [RoboRecover](papers/roborecover.md) | 更新benchmark/监测器，不更新主策略 | 两平台2,000个执行偏差scenario；纯仿真 | 恢复能力的独立评测；不能支持自我改进 |
+| [World-Model Benchmark Survey](papers/world-model-benchmarks-survey.md) | 组织160个基准与闭环对照协议 | 文献目录；无新机器人实验 | 只有11项显式VLA-vs-WM、4项prediction-to-action；不能证明某类模型优劣 |
 | [InternW0](papers/internw0.md) | 离线更新视频/动作专家；部署期只重路由上下文 | 5项真机、每项15次；混合成功/过程指标 | 世界模型支撑；不能支持部署期持久更新 |
 | [MemBodied](papers/membodied.md) | rollout内联想状态；主协议每次重置 | PiPER三任务、每策略每任务20次 | 任务内记忆；跨episode携带均值反降 |
 | [X2Real](papers/x2real.md) | 更新任务/环境/数据基础设施，不更新被测策略 | 44任务；8项sim-real对照为单模型 | RSI评价基础；“可演化基准”不等于递归策略 |
@@ -23,6 +31,11 @@
 
 | 工作 / 指标 | 作者报告 | 引用时必须同时写明 |
 | :--- | :--- | :--- |
+| KnowBody / 固定预算完成 | 4/16 → 12/16 | 同一冻结VLM；四任务×两方法×4次；KnowBody跨episode更新关闭 |
+| 门控在线RL / 池化坍缩 | 门控三种子均0/7；固定为4/7、1/7、0/7 | 每运行最后5次扫描共1050 episode；三种子；门控成功率仍低于BC tare 0.648 |
+| PACL / 七任务成功 | DP 46.4–88.0% → PACL 82.8–100% | 仿真每任务250次、真机25次；PACL用至多700条总轨迹并增加critic筛选 |
+| Self-Adaptive VLA / 偏移恢复 | 7.5→72.5%；5.0→75.0% | 每偏移20个部署环境，每环境最多6次并完全复位；不是单次尝试成功率 |
+| WAA / LIBERO-Pro | 28.9%无技能 → 75.6%演化技能 | 6 split×60 episode；技能来自LIBERO-90示范并在目标域评测前冻结 |
 | BEE / 成功率 | 100%、85%、90%、90% | 每任务 3×20 次评测；前述手机、布料为精细阶段成功，另两项为全任务；真机训练每任务 20＋70 episode |
 | HiRE / 瓶子任务 | 6/30 → 20/30 | 基础策略已有示范训练；60 与 70 个在线 episode 的检查点；另一个任务的 73.3% 为峰值 |
 | Banana Kick / 固定评测分 | 912.8 → 1093.7 | 对照为学习进展课程；五种子、每种子 4096 匹配情境；不是任务成功率 |

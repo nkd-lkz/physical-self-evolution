@@ -3,7 +3,32 @@
 
 # 引文溯源队列
 
-**80 条引文线索**，不是 80 篇已读论文。保留发现路径和原文定位；可能与原报告/候选重叠，升级前仍须按 ID、DOI、题名和作者合并。
+**85 条引文线索**，不是 85 篇已读论文。保留发现路径和原文定位；可能与原报告/候选重叠，升级前仍须按 ID、DOI、题名和作者合并。
+
+- **Li et al. (2026), PhysMem: Scaling Test-Time Memory for Embodied Physical Reasoning, arXiv:2602.20323v6.**
+  - 发现于：[引用它的原文](https://arxiv.org/html/2609.28530v1)
+  - KnowBody引用的物理假设验证记忆；升级前核对test-time范围、跨任务保留与真实执行证据
+  - 原始入口：[来源](https://arxiv.org/abs/2602.20323)
+
+- **Lian et al. (2026), Reflective VLA: In-Context Action Consequences Make VLAs Generalize, arXiv:2606.25215.**
+  - 发现于：[引用它的原文](https://arxiv.org/html/2609.28530v1)
+  - KnowBody引用的动作—后果上下文基线；待核对是否跨episode保留及硬件偏移协议
+  - 原始入口：[来源](https://arxiv.org/abs/2606.25215)
+
+- **Liu, Bahety, and Song (2023), REFLECT: Summarizing Robot Experiences for Failure Explanation and Correction, CoRL 2023 / PMLR 229.**
+  - 发现于：[引用它的原文](https://arxiv.org/html/2609.28530v1)
+  - 失败解释与经验摘要的正式会议来源；回读任务内纠错、记忆留存和真机分母
+  - 原始入口：[来源](https://proceedings.mlr.press/v229/liu23g.html)
+
+- **Zhang et al. (2025), ReinFlow: Fine-tuning Flow Matching Policy with Online Reinforcement Learning, NeurIPS 2025 / arXiv:2505.22094.**
+  - 发现于：[引用它的原文](https://arxiv.org/html/2609.28838v1)
+  - 不确定性门控论文的最近机制基线；其原实验为较小flow policy，不能直接当VLA规模证据
+  - 原始入口：[来源](https://arxiv.org/abs/2505.22094)
+
+- **Zhang et al. (2026), Playful Agentic Robot Learning, arXiv:2606.19419.**
+  - 发现于：[引用它的原文](https://arxiv.org/html/2609.29394v1)
+  - RACaP与WAA共同引用的自指导play/code-skill基线；待核对play目标、下游迁移和预算匹配
+  - 原始入口：[来源](https://arxiv.org/abs/2606.19419)
 
 - **Cai et al. (2026), AHA-WAM: Asynchronous Horizon-Adaptive World-Action Modeling with Observation-Guided Context Routing, arXiv:2606.09811.**
   - 发现于：[引用它的原文](https://arxiv.org/html/2609.27656v1)
@@ -378,4 +403,3 @@
   - 发现于：[引用它的原文](https://arxiv.org/html/2609.26567v1)
   - 已定位arXiv、作者项目与代码入口；未在本轮读全文，不计正式卡片
   - 原始入口：[来源](https://arxiv.org/abs/2410.22689) · [来源](https://ut-austin-rpl.github.io/sirius-fleet/) · [来源](https://github.com/UT-Austin-RPL/sirius-fleet)
-

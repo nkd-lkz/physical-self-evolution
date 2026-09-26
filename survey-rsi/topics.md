@@ -21,6 +21,8 @@
 - [Dissecting Advantage-Guided Post-Training for Vision-Language-Action Policies](papers/advantage-guided-vla-post-training.md) — 边界案例 / 离线后训练 / 优势估计 / 真机
 - [RouteRLT: Learning When and Which RL Specialist Should Control a VLA Policy](papers/routerlt.md) — 支撑组件 / VLA-RL / 专家路由 / 真机 / 部署期不学习
 - [The Gaussian Is Enough: Flow-Matching Priors Do Not Help When Fine-Tuning Large Behavior Models](papers/gaussian-is-enough.md) — 边界案例 / 负结果 / 离线微调 / 真机
+- [Uncertainty-Gated Exploration Noise Suppresses Task Collapse in Online RL Fine-Tuning of a Flow-Matching Vision-Language-Action Policy](papers/uncertainty-gated-exploration.md) — 在线VLA-RL / 持续学习 / 负结果 / 纯仿真
+- [Learning from Mixed-Quality Deployment Experience for Robot Manipulation](papers/pacl.md) — 部署后学习 / 混合质量经验 / 动作块critic / 真机
 
 <a id="world"></a>
 
@@ -32,6 +34,7 @@
 - [Benchmarking World Models for Continual Learning on Compositional Tasks](papers/compositional-continual-world-models.md) — 评价框架 / 世界模型 / 持续学习 / 仿真
 - [World Models for Embodied Intelligence: From Plausible to Controllable to Actionable](papers/world-models-actionable-survey.md) — 重点综述 / 世界模型 / 闭环效用 / 参考文献入口
 - [InternW0: A Foundational Physical World Model for Efficient Real-World Interactions](papers/internw0.md) — 支撑组件 / 世界—动作模型 / 离线后训练 / 真机
+- [Do World Models Make Better Robots? A Survey of Evaluation Benchmarks for Predictive Embodied Intelligence](papers/world-model-benchmarks-survey.md) — 综述 / 世界模型 / 闭环评价 / benchmark
 
 <a id="skills"></a>
 
@@ -47,6 +50,9 @@
 - [SPINE: Bridging Cyber-Physical Gap with Agentic AI](papers/spine.md) — 支撑组件 / 具身harness / 诊断与修复 / 真机 / 版本修订
 - [Show-Harness: Just a VLM Agent Can Play Robots](papers/show-harness.md) — 边界案例 / 语义动作接口 / harness / 真机
 - [EmbodiedSkills: A Unified Framework for Orchestrating, Training, and Deploying VLA Agents](papers/embodiedskills.md) — 边界案例 / 技能契约 / 验证与恢复 / 仿真
+- [Know Your Body: A Harness for Direct and Self-Improving Robot Control with VLMs](papers/know-your-body.md) — 核心自我改进 / harness / 身体模型 / 真机
+- [RACaP: Agentic Reasoning, Acting, and Coding as Policies for Evolvable Robot Learning](papers/racap.md) — 代码与harness演化 / Policy API / 经验记忆 / 纯仿真
+- [World Action Agent: Harnessing VLMs for Robot Manipulation via World Action Rehearsal](papers/world-action-agent.md) — 多模态技能演化 / 视觉harness / 蒸馏 / 纯仿真
 
 <a id="memory"></a>
 
@@ -62,6 +68,7 @@
 - [Beyond End-Task Success: How to Audit Visual Experience Retrieval in Robotics](papers/beyond-end-task-success-audit.md) — 评价框架 / 经验检索 / 因果审计 / 仿真
 - [MEMOBench: A Process Level Memory Benchmark for Robotic Manipulation](papers/memobench.md) — 评价框架 / 跨时段记忆 / 过程指标 / 仿真 / 旧候选补全
 - [MemBodied: Recurrent Associative Memory for Vision-Language-Action Models](papers/membodied.md) — 边界案例 / episode内记忆 / VLA / 真机
+- [Self-Adaptive VLA for Robust Robot Deployment](papers/self-adaptive-vla.md) — 边界案例 / 测试时上下文适应 / 硬件偏移 / 真机
 
 <a id="continual"></a>
 
@@ -74,6 +81,9 @@
 - [Stable and Efficient Real-World Online VLA Post-Training via Asynchronous Replay-Anchored Policy Improvement](papers/rapolicy.md) — 核心自我改进 / 在线VLA-RL / 异步真机学习 / 人在环
 - [Benchmarking World Models for Continual Learning on Compositional Tasks](papers/compositional-continual-world-models.md) — 评价框架 / 世界模型 / 持续学习 / 仿真
 - [DexPIE: Stable Dexterous Policy Improvement from Real-World Experience](papers/dexpie.md) — 核心自我改进 / 灵巧操作 / 真实部署经验 / 版本修订
+- [Uncertainty-Gated Exploration Noise Suppresses Task Collapse in Online RL Fine-Tuning of a Flow-Matching Vision-Language-Action Policy](papers/uncertainty-gated-exploration.md) — 在线VLA-RL / 持续学习 / 负结果 / 纯仿真
+- [Learning from Mixed-Quality Deployment Experience for Robot Manipulation](papers/pacl.md) — 部署后学习 / 混合质量经验 / 动作块critic / 真机
+- [Know Your Body: A Harness for Direct and Self-Improving Robot Control with VLMs](papers/know-your-body.md) — 核心自我改进 / harness / 身体模型 / 真机
 
 <a id="feedback"></a>
 
@@ -90,6 +100,9 @@
 - [Safe Task Planning with Long-Term Graph Memory for Embodied Agents](papers/safemem.md) — 边界案例 / 图记忆 / 风险验证 / 仿真与真机
 - [VLA-Corrector: Stage-Aware Observable State Understanding for Prompt-Based Closed-Loop Recovery of Vision-Language-Action Policies](papers/vla-corrector.md) — 边界案例 / 任务内恢复 / 可观测验证器 / 仿真与真机
 - [RegenHarness: A Robot Agent Harness with Evidence-Gated Recursive Self-Improvement](papers/regenharness.md) — 支撑组件 / harness演化协议 / 递归主张待证 / 真机案例
+- [Know Your Body: A Harness for Direct and Self-Improving Robot Control with VLMs](papers/know-your-body.md) — 核心自我改进 / harness / 身体模型 / 真机
+- [RACaP: Agentic Reasoning, Acting, and Coding as Policies for Evolvable Robot Learning](papers/racap.md) — 代码与harness演化 / Policy API / 经验记忆 / 纯仿真
+- [World Action Agent: Harnessing VLMs for Robot Manipulation via World Action Rehearsal](papers/world-action-agent.md) — 多模态技能演化 / 视觉harness / 蒸馏 / 纯仿真
 
 <a id="infrastructure"></a>
 
@@ -103,6 +116,7 @@
 - [EmbodiedSkills: A Unified Framework for Orchestrating, Training, and Deploying VLA Agents](papers/embodiedskills.md) — 边界案例 / 技能契约 / 验证与恢复 / 仿真
 - [SPINE: Bridging Cyber-Physical Gap with Agentic AI](papers/spine.md) — 支撑组件 / 具身harness / 诊断与修复 / 真机 / 版本修订
 - [X2Real: an eXtensive simulation benchmark for real-world generalist policies](papers/x2real.md) — 评价框架 / 仿真—真机 / 自动数据采集 / 企业技术报告
+- [RoboRecover: Benchmarking Robot Policy Recovery under Execution Deviations](papers/roborecover.md) — 恢复评测 / 执行偏差 / 支撑组件 / 纯仿真
 
 <a id="curriculum"></a>
 
@@ -132,6 +146,7 @@
 
 - [No Free Checker: A Survey of Verifiers for Robot Policies](papers/no-free-checker.md) — 重点综述 / 验证器 / 奖励可靠性 / 参考文献入口
 - [World Models for Embodied Intelligence: From Plausible to Controllable to Actionable](papers/world-models-actionable-survey.md) — 重点综述 / 世界模型 / 闭环效用 / 参考文献入口
+- [Do World Models Make Better Robots? A Survey of Evaluation Benchmarks for Predictive Embodied Intelligence](papers/world-model-benchmarks-survey.md) — 综述 / 世界模型 / 闭环评价 / benchmark
 - [Memory That Changes Action Is Not Memory That Guides It: Counterfactual Auditing of History-Conditioned Robot Policies](papers/counterfactual-memory-audit.md) — 评价框架 / 记忆审计 / 因果干预 / 真机与仿真
 - [Beyond End-Task Success: How to Audit Visual Experience Retrieval in Robotics](papers/beyond-end-task-success-audit.md) — 评价框架 / 经验检索 / 因果审计 / 仿真
 - [MEMOBench: A Process Level Memory Benchmark for Robotic Manipulation](papers/memobench.md) — 评价框架 / 跨时段记忆 / 过程指标 / 仿真 / 旧候选补全
@@ -141,6 +156,8 @@
 - [X2Real: an eXtensive simulation benchmark for real-world generalist policies](papers/x2real.md) — 评价框架 / 仿真—真机 / 自动数据采集 / 企业技术报告
 - [The Gaussian Is Enough: Flow-Matching Priors Do Not Help When Fine-Tuning Large Behavior Models](papers/gaussian-is-enough.md) — 边界案例 / 负结果 / 离线微调 / 真机
 - [MemBodied: Recurrent Associative Memory for Vision-Language-Action Models](papers/membodied.md) — 边界案例 / episode内记忆 / VLA / 真机
+- [RoboRecover: Benchmarking Robot Policy Recovery under Execution Deviations](papers/roborecover.md) — 恢复评测 / 执行偏差 / 支撑组件 / 纯仿真
+- [Uncertainty-Gated Exploration Noise Suppresses Task Collapse in Online RL Fine-Tuning of a Flow-Matching Vision-Language-Action Policy](papers/uncertainty-gated-exploration.md) — 在线VLA-RL / 持续学习 / 负结果 / 纯仿真
 
 ## 原报告主线也要回看
 
