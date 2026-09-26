@@ -43,7 +43,7 @@
 2. **记忆有效性**：匹配库大小、检索数量、上下文长度与控制预算，对比随机经验、语义相似经验、接触响应相似经验。先用固定离线库，避免把新增在线数据误认为检索算法收益。
 3. **经验固化**：条目记录适用条件、证据与失效条件；经过独立验证后再写入可检索库。在线累积阶段额外比较“有写入”和“禁止写入”，单独报告人工投入。
 
-完整的[三项最小实验与停止条件](../research/glow-real2sim2real-experiments.md)均为待验证提案，不是已完成结果。可复用此前的[回执数据合同与实验模板](https://github.com/nkd-lkz/physical-self-evolution/tree/main/survey-rsi/experiments/rlt-contact-memory)。
+完整的[三项最小实验与停止条件](../research/glow-real2sim2real-experiments.md)均为待验证提案，不是已完成结果。可复用此前的[回执数据合同与实验模板](../research/experiments/rlt-contact-memory/README.md)。
 
 ## 阅读边界
 

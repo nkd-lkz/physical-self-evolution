@@ -2,9 +2,14 @@
 
 Living research website for **Universal Physical Token, robot self-improvement, VLA / action models, Online RL and embodied physical adaptation**.
 
-## RSI survey literature
+## 分区入口与单向引用
 
-[具身 / 机器人 RSI 综述调研](survey-rsi/README.md) — 每日增量、原图阅读卡片、去重索引和证据核查，与实验主线分别维护。新增：[Simate / Skild / Zeva-Ego / GLOW 综合分析](survey-rsi/discussions/physical-rsi-sept24.md)、[研究随想](survey-rsi/discussions/physical-experience-theses.md)与[RLT loss-first / 记忆实验提案](survey-rsi/experiments/rlt-contact-memory/README.md)（含数据合同与校验器，未训练）。
+| 区域 | 内容与入口 |
+| :--- | :--- |
+| **RLT / Universal Physical Token 项目** | [Research OS 网站](https://nkd-lkz.github.io/physical-self-evolution/)；`research/`、`notes/` 与根目录 `data/` 存放项目观点、方案和实验记录 |
+| **具身 / 机器人 RSI 综述** | [独立文献库](survey-rsi/README.md)；仅公开论文、作者来源及综述分析 |
+
+**公开论文可以从 RSI 文献库进入 RLT 项目；RLT 的研究观点、方案与进度不回流到综述区。** [文献引入与已迁回材料](research/survey-literature-intake.md)提供项目侧入口。同一公开仓库内的分区不是权限隔离，历史版本仍可访问。
 
 ## Website
 

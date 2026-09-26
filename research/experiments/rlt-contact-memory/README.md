@@ -1,8 +1,8 @@
-[研究库](../../README.md) · [四条技术线索](../../discussions/physical-rsi-sept24.md) · [研究随想](../../discussions/physical-experience-theses.md)
+[研究库](../../survey-literature-intake.md) · [四条技术线索](../../discussions/physical-rsi-sept24.md) · [研究随想](../../discussions/physical-experience-theses.md)
 
 # RLT 接触经验实验：先验证 loss，再验证记忆
 
-**2026-09-24｜执行提案，未训练、未复现、无性能结果。** 延续仓库的 [09-22 物理经验合同](../../../research/physical-experience-protocol-2026-09-22.md)，不替换现有路线。当前优先完成数据合同和离线 probe；在线比较依赖可信 reference、learner 与干预闭环。这里的可运行代码仅是日志校验器，RLinf rollout adapter、特征导出和训练接入仍待实现。
+**2026-09-24｜执行提案，未训练、未复现、无性能结果。** 延续仓库的 [09-22 物理经验合同](../../physical-experience-protocol-2026-09-22.md)，不替换现有路线。当前优先完成数据合同和离线 probe；在线比较依赖可信 reference、learner 与干预闭环。这里的可运行代码仅是日志校验器，RLinf rollout adapter、特征导出和训练接入仍待实现。
 
 ## 1. 同事讨论时先讲清的一个问题
 

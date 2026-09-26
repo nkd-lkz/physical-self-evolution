@@ -27,8 +27,8 @@
 在仓库根目录执行：
 
 ```bash
-python survey-rsi/experiments/rlt-contact-memory/validate_transitions.py \
-  survey-rsi/experiments/rlt-contact-memory/example.synthetic.jsonl
+python research/experiments/rlt-contact-memory/validate_transitions.py \
+  research/experiments/rlt-contact-memory/example.synthetic.jsonl
 ```
 
 示例只有两行合成记录，专门说明格式，不是机器人采集、训练集或实验结果。把参数换成 adapter 导出的真实 JSONL 即可校验；任何失败会返回非零状态。脚本检查长度、时长、输入白名单、实例划分、必要标签和 finite 数值。

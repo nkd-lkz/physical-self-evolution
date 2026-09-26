@@ -1,4 +1,4 @@
-[研究库首页](../README.md) · [四线对照](physical-rsi-sept24.md) · [实验包](../experiments/rlt-contact-memory/README.md)
+[研究库首页](../survey-literature-intake.md) · [四线对照](physical-rsi-sept24.md) · [实验包](../experiments/rlt-contact-memory/README.md)
 
 # 研究随想：让实践留下能再次使用的物理经验
 

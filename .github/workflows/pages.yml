@@ -25,10 +25,12 @@ jobs:
         uses: actions/checkout@v6
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      - name: Stage RLT project only
+        run: python3 .github/scripts/stage_project_site.py "${{ runner.temp }}/rlt-pages"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: "."
+          path: "${{ runner.temp }}/rlt-pages"
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

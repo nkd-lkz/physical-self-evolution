@@ -1,0 +1,22 @@
+name: Survey content boundary
+
+on:
+  push:
+    branches: ["main"]
+    paths: ["survey-rsi/**", ".github/workflows/survey-boundary.yml"]
+  pull_request:
+    paths: ["survey-rsi/**", ".github/workflows/survey-boundary.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Check survey links and content boundaries
+        run: python3 survey-rsi/scripts/check_boundary.py
+      - name: Check boundary regression cases
+        run: python3 survey-rsi/scripts/test_boundary.py

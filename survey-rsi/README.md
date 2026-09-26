@@ -8,20 +8,13 @@
 **46 篇阅读卡片** · **141 项原报告条目** · **69 项待核查** · **85 条引文线索**
 <!-- stats:end -->
 
-**最近更新：2026-09-26** · [当日增量调研](daily/2026-09-26.md) · [9月25日调研](daily/2026-09-25.md) · [9月24日专题与实验提案](daily/2026-09-24-physical-rsi-cases.md) · [历史日志](daily/)
+**最近更新：2026-09-26** · [当日增量调研](daily/2026-09-26.md) · [9月25日调研](daily/2026-09-25.md) · [9月24日企业案例专题](daily/2026-09-24-physical-rsi-cases.md) · [历史日志](daily/)
 
-## 新增专题：从 Physical RSI 线索到 RLT 可执行实验
+## 收录范围
 
-**[先读综合分析](discussions/physical-rsi-sept24.md)**：Simate、Skild、Zeva-Ego，以及附件补充的 GLOW，分别更新研究流程、策略、上下文或经验链路，不能用同一种“RSI”结论概括。
+本库只收录**公开论文、作者项目/代码、可追溯行业来源，以及基于这些来源的综述分析**。每篇采用固定阅读模板，保留原图来源、指标口径和证据边界。项目方案、个人研究假设与实验进度不属于本库内容。
 
-| 需要的产物 | 入口 |
-| :--- | :--- |
-| 和同事解释四条路线、证据与取舍 | [综合分析](discussions/physical-rsi-sept24.md) · [3项企业案例](cases/README.md) · [Zeva-Ego勘误](papers/zeva-ego.md) |
-| 整理“物理直觉、成长、经验沉淀”的研究动机 | [研究随想与可证伪假设](discussions/physical-experience-theses.md) |
-| 本周开始做数据、loss-first与记忆对照 | **[RLT实验方案](experiments/rlt-contact-memory/README.md)** · [接入合同/日志校验](experiments/rlt-contact-memory/implementation.md) |
-| 安排Jev、注意力、TTA、Astra/harness的角色 | [后续组件与最小实验](discussions/optional-components.md) |
-
-当前建议：**可靠执行回执 → 离线后果 probe → 匹配的在线 loss 对照 → 有重置边界的经验库**。新增内容均为来源核查或待实施提案，没有新机器人训练结果；企业案例与论文卡片分开计数。
+[四类 Physical RSI 线索对照](discussions/physical-rsi-sept24.md) · [企业系统案例](cases/README.md) · [来源边界](SCOPE.md) · [本次整理说明](daily/2026-09-26-boundary-cleanup.md)
 
 ## 从这里开始
 

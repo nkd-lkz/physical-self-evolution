@@ -58,16 +58,16 @@
 
 ## 严格递归还缺什么
 
-### 9月24日追加：三条新线索与附件补充
+### 企业来源与论文应分列
 
-| 工作 | 核实到的证据 | 仍需验证的主张 | 进入当前研究的方式 |
+| 工作 | 已核查的证据 | 仍缺少什么 | 综述归类 |
 | :--- | :--- | :--- | :--- |
-| [Simate](cases/simate-autoresearch.md) | 官方榜单快照；公开研究图谱有16节点/25运行 | 自动研究对榜单成绩的因果贡献、改进器增强 | 有预算和版本的run card |
-| [Skild](cases/skild-physical-self-play.md) | 官方自述仿真对近期策略self-play，真机足球演示 | 真机在线改进、独立量化泛化、算法复现 | 后续课程分支，不把单智能体采样直接叫self-play |
-| [Zeva-Ego](papers/zeva-ego.md) | v2明确新实例清PIM，部署冻结；effect目标为视觉差分 | 跨独立实例留存、长期增长；58→89的sim/real文本归属待澄清 | 视觉差分对照、记忆清空与新实例检验 |
-| [GLOW](cases/knowin-glow.md) | 官方技术页的执行回执与18项仿真子集结果 | 与完整总榜可比、循环组件各自收益 | 日志记录命令与实际响应 |
+| [Simate](cases/simate-autoresearch.md) | 官方榜单快照；公开研究图谱 16 节点 / 25 运行 | 自动研究对成绩的因果贡献、改进器增强 | 自动研究的企业线索 |
+| [Skild](cases/skild-physical-self-play.md) | 官方仿真 self-play 自述与真机足球演示 | 真机在线改进、独立量化泛化、完整算法复现 | 策略与课程的企业线索 |
+| [Zeva-Ego](papers/zeva-ego.md) | v2 明确 PIM 新实例清空、部署参数冻结 | 跨独立实例留存；58→89 的 sim/real 归属待澄清 | 同实例适应边界 |
+| [GLOW](cases/knowin-glow.md) | 官方执行回执描述与 18 项仿真子集结果 | 完整总榜可比性、循环组件各自收益 | 经验反馈的企业线索 |
 
-前三者来自本轮正文线索，GLOW来自另一附件；Zeva-Ego只修订既有卡片，另外三项是企业案例。详见[综合分析](discussions/physical-rsi-sept24.md)与[实验矩阵](experiments/rlt-contact-memory/README.md)。
+来源和指标限制见[四类线索对照](discussions/physical-rsi-sept24.md)。企业案例不计入论文卡片数量。
 
 ### 递归的独立验收
 

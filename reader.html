@@ -68,7 +68,9 @@ function resolveDocumentLinks(){
     if(!href||href.startsWith('#')||/^[a-z][a-z0-9+.-]*:/i.test(href)||href.startsWith('//'))return;
     const resolved=new URL(href,documentURL);
     const relative=resolved.pathname.startsWith(siteBase.pathname)?resolved.pathname.slice(siteBase.pathname.length):'';
-    if(resolved.origin===siteBase.origin&&/^(research|notes)\/[a-zA-Z0-9._\/-]+\.md$/.test(relative)){
+    if(resolved.origin===siteBase.origin&&relative.startsWith('survey-rsi/')){
+      a.href='https://github.com/nkd-lkz/physical-self-evolution/blob/main/'+relative+resolved.hash;
+    }else if(resolved.origin===siteBase.origin&&/^(research|notes)\/[a-zA-Z0-9._\/-]+\.md$/.test(relative)){
       const reader=new URL('reader.html',siteBase);
       reader.searchParams.set('path',relative);
       reader.hash=resolved.hash;
@@ -118,7 +120,7 @@ function highlight(term){
   searchInfo.textContent='找到 '+count+' 处匹配';
   if(first) first.scrollIntoView({behavior:'smooth',block:'center'});
 }
-if(!/^(research|notes)\/[a-zA-Z0-9._\/-]+\.md$/.test(path)){
+if(!/^(research|notes)\/[a-zA-Z0-9._\/-]+\.md$/.test(path)||path.split('/').some(p=>p==='..'||p==='.')){
   content.textContent='非法路径';
 }else{
   fetch(path).then(r=>r.ok?r.text():Promise.reject(new Error('HTTP '+r.status)))
