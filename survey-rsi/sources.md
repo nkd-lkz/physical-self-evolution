@@ -43,3 +43,11 @@
 - 全文入口：[KnowBody](https://arxiv.org/html/2609.28530v1)、[Uncertainty-Gated Exploration](https://arxiv.org/html/2609.28838v1)、[PACL](https://arxiv.org/html/2609.29000v1)、[Self-Adaptive VLA](https://arxiv.org/html/2609.30092v1)、[RACaP](https://arxiv.org/html/2609.29394v1)、[RoboRecover](https://arxiv.org/html/2609.28952v1)、[WAA](https://arxiv.org/html/2609.29964v1) 与 [world-model benchmark综述](https://arxiv.org/html/2609.29669v1)。
 - 同批只读摘要的OSRAM、AdaHVLA、Streaming/Rolling-WAM、AD-WM、DSD、RWM、RAPID和Body-Grounded Replanning进入候选队列，没有用题名补写结果。
 - awesome入口用于检查遗漏；正式卡片的题名、版本、图、样本量和结论均回到arXiv全文。OpenReview定向检索未得到比本轮arXiv全文更直接、且不与现有库重复的新增RSI实证。
+
+## 2026-09-27 扩展检索入口
+
+- arXiv 官方 `cs.RO/new`、`cs.AI/new`、`cs.LG/new` 在北京时间9月27日早间仍停留于 Friday, 25 September 2026 批次；因此当日新发表记0，不把此前候选升级记成当天新稿。
+- 全文升级：[AdaHVLA](https://arxiv.org/html/2609.29204v1)、[OSRAM](https://arxiv.org/html/2609.28878v1)、[RAPID](https://arxiv.org/html/2609.30249v1)、[AD-WM](https://arxiv.org/html/2609.30264v1)；旧稿补漏：[Streaming Deep RL for Robotics](https://arxiv.org/html/2609.28807v1)。代码或项目链接仅采用论文明确给出的作者入口。
+- 新增摘要候选：[OCC4M](https://arxiv.org/abs/2609.28798) 与 [Pretrained VLAs are Surprisingly Resistant to Forgetting](https://arxiv.org/abs/2603.03818)。后者已在引文队列出现，本轮按 arXiv ID 合并后进入全文候选，没有重复计引文。
+- 复查 [Embodied RSI](https://github.com/cocacola-lab/awesome-embodied-rsi)、[Coding Agents for Robot Learning](https://github.com/harooos/awesome-coding-agents-for-robot-learning)、[Embodied Continual Learning](https://github.com/Songlin-Dong/Awesome-Embodied-Continual-Learning)、[RL-VLA](https://github.com/Denghaoyuan123/Awesome-RL-VLA) 与 [World Models for Robotic Policy Learning](https://github.com/NTUMARS/Awesome-World-Model-for-Robotics-Policy) 作为查漏入口；分类与数字仍回到原论文核查。
+- OpenReview 机器人 continual learning / online correction 定向搜索定位到 VLA-in-the-Loop；论坛触发浏览器验证页，本轮只依据可访问的官方题名、摘要索引和提交记录加入引文线索，没有伪装成全文阅读。

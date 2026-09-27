@@ -9,8 +9,8 @@
 | 章节 | 核心问题 | 可以先用的材料 | 还需要补的证据 |
 | :--- | :--- | :--- | :--- |
 | 范围与定义 | 哪些是任务内适应、持久自我改进、改进器递归增强？ | [证据对照](evidence-map.md)；Zeva-Ego / MessyMem / RegenHarness 的差异 | 明确跨任务、会话、部署的重置边界；不要靠标题纳入 |
-| 策略与世界模型更新 | 执行经验怎样进入参数，模型想象何时可信？ | RAPolicy、ForceRFT、BEE、PACL、门控在线RL、InternW0、The Gaussian Is Enough；[世界模型主题](topics.md#world) | 用matched VLA对照连接预测误差、行动收益、延迟与旧任务保持 |
-| 记忆、技能与可执行代码 | 不改基础权重，系统还能更新什么？ | KnowBody、RACaP、WAA、Self-Adaptive VLA、MessyMem、MemBodied、LEMCA | 记忆/技能清空对照、跨任务迁移、库膨胀与退化 |
+| 策略与世界模型更新 | 执行经验怎样进入参数，模型想象何时可信？ | Streaming Deep RL、RAPolicy、ForceRFT、PACL、门控在线RL、OSRAM、AD-WM、InternW0；[世界模型主题](topics.md#world) | 用matched对照连接事实预测、候选排序、行动收益、延迟与旧任务保持 |
+| 记忆、技能与可执行代码 | 不改基础权重，系统还能更新什么？ | AdaHVLA、RAPID、KnowBody、RACaP、WAA、Self-Adaptive VLA、MessyMem、LEMCA | 区分跨任务revision graph、每任务离线构造和部署时上下文；测库膨胀与退化 |
 | 反馈、目标与自动课程 | 什么决定更新方向和接纳标准？ | No Free Checker、SRPO、AgenticRL、HiRE、Banana Kick | 固定验证器 vs 共同演化验证器；奖励投机与独立任务指标 |
 | 连续物理运行的条件 | 学习闭环在硬件上为什么难持续？ | HALTER、LIBERO-RECOVER、RoboRecover、SPINE、RegenHarness | 人工接管/复位时长、失败损耗、全天运行与累计成本 |
 | 持续学习与跨部署积累 | 新能力增加后旧能力是否保持？ | FAN、MEMOBench、持续世界模型基准 | 多轮前向/后向迁移、场景漂移、旧数据依赖 |
@@ -61,6 +61,9 @@
 - **“部署时用了历史”至少分三种。** Self-Adaptive VLA只在当前偏移实例内累加token；KnowBody把通过验证的身体知识跨episode发布；PACL把固定部署数据离线写回权重。三者不能合并成一个self-learning等级。
 - **保持能力和提高能力要分成两条曲线。** 门控在线RL能降低task collapse，却仍未超过行为克隆tare；引用时必须同时报告每任务坍缩和相对起点的净增益。
 - **世界模型章节要回答行动反事实，而非只列生成指标。** 160项benchmark里仅11项做模型家族显式对照、4项把预测接到行动；优先比较同环境、同预算下的closed-loop advantage。
+- **在线学习必须区分“最好到过哪里”和“后来保住多少”。** Streaming Deep RL 在操作任务中峰值很高、随后回落；峰值成功率不能代替时间平均、末端稳定性或旧任务保持。
+- **可修改工件的留存范围决定其 RSI 含义。** AdaHVLA 的 revision graph 跨任务携带候选和证据；RAPID 每个任务先构造程序、再冻结部署。两者都改代码，但持续性证据不同。
+- **策略冻结也可能有部署后持久适应。** OSRAM 更新闭环模型并改变参考命令，适合列为“模型—接口适应”；不要与策略参数自我改进合并统计。
 
 ## 建议准备的图与表
 

@@ -23,6 +23,7 @@
 - [The Gaussian Is Enough: Flow-Matching Priors Do Not Help When Fine-Tuning Large Behavior Models](papers/gaussian-is-enough.md) — 边界案例 / 负结果 / 离线微调 / 真机
 - [Uncertainty-Gated Exploration Noise Suppresses Task Collapse in Online RL Fine-Tuning of a Flow-Matching Vision-Language-Action Policy](papers/uncertainty-gated-exploration.md) — 在线VLA-RL / 持续学习 / 负结果 / 纯仿真
 - [Learning from Mixed-Quality Deployment Experience for Robot Manipulation](papers/pacl.md) — 部署后学习 / 混合质量经验 / 动作块critic / 真机
+- [An Analysis of Streaming Deep Reinforcement Learning for Adaptive Continual Learning in Robotics](papers/streaming-deep-rl-continual-robotics.md) — 核心持续改进 / 流式强化学习 / 塑性 / 纯仿真
 
 <a id="world"></a>
 
@@ -35,6 +36,8 @@
 - [World Models for Embodied Intelligence: From Plausible to Controllable to Actionable](papers/world-models-actionable-survey.md) — 重点综述 / 世界模型 / 闭环效用 / 参考文献入口
 - [InternW0: A Foundational Physical World Model for Efficient Real-World Interactions](papers/internw0.md) — 支撑组件 / 世界—动作模型 / 离线后训练 / 真机
 - [Do World Models Make Better Robots? A Survey of Evaluation Benchmarks for Predictive Embodied Intelligence](papers/world-model-benchmarks-survey.md) — 综述 / 世界模型 / 闭环评价 / benchmark
+- [Online Sim-to-Real Adaptation via Closed-Loop System Modeling](papers/osram.md) — 持续部署适应 / 闭环模型 / 参考命令 / 真机
+- [AD-WM: Action-Discriminative World Models for Counterfactual Model Predictive Control](papers/ad-wm.md) — 支撑组件 / 世界模型 / 反事实规划 / 真机
 
 <a id="skills"></a>
 
@@ -53,6 +56,8 @@
 - [Know Your Body: A Harness for Direct and Self-Improving Robot Control with VLMs](papers/know-your-body.md) — 核心自我改进 / harness / 身体模型 / 真机
 - [RACaP: Agentic Reasoning, Acting, and Coding as Policies for Evolvable Robot Learning](papers/racap.md) — 代码与harness演化 / Policy API / 经验记忆 / 纯仿真
 - [World Action Agent: Harnessing VLMs for Robot Manipulation via World Action Rehearsal](papers/world-action-agent.md) — 多模态技能演化 / 视觉harness / 蒸馏 / 纯仿真
+- [AdaHVLA: Adaptive Harnesses for Long-Horizon Vision-Language-Action Execution](papers/adahvla.md) — 核心自我改进 / harness代码 / 跨任务记忆 / 仿真为主
+- [RAPID: Robot Agentic Programming from Demonstrations](papers/rapid.md) — 机器人程序 / 编码代理 / 验证 / 仿真与真机
 
 <a id="memory"></a>
 
@@ -84,6 +89,9 @@
 - [Uncertainty-Gated Exploration Noise Suppresses Task Collapse in Online RL Fine-Tuning of a Flow-Matching Vision-Language-Action Policy](papers/uncertainty-gated-exploration.md) — 在线VLA-RL / 持续学习 / 负结果 / 纯仿真
 - [Learning from Mixed-Quality Deployment Experience for Robot Manipulation](papers/pacl.md) — 部署后学习 / 混合质量经验 / 动作块critic / 真机
 - [Know Your Body: A Harness for Direct and Self-Improving Robot Control with VLMs](papers/know-your-body.md) — 核心自我改进 / harness / 身体模型 / 真机
+- [AdaHVLA: Adaptive Harnesses for Long-Horizon Vision-Language-Action Execution](papers/adahvla.md) — 核心自我改进 / harness代码 / 跨任务记忆 / 仿真为主
+- [Online Sim-to-Real Adaptation via Closed-Loop System Modeling](papers/osram.md) — 持续部署适应 / 闭环模型 / 参考命令 / 真机
+- [An Analysis of Streaming Deep Reinforcement Learning for Adaptive Continual Learning in Robotics](papers/streaming-deep-rl-continual-robotics.md) — 核心持续改进 / 流式强化学习 / 塑性 / 纯仿真
 
 <a id="feedback"></a>
 
@@ -103,6 +111,8 @@
 - [Know Your Body: A Harness for Direct and Self-Improving Robot Control with VLMs](papers/know-your-body.md) — 核心自我改进 / harness / 身体模型 / 真机
 - [RACaP: Agentic Reasoning, Acting, and Coding as Policies for Evolvable Robot Learning](papers/racap.md) — 代码与harness演化 / Policy API / 经验记忆 / 纯仿真
 - [World Action Agent: Harnessing VLMs for Robot Manipulation via World Action Rehearsal](papers/world-action-agent.md) — 多模态技能演化 / 视觉harness / 蒸馏 / 纯仿真
+- [AdaHVLA: Adaptive Harnesses for Long-Horizon Vision-Language-Action Execution](papers/adahvla.md) — 核心自我改进 / harness代码 / 跨任务记忆 / 仿真为主
+- [RAPID: Robot Agentic Programming from Demonstrations](papers/rapid.md) — 机器人程序 / 编码代理 / 验证 / 仿真与真机
 
 <a id="infrastructure"></a>
 
@@ -137,6 +147,7 @@
 - [LEMCA: LLM-Guided Synthesis of Efficient Mode-Switching Control Architectures](papers/lemca.md) — 核心改进器 / 代码演化 / 控制架构 / 仿真
 - [RegenHarness: A Robot Agent Harness with Evidence-Gated Recursive Self-Improvement](papers/regenharness.md) — 支撑组件 / harness演化协议 / 递归主张待证 / 真机案例
 - [Learning and Transferring Closed-Loop Robot Software](papers/learning-transferring-robot-software.md) — 核心自我改进 / 代码演化 / 跨任务迁移 / 仿真
+- [AdaHVLA: Adaptive Harnesses for Long-Horizon Vision-Language-Action Execution](papers/adahvla.md) — 核心自我改进 / harness代码 / 跨任务记忆 / 仿真为主
 
 <a id="surveys"></a>
 
@@ -158,6 +169,8 @@
 - [MemBodied: Recurrent Associative Memory for Vision-Language-Action Models](papers/membodied.md) — 边界案例 / episode内记忆 / VLA / 真机
 - [RoboRecover: Benchmarking Robot Policy Recovery under Execution Deviations](papers/roborecover.md) — 恢复评测 / 执行偏差 / 支撑组件 / 纯仿真
 - [Uncertainty-Gated Exploration Noise Suppresses Task Collapse in Online RL Fine-Tuning of a Flow-Matching Vision-Language-Action Policy](papers/uncertainty-gated-exploration.md) — 在线VLA-RL / 持续学习 / 负结果 / 纯仿真
+- [An Analysis of Streaming Deep Reinforcement Learning for Adaptive Continual Learning in Robotics](papers/streaming-deep-rl-continual-robotics.md) — 核心持续改进 / 流式强化学习 / 塑性 / 纯仿真
+- [AD-WM: Action-Discriminative World Models for Counterfactual Model Predictive Control](papers/ad-wm.md) — 支撑组件 / 世界模型 / 反事实规划 / 真机
 
 ## 原报告主线也要回看
 

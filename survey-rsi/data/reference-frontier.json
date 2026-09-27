@@ -646,5 +646,33 @@
     "urls": ["https://arxiv.org/abs/2606.19419"],
     "status": "RACaP与WAA共同引用的自指导play/code-skill基线；待核对play目标、下游迁移和预算匹配",
     "discovered": "2026-09-26"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.28807v1",
+    "reference": "Elsayed, Vasan, and Mahmood (2024), Streaming Deep Reinforcement Learning Finally Works, arXiv:2410.14606.",
+    "urls": ["https://arxiv.org/abs/2410.14606"],
+    "status": "流式机器人适应直接使用的Stream-AC与ObGD基础；待核对从头训练协议和与预训练适应的差异",
+    "discovered": "2026-09-27"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.28878v1",
+    "reference": "Levy et al. (2026), Simulation Distillation: Pretraining World Models in Simulation for Rapid Real-World Adaptation, arXiv:2603.15759.",
+    "urls": ["https://arxiv.org/abs/2603.15759"],
+    "status": "OSRAM引用的仿真预训练世界模型快速真机适应基线；全文待核查，不计正式卡片",
+    "discovered": "2026-09-27"
+  },
+  {
+    "cited_by": "https://arxiv.org/html/2609.30264v1",
+    "reference": "Gao and Xu (2026), Fast LeWorldModel, arXiv:2606.26217.",
+    "urls": ["https://arxiv.org/abs/2606.26217"],
+    "status": "AD-WM的推理效率和Cube外部基线；待核对训练/规划预算，不能与matched LeWM对照混算",
+    "discovered": "2026-09-27"
+  },
+  {
+    "cited_by": "https://openreview.net/forum?id=aT4LG8c6DE",
+    "reference": "Xu et al. (2026), VLA-IN-THE-LOOP: Online Policy Correction with World Models for Robust Robotic Grasping, ICLR 2026 submission.",
+    "urls": ["https://openreview.net/forum?id=aT4LG8c6DE"],
+    "status": "已核对OpenReview题名、摘要和提交记录；在线干预可能是任务内纠错，全文边界与真机分母待核查",
+    "discovered": "2026-09-27"
   }
 ]

@@ -3,13 +3,21 @@
 
 # 全部阅读卡片
 
-**46 篇**。按完整题名字母顺序排列；浏览器搜索可查题名、短名或 arXiv ID。方法及指定实验已核查，均未复现。
+**51 篇**。按完整题名字母顺序排列；浏览器搜索可查题名、短名或 arXiv ID。方法及指定实验已核查，均未复现。
 
-[下载 BibTeX](../references.bib) · [原报告 141 项](../baseline.md) · [候选 69 项](../candidates.md)
+[下载 BibTeX](../references.bib) · [原报告 141 项](../baseline.md) · [候选 67 项](../candidates.md)
 
 ### [2AM: Grounding Agent-Side Memory as Guidance for Steerable Action Models in Long-Horizon Manipulation](2am.md)
 
 **2AM** · `2609.11308v1` · 边界案例 / agent侧记忆 / 任务内状态 / 仿真
+
+### [AD-WM: Action-Discriminative World Models for Counterfactual Model Predictive Control](ad-wm.md)
+
+**AD-WM** · `2609.30264v1` · 支撑组件 / 世界模型 / 反事实规划 / 真机
+
+### [AdaHVLA: Adaptive Harnesses for Long-Horizon Vision-Language-Action Execution](adahvla.md)
+
+**AdaHVLA** · `2609.29204v1` · 核心自我改进 / harness代码 / 跨任务记忆 / 仿真为主
 
 ### [AgenticRL: Agentic Reinforcement Learning with Self-Refinement for Complex UAV Navigation](agenticrl.md)
 
@@ -18,6 +26,10 @@
 ### [Amortized Low-Rank Adaptation for Model-Based Reinforcement Learning](claw.md)
 
 **CLAW** · `2609.12278v2` · 支撑组件 / 世界模型适配 / 上下文LoRA / 仿真 / 版本修订
+
+### [An Analysis of Streaming Deep Reinforcement Learning for Adaptive Continual Learning in Robotics](streaming-deep-rl-continual-robotics.md)
+
+**Streaming Deep RL for Robotics** · `2609.28807v1` · 核心持续改进 / 流式强化学习 / 塑性 / 纯仿真
 
 ### [Banana Kick: Response-Informed Skill Evolution for Humanoid Soccer](banana-kick.md)
 
@@ -119,9 +131,17 @@
 
 **No Free Checker** · `2609.09250v1` · 重点综述 / 验证器 / 奖励可靠性 / 参考文献入口
 
+### [Online Sim-to-Real Adaptation via Closed-Loop System Modeling](osram.md)
+
+**OSRAM** · `2609.28878v1` · 持续部署适应 / 闭环模型 / 参考命令 / 真机
+
 ### [RACaP: Agentic Reasoning, Acting, and Coding as Policies for Evolvable Robot Learning](racap.md)
 
 **RACaP** · `2609.29394v1` · 代码与harness演化 / Policy API / 经验记忆 / 纯仿真
+
+### [RAPID: Robot Agentic Programming from Demonstrations](rapid.md)
+
+**RAPID** · `2609.30249v1` · 机器人程序 / 编码代理 / 验证 / 仿真与真机
 
 ### [RegenHarness: A Robot Agent Harness with Evidence-Gated Recursive Self-Improvement](regenharness.md)
 

@@ -3,7 +3,27 @@
 
 # 引文溯源队列
 
-**85 条引文线索**，不是 85 篇已读论文。保留发现路径和原文定位；可能与原报告/候选重叠，升级前仍须按 ID、DOI、题名和作者合并。
+**89 条引文线索**，不是 89 篇已读论文。保留发现路径和原文定位；可能与原报告/候选重叠，升级前仍须按 ID、DOI、题名和作者合并。
+
+- **Elsayed, Vasan, and Mahmood (2024), Streaming Deep Reinforcement Learning Finally Works, arXiv:2410.14606.**
+  - 发现于：[引用它的原文](https://arxiv.org/html/2609.28807v1)
+  - 流式机器人适应直接使用的Stream-AC与ObGD基础；待核对从头训练协议和与预训练适应的差异
+  - 原始入口：[来源](https://arxiv.org/abs/2410.14606)
+
+- **Levy et al. (2026), Simulation Distillation: Pretraining World Models in Simulation for Rapid Real-World Adaptation, arXiv:2603.15759.**
+  - 发现于：[引用它的原文](https://arxiv.org/html/2609.28878v1)
+  - OSRAM引用的仿真预训练世界模型快速真机适应基线；全文待核查，不计正式卡片
+  - 原始入口：[来源](https://arxiv.org/abs/2603.15759)
+
+- **Gao and Xu (2026), Fast LeWorldModel, arXiv:2606.26217.**
+  - 发现于：[引用它的原文](https://arxiv.org/html/2609.30264v1)
+  - AD-WM的推理效率和Cube外部基线；待核对训练/规划预算，不能与matched LeWM对照混算
+  - 原始入口：[来源](https://arxiv.org/abs/2606.26217)
+
+- **Xu et al. (2026), VLA-IN-THE-LOOP: Online Policy Correction with World Models for Robust Robotic Grasping, ICLR 2026 submission.**
+  - 发现于：[引用它的原文](https://openreview.net/forum?id=aT4LG8c6DE)
+  - 已核对OpenReview题名、摘要和提交记录；在线干预可能是任务内纠错，全文边界与真机分母待核查
+  - 原始入口：[来源](https://openreview.net/forum?id=aT4LG8c6DE)
 
 - **Li et al. (2026), PhysMem: Scaling Test-Time Memory for Embodied Physical Reasoning, arXiv:2602.20323v6.**
   - 发现于：[引用它的原文](https://arxiv.org/html/2609.28530v1)

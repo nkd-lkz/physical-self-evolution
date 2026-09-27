@@ -13,7 +13,8 @@
       "routerlt",
       "gaussian-is-enough",
       "uncertainty-gated-exploration",
-      "pacl"
+      "pacl",
+      "streaming-deep-rl-continual-robotics"
     ]
   },
   {
@@ -25,7 +26,9 @@
       "compositional-continual-world-models",
       "world-models-actionable-survey",
       "internw0",
-      "world-model-benchmarks-survey"
+      "world-model-benchmarks-survey",
+      "osram",
+      "ad-wm"
     ]
   },
   {
@@ -43,7 +46,9 @@
       "embodiedskills",
       "know-your-body",
       "racap",
-      "world-action-agent"
+      "world-action-agent",
+      "adahvla",
+      "rapid"
     ]
   },
   {
@@ -74,7 +79,10 @@
       "dexpie",
       "uncertainty-gated-exploration",
       "pacl",
-      "know-your-body"
+      "know-your-body",
+      "adahvla",
+      "osram",
+      "streaming-deep-rl-continual-robotics"
     ]
   },
   {
@@ -93,7 +101,9 @@
       "regenharness",
       "know-your-body",
       "racap",
-      "world-action-agent"
+      "world-action-agent",
+      "adahvla",
+      "rapid"
     ]
   },
   {
@@ -127,7 +137,8 @@
     "slugs": [
       "lemca",
       "regenharness",
-      "learning-transferring-robot-software"
+      "learning-transferring-robot-software",
+      "adahvla"
     ]
   },
   {
@@ -148,7 +159,9 @@
       "gaussian-is-enough",
       "membodied",
       "roborecover",
-      "uncertainty-gated-exploration"
+      "uncertainty-gated-exploration",
+      "streaming-deep-rl-continual-robotics",
+      "ad-wm"
     ]
   }
 ]

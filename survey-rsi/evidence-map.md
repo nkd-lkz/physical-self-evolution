@@ -8,6 +8,11 @@
 
 | 工作 | 实际更新对象与保留范围 | 物理证据与人工条件 | 可以支持 / 不能支持 |
 | :--- | :--- | :--- | :--- |
+| [AdaHVLA](papers/adahvla.md) | 代码式coordination policy、候选图和证据跨尝试/任务保留；VLA冻结 | 两套长时仿真基准；三次重启、每次至多16候选；真机仅定性 | 持久harness改进；外层改写流程未自改，不能支持严格递归 |
+| [Streaming Deep RL](papers/streaming-deep-rl-continual-robotics.md) | Stream-AC参数每个transition持续更新，无回放 | ManiSkill3四足/操作；5种子、每次50 episodes；纯仿真 | 持久在线参数适应；只测M0→M1且不回测旧任务，不能支持抗遗忘 |
+| [OSRAM](papers/osram.md) | 闭环command-response模型持久微调；参考命令在线变化，策略冻结 | LimX Tron1；20次仿真/5次硬件重复 | 部署后模型—接口适应；不是策略学习或开放任务能力积累 |
+| [RAPID](papers/rapid.md) | 每任务构造并保存关系程序/原语；新场景部署时固定 | 8×50仿真场景×3次；Franka 8×10真机场景 | 可验证程序构造；不是部署经验驱动的持续自改进 |
+| [AD-WM](papers/ad-wm.md) | 离线训练动作可辨世界模型；部署MPC和模型固定 | 三种子仿真；Franka每模型82次，人工给子目标 | 预测—行动桥梁；不能支持部署期持久更新 |
 | [KnowBody](papers/know-your-body.md) | body model、知识规则与证据跨episode验证后保留；VLM冻结 | FR3四任务；固定预算32次；初始化轨迹＋后续执行证据 | 非参数持久改进；主对照关闭跨episode更新，持续曲线仅画成功回合 |
 | [Uncertainty-Gated Exploration](papers/uncertainty-gated-exploration.md) | 450M SmolVLA在线PPO；探索门控随状态/时间变化 | LIBERO-10七任务；每主臂3种子；纯仿真 | 抑制任务坍缩；没有方案超过BC起点，不能称能力持续增长 |
 | [PACL](papers/pacl.md) | critic与扩散策略在固定混合质量部署数据上后训练 | 四仿真任务×250次、三FR3任务×25次；不需新增纠正 | 利用失败/部分进展；批次离线更新，不是连续自主学习 |
@@ -31,6 +36,11 @@
 
 | 工作 / 指标 | 作者报告 | 引用时必须同时写明 |
 | :--- | :--- | :--- |
+| AdaHVLA / NaVILA-LH测试 | 2.5%单VLA → 22.5%初始harness → 31.7–57.5%适应harness | 10/40适应—测试划分；三次重启；测试不指导选择；均值不是独立任务数 |
+| Streaming Deep RL / 四足峰值 | 断腿0.968、目标移动0.848、低摩擦0.676 | 各取不同最佳变体；5种子、50万+150万步；峰值远高于全程均值且未回测旧任务 |
+| OSRAM / 真机速度RMSE | 无适应0.2847 → OSRAM 0.2014 | 0.7 m/s、5次硬件试验；四种方法成功率均100%，误差只在成功试验上平均 |
+| RAPID / 非抓取仿真 | CaP-Agent0 0.146±0.025 → RAPID 0.759±0.024 | 8任务×50新场景×3次；程序构造每任务数十分钟，测试时程序固定 |
+| AD-WM / Franka基础抓放 | 19/45 → 32/45 | 相同冻结V-JEPA2与部署栈；人工图像子目标、非随机模型块；每模型总计82次 |
 | KnowBody / 固定预算完成 | 4/16 → 12/16 | 同一冻结VLM；四任务×两方法×4次；KnowBody跨episode更新关闭 |
 | 门控在线RL / 池化坍缩 | 门控三种子均0/7；固定为4/7、1/7、0/7 | 每运行最后5次扫描共1050 episode；三种子；门控成功率仍低于BC tare 0.648 |
 | PACL / 七任务成功 | DP 46.4–88.0% → PACL 82.8–100% | 仿真每任务250次、真机25次；PACL用至多700条总轨迹并增加critic筛选 |
@@ -47,11 +57,11 @@
 
 | 要比较的论点 | 放在一起读 | 要控制的混淆 |
 | :--- | :--- | :--- |
-| 在线参数更新是否有用 | [RAPolicy](papers/rapolicy.md)、[ForceRFT](papers/forcerft.md)、[BEE](papers/bee.md)、[DexPIE](papers/dexpie.md) | 全模型/残差、在线/批次、接管时长、交互预算、任务成功口径 |
+| 在线参数更新是否有用 | [Streaming Deep RL](papers/streaming-deep-rl-continual-robotics.md)、[RAPolicy](papers/rapolicy.md)、[ForceRFT](papers/forcerft.md)、[BEE](papers/bee.md)、[DexPIE](papers/dexpie.md) | 全模型/残差、在线/批次、接管时长、交互预算、峰值与保持、任务成功口径 |
 | 记忆是否变成长期能力 | [MessyMem](papers/messymem.md)、[2AM](papers/2am.md)、[Zeva-Ego](papers/zeva-ego.md)、[CMA](papers/counterfactual-memory-audit.md) | 同实例跨尝试与跨任务不同；是否重置；记忆使用是否被干预验证 |
-| 代码是否真的累积改进 | [机器人软件学习与迁移](papers/learning-transferring-robot-software.md)、[LEMCA](papers/lemca.md)、[Local Coding Agent](papers/generalizing-manipulation-local-coding-agent.md) | 控制程序演化、同任务会话缓存、基础模型或外层搜索规则更新应分列 |
+| 代码是否真的累积改进 | [AdaHVLA](papers/adahvla.md)、[RAPID](papers/rapid.md)、[机器人软件学习与迁移](papers/learning-transferring-robot-software.md)、[LEMCA](papers/lemca.md) | 跨任务revision graph、每任务离线构造、控制程序演化和外层搜索规则更新应分列 |
 | 不同反馈能否可信验收 | [No Free Checker](papers/no-free-checker.md)、[HiRE](papers/hire.md)、[SeeQ](papers/seeq.md)、[SRPO](papers/srpo.md) | 提议器与验证器共因错误、稀疏标签依赖、奖励投机、外部任务指标 |
-| 世界模型是否真的帮助控制 | [InternW0](papers/internw0.md)、[世界模型综述](papers/world-models-actionable-survey.md)、[持续世界模型基准](papers/compositional-continual-world-models.md) | 预测精度、动作收益、推理延迟、部署更新和旧能力保持应分开 |
+| 世界模型是否真的帮助控制 | [AD-WM](papers/ad-wm.md)、[OSRAM](papers/osram.md)、[InternW0](papers/internw0.md)、[世界模型综述](papers/world-models-actionable-survey.md) | 事实预测、候选排序、动作收益、推理延迟、部署更新和旧能力保持应分开 |
 | 任务内记忆是否应跨episode保留 | [MemBodied](papers/membodied.md)、[Zeva-Ego](papers/zeva-ego.md)、[MessyMem](papers/messymem.md) | 明确重置边界；未经训练的携带可能负迁移 |
 | 进步是否伴随遗忘 | [FAN](papers/fan.md)、[持续世界模型基准](papers/compositional-continual-world-models.md)、[MEMOBench](papers/memobench.md) | 后向迁移、学习速度、旧能力保持与最终成功率不同 |
 | 系统能否连续自主运行 | [HALTER](papers/halter.md)、[LIBERO-RECOVER](papers/libero-recover.md)、[SPINE](papers/spine.md)、[RegenHarness](papers/regenharness.md) | 复位、恢复和验证的成本；演示可运行不等于自我改进有效 |
@@ -71,4 +81,4 @@
 
 ### 递归的独立验收
 
-把“自身执行 → 更新策略”与“改写产生更新的程序/学习规则 → 后续改进更有效”分开评测。建议要求：固定外部任务指标、相同累计预算、冻结改进器对照、多轮轨迹、旧能力保持，以及对验收器变动的单独消融。本轮六篇没有充分实证严格递归增强；这是对本轮证据的判断，不是对整个领域的否定。
+把“自身执行 → 更新策略”与“改写产生更新的程序/学习规则 → 后续改进更有效”分开评测。建议要求：固定外部任务指标、相同累计预算、冻结改进器对照、多轮轨迹、旧能力保持，以及对验收器变动的单独消融。现有卡片尚无充分实证表明外层改进器自身递归增强；这是对已核查证据的判断，不是对整个领域的否定。

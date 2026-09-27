@@ -5,10 +5,10 @@
 面向综述写作，按 **问题 → 方法 → 结果 → 引用价值 → 证据边界** 阅读论文。持续区分任务内适应、可留存的自我改进，以及改进器自身的递归增强。
 
 <!-- stats:start -->
-**46 篇阅读卡片** · **141 项原报告条目** · **69 项待核查** · **85 条引文线索**
+**51 篇阅读卡片** · **141 项原报告条目** · **67 项待核查** · **89 条引文线索**
 <!-- stats:end -->
 
-**最近更新：2026-09-26** · [当日增量调研](daily/2026-09-26.md) · [9月25日调研](daily/2026-09-25.md) · [9月24日企业案例专题](daily/2026-09-24-physical-rsi-cases.md) · [历史日志](daily/)
+**最近更新：2026-09-27** · [当日增量调研](daily/2026-09-27.md) · [9月26日调研](daily/2026-09-26.md) · [9月25日调研](daily/2026-09-25.md) · [历史日志](daily/)
 
 ## 收录范围
 
@@ -31,11 +31,11 @@
 
 | 工作 | 为什么值得读 | 放到综述哪里 |
 | :--- | :--- | :--- |
-| **[KnowBody](papers/know-your-body.md)** | 冻结VLM，把身体关系与任务知识做成验证后发布的跨episode更新；固定预算真机为12/16，对照4/16 | 非参数持久改进、body model、发布门控 |
-| **[RACaP](papers/racap.md)** | 同时演化Policy API、ReAct harness与经验记忆；部署前后边界清楚，并报告proposal、episode、时延和成本 | 代码/harness演化、改进预算、非递归边界 |
-| **[Uncertainty-Gated Exploration](papers/uncertainty-gated-exploration.md)** | 门控探索减少单任务坍缩，但没有任何方案超过行为克隆起点；汇总成功率会掩盖遗忘 | 在线VLA-RL、保持—可塑性、负结果 |
+| **[AdaHVLA](papers/adahvla.md)** | 用执行证据持续改写代码式协调策略，候选和证据跨任务保留；测试集不参与选择 | harness持久改进、版本树、非递归外层 |
+| **[Streaming Deep RL for Robotics](papers/streaming-deep-rl-continual-robotics.md)** | batch size 1、无回放地持续改策略；四足恢复强，但操作成功率峰值后衰退 | 在线参数更新、塑性—稳定性、峰值与保持 |
+| **[AD-WM](papers/ad-wm.md)** | matched LeWM对照显示低事实误差不保证高控制成功；把elite regret连到闭环行动 | 世界模型评价、反事实规划、支撑组件边界 |
 
-本轮另收录 [PACL](papers/pacl.md)、[Self-Adaptive VLA](papers/self-adaptive-vla.md)、[WAA](papers/world-action-agent.md)、[RoboRecover](papers/roborecover.md) 与 [world-model benchmark综述](papers/world-model-benchmarks-survey.md)。其中 Self-Adaptive VLA 是实例内上下文适应，RoboRecover 是评价基础设施；两者不因“自适应/恢复”措辞被升级为持久 RSI。全部结果均为作者报告，未复现。
+本轮另收录 [OSRAM](papers/osram.md) 与 [RAPID](papers/rapid.md)。OSRAM 持久更新闭环模型但冻结策略；RAPID 在部署前改写并验证机器人程序，目标场景执行时固定。两者不能仅因“在线/agentic”措辞升级为完整 RSI。全部结果均为作者报告，未复现。
 
 ## 按综述主线浏览
 

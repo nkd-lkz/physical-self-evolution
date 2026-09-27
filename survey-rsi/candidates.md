@@ -3,25 +3,17 @@
 
 # 候选与待核查
 
-**69 项**。下列条目未完成全文方法/结果核查，不计入正式卡片。优先级表示下一步阅读顺序，不能作为可信度评分。
+**67 项**。下列条目未完成全文方法/结果核查，不计入正式卡片。优先级表示下一步阅读顺序，不能作为可信度评分。
 
-## 优先 · 35 项
+## 优先 · 33 项
 
-- **[RAPID: Robot Agentic Programming from Demonstrations](https://arxiv.org/abs/2609.30249)**
-  - `2609.30249` · 发现 2026-09-26 · 摘要、元数据与全文入口已核查；尚未逐表审核，不计正式卡片
-  - 下一步：核对单视频如何自动推断规格/原语/验证环境、迭代代码修订次数与八项真机分母；判断代码是否跨任务留存。
+- **[Pretrained Vision-Language-Action Models are Surprisingly Resistant to Forgetting in Continual Learning](https://arxiv.org/abs/2603.03818)**
+  - `2603.03818` · 发现 2026-09-27 · 作者项目、ICML 2026条目与摘要已核查；尚未逐表审核，不计正式卡片
+  - 下一步：全文核对Pi0/GR00T N1.5与从头训练策略、replay比例、LIBERO任务序列、NBT和快速恢复实验；与2603.11653去重后做正交对照。
 
-- **[Online Sim-to-Real Adaptation via Closed-Loop System Modeling](https://arxiv.org/abs/2609.28878)**
-  - `2609.28878` · 发现 2026-09-26 · 摘要、元数据与全文入口已核查；尚未逐表审核，不计正式卡片
-  - 下一步：核对在线真机交互量、模型finetune预算、biped velocity/loco-manipulation指标；区分参考命令适应与底层策略更新。
-
-- **[AdaHVLA: Adaptive Harnesses for Long-Horizon Vision-Language-Action Execution](https://arxiv.org/abs/2609.29204)**
-  - `2609.29204` · 发现 2026-09-26 · 摘要、元数据与全文入口已核查；尚未逐表审核，不计正式卡片
-  - 下一步：全文核对revision graph、替代harness保留与跨任务继续适应协议；重点核实NaVILA-LH 22.5%→57.5%、三backbone最高+30.8点的分母和真机量化。
-
-- **[AD-WM: Action-Discriminative World Models for Counterfactual Model Predictive Control](https://arxiv.org/abs/2609.30264)**
-  - `2609.30264` · 发现 2026-09-26 · 摘要、元数据与全文入口已核查；尚未逐表审核，不计正式卡片
-  - 下一步：核对matched LeWM、CEM elite regret、DROID post-training和Franka 42.2%→71.1%的分母；作为预测—行动桥梁而非RSI本体处理。
+- **[OCC4M: Object-Centric 4D Memory for Spatiotemporal Reasoning in Long-Horizon Manipulation](https://arxiv.org/abs/2609.28798)**
+  - `2609.28798` · 发现 2026-09-27 · 摘要、元数据与项目入口已核查；尚未逐表审核，不计正式卡片
+  - 下一步：全文核对350个仿真episode、20个Franka episode、viewpoint transfer与memory-success定义；判断persistent track是固定系统状态还是会形成跨episode知识更新。
 
 - **[Watch, Recall, Act: Always-On Robots in Concurrent Embodied Streams](https://arxiv.org/abs/2609.28429)**
   - `2609.28429` · 发现 2026-09-25 · 仅摘要与元数据已核查；不计正式卡片

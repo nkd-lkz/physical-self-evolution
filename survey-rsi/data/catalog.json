@@ -1375,5 +1375,125 @@
       "platform": "LIBERO-Pro六split每设置360 episodes；robosuite三任务",
       "limit": "主要是仿真；技能非纯自主；各基线预算不完全匹配"
     }
+  },
+  {
+    "title": "AdaHVLA: Adaptive Harnesses for Long-Horizon Vision-Language-Action Execution",
+    "short": "AdaHVLA",
+    "arxiv_id": "2609.29204",
+    "version": "v1",
+    "url": "https://arxiv.org/abs/2609.29204",
+    "added": "2026-09-27",
+    "updated": "2026-09-27",
+    "tags": ["核心自我改进", "harness代码", "跨任务记忆", "仿真为主"],
+    "read_status": "全文方法与指定实验/表格已核查；未复现",
+    "note": "papers/adahvla.md",
+    "evidence_locations": "§§III–V；Figures 2–5；Tables I–II。10/40适应—测试划分，三次重启，每次最多16候选。",
+    "figure_url": "https://arxiv.org/html/2609.29204v1/overview.png",
+    "authors": ["Tang, Junyi", "Peng, Jie", "Ding, Zezhen", "Shen, Yuan", "Chen, Tianlong"],
+    "citation_date": "2026/09/24",
+    "summary": "用执行证据改写并版本化代码式协调策略，VLA权重和外层改进流程保持固定。",
+    "evidence": {
+      "update_object": "代码式coordination policy与revision graph",
+      "retention": "候选、证据和适应记忆跨尝试与任务保留",
+      "feedback": "执行轨迹、失败归因、亲代—子代行为评估",
+      "platform": "NaVILA-LH、VLA-Arena；真机Go2只做定性轨迹",
+      "limit": "量化主要为仿真；外层改写规则固定；测试均值不是独立任务数"
+    }
+  },
+  {
+    "title": "Online Sim-to-Real Adaptation via Closed-Loop System Modeling",
+    "short": "OSRAM",
+    "arxiv_id": "2609.28878",
+    "version": "v1",
+    "url": "https://arxiv.org/abs/2609.28878",
+    "added": "2026-09-27",
+    "updated": "2026-09-27",
+    "tags": ["持续部署适应", "闭环模型", "参考命令", "真机"],
+    "read_status": "全文方法与指定实验/表格已核查；未复现",
+    "note": "papers/osram.md",
+    "evidence_locations": "§§III–V；Figures 2–5；Tables II–III。20次仿真/5次硬件重复；30或70个微调梯度步。",
+    "figure_url": "https://arxiv.org/html/2609.28878v1/pipeline.png",
+    "authors": ["Huang, Yuhao", "Moore, Samuel A.", "Chen, Boyuan"],
+    "citation_date": "2026/09/24",
+    "summary": "在线微调机器人—控制器闭环模型并修改参考命令，底层控制策略冻结。",
+    "evidence": {
+      "update_object": "闭环command-response模型与运行时参考命令",
+      "retention": "模型微调后持续使用；未测跨任务序列",
+      "feedback": "真实reference-response跟踪轨迹",
+      "platform": "LimX Tron1速度跟踪和loco-manipulation；每方法5次硬件试验",
+      "limit": "低维reference space、样本小、策略冻结；不是策略RSI"
+    }
+  },
+  {
+    "title": "RAPID: Robot Agentic Programming from Demonstrations",
+    "short": "RAPID",
+    "arxiv_id": "2609.30249",
+    "version": "v1",
+    "url": "https://arxiv.org/abs/2609.30249",
+    "added": "2026-09-27",
+    "updated": "2026-09-27",
+    "tags": ["机器人程序", "编码代理", "验证", "仿真与真机"],
+    "read_status": "全文方法与指定实验/表格已核查；未复现",
+    "note": "papers/rapid.md",
+    "evidence_locations": "§§III、VI–VII；Figures 2、4–5；Tables II–III。仿真8×50场景×3次；真机8×10场景。",
+    "figure_url": "https://arxiv.org/html/2609.30249v1/method.png",
+    "authors": ["Liu, Yuyao", "Mao, Jiayuan", "Hsu, David", "Kaelbling, Leslie Pack", "Lozano-Pérez, Tomás"],
+    "citation_date": "2026/09/24",
+    "summary": "从单段示范自动构造规格、原语、验证环境并迭代程序，目标场景部署时程序固定。",
+    "evidence": {
+      "update_object": "object-centric relational robot program与原语库",
+      "retention": "每任务构造后跨新场景复用；部署时冻结",
+      "feedback": "重建仿真、合成场景变体与推断成功谓词",
+      "platform": "MuJoCo、LIBERO-Pro、Franka Research 3",
+      "limit": "改写在部署前；基线调试/原语条件不完全匹配；真机无汇总置信区间"
+    }
+  },
+  {
+    "title": "AD-WM: Action-Discriminative World Models for Counterfactual Model Predictive Control",
+    "short": "AD-WM",
+    "arxiv_id": "2609.30264",
+    "version": "v1",
+    "url": "https://arxiv.org/abs/2609.30264",
+    "added": "2026-09-27",
+    "updated": "2026-09-27",
+    "tags": ["支撑组件", "世界模型", "反事实规划", "真机"],
+    "read_status": "全文方法与指定实验/表格已核查；未复现",
+    "note": "papers/ad-wm.md",
+    "evidence_locations": "§§III–V；Figures 2、4–5；Tables I–IV。三种子仿真；每模型82次Franka试验。",
+    "figure_url": "https://arxiv.org/html/2609.30264v1/ad-wm.png",
+    "authors": ["Qiu, Jiabin", "Chen, Zixuan", "Cao, Hongye", "Shi, Jieqi", "Huo, Jing", "Gao, Yang"],
+    "citation_date": "2026/09/24",
+    "summary": "用动作恢复目标提升潜在世界模型的反事实可辨性和MPC选择质量。",
+    "evidence": {
+      "update_object": "离线训练的潜在世界模型；部署MPC固定",
+      "retention": "训练后冻结；不从部署经验更新",
+      "feedback": "离线转移数据和动作恢复辅助目标",
+      "platform": "OGBench等仿真；Franka每模型82次",
+      "limit": "人工子目标、单场地/相机/backbone；不是持久RSI"
+    }
+  },
+  {
+    "title": "An Analysis of Streaming Deep Reinforcement Learning for Adaptive Continual Learning in Robotics",
+    "short": "Streaming Deep RL for Robotics",
+    "arxiv_id": "2609.28807",
+    "version": "v1",
+    "url": "https://arxiv.org/abs/2609.28807",
+    "added": "2026-09-27",
+    "updated": "2026-09-27",
+    "tags": ["核心持续改进", "流式强化学习", "塑性", "纯仿真"],
+    "read_status": "全文方法与指定实验/表格已核查；未复现",
+    "note": "papers/streaming-deep-rl-continual-robotics.md",
+    "evidence_locations": "§§III–VI；Figures 1–3；Tables 1–3。50万步warm-start、150万步适应；5种子、每次50 episodes。",
+    "figure_url": "https://arxiv.org/html/2609.28807v1/figures/overview.png",
+    "authors": ["Vitchutripop, Teeratham", "Quarles, Alyssa", "Zhang, Wenhe", "Xue, Richard", "Rakita, Daniel"],
+    "citation_date": "2026/09/23",
+    "summary": "只用最新transition、无回放地持续更新策略；四足恢复强，操作任务峰值后退化。",
+    "evidence": {
+      "update_object": "Stream-AC actor-critic参数",
+      "retention": "跨150万适应步持续更新；未测回到旧任务",
+      "feedback": "dense reward与最新一条transition",
+      "platform": "ManiSkill3四足和Panda操作；5种子纯仿真",
+      "limit": "只测一次M0→M1前向迁移；无真机、无视觉输入、未测遗忘"
+    }
   }
 ]
