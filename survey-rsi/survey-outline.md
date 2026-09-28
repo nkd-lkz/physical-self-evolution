@@ -9,11 +9,11 @@
 | 章节 | 核心问题 | 可以先用的材料 | 还需要补的证据 |
 | :--- | :--- | :--- | :--- |
 | 范围与定义 | 哪些是任务内适应、持久自我改进、改进器递归增强？ | [证据对照](evidence-map.md)；Zeva-Ego / MessyMem / RegenHarness 的差异 | 明确跨任务、会话、部署的重置边界；不要靠标题纳入 |
-| 策略与世界模型更新 | 执行经验怎样进入参数，模型想象何时可信？ | Streaming Deep RL、RAPolicy、ForceRFT、PACL、门控在线RL、OSRAM、AD-WM、InternW0；[世界模型主题](topics.md#world) | 用matched对照连接事实预测、候选排序、行动收益、延迟与旧任务保持 |
-| 记忆、技能与可执行代码 | 不改基础权重，系统还能更新什么？ | AdaHVLA、RAPID、KnowBody、RACaP、WAA、Self-Adaptive VLA、MessyMem、LEMCA | 区分跨任务revision graph、每任务离线构造和部署时上下文；测库膨胀与退化 |
+| 策略与世界模型更新 | 执行经验怎样进入参数，模型想象何时可信？ | Streaming Deep RL、ContinualVLA-Real、Pretrained VLA Forgetting、RAPolicy、ForceRFT、PACL、OSRAM、AD-WM、InternW0、Streaming-WAM；[世界模型主题](topics.md#world) | 用matched对照连接事实预测、候选排序、行动收益、延迟与旧任务保持 |
+| 记忆、技能与可执行代码 | 不改基础权重，系统还能更新什么？ | OCC4M、ARMS、AdaHVLA、RAPID、KnowBody、RACaP、WAA、Self-Adaptive VLA、MessyMem、LEMCA | 区分单episode对象轨迹、压缩自历史、跨任务revision graph和部署时上下文；测库膨胀与退化 |
 | 反馈、目标与自动课程 | 什么决定更新方向和接纳标准？ | No Free Checker、SRPO、AgenticRL、HiRE、Banana Kick | 固定验证器 vs 共同演化验证器；奖励投机与独立任务指标 |
-| 连续物理运行的条件 | 学习闭环在硬件上为什么难持续？ | HALTER、LIBERO-RECOVER、RoboRecover、SPINE、RegenHarness | 人工接管/复位时长、失败损耗、全天运行与累计成本 |
-| 持续学习与跨部署积累 | 新能力增加后旧能力是否保持？ | FAN、MEMOBench、持续世界模型基准 | 多轮前向/后向迁移、场景漂移、旧数据依赖 |
+| 连续物理运行的条件 | 学习闭环在硬件上为什么难持续？ | HALTER、LIBERO-RECOVER、RoboRecover、SPINE、ARMS、TANDEM、RegenHarness | 人工接管/复位时长、失败损耗、推理截止时间、全天运行与累计成本 |
+| 持续学习与跨部署积累 | 新能力增加后旧能力是否保持？ | ContinualVLA-Real、Pretrained VLA Forgetting、FAN、MEMOBench、持续世界模型基准 | 多轮前向/后向迁移、动作坐标、任务异质性、场景漂移、旧数据依赖 |
 | 从自我改进到递归 | 学习/研究流程自身能否越来越有效？ | 原报告的 STOP、DGM、HELIX、Dream-RSI 等仅作待复核入口；[改进器主题](topics.md#improvers) | 机器人上的外层改进器更新、冻结外层对照与预算匹配 |
 | 评价与开放问题 | 什么证据足以支持“越部署越强”？ | RoboRecover、world-model benchmark综述、CMA、MemBodied、X2Real、No Free Checker | 多轮改进曲线、matched architecture对照、独立验收与长期回滚审计 |
 
@@ -64,6 +64,9 @@
 - **在线学习必须区分“最好到过哪里”和“后来保住多少”。** Streaming Deep RL 在操作任务中峰值很高、随后回落；峰值成功率不能代替时间平均、末端稳定性或旧任务保持。
 - **可修改工件的留存范围决定其 RSI 含义。** AdaHVLA 的 revision graph 跨任务携带候选和证据；RAPID 每个任务先构造程序、再冻结部署。两者都改代码，但持续性证据不同。
 - **策略冻结也可能有部署后持久适应。** OSRAM 更新闭环模型并改变参考命令，适合列为“模型—接口适应”；不要与策略参数自我改进合并统计。
+- **“预训练抗遗忘”与“真机严重遗忘”并不矛盾。** Pretrained VLA Forgetting 在同构的LIBERO顺序流中观察到较强保持，而ContinualVLA-Real在异质单/双臂真机流中发现朴素微调崩溃；综述需要把动作坐标、本体切换、回放比例和任务异质性作为条件变量。
+- **连续运行、持续记忆和持续学习是三件事。** ARMS与OCC4M让部署过程保留自历史或对象轨迹，Streaming-WAM让推理和执行重叠；只有发生可留存参数/程序更新并在后续任务验收时，才进入持久自我改进论证。
+- **效率预算应同时包含机器时钟与人类时钟。** Streaming-WAM报告动作等待时间，TANDEM报告相同人类遥操作时间能采到的示范数；综述不应只用episode数量或最终成功率比较闭环效率。
 
 ## 建议准备的图与表
 

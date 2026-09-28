@@ -5,10 +5,10 @@
 面向综述写作，按 **问题 → 方法 → 结果 → 引用价值 → 证据边界** 阅读论文。持续区分任务内适应、可留存的自我改进，以及改进器自身的递归增强。
 
 <!-- stats:start -->
-**51 篇阅读卡片** · **141 项原报告条目** · **67 项待核查** · **89 条引文线索**
+**57 篇阅读卡片** · **141 项原报告条目** · **65 项待核查** · **90 条引文线索**
 <!-- stats:end -->
 
-**最近更新：2026-09-27** · [当日增量调研](daily/2026-09-27.md) · [9月26日调研](daily/2026-09-26.md) · [9月25日调研](daily/2026-09-25.md) · [历史日志](daily/)
+**最近更新：2026-09-28** · [当日增量调研](daily/2026-09-28.md) · [9月27日调研](daily/2026-09-27.md) · [9月26日调研](daily/2026-09-26.md) · [历史日志](daily/)
 
 ## 收录范围
 
@@ -31,11 +31,11 @@
 
 | 工作 | 为什么值得读 | 放到综述哪里 |
 | :--- | :--- | :--- |
-| **[AdaHVLA](papers/adahvla.md)** | 用执行证据持续改写代码式协调策略，候选和证据跨任务保留；测试集不参与选择 | harness持久改进、版本树、非递归外层 |
-| **[Streaming Deep RL for Robotics](papers/streaming-deep-rl-continual-robotics.md)** | batch size 1、无回放地持续改策略；四足恢复强，但操作成功率峰值后衰退 | 在线参数更新、塑性—稳定性、峰值与保持 |
-| **[AD-WM](papers/ad-wm.md)** | matched LeWM对照显示低事实误差不保证高控制成功；把elite regret连到闭环行动 | 世界模型评价、反事实规划、支撑组件边界 |
+| **[Can VLAs Learn Continually from Real-World Data?](papers/continual-vla-real-world.md)** | 十个单/双臂真机任务显示朴素顺序微调严重遗忘；统一动作接口与少量回放可以显著恢复保持 | 真机持续VLA、BWT/FWT、回放与本体切换 |
+| **[Pretrained VLAs Are Surprisingly Resistant to Forgetting](papers/pretrained-vla-forgetting.md)** | 用LIBERO顺序学习分离性能下降、知识恢复和经验回放，给出预训练VLA与从头训练策略的matched对照 | 预训练抗遗忘、知识可恢复性、仿真—真机边界 |
+| **[OCC4M](papers/occ4m.md)** | 对象级4D轨迹在遮挡、洗牌和包含关系上优于全帧上下文；同时明确只在单次任务内积累 | 具身记忆、对象持续性、任务内适应边界 |
 
-本轮另收录 [OSRAM](papers/osram.md) 与 [RAPID](papers/rapid.md)。OSRAM 持久更新闭环模型但冻结策略；RAPID 在部署前改写并验证机器人程序，目标场景执行时固定。两者不能仅因“在线/agentic”措辞升级为完整 RSI。全部结果均为作者报告，未复现。
+本轮另收录 [ARMS](papers/watch-recall-act.md)、[Streaming-WAM](papers/streaming-wam.md) 与 [TANDEM](papers/tandem.md)。它们分别增强连续运行时的自历史、异步世界—动作生成，以及按需人工示范的数据生产闭环；部署时并未从新经验持续更新策略，不能只凭“always-on / streaming / closed loop”升级为持久 RSI。全部结果均为作者报告，未复现。
 
 ## 按综述主线浏览
 

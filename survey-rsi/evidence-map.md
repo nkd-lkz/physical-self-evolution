@@ -8,6 +8,12 @@
 
 | 工作 | 实际更新对象与保留范围 | 物理证据与人工条件 | 可以支持 / 不能支持 |
 | :--- | :--- | :--- | :--- |
+| [ContinualVLA-Real](papers/continual-vla-real-world.md) | 顺序微调VLA并以经验回放保留旧任务；固定动作归一化、跨本体非对称回放 | 5单臂＋5双臂真机任务；每单臂500、每双臂300条人工示范 | 真机多任务持续学习与遗忘；仍是离线示范流，不能支持自主部署学习 |
+| [Pretrained VLA Forgetting](papers/pretrained-vla-forgetting.md) | π0/GR00T按LIBERO任务顺序更新；少量回放并测试知识恢复 | 10项LIBERO仿真任务；默认每任务1000条回放，另测2%缓冲 | 预训练表征可减缓遗忘；不能直接外推真机或部署后自主更新 |
+| [OCC4M](papers/occ4m.md) | 单次长程任务内更新对象级4D轨迹和关系；episode后不留存 | 350次仿真＋20次真机记忆试验；策略/VLM权重固定 | 长上下文记忆的支撑组件；不能支持跨episode持续学习 |
+| [ARMS](papers/watch-recall-act.md) | 并行写入触发事件、具身状态与压缩自历史；部署参数固定 | 单台Cobot Magic连续流；约1200示范、约200流，真机每段60次 | always-on运行、自历史接口；不能支持经验驱动的持久能力增长 |
+| [Streaming-WAM](papers/streaming-wam.md) | 动作条件世界—动作模型离线训练；执行中只滚动固定上下文 | LIBERO、RoboTwin、RoboCasa＋两项真机各30次 | 异步低延迟支撑；不是部署期学习或跨任务保持 |
+| [TANDEM](papers/tandem.md) | TAMP域按任务扩展谓词/人工算子，采集后离线微调π0.5；推理时冻结 | 五项长程真机任务；130次采集尝试，20示范/任务，评测20次/任务 | 降低示范人力的数据闭环；不是无人监督或在线RSI |
 | [AdaHVLA](papers/adahvla.md) | 代码式coordination policy、候选图和证据跨尝试/任务保留；VLA冻结 | 两套长时仿真基准；三次重启、每次至多16候选；真机仅定性 | 持久harness改进；外层改写流程未自改，不能支持严格递归 |
 | [Streaming Deep RL](papers/streaming-deep-rl-continual-robotics.md) | Stream-AC参数每个transition持续更新，无回放 | ManiSkill3四足/操作；5种子、每次50 episodes；纯仿真 | 持久在线参数适应；只测M0→M1且不回测旧任务，不能支持抗遗忘 |
 | [OSRAM](papers/osram.md) | 闭环command-response模型持久微调；参考命令在线变化，策略冻结 | LimX Tron1；20次仿真/5次硬件重复 | 部署后模型—接口适应；不是策略学习或开放任务能力积累 |
@@ -36,6 +42,9 @@
 
 | 工作 / 指标 | 作者报告 | 引用时必须同时写明 |
 | :--- | :--- | :--- |
+| ContinualVLA-Real / 单臂顺序学习 | 朴素微调最终均值86.9→31.4、BWT -81.0；ER均值97.2、BWT +1.5 | 五个单臂真机任务、每任务500示范；默认回放比例20%，作者报告、未复现 |
+| Pretrained VLA / LIBERO-10 | π0平均成功率0.768、NBT -0.016；GR00T为0.919、+0.027 | 纯仿真顺序模仿学习；默认每任务1000回放条目，NBT不是绝对成功率 |
+| OCC4M / 记忆对照 | 仿真96.6%/88.9%，FrameSamp为54.6%/57.7%；真机记忆85%、端到端45% | 两类仿真各约175 episode；真机仅20 episode，FrameSamp记忆30%且未做物理执行 |
 | AdaHVLA / NaVILA-LH测试 | 2.5%单VLA → 22.5%初始harness → 31.7–57.5%适应harness | 10/40适应—测试划分；三次重启；测试不指导选择；均值不是独立任务数 |
 | Streaming Deep RL / 四足峰值 | 断腿0.968、目标移动0.848、低摩擦0.676 | 各取不同最佳变体；5种子、50万+150万步；峰值远高于全程均值且未回测旧任务 |
 | OSRAM / 真机速度RMSE | 无适应0.2847 → OSRAM 0.2014 | 0.7 m/s、5次硬件试验；四种方法成功率均100%，误差只在成功试验上平均 |
@@ -64,6 +73,9 @@
 | 世界模型是否真的帮助控制 | [AD-WM](papers/ad-wm.md)、[OSRAM](papers/osram.md)、[InternW0](papers/internw0.md)、[世界模型综述](papers/world-models-actionable-survey.md) | 事实预测、候选排序、动作收益、推理延迟、部署更新和旧能力保持应分开 |
 | 任务内记忆是否应跨episode保留 | [MemBodied](papers/membodied.md)、[Zeva-Ego](papers/zeva-ego.md)、[MessyMem](papers/messymem.md) | 明确重置边界；未经训练的携带可能负迁移 |
 | 进步是否伴随遗忘 | [FAN](papers/fan.md)、[持续世界模型基准](papers/compositional-continual-world-models.md)、[MEMOBench](papers/memobench.md) | 后向迁移、学习速度、旧能力保持与最终成功率不同 |
+| 预训练是否天然抗遗忘 | [Pretrained VLA Forgetting](papers/pretrained-vla-forgetting.md)、[ContinualVLA-Real](papers/continual-vla-real-world.md)、[FAN](papers/fan.md) | 仿真/真机、同本体/跨本体、动作坐标、回放规模和任务异质性必须matched |
+| 连续运行是否等于持续学习 | [ARMS](papers/watch-recall-act.md)、[Streaming-WAM](papers/streaming-wam.md)、[Streaming Deep RL](papers/streaming-deep-rl-continual-robotics.md) | 固定权重上下文更新、异步推理与在线参数更新是三种不同证据 |
+| 数据效率是否计入人工时间 | [TANDEM](papers/tandem.md)、[BEE](papers/bee.md)、[RAPolicy](papers/rapolicy.md) | 示范数、遥操作秒数、接管次数、复位与失败损耗应分别报告 |
 | 系统能否连续自主运行 | [HALTER](papers/halter.md)、[LIBERO-RECOVER](papers/libero-recover.md)、[SPINE](papers/spine.md)、[RegenHarness](papers/regenharness.md) | 复位、恢复和验证的成本；演示可运行不等于自我改进有效 |
 
 ## 严格递归还缺什么

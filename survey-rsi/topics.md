@@ -23,6 +23,8 @@
 - [The Gaussian Is Enough: Flow-Matching Priors Do Not Help When Fine-Tuning Large Behavior Models](papers/gaussian-is-enough.md) — 边界案例 / 负结果 / 离线微调 / 真机
 - [Uncertainty-Gated Exploration Noise Suppresses Task Collapse in Online RL Fine-Tuning of a Flow-Matching Vision-Language-Action Policy](papers/uncertainty-gated-exploration.md) — 在线VLA-RL / 持续学习 / 负结果 / 纯仿真
 - [Learning from Mixed-Quality Deployment Experience for Robot Manipulation](papers/pacl.md) — 部署后学习 / 混合质量经验 / 动作块critic / 真机
+- [Can Vision-Language-Action Models Learn from Real-World Data Continually without Forgetting?](papers/continual-vla-real-world.md) — 核心持续学习 / 经验回放 / 动作归一化 / 真机十任务
+- [Pretrained Vision-Language-Action Models are Surprisingly Resistant to Forgetting in Continual Learning](papers/pretrained-vla-forgetting.md) — 持续学习 / VLA预训练 / 经验回放 / 纯仿真
 - [An Analysis of Streaming Deep Reinforcement Learning for Adaptive Continual Learning in Robotics](papers/streaming-deep-rl-continual-robotics.md) — 核心持续改进 / 流式强化学习 / 塑性 / 纯仿真
 
 <a id="world"></a>
@@ -38,6 +40,7 @@
 - [Do World Models Make Better Robots? A Survey of Evaluation Benchmarks for Predictive Embodied Intelligence](papers/world-model-benchmarks-survey.md) — 综述 / 世界模型 / 闭环评价 / benchmark
 - [Online Sim-to-Real Adaptation via Closed-Loop System Modeling](papers/osram.md) — 持续部署适应 / 闭环模型 / 参考命令 / 真机
 - [AD-WM: Action-Discriminative World Models for Counterfactual Model Predictive Control](papers/ad-wm.md) — 支撑组件 / 世界模型 / 反事实规划 / 真机
+- [Streaming-WAM: Action-Conditioned World-Action Model for Asynchronous Robot Manipulation](papers/streaming-wam.md) — 支撑组件 / 世界动作模型 / 异步控制 / 真机
 
 <a id="skills"></a>
 
@@ -74,6 +77,8 @@
 - [MEMOBench: A Process Level Memory Benchmark for Robotic Manipulation](papers/memobench.md) — 评价框架 / 跨时段记忆 / 过程指标 / 仿真 / 旧候选补全
 - [MemBodied: Recurrent Associative Memory for Vision-Language-Action Models](papers/membodied.md) — 边界案例 / episode内记忆 / VLA / 真机
 - [Self-Adaptive VLA for Robust Robot Deployment](papers/self-adaptive-vla.md) — 边界案例 / 测试时上下文适应 / 硬件偏移 / 真机
+- [OCC4M: Object-Centric 4D Memory for Spatiotemporal Reasoning in Long-Horizon Manipulation](papers/occ4m.md) — 支撑组件 / 对象中心记忆 / 任务内状态 / 真机
+- [Watch, Recall, Act: Always-On Robots in Concurrent Embodied Streams](papers/watch-recall-act.md) — 支撑组件 / 自历史记忆 / 不重置流 / 双臂真机
 
 <a id="continual"></a>
 
@@ -91,6 +96,8 @@
 - [Know Your Body: A Harness for Direct and Self-Improving Robot Control with VLMs](papers/know-your-body.md) — 核心自我改进 / harness / 身体模型 / 真机
 - [AdaHVLA: Adaptive Harnesses for Long-Horizon Vision-Language-Action Execution](papers/adahvla.md) — 核心自我改进 / harness代码 / 跨任务记忆 / 仿真为主
 - [Online Sim-to-Real Adaptation via Closed-Loop System Modeling](papers/osram.md) — 持续部署适应 / 闭环模型 / 参考命令 / 真机
+- [Can Vision-Language-Action Models Learn from Real-World Data Continually without Forgetting?](papers/continual-vla-real-world.md) — 核心持续学习 / 经验回放 / 动作归一化 / 真机十任务
+- [Pretrained Vision-Language-Action Models are Surprisingly Resistant to Forgetting in Continual Learning](papers/pretrained-vla-forgetting.md) — 持续学习 / VLA预训练 / 经验回放 / 纯仿真
 - [An Analysis of Streaming Deep Reinforcement Learning for Adaptive Continual Learning in Robotics](papers/streaming-deep-rl-continual-robotics.md) — 核心持续改进 / 流式强化学习 / 塑性 / 纯仿真
 
 <a id="feedback"></a>
@@ -127,6 +134,8 @@
 - [SPINE: Bridging Cyber-Physical Gap with Agentic AI](papers/spine.md) — 支撑组件 / 具身harness / 诊断与修复 / 真机 / 版本修订
 - [X2Real: an eXtensive simulation benchmark for real-world generalist policies](papers/x2real.md) — 评价框架 / 仿真—真机 / 自动数据采集 / 企业技术报告
 - [RoboRecover: Benchmarking Robot Policy Recovery under Execution Deviations](papers/roborecover.md) — 恢复评测 / 执行偏差 / 支撑组件 / 纯仿真
+- [TANDEM: Task and Motion Planning with As-Needed Demonstrations for Efficient Vision-Language-Action Model Fine-tuning](papers/tandem.md) — 支撑组件 / 自动数据采集 / 人机协同 / 真机
+- [Watch, Recall, Act: Always-On Robots in Concurrent Embodied Streams](papers/watch-recall-act.md) — 支撑组件 / 自历史记忆 / 不重置流 / 双臂真机
 
 <a id="curriculum"></a>
 
@@ -169,6 +178,8 @@
 - [MemBodied: Recurrent Associative Memory for Vision-Language-Action Models](papers/membodied.md) — 边界案例 / episode内记忆 / VLA / 真机
 - [RoboRecover: Benchmarking Robot Policy Recovery under Execution Deviations](papers/roborecover.md) — 恢复评测 / 执行偏差 / 支撑组件 / 纯仿真
 - [Uncertainty-Gated Exploration Noise Suppresses Task Collapse in Online RL Fine-Tuning of a Flow-Matching Vision-Language-Action Policy](papers/uncertainty-gated-exploration.md) — 在线VLA-RL / 持续学习 / 负结果 / 纯仿真
+- [Can Vision-Language-Action Models Learn from Real-World Data Continually without Forgetting?](papers/continual-vla-real-world.md) — 核心持续学习 / 经验回放 / 动作归一化 / 真机十任务
+- [Pretrained Vision-Language-Action Models are Surprisingly Resistant to Forgetting in Continual Learning](papers/pretrained-vla-forgetting.md) — 持续学习 / VLA预训练 / 经验回放 / 纯仿真
 - [An Analysis of Streaming Deep Reinforcement Learning for Adaptive Continual Learning in Robotics](papers/streaming-deep-rl-continual-robotics.md) — 核心持续改进 / 流式强化学习 / 塑性 / 纯仿真
 - [AD-WM: Action-Discriminative World Models for Counterfactual Model Predictive Control](papers/ad-wm.md) — 支撑组件 / 世界模型 / 反事实规划 / 真机
 

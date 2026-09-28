@@ -632,52 +632,6 @@
     "version": "v1"
   },
   {
-    "title": "TANDEM: Task and Motion Planning with As-Needed Demonstrations for Efficient Vision-Language-Action Model Fine-tuning",
-    "arxiv_id": "2609.28314",
-    "url": "https://arxiv.org/abs/2609.28314",
-    "status": "仅摘要与元数据已核查；不计正式卡片",
-    "priority": "优先",
-    "next_check": "全文核对5个长时任务、20条/任务数据、2.9倍演示产出分母、TAMP失败后的人工魔法操作与独立评测。",
-    "discovered": "2026-09-25",
-    "authors": [
-      "Sahoo, Samrat",
-      "Ji, Liang",
-      "Silver, Tom",
-      "Huang, Yixuan"
-    ],
-    "citation_date": "2026/09/23",
-    "topics": [
-      "自动采集",
-      "人机协同",
-      "VLA微调"
-    ],
-    "version": "v1"
-  },
-  {
-    "title": "Watch, Recall, Act: Always-On Robots in Concurrent Embodied Streams",
-    "arxiv_id": "2609.28429",
-    "url": "https://arxiv.org/abs/2609.28429",
-    "status": "仅摘要与元数据已核查；不计正式卡片",
-    "priority": "优先",
-    "next_check": "全文核对ARMS数据规模、45%对28%的任务与rollout分母、状态/自历史模块消融，以及流式上下文是否跨episode保留。",
-    "discovered": "2026-09-25",
-    "authors": [
-      "Yi, Ding",
-      "Sun, Peiwen",
-      "Rong, Chenchu",
-      "Wang, Jianan",
-      "Dai, Xili",
-      "Yue, Xiangyu",
-      "Lin, Xi"
-    ],
-    "citation_date": "2026/09/23",
-    "topics": [
-      "长期记忆",
-      "流式机器人"
-    ],
-    "version": "v1"
-  },
-  {
     "title": "PointCast: One World Model for Rigid, Articulated, and Deformable Object Manipulation",
     "arxiv_id": "2609.28393",
     "url": "https://arxiv.org/abs/2609.28393",
@@ -721,19 +675,6 @@
       "世界模型",
       "评价"
     ],
-    "version": "v1"
-  },
-  {
-    "title": "Streaming-WAM: Action-Conditioned World-Action Model for Asynchronous Robot Manipulation",
-    "arxiv_id": "2609.28927",
-    "url": "https://arxiv.org/abs/2609.28927",
-    "status": "摘要、元数据与全文入口已核查；尚未逐表审核，不计正式卡片",
-    "priority": "次优先",
-    "next_check": "全文核对LIBERO 98.35%、相对Fast-WAM 2.93×、真机90 s→38 s的协议与异步公平对照；部署权重预计固定。",
-    "discovered": "2026-09-26",
-    "authors": ["Huang, Xuyao", "Wang, Yixuan", "Ye, Zengyao", "Zhao, Boyuan", "Yu, Chenyang", "Wen, Haoran", "Deng, Zhijie"],
-    "citation_date": "2026/09/24",
-    "topics": ["世界动作模型", "异步控制"],
     "version": "v1"
   },
   {
@@ -789,29 +730,42 @@
     "version": "v1"
   },
   {
-    "title": "OCC4M: Object-Centric 4D Memory for Spatiotemporal Reasoning in Long-Horizon Manipulation",
-    "arxiv_id": "2609.28798",
-    "url": "https://arxiv.org/abs/2609.28798",
-    "status": "摘要、元数据与项目入口已核查；尚未逐表审核，不计正式卡片",
+    "title": "MemoryVLA: Perceptual-Cognitive Memory in Vision-Language-Action Models for Robotic Manipulation",
+    "arxiv_id": "2508.19236",
+    "url": "https://arxiv.org/abs/2508.19236",
+    "status": "arXiv摘要、版本、ICLR状态与作者项目入口已核查；尚未逐表审核，不计正式卡片",
     "priority": "优先",
-    "next_check": "全文核对350个仿真episode、20个Franka episode、viewpoint transfer与memory-success定义；判断persistent track是固定系统状态还是会形成跨episode知识更新。",
-    "discovered": "2026-09-27",
-    "authors": ["Jedlicki, Jack B.", "Dieudonné, Tanguy", "Yang, Heng"],
-    "citation_date": "2026/09/23",
-    "topics": ["对象中心记忆", "长时操作", "真机"],
-    "version": "v1"
+    "next_check": "全文核对150+任务和12项真机的分母、memory bank跨episode清空/保留边界，并与ARMS、OCC4M和MemBodied做matched分类。",
+    "discovered": "2026-09-28",
+    "authors": ["Shi, Hao", "Xie, Bin", "Liu, Yingfei", "Sun, Lin", "Liu, Fengrong", "Wang, Tiancai", "Zhou, Erjin", "Fan, Haoqiang", "Zhang, Xiangyu", "Huang, Gao"],
+    "citation_date": "2025/08/26",
+    "topics": ["记忆VLA", "长时操作", "真机"],
+    "version": "v2"
   },
   {
-    "title": "Pretrained Vision-Language-Action Models are Surprisingly Resistant to Forgetting in Continual Learning",
-    "arxiv_id": "2603.03818",
-    "url": "https://arxiv.org/abs/2603.03818",
-    "status": "作者项目、ICML 2026条目与摘要已核查；尚未逐表审核，不计正式卡片",
+    "title": "RoboStream: Weaving Spatio-Temporal Reasoning with Memory in Vision-Language Models for Robotics",
+    "arxiv_id": "2603.12939",
+    "url": "https://arxiv.org/abs/2603.12939",
+    "status": "arXiv摘要、版本与ECCV状态已核查；尚未逐表审核，不计正式卡片",
     "priority": "优先",
-    "next_check": "全文核对Pi0/GR00T N1.5与从头训练策略、replay比例、LIBERO任务序列、NBT和快速恢复实验；与2603.11653去重后做正交对照。",
-    "discovered": "2026-09-27",
-    "authors": ["Liu, Huihan", "Kim, Changyeon", "Liu, Bo", "Liu, Minghuan", "Zhu, Yuke"],
-    "citation_date": "2026/03/04",
-    "topics": ["持续学习", "VLA预训练", "经验回放"],
+    "next_check": "全文核对RLBench 90.5%和真机44.4%的任务/试验分母、training-free图更新规则，以及状态是否仅在单次任务内保留。",
+    "discovered": "2026-09-28",
+    "authors": ["Huang, Yuzhi", "Wu, Jie", "Bu, Weijue", "Xiong, Ziyi", "Jiang, Gaoyang", "Li, Ye", "Ji, Kangye", "Xie, Shuzhao", "Huang, Yue", "Wu, Chenglei", "Jiang, Jingyan", "Wang, Zhi"],
+    "citation_date": "2026/03/13",
+    "topics": ["时空记忆", "因果图", "长时操作"],
     "version": "v2"
+  },
+  {
+    "title": "MemER: Scaling Up Memory for Robot Control via Experience Retrieval",
+    "arxiv_id": "2510.20328",
+    "url": "https://arxiv.org/abs/2510.20328",
+    "status": "arXiv摘要、元数据与作者项目入口已核查；尚未逐表审核，不计正式卡片",
+    "priority": "优先",
+    "next_check": "全文核对三项分钟级真机任务、keyframe选择和文本子指令的分母；判断experience retrieval是单episode历史还是跨任务技能积累。",
+    "discovered": "2026-09-28",
+    "authors": ["Sridhar, Ajay", "Pan, Jennifer", "Sharma, Satvik", "Finn, Chelsea"],
+    "citation_date": "2025/10/23",
+    "topics": ["经验检索", "长时记忆", "真机"],
+    "version": "v1"
   }
 ]

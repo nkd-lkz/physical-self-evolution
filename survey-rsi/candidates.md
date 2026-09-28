@@ -3,25 +3,21 @@
 
 # 候选与待核查
 
-**67 项**。下列条目未完成全文方法/结果核查，不计入正式卡片。优先级表示下一步阅读顺序，不能作为可信度评分。
+**65 项**。下列条目未完成全文方法/结果核查，不计入正式卡片。优先级表示下一步阅读顺序，不能作为可信度评分。
 
-## 优先 · 33 项
+## 优先 · 32 项
 
-- **[Pretrained Vision-Language-Action Models are Surprisingly Resistant to Forgetting in Continual Learning](https://arxiv.org/abs/2603.03818)**
-  - `2603.03818` · 发现 2026-09-27 · 作者项目、ICML 2026条目与摘要已核查；尚未逐表审核，不计正式卡片
-  - 下一步：全文核对Pi0/GR00T N1.5与从头训练策略、replay比例、LIBERO任务序列、NBT和快速恢复实验；与2603.11653去重后做正交对照。
+- **[RoboStream: Weaving Spatio-Temporal Reasoning with Memory in Vision-Language Models for Robotics](https://arxiv.org/abs/2603.12939)**
+  - `2603.12939` · 发现 2026-09-28 · arXiv摘要、版本与ECCV状态已核查；尚未逐表审核，不计正式卡片
+  - 下一步：全文核对RLBench 90.5%和真机44.4%的任务/试验分母、training-free图更新规则，以及状态是否仅在单次任务内保留。
 
-- **[OCC4M: Object-Centric 4D Memory for Spatiotemporal Reasoning in Long-Horizon Manipulation](https://arxiv.org/abs/2609.28798)**
-  - `2609.28798` · 发现 2026-09-27 · 摘要、元数据与项目入口已核查；尚未逐表审核，不计正式卡片
-  - 下一步：全文核对350个仿真episode、20个Franka episode、viewpoint transfer与memory-success定义；判断persistent track是固定系统状态还是会形成跨episode知识更新。
+- **[MemoryVLA: Perceptual-Cognitive Memory in Vision-Language-Action Models for Robotic Manipulation](https://arxiv.org/abs/2508.19236)**
+  - `2508.19236` · 发现 2026-09-28 · arXiv摘要、版本、ICLR状态与作者项目入口已核查；尚未逐表审核，不计正式卡片
+  - 下一步：全文核对150+任务和12项真机的分母、memory bank跨episode清空/保留边界，并与ARMS、OCC4M和MemBodied做matched分类。
 
-- **[Watch, Recall, Act: Always-On Robots in Concurrent Embodied Streams](https://arxiv.org/abs/2609.28429)**
-  - `2609.28429` · 发现 2026-09-25 · 仅摘要与元数据已核查；不计正式卡片
-  - 下一步：全文核对ARMS数据规模、45%对28%的任务与rollout分母、状态/自历史模块消融，以及流式上下文是否跨episode保留。
-
-- **[TANDEM: Task and Motion Planning with As-Needed Demonstrations for Efficient Vision-Language-Action Model Fine-tuning](https://arxiv.org/abs/2609.28314)**
-  - `2609.28314` · 发现 2026-09-25 · 仅摘要与元数据已核查；不计正式卡片
-  - 下一步：全文核对5个长时任务、20条/任务数据、2.9倍演示产出分母、TAMP失败后的人工魔法操作与独立评测。
+- **[MemER: Scaling Up Memory for Robot Control via Experience Retrieval](https://arxiv.org/abs/2510.20328)**
+  - `2510.20328` · 发现 2026-09-28 · arXiv摘要、元数据与作者项目入口已核查；尚未逐表审核，不计正式卡片
+  - 下一步：全文核对三项分钟级真机任务、keyframe选择和文本子指令的分母；判断experience retrieval是单episode历史还是跨任务技能积累。
 
 - **[PointCast: One World Model for Rigid, Articulated, and Deformable Object Manipulation](https://arxiv.org/abs/2609.28393)**
   - `2609.28393` · 发现 2026-09-25 · 仅摘要、项目入口与元数据已核查；不计正式卡片
@@ -139,11 +135,7 @@
   - `2609.18520` · 发现 2026-09-21 · 仅摘要已核查；不计正式卡片
   - 下一步：角色索引经验驱动在线技能选择；查训练free含义、反馈与长期收益。
 
-## 次优先 · 28 项
-
-- **[Streaming-WAM: Action-Conditioned World-Action Model for Asynchronous Robot Manipulation](https://arxiv.org/abs/2609.28927)**
-  - `2609.28927` · 发现 2026-09-26 · 摘要、元数据与全文入口已核查；尚未逐表审核，不计正式卡片
-  - 下一步：全文核对LIBERO 98.35%、相对Fast-WAM 2.93×、真机90 s→38 s的协议与异步公平对照；部署权重预计固定。
+## 次优先 · 27 项
 
 - **[Rolling-WAM: World Action Models with Rolling Imagination](https://arxiv.org/abs/2609.30247)**
   - `2609.30247` · 发现 2026-09-26 · 摘要、元数据与全文入口已核查；尚未逐表审核，不计正式卡片

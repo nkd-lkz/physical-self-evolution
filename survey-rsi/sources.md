@@ -51,3 +51,11 @@
 - 新增摘要候选：[OCC4M](https://arxiv.org/abs/2609.28798) 与 [Pretrained VLAs are Surprisingly Resistant to Forgetting](https://arxiv.org/abs/2603.03818)。后者已在引文队列出现，本轮按 arXiv ID 合并后进入全文候选，没有重复计引文。
 - 复查 [Embodied RSI](https://github.com/cocacola-lab/awesome-embodied-rsi)、[Coding Agents for Robot Learning](https://github.com/harooos/awesome-coding-agents-for-robot-learning)、[Embodied Continual Learning](https://github.com/Songlin-Dong/Awesome-Embodied-Continual-Learning)、[RL-VLA](https://github.com/Denghaoyuan123/Awesome-RL-VLA) 与 [World Models for Robotic Policy Learning](https://github.com/NTUMARS/Awesome-World-Model-for-Robotics-Policy) 作为查漏入口；分类与数字仍回到原论文核查。
 - OpenReview 机器人 continual learning / online correction 定向搜索定位到 VLA-in-the-Loop；论坛触发浏览器验证页，本轮只依据可访问的官方题名、摘要索引和提交记录加入引文线索，没有伪装成全文阅读。
+
+## 2026-09-28 扩展检索入口
+
+- arXiv 官方 [cs.RO/new](https://arxiv.org/list/cs.RO/new)、[cs.AI/new](https://arxiv.org/list/cs.AI/new) 与 [cs.LG/new](https://arxiv.org/list/cs.LG/new) 在北京时间9月28日早间仍显示 Friday, 25 September 2026；当日新发表记0，候选升级与旧文补漏单独计数。
+- 全文升级：[OCC4M](https://arxiv.org/html/2609.28798v1)、[ARMS](https://arxiv.org/html/2609.28429v1)、[Streaming-WAM](https://arxiv.org/html/2609.28927v1)、[TANDEM](https://arxiv.org/html/2609.28314v1) 与 [Pretrained VLA Forgetting](https://arxiv.org/html/2603.03818v2)；旧引文补漏：[ContinualVLA-Real](https://arxiv.org/abs/2605.26820) 采用v3 PDF，避免把旧HTML版本的作者和结果当作当前版本。
+- 新摘要候选：[MemoryVLA](https://arxiv.org/abs/2508.19236)、[RoboStream](https://arxiv.org/abs/2603.12939) 与 [MemER](https://arxiv.org/abs/2510.20328)。三项只依据当前arXiv摘要加入候选，尚未按全文模板写结果。
+- 引文回溯新增 [Robust VLA Finetuning via Parameter Merging](https://arxiv.org/abs/2512.08333)、[HITL-TAMP](https://arxiv.org/abs/2310.16014) 与 [Habilis-beta](https://arxiv.org/abs/2602.18813)。它们仍在引文队列，不能算正式核查卡片。
+- OpenReview定向搜索没有定位到比上述原始arXiv全文更直接、且未与库内条目重复的新增具身RSI实证；论坛正文访问限制延续，因此不根据题名补写方法或结果。

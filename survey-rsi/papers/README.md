@@ -3,9 +3,9 @@
 
 # 全部阅读卡片
 
-**51 篇**。按完整题名字母顺序排列；浏览器搜索可查题名、短名或 arXiv ID。方法及指定实验已核查，均未复现。
+**57 篇**。按完整题名字母顺序排列；浏览器搜索可查题名、短名或 arXiv ID。方法及指定实验已核查，均未复现。
 
-[下载 BibTeX](../references.bib) · [原报告 141 项](../baseline.md) · [候选 67 项](../candidates.md)
+[下载 BibTeX](../references.bib) · [原报告 141 项](../baseline.md) · [候选 65 项](../candidates.md)
 
 ### [2AM: Grounding Agent-Side Memory as Guidance for Steerable Action Models in Long-Horizon Manipulation](2am.md)
 
@@ -46,6 +46,10 @@
 ### [Beyond End-Task Success: How to Audit Visual Experience Retrieval in Robotics](beyond-end-task-success-audit.md)
 
 **Visual Experience Retrieval Audit** · `2609.26567v1` · 评价框架 / 经验检索 / 因果审计 / 仿真
+
+### [Can Vision-Language-Action Models Learn from Real-World Data Continually without Forgetting?](continual-vla-real-world.md)
+
+**ContinualVLA-Real** · `2605.26820v3` · 核心持续学习 / 经验回放 / 动作归一化 / 真机十任务
 
 ### [DexPIE: Stable Dexterous Policy Improvement from Real-World Experience](dexpie.md)
 
@@ -131,9 +135,17 @@
 
 **No Free Checker** · `2609.09250v1` · 重点综述 / 验证器 / 奖励可靠性 / 参考文献入口
 
+### [OCC4M: Object-Centric 4D Memory for Spatiotemporal Reasoning in Long-Horizon Manipulation](occ4m.md)
+
+**OCC4M** · `2609.28798v1` · 支撑组件 / 对象中心记忆 / 任务内状态 / 真机
+
 ### [Online Sim-to-Real Adaptation via Closed-Loop System Modeling](osram.md)
 
 **OSRAM** · `2609.28878v1` · 持续部署适应 / 闭环模型 / 参考命令 / 真机
+
+### [Pretrained Vision-Language-Action Models are Surprisingly Resistant to Forgetting in Continual Learning](pretrained-vla-forgetting.md)
+
+**Pretrained VLA Forgetting** · `2603.03818v2` · 持续学习 / VLA预训练 / 经验回放 / 纯仿真
 
 ### [RACaP: Agentic Reasoning, Acting, and Coding as Policies for Evolvable Robot Learning](racap.md)
 
@@ -183,6 +195,14 @@
 
 **RAPolicy** · `2609.22888v1` · 核心自我改进 / 在线VLA-RL / 异步真机学习 / 人在环
 
+### [Streaming-WAM: Action-Conditioned World-Action Model for Asynchronous Robot Manipulation](streaming-wam.md)
+
+**Streaming-WAM** · `2609.28927v1` · 支撑组件 / 世界动作模型 / 异步控制 / 真机
+
+### [TANDEM: Task and Motion Planning with As-Needed Demonstrations for Efficient Vision-Language-Action Model Fine-tuning](tandem.md)
+
+**TANDEM** · `2609.28314v1` · 支撑组件 / 自动数据采集 / 人机协同 / 真机
+
 ### [The Gaussian Is Enough: Flow-Matching Priors Do Not Help When Fine-Tuning Large Behavior Models](gaussian-is-enough.md)
 
 **The Gaussian Is Enough** · `2609.27070v1` · 边界案例 / 负结果 / 离线微调 / 真机
@@ -194,6 +214,10 @@
 ### [VLA-Corrector: Stage-Aware Observable State Understanding for Prompt-Based Closed-Loop Recovery of Vision-Language-Action Policies](vla-corrector.md)
 
 **VLA-Corrector** · `2609.06508v1` · 边界案例 / 任务内恢复 / 可观测验证器 / 仿真与真机
+
+### [Watch, Recall, Act: Always-On Robots in Concurrent Embodied Streams](watch-recall-act.md)
+
+**ARMS** · `2609.28429v1` · 支撑组件 / 自历史记忆 / 不重置流 / 双臂真机
 
 ### [World Action Agent: Harnessing VLMs for Robot Manipulation via World Action Rehearsal](world-action-agent.md)
 

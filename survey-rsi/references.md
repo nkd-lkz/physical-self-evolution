@@ -3,7 +3,22 @@
 
 # 引文溯源队列
 
-**89 条引文线索**，不是 89 篇已读论文。保留发现路径和原文定位；可能与原报告/候选重叠，升级前仍须按 ID、DOI、题名和作者合并。
+**90 条引文线索**，不是 90 篇已读论文。保留发现路径和原文定位；可能与原报告/候选重叠，升级前仍须按 ID、DOI、题名和作者合并。
+
+- **Yadav et al. (2026), Robust Finetuning of Vision-Language-Action Robot Policies via Parameter Merging, ICLR 2026 / arXiv:2512.08333v3.**
+  - 发现于：[引用它的原文](https://arxiv.org/html/2603.03818v2)
+  - 顺序模型合并与终身能力获取的重要基线；待核对真实任务序列、基础能力保持和真机分母
+  - 原始入口：[来源](https://arxiv.org/abs/2512.08333)
+
+- **Mandlekar et al. (2023), Human-in-the-Loop Task and Motion Planning for Imitation Learning, CoRL 2023 / arXiv:2310.16014.**
+  - 发现于：[引用它的原文](https://arxiv.org/abs/2609.28314)
+  - TANDEM的数据采集前身；待按相同人工时间重核数据效率、干预定义与长程任务覆盖
+  - 原始入口：[来源](https://arxiv.org/abs/2310.16014)
+
+- **Kang et al. (2026), Habilis-beta: a Strong Action Model for Robotic Manipulation, arXiv:2602.18813.**
+  - 发现于：[引用它的原文](https://arxiv.org/abs/2609.28429)
+  - ARMS使用的连续运行操作基线；待核对一小时协议、TPH/MTBI口径与人工干预标准，固定后训练策略不能直接视为RSI
+  - 原始入口：[来源](https://arxiv.org/abs/2602.18813)
 
 - **Elsayed, Vasan, and Mahmood (2024), Streaming Deep Reinforcement Learning Finally Works, arXiv:2410.14606.**
   - 发现于：[引用它的原文](https://arxiv.org/html/2609.28807v1)
@@ -308,16 +323,6 @@
   - 发现于：[引用它的原文](https://arxiv.org/html/2609.19906v1)
   - 引文元数据线索；原始链接未逐项打开，不计已核查新增
   - 原始入口：[来源](https://dx.doi.org/10.18653/v1/2026.eacl-long.163) · [来源](https://aclanthology.org/2026.eacl-long.163/)
-
-- **H. Liu, C. Kim, B. Liu, M. Liu, and Y. Zhu (2026) Pretrained Vision-Language-Action Models Are Surprisingly Resistant to Forgetting in Continual Learning.**
-  - 发现于：[引用它的原文](https://arxiv.org/html/2609.21358v1)
-  - 引文元数据线索；已定位原始入口但未读全文，不计已核查新增
-  - 原始入口：[来源](https://arxiv.org/abs/2603.03818)
-
-- **J. Zhu et al. (2026) Can Vision-Language-Action Models Learn from Real-World Data Continually without Forgetting?**
-  - 发现于：[引用它的原文](https://arxiv.org/html/2609.21358v1)
-  - 引文元数据线索；已定位原始入口但未读全文，不计已核查新增
-  - 原始入口：[来源](https://arxiv.org/abs/2605.26820)
 
 - **Z. Chen et al. (2026) PHASER: Phase-Aware and Semantic Experience Replay for Vision-Language-Action Models.**
   - 发现于：[引用它的原文](https://arxiv.org/html/2609.21358v1)

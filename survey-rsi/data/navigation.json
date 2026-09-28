@@ -14,6 +14,8 @@
       "gaussian-is-enough",
       "uncertainty-gated-exploration",
       "pacl",
+      "continual-vla-real-world",
+      "pretrained-vla-forgetting",
       "streaming-deep-rl-continual-robotics"
     ]
   },
@@ -28,7 +30,8 @@
       "internw0",
       "world-model-benchmarks-survey",
       "osram",
-      "ad-wm"
+      "ad-wm",
+      "streaming-wam"
     ]
   },
   {
@@ -64,7 +67,9 @@
       "beyond-end-task-success-audit",
       "memobench",
       "membodied",
-      "self-adaptive-vla"
+      "self-adaptive-vla",
+      "occ4m",
+      "watch-recall-act"
     ]
   },
   {
@@ -82,6 +87,8 @@
       "know-your-body",
       "adahvla",
       "osram",
+      "continual-vla-real-world",
+      "pretrained-vla-forgetting",
       "streaming-deep-rl-continual-robotics"
     ]
   },
@@ -117,7 +124,9 @@
       "embodiedskills",
       "spine",
       "x2real",
-      "roborecover"
+      "roborecover",
+      "tandem",
+      "watch-recall-act"
     ]
   },
   {
@@ -160,6 +169,8 @@
       "membodied",
       "roborecover",
       "uncertainty-gated-exploration",
+      "continual-vla-real-world",
+      "pretrained-vla-forgetting",
       "streaming-deep-rl-continual-robotics",
       "ad-wm"
     ]
