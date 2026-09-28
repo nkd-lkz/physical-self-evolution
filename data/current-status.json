@@ -1,133 +1,108 @@
 {
-  "as_of": "2026-09-22",
+  "as_of": "2026-09-28",
   "metrics": [
     {
-      "value": "22/40 · 55%",
-      "label": "train450 Stage1 10k；同cohort双复测聚合一致"
+      "value": "2000/2000",
+      "label": "ManiSkill RLT Stage 1 已完成并导出约9.93 GB最终权重"
     },
     {
-      "value": "18/40",
-      "label": "失败仍待逐episode归因；未证明RLT表征收益"
+      "value": "eval20 running",
+      "label": "20个固定reset、500控制步、完整拼接视频；成功率待结束"
     },
     {
-      "value": "196.25/200",
-      "label": "名义episode步数；不等于物理时间或反馈次数"
+      "value": "3 seeds",
+      "label": "FLARE启发的增量未来latent在horizon 1/5/10均优于对照"
     },
     {
-      "value": "125 papers",
-      "label": "09-19历史检索批次；当前文献总数见阅读总账"
+      "value": "step 2→4",
+      "label": "FLARE外挂真实Stage 2 smoke续跑并保留optimizer状态"
     },
     {
-      "value": "18 P0",
-      "label": "最高重合近邻，优先全文/附录/代码防撞"
+      "value": "17/17",
+      "label": "Zeva启发的memory reader真实FSDP参数已更新"
     },
     {
-      "value": "B0 degraded",
-      "label": "旧RLT Stage2约45%→15%，说明 learner 不应绑架 Physical Token 故事"
+      "value": "no stable gain",
+      "label": "当前learned memory reader未稳定优于无记忆对照"
     },
     {
-      "value": "3 routes",
-      "label": "Representation-first / Physical Critic / WAM-compatible interface"
+      "value": "40 transitions",
+      "label": "VR单环境learner smoke；12条为脚本接管，不是真实人工样本"
     },
     {
-      "value": "D0–D5",
-      "label": "RoboDojo工程Gate已到D5；真机同事继续推进任务/reference"
+      "value": "4 isolated lines",
+      "label": "baseline / FLARE / Zeva / VR保持分支隔离，尚未混合变量"
     }
   ],
   "timeline": [
     {
-      "title": "09-22迁移与干预核查 · 未新增GPU实验",
-      "body": "迁移包保留代码/元数据而缺历史权重与原始数据；当前先恢复冻结reference。旧clean50/12k Stage2的expert=null，请求与干预摘要均为0，Hammer纠错闭环尚未接通。"
+      "title": "09-28 · ManiSkill Stage 1训练完成",
+      "body": "从step 750保留optimizer恢复并完成2000/2000；最终loss/rlt/vla约0.42236/0.41457/0.00779，权重已导出。训练loss不是闭环成功率。"
     },
     {
-      "title": "100/200是名义动作预算",
-      "body": "H50/C50下，warmup通过后通常前两个chunk由reference控制，后两个由actor控制；不是100/200次物理步或闭环反馈。不能照搬连续3个停滞chunk的专家阈值。"
+      "title": "eval20首次失败已隔离，不计结果",
+      "body": "首次评测因policy_setup=None在第一次动作转换前退出，没有有效episode。修复为panda-qpos pass-through后，GPU 2重跑已经进入rollout和视频录制；最终成功率仍待完成。"
     },
     {
-      "title": "把减干预变成可证伪问题",
-      "body": "固定专家与门控先验证后果监督，之后单独研究预测式gate。分开统计无专家/辅助成功率、专家控制秒数、切换事件和墙钟吞吐率；全部仍为待验证方案。"
+      "title": "FLARE启发 · 从直接预测改为增量预测",
+      "body": "直接回归未来latent弱于状态保持。增量版在固定split的三个初始化上，horizon 1/5/10误差均更低；动作打乱会恶化，说明动作输入被使用。"
     },
     {
-      "title": "09-22评测证据补充 · train450 Stage1 10k",
-      "body": "用户截图报告GPU6 22/40成功、return=0.55、mean reward约0.00287，与此前GPU7聚合一致。与09-18已有记录关联；无新run ID，暂不新增运行次数或独立seed。"
+      "title": "FLARE在线链路通过，不等于控制收益",
+      "body": "真实GPU Stage 2 smoke、参数变化审计和step 2→4续跑通过。尚无等预算success曲线、收敛transition或跨任务结果。"
     },
     {
-      "title": "指标与视频口径",
-      "body": "reward约0.00287是按步平均，不是成功奖励幅度；W&B已同步但0 media不能推出本地无视频。平均196.25/200步需拆分成功、失败与超时统计。"
+      "title": "Zeva启发 · memory reader真实更新",
+      "body": "修复FSDP optimizer分组后，step 1→4与4→6均有17/17 reader张量变化，optimizer状态保留。"
+    },
+    {
+      "title": "Zeva诊断保留负结果",
+      "body": "成功示范和隐藏PD刚度数据中，learned reader没有稳定优势；固定历史响应公式明显更准，指向可辨识统计量和读取结构瓶颈。"
+    },
+    {
+      "title": "VR本地控制与服务器learner分开验收",
+      "body": "Windows/PICO已进入本地末端跟随、限位、碰撞恢复和夹爪映射调试。服务器40-transition smoke含12条scripted takeover与33次更新，但真实PICO跨机器在线闭环尚未通过。"
     },
     {
       "title": "当前科研结论",
-      "body": "55%是当前开发cohort闭环结果；未证明逐seed轨迹一致、优于旧clean50/12k的50%，也未证明RLT或Physical Token表征收益。"
-    },
-    {
-      "title": "09-19研究重点 · 科研思路深挖",
-      "body": "暂停继续堆代码与实验变量，优先梳理 Physical Token 的定义、近邻论文、创新边界和几套可证伪方案。"
-    },
-    {
-      "title": "Physical Token 不再绑定 RLT",
-      "body": "RLT保留为 compact-readout baseline；RECAP、V-GPS/Q-VGM、offline/online RL、WAM都可以是 downstream learner。"
-    },
-    {
-      "title": "125项文献总账建立",
-      "body": "所有条目至少有检索级方法/项目关系/核验边界；精读与摘要阅读严格分开管理。"
-    },
-    {
-      "title": "Wave 0 防撞优先",
-      "body": "先精读 FLARE、Pri4R、AGRA、CometVLA、PAR、DyWA、TACO、RoboPack、MSDP、exUMI、Spline Policy、LeTO、V-GPS、FlowDAgger、DSRL、HPT、GeoAAC 等。"
-    },
-    {
-      "title": "当前最强定义候选",
-      "body": "Physical Token 更适合定义成 action-side、action-consequence-sufficient control latent，而不是物理参数表或简单 proprio token。"
-    },
-    {
-      "title": "真机数据合同反推方法",
-      "body": "优先让同事确认 actual q/qdot、EEF/object state、F/T/tactile、timestamps、applied command、controller delay/contact labels，再决定哪些 physics supervision 可落地。"
-    },
-    {
-      "title": "实验线仍保留",
-      "body": "Stage1 10k同cohort双复测22/40、旧B0退化、RoboDojo D3/D5等既有事实继续保留；本次截图不增加独立评测样本。"
+      "body": "最强正向信号来自FLARE启发的离线增量预测；Zeva分支给出有价值的读取负结果；VR提供未来人工干预数据通道。三者均未证明Stage 2更快收敛、减少干预或迁移到新任务。"
     }
   ],
   "plan": [
     {
       "priority": "P0",
-      "action": "恢复train450/10k完整wrapper、匹配norm与Hammer资源",
-      "evidence": "先单观测/单seed，再4–8个串行开发回合；迁移元数据已有，旧权重缺失，串行协议单独记录"
+      "action": "完成并审计ManiSkill Stage 1 eval20",
+      "evidence": "确认20/20 episode、eval/success_once、逐episode终止原因和MP4可解码；首次失败run不计入样本"
     },
     {
       "priority": "P0",
-      "action": "复盘已有旧12k视频，选择一种可恢复失败类型",
-      "evidence": "旧20回合不冒充新10k的18次失败；记录阶段、实际时长与未知原因"
+      "action": "固定最终Stage 1 reference并建立等预算Stage 2 baseline",
+      "evidence": "同一checkpoint、norm、seed、环境、交互预算与评测协议；先证明baseline不退化"
     },
     {
       "priority": "P0",
-      "action": "接通最小Hammer专家纠错与计时",
-      "evidence": "固定phase/gate/expert；验证从当前状态恢复、实际动作、控制秒数、请求/执行/归还与terminal"
+      "action": "完成一个真实PICO到GPU 2 learner的端到端回合",
+      "evidence": "人工动作计数、实际执行动作、上传ack、update_step、policy_version、动作回传和本地原始记录同时成立"
     },
     {
       "priority": "P1",
-      "action": "缓存少量交互特征，做后果预测对照",
-      "evidence": "state/history vs 原RLT/prefix vs head；相同输入/容量/episode划分，真实执行后果与validity mask"
+      "action": "做baseline / direct / residual未来预测的在线等预算消融",
+      "evidence": "success曲线、达到阈值所需transition、失败恢复、额外显存/时延；至少多seed"
     },
     {
       "priority": "P1",
-      "action": "原eval40结果拿回后核对逐seed与失败视频",
-      "evidence": "新10k 22/40仅沿用既有截图；不增加独立样本，不承诺串行重现同一聚合"
+      "action": "重做交互记忆读取对照",
+      "evidence": "预先冻结新测试集；无记忆、近期、检索、显式响应统计；加入隐藏动力学与失败/纠正轨迹"
     },
     {
       "priority": "P1",
-      "action": "固定专家与gate，冻结成功率/吞吐率及成本合同",
-      "evidence": "无专家/辅助评测分开；累计专家秒数为主成本，事件数和训练/交互/墙钟预算分别报告"
-    },
-    {
-      "priority": "P1",
-      "action": "继续近邻防撞与可用物理数据合同",
-      "evidence": "ThriftyDAgger/LazyDAgger门控近邻；head/prefix/history对照；传感器、单位与可部署输入"
+      "action": "统一干预成本口径",
+      "evidence": "无辅助与有辅助成功率分开；人工控制秒数、接管事件、训练transition和墙钟时间分别报告"
     },
     {
       "priority": "Later",
-      "action": "可信小learner上比较B0/B1/B2，再独立比较预测式gate",
-      "evidence": "专家、数据、动作时间语义和资源匹配；多任务从留出物理条件与第二任务开始"
+      "action": "单变量成立后再研究组合与迁移",
+      "evidence": "先跨物理条件，再第二任务；保留旧任务能力，不提前合并FLARE、Zeva和VR变量"
     }
   ]
 }

@@ -1,5 +1,25 @@
 [
   {
+    "date": "2026-09-28",
+    "title": "ManiSkill RLT Stage 1 完成 2000 step，固定20回合评测进行中",
+    "summary": "两张L40上的Stage 1从step 750保留optimizer恢复并完成2000/2000，最终权重已导出。首次eval20因policy_setup缺失在动作转换前失败，不计有效episode；提交853e664c修复Panda joint-action pass-through后，GPU 2重跑已进入rollout与完整拼接视频录制。成功率尚未产生，不能用训练loss替代。"
+  },
+  {
+    "date": "2026-09-27",
+    "title": "FLARE启发的增量未来latent预测完成三初始化复测",
+    "summary": "固定split、300 updates、seed 2026/2027/2028下，增量预测在horizon 1/5/10的独立测试cosine error均低于状态保持与直接预测；真实Stage 2 smoke、参数变化审计和step 2→4续跑通过。结果支持动作后果预测形式选择，不证明在线成功率、收敛加速或跨任务迁移。"
+  },
+  {
+    "date": "2026-09-27",
+    "title": "Zeva启发的交互记忆完成真实更新，并保留读取负结果",
+    "summary": "修复FSDP optimizer分组后，真实smoke与续跑中17/17 memory reader张量更新。成功示范及隐藏PD刚度诊断中，learned reader没有稳定优于无记忆对照；固定历史响应公式显著更准，说明历史有信息但当前读取网络仍是瓶颈。"
+  },
+  {
+    "date": "2026-09-27",
+    "title": "PICO VR单环境在线learner完成脚本接管smoke",
+    "summary": "GPU 2隔离运行40条仿真transition，其中12条为scripted takeover，actor/critic各更新33次并验证发布、去重和checkpoint恢复。Windows/PICO已进入本地机械臂控制调试，但真实PICO→校园网→learner→动作回传尚未整链验收，scripted样本不计人工干预。"
+  },
+  {
     "date": "2026-09-22",
     "title": "迁移与干预讨论入库（代码核查/研究设计，非新增GPU实验）",
     "summary": "明确旧clean50/12k Stage2未启用Hammer专家；解释H50/C50、100步切换与200名义步。新增冻结reference恢复、最小脚本专家、缓存后果probe和固定expert/gate的研究合同；55%仍沿用既有截图证据，不增加独立样本。"

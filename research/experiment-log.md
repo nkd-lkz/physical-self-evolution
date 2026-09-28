@@ -1,5 +1,19 @@
 # 实验日志
 
+## 2026-09-28 · ManiSkill RLT baseline、FLARE、Zeva 与 PICO VR 进展
+
+新的 ManiSkill `PegInsertionSide` 实验线已形成四个隔离分支。Baseline Stage 1 从 step 750 保留 optimizer 状态恢复，并完成 `2000/2000`；最终权重已导出。20 个固定 reset 的闭环评测首次因缺少 `policy_setup` 在动作转换前失败，该次不计 episode；修复为 Panda joint-action pass-through 后，重跑已进入 rollout 与完整视频录制，最终成功率仍待任务结束。
+
+FLARE 启发分支用真实未来观测的冻结 RLT latent 监督动作条件化预测。直接回归未来 latent 弱于状态保持；增量预测在固定 split、三个初始化和 horizon 1/5/10 上均得到更低 cosine error，且真实 Stage 2 smoke / resume 的参数更新审计通过。它仍未证明在线成功率、收敛或迁移收益。
+
+Zeva 启发分支已修复 FSDP 下 memory reader 未进入 critic optimizer 的问题，真实 smoke 与续跑中 `17/17` reader 张量更新。成功示范和隐藏动力学诊断均未显示 learned reader 的稳定优势；固定历史响应公式明显更准，说明信息存在而读取方式仍是瓶颈。这一结果按负结果保留。
+
+PICO VR 分支已达到 Windows 本地仿真与手柄调试，并完成 GPU 2 单环境 learner 的 40-transition scripted smoke、33 次 actor/critic 更新及 checkpoint 恢复。真实 PICO 跨机器上传与在线更新尚未整链验收，不能把 scripted takeover 计为人工干预结果。
+
+四条线的具体提交、数值、解释边界和下一步 Gate 见[09-28 完整快照](https://nkd-lkz.github.io/physical-self-evolution/reader.html?path=research/progress-2026-09-28-maniskill-rlt.md)。本次不修改 RSI 综述区，也不把短 smoke 解释为算法有效。
+
+---
+
 ## 2026-09-22 · 迁移核查与干预讨论整理（无新增GPU运行）
 
 归档元数据确认train450/eval40无seed交叉，最后Stage1日志为10823；迁移包缺历史权重和原始数据。旧12k物理诊断20回合与新10k eval40严格区分。旧Stage2配置expert=null、请求/干预摘要为0，尚无Hammer专家纠错闭环。

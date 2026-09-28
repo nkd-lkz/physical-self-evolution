@@ -15,6 +15,16 @@ Living research website for **Universal Physical Token, robot self-improvement, 
 
 **https://nkd-lkz.github.io/physical-self-evolution/**
 
+## ManiSkill RLT implementation update — 2026-09-28
+
+- [完整进度快照](research/progress-2026-09-28-maniskill-rlt.md)：区分 baseline、FLARE 动作后果表征、Zeva 交互记忆和 PICO VR 接管四条隔离代码线，并列出已验证证据与未完成 Gate。
+- Baseline Stage 1 已完成 2000 step 并导出最终权重；20 个固定 reset、500 控制步和完整拼接视频的评测正在 GPU 2 上运行，成功率尚未入库。
+- FLARE 启发的增量未来 latent 预测在固定划分的三个初始化上优于状态保持与直接预测，真实 Stage 2 smoke / resume 已通过；在线收敛收益未验证。
+- Zeva 启发的 memory reader 已在真实 FSDP smoke 中更新并可续跑，但当前学习型 reader 没有稳定预测优势；保留这一负结果。
+- Windows / PICO 已进入本地仿真控制调试；服务器单环境 learner 的 40-transition scripted smoke 已通过，真实 PICO 跨机器在线更新仍待验收。
+
+上述内容属于 RLT / Physical Token 项目，不写入 `survey-rsi/`。训练 loss、短 smoke 和参数变化均不等价于任务成功率或自进化能力。
+
 ## Guided reading and prototype — 2026-09-26
 
 - [六篇联合导读：Zeva / Harness VLA / SHAPER / ASPIRE / ENPIRE / Zetta](research/six-papers-guided-reading-2026-09-26.md)：按自进化发生的位置选择实验。
@@ -98,6 +108,7 @@ Current source of truth:
 - [`research/physical-token-leadership-spec.md`](research/physical-token-leadership-spec.md)
 - [`research/master-roadmap.md`](research/master-roadmap.md)
 - [`research/rlt-multitask-benchmark.md`](research/rlt-multitask-benchmark.md)
+- [`research/progress-2026-09-28-maniskill-rlt.md`](research/progress-2026-09-28-maniskill-rlt.md) — current ManiSkill baseline, FLARE, Zeva and VR implementation evidence
 - [`research/progress-2026-09-22.md`](research/progress-2026-09-22.md) — latest evaluation evidence and counting boundaries
 - [`research/progress-2026-09-18.md`](research/progress-2026-09-18.md) — detailed execution snapshot
 - [`research/progress-2026-09-17.md`](research/progress-2026-09-17.md) — previous detailed snapshot
