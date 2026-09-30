@@ -51,6 +51,7 @@
 
 - [Axis：部署回流、数据筛选与技能适用范围](axis-capability-library.md)（官方博客，自述证据）
 - [Physical RSI 资料核验与 RLT 小实验](../research/physical-rsi-source-intake-2026-09-30.md)（研究备忘；非新增实验结果）
+- [PhysicalRSI 1.0：程序自改进与 RLT 适用范围实验](physicalrsi-mmlab.md)（MMLab 官方项目页；未复现）
 
 ## 已有独立笔记
 

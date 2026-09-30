@@ -19,6 +19,7 @@ Living research website for **Universal Physical Token, robot self-improvement, 
 
 - [新资料摄取与三步实验](research/physical-rsi-source-intake-2026-09-30.md)：核验 RPent、Astra 42 任务评测、Axis、Simate、RoboICL 与 IROS 相关原始论文；区分公开证据、团队自述和二次转述，将接触后果监督、经验检索、等预算 RL 分开设计。
 - [Axis 仿真到真机回流与技能库](notes/axis-capability-library.md)：校正“零真机数据”和纯计算成本的口径；[Astra 笔记](notes/astra-robodojo.md)补入 42 任务论文；[RPent 笔记](notes/rpent.md)补入任务卡对照。
+- [HKU MMLab PhysicalRSI 1.0](notes/physicalrsi-mmlab.md)：自改写 harness 与 RLT 的创新边界；提出经验适用范围门控的离线诊断和等预算后续对照。
 
 这些是论文/官网阅读与待验证实验，没有新增闭环提升或真机结果。Simate 官网当时标注 RoboDojo 评估进行中，媒体所称榜首未被当作已验证排名。
 
