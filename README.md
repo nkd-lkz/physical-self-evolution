@@ -15,6 +15,10 @@ Living research website for **Universal Physical Token, robot self-improvement, 
 
 **https://nkd-lkz.github.io/physical-self-evolution/**
 
+## RLT 近邻论文专题 — 2026-09-30
+
+- [UniMPA：预期转移、历史可执行动作与 flow 生成](notes/unimpa.md)；[F4R：失败诊断、目标化仿真与再训练闭环](notes/f4r.md)。两项是项目研究所需的独立文献笔记，未复现代码或真机；与现有 [三分支前沿对照](research/literature/frontier-rlt-2026-09-30.md)衔接。
+
 ## Three-branch audit and research proposals — 2026-09-30
 
 下午续作已完成：[99 次预定诊断＋12 次追加 CPU 拟合与人工接管入口](research/three-branch-audit-2026-09-30.md#下午续作预先固定实验矩阵与人工介入入口)。Zeva 支持度门控降低开发预测误差；Jev 排序随 BC／数据条件变化；FLARE 已补齐动作前缀敏感性和匹配 online 配置。原始统计与新结果图见[结构化记录](data/continuation-2026-09-30.json)。小模型矩阵约 31 分钟完成后已释放 GPU；不是 12 小时大训练，也不是 111 次机器人闭环。完整 Jev online 仍保留 12 小时空闲等待预算。
@@ -56,7 +60,7 @@ VR 单环境 `horizon=1` pilot 已准备，支持真实人工 transition、有�
 - [Six concise paper notes](research/literature/reading-notes-2026-09-25.md): FLARE, Pri4R, AGRA, Spline Policy, CometVLA and PAR; existing entries promoted to an initial discussion, no reproduction claimed.
 - [Chelsea Finn talk perspective](research/chelsea-finn-physical-rsi-talk-2026-09-25.md): distinguishes secondary talk coverage, PI primary RECAP / π0.7 evidence, and open verification questions.
 - [FLARE-inspired RLT experiments](research/flare-rlt-contact-experiments-2026-09-25.md): matched future/outcome loss controls, separate candidate-action screening, intervention accounting and held-out-task transfer; all are proposals.
-- [Reading ledger](research/literature/reading-ledger.md): 132 existing paper/project entries and 2 separately counted perspectives.
+- [Reading ledger](research/literature/reading-ledger.md): 134 paper/project entries and 2 separately counted perspectives as of 2026-09-30.
 
 ## Discussion update — 2026-09-22
 

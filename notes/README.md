@@ -1,6 +1,12 @@
 # Paper Notes Index
 
-> 规则：独立 notes 表示已经专题阅读/精读的论文或系统；132 项论文/项目总账（另列 2 项观点）在 `research/literature/reading-ledger.md` 中维护，且每篇至少已有检索 mini-note。
+> 规则：独立 notes 表示已经专题阅读/精读的论文或系统；134 项论文/项目总账（另列 2 项观点）在 `research/literature/reading-ledger.md` 中维护。新增 P133/P134 为正文/实验/附录专题阅读，尚未代码复现；原 125 项历史检索稿仍为检索级 mini-note。
+
+## 2026-09-30：RLT 两篇直接近邻
+
+- [UniMPA：预期转移、视觉动作记忆与 flow 原型](unimpa.md) — P133，区分训练期未来监督、部署期 World Expert 和跨 rollout 异步记忆。
+- [F4R：真机失败到目标化仿真再训练](f4r.md) — P134，区分失败诊断、纠偏共训与 RL 的增益以及总成本。
+- [三分支前沿邻近工作](../research/literature/frontier-rlt-2026-09-30.md) — 两篇均是已覆盖的 P0 对照；新增专题笔记不意味着我们已复现。
 
 ## 2026-09-26：六篇联合导读与 Zeva 精读
 
@@ -60,7 +66,7 @@
 
 ## 阅读总账
 
-- [132 项论文/项目与 2 项观点目录](../research/literature/reading-ledger.md)
+- [134 项论文/项目与 2 项观点目录](../research/literature/reading-ledger.md)
 - [125 项检索与防撞审查](../research/literature/physical-token-literature-audit-2026-09-19.md)
 
 升级为“精读”时，优先新建独立 note，并在 reading ledger 中更新状态。
