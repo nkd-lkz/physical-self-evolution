@@ -1,5 +1,19 @@
 # 实验日志
 
+## 2026-09-30 · Stage 1 eval20、Stage 2 baseline、FLARE 对照与 Jev 分支
+
+ManiSkill Stage 1 step 2000 的固定 20 回合闭环评测已经正常结束：`eval/success_once=0.4`、`return=0.4`、mean episode length `335.25`，即 8/20 成功。该点估计建立了当前 Stage 1 reference，但不能单独证明训练充分收敛、没有过拟合或 RL token 已学到物理规律。
+
+正式 baseline Stage 2 已在 GPU 0/1 上运行，配置为 64 个训练环境、256 个固定评估环境和 5000 global step，自动 expert 关闭。截至快照至少到 `149/5000`、`rlt/update_step=46400`；global step 24/49/74/99/124 的评估成功率分别约为 37.89%/36.33%/40.23%/35.94%/42.19%。这是单个在途 run 的周期结果，不是五个独立实验，也不是最终 checkpoint。
+
+FLARE 启发分支完成 baseline / sidecar 各 100 global step 的中等 smoke。两组均 exit 0，并各进行 200 次 actor/critic 更新；每 10 step 的 10 次单环境评估全部为 0 成功。训练中的 baseline 1 次、FLARE 2 次成功都发生在第 0 步、`actor_switch_rate=0` 的 VLA reference 阶段，不能归因于新 actor 或 sidecar。FLARE 的 54 个在线张量有 50 个变化，未来预测 loss 前 10/后 10 轮均值约 0.217/0.146，只能证明更新链路，不证明控制收益。下一轮需统一 `use_orig_params` 并延长可验证的 BC 热身。
+
+新增 Jev 启发的 `research/rlt-jev-atomic-decisions` 分支（`020e0cf6`）。它不调用 Jev API，也不使用模拟器候选预演；在冻结 VLA reference 周围构造最多 17 个受限关节 chunk，由本地选择器决策，连续 critic 仍用实际执行动作训练。229 项 CPU 回归通过；合成诊断发现并修正 selector 饱和问题。GPU 2 的只读 `--check` 已通过，但真实 placement probe 和 ManiSkill smoke 尚未执行。
+
+五条线的提交、指标、边界和下一步 Gate 见[09-30 完整快照](https://nkd-lkz.github.io/physical-self-evolution/reader.html?path=research/progress-2026-09-30-maniskill-rlt.md)。本次不修改 RSI 综述区；Zeva 与 VR 没有新增能力结论。
+
+---
+
 ## 2026-09-28 · ManiSkill RLT baseline、FLARE、Zeva 与 PICO VR 进展
 
 新的 ManiSkill `PegInsertionSide` 实验线已形成四个隔离分支。Baseline Stage 1 从 step 750 保留 optimizer 状态恢复，并完成 `2000/2000`；最终权重已导出。20 个固定 reset 的闭环评测首次因缺少 `policy_setup` 在动作转换前失败，该次不计 episode；修复为 Panda joint-action pass-through 后，重跑已进入 rollout 与完整视频录制，最终成功率仍待任务结束。

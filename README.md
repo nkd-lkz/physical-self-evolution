@@ -15,13 +15,13 @@ Living research website for **Universal Physical Token, robot self-improvement, 
 
 **https://nkd-lkz.github.io/physical-self-evolution/**
 
-## ManiSkill RLT implementation update — 2026-09-28
+## ManiSkill RLT implementation update — 2026-09-30
 
-- [完整进度快照](research/progress-2026-09-28-maniskill-rlt.md)：区分 baseline、FLARE 动作后果表征、Zeva 交互记忆和 PICO VR 接管四条隔离代码线，并列出已验证证据与未完成 Gate。
-- Baseline Stage 1 已完成 2000 step 并导出最终权重；20 个固定 reset、500 控制步和完整拼接视频的评测正在 GPU 2 上运行，成功率尚未入库。
-- FLARE 启发的增量未来 latent 预测在固定划分的三个初始化上优于状态保持与直接预测，真实 Stage 2 smoke / resume 已通过；在线收敛收益未验证。
-- Zeva 启发的 memory reader 已在真实 FSDP smoke 中更新并可续跑，但当前学习型 reader 没有稳定预测优势；保留这一负结果。
-- Windows / PICO 已进入本地仿真控制调试；服务器单环境 learner 的 40-transition scripted smoke 已通过，真实 PICO 跨机器在线更新仍待验收。
+- [完整进度快照](research/progress-2026-09-30-maniskill-rlt.md)：汇总 baseline、FLARE 动作后果表征、Zeva 交互记忆、Jev 有限动作决策和 PICO VR 五条隔离代码线，并列出已验证证据与未完成 Gate。
+- Baseline Stage 1 已完成 2000 step；固定 20 回合闭环评测为 **8/20（40%）**。正式 Stage 2 正在两张 L40 上运行；截至快照至少到 149/5000，前五次 256 环境评估约为 35.9%–42.2%，尚未形成最终结果。
+- FLARE 启发的增量未来 latent 预测保留三初始化离线正向结果。最新 baseline / FLARE 各 100 轮在线对照均正常退出，但两组 10 次单环境评估全部失败；预测网络在更新，控制收益没有得到支持。
+- Jev 启发分支新增最多 17 个 reference-relative 有限动作候选和本地选择器。229 项 CPU 回归通过，三 seed 合成诊断验证修正后的更新方式；GPU 只读预检通过，尚未执行 ManiSkill smoke。
+- Zeva reader 的真实更新和负结果、Windows / PICO 本地调试及服务器 scripted takeover 证据继续保留；两者都没有新增能力结论。
 
 上述内容属于 RLT / Physical Token 项目，不写入 `survey-rsi/`。训练 loss、短 smoke 和参数变化均不等价于任务成功率或自进化能力。
 
@@ -108,7 +108,8 @@ Current source of truth:
 - [`research/physical-token-leadership-spec.md`](research/physical-token-leadership-spec.md)
 - [`research/master-roadmap.md`](research/master-roadmap.md)
 - [`research/rlt-multitask-benchmark.md`](research/rlt-multitask-benchmark.md)
-- [`research/progress-2026-09-28-maniskill-rlt.md`](research/progress-2026-09-28-maniskill-rlt.md) — current ManiSkill baseline, FLARE, Zeva and VR implementation evidence
+- [`research/progress-2026-09-30-maniskill-rlt.md`](research/progress-2026-09-30-maniskill-rlt.md) — current ManiSkill baseline, FLARE, Zeva, Jev and VR implementation evidence
+- [`research/progress-2026-09-28-maniskill-rlt.md`](research/progress-2026-09-28-maniskill-rlt.md) — previous ManiSkill implementation snapshot
 - [`research/progress-2026-09-22.md`](research/progress-2026-09-22.md) — latest evaluation evidence and counting boundaries
 - [`research/progress-2026-09-18.md`](research/progress-2026-09-18.md) — detailed execution snapshot
 - [`research/progress-2026-09-17.md`](research/progress-2026-09-17.md) — previous detailed snapshot

@@ -1,5 +1,25 @@
 [
   {
+    "date": "2026-09-30",
+    "title": "ManiSkill Stage 1 step 2000固定20回合评测为8/20",
+    "summary": "修复policy_setup后，20个固定reset、每回合最多500控制步的闭环评测正常退出：success_once/return均为0.4，mean episode length为335.25。该结果建立当前reference点估计，不证明Stage 1充分收敛、没有过拟合或RL token获得通用物理规律。"
+  },
+  {
+    "date": "2026-09-30",
+    "title": "正式baseline Stage 2启动并进入在线更新",
+    "summary": "两张L40、64训练环境、256固定评估环境、5000步预算，自动expert关闭。截至快照至少149/5000、update_step=46400；前五次评估约37.89%/36.33%/40.23%/35.94%/42.19%。这是同一在途run的周期指标，不是独立实验或最终收敛结论。"
+  },
+  {
+    "date": "2026-09-30",
+    "title": "FLARE 100轮在线对照链路通过，但未显示成功率收益",
+    "summary": "baseline与FLARE均完成100个global step并正常退出；各10次单环境评估全部失败。训练中的1次与2次成功均发生在actor接管前的VLA reference阶段。FLARE 50/54个在线张量更新、预测loss下降只证明学习链路，不能证明控制提升。下一轮需统一FSDP并验证BC热身。"
+  },
+  {
+    "date": "2026-09-30",
+    "title": "Jev启发的RLT有限动作决策分支完成首版开发",
+    "summary": "research/rlt-jev-atomic-decisions提交020e0cf6：围绕VLA reference构造最多17个受限关节候选，由本地选择器决策，连续critic仍学习实际执行动作；不调用Jev API或模拟器预演。229项CPU回归通过，三seed合成诊断修复selector饱和；GPU只读预检通过，真实smoke未运行。"
+  },
+  {
     "date": "2026-09-28",
     "title": "ManiSkill RLT Stage 1 完成 2000 step，固定20回合评测进行中",
     "summary": "两张L40上的Stage 1从step 750保留optimizer恢复并完成2000/2000，最终权重已导出。首次eval20因policy_setup缺失在动作转换前失败，不计有效episode；提交853e664c修复Panda joint-action pass-through后，GPU 2重跑已进入rollout与完整拼接视频录制。成功率尚未产生，不能用训练loss替代。"
