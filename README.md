@@ -25,6 +25,9 @@ Living research website for **Universal Physical Token, robot self-improvement, 
 - [调研与阅读库](https://nkd-lkz.github.io/physical-self-evolution/index.html#library)：项目笔记自动收录，按类型与主题筛选。
 
 后续维护遵循 [统一发布流程](research/knowledge-base-maintenance.md)：源文件保留在原目录，首页自动汇总；不再新增竞争性总览。下面保留历次更新摘要供追溯。
+## 经验可信度与视觉诊断更新 — 2026-10-01
+
+[最新实现与实验记录](research/physical-rsi-source-intake-2026-09-30.md#2026-10-01-实现与实验续作)：核对 PhysicalRSI、EXPO-FT 和视觉近邻，完成 FLARE 验证阈值评估、Zeva 延迟反馈版本保护、Jev 相对参考动作准入诊断，并建立独立视觉证据分支。完成 12 次 CPU 小模型拟合、324 条合成延迟序列和 3 个 checkpoint 的缓存评估；保留门槛阻碍有效修正等负结果。没有新增机器人成功率结论，也没有占用正在使用的 GPU 2。[结果与校验值](data/evidence-gates-2026-10-01.json)。
 
 ## ManiSkill RLT 晚间实验更新 — 2026-09-30
 
