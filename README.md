@@ -17,6 +17,8 @@ Living research website for **Universal Physical Token, robot self-improvement, 
 
 ## RLT 近邻论文专题 — 2026-09-30
 
+- [注意力可视化、ActGaze 近邻与经验条件视觉证据方案](research/literature/visual-evidence-rlt-2026-09-30.md)：区分热图、输入依赖与闭环控制；新增 FLARE 时序诊断、Zeva 90 条遗忘测试流和 Jev 6 次候选覆盖拟合。CPU 回归更新为 **196 / 206 / 206 passed**；没有新 GPU 作业或第四分支训练。
+
 - [UniMPA：预期转移、历史可执行动作与 flow 生成](notes/unimpa.md)；[F4R：失败诊断、目标化仿真与再训练闭环](notes/f4r.md)。两项是项目研究所需的独立文献笔记，未复现代码或真机；与现有 [三分支前沿对照](research/literature/frontier-rlt-2026-09-30.md)衔接。
 
 ## Three-branch audit and research proposals — 2026-09-30
