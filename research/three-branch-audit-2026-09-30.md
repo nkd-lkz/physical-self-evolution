@@ -2,6 +2,8 @@
 
 这份记录区分首轮 42 次诊断与下午续作。首轮修复了 FLARE 的掩码梯度问题，并为 Zeva、Jev 补齐可解释且可执行的对照；该轮 baseline 与 VR 未改动。下午新增人工接管入口，但仍未改动正式 baseline。首轮运行目录为 `three_branch_audit_20260930_1247`，结构化结果见 [JSON](../data/three-branch-audit-2026-09-30.json)，原始权重与日志留在服务器 NAS 的 `research/` 下。首轮测试使用开发工作树，manifest 同时记录基准 commit、diff 哈希与源文件哈希，而不是冒称运行于最终提交。
 
+晚间 Jev GPU 2 online pilot 已完成，更新见[本页晚间追加](#晚间追加jev-online-pilot完成但没有离开reference)。它替代了本文早先“仍在等待”的运行状态，但不改变首轮和下午矩阵的历史记录。
+
 本轮代码分别提交并推送为 [FLARE `3ca6f246`](https://github.com/nkd-lkz/UPT_dev/commit/3ca6f246)、[Zeva `547d634e`](https://github.com/nkd-lkz/UPT_dev/commit/547d634e)、[Jev `6c5cf66d`](https://github.com/nkd-lkz/UPT_dev/commit/6c5cf66d)。三个工作树均保持独立，没有合并回 baseline。各分支 `experiments/maniskill_rlt/AUDIT_2026-09-30{,.zh-CN}.md` 包含中英文复查命令。
 
 ## 下午续作：预先固定实验矩阵与人工介入入口
@@ -21,7 +23,7 @@
 
 `research/scripts/experiment_queue.py` 声明 11 组、99 次小模型拟合，最多 12 小时；每组最多一小时。CPU 任务使用单线程，只有缓存特征上的小预测器共享 GPU 2，沿用至少 8 GiB 余量和 4% PyTorch allocator 上限。任何失败/超时停止后续组，只终止本队列创建的 child group，不停止其他用户或 baseline 作业。完成预定矩阵即结束，不为填满时间重复计算。它执行预设实验，不代表后台模型会持续自行改代码。
 
-Jev 完整在线队列仍等待 GPU 2 空闲；本矩阵不绕过其资源限制。数据仍为已查看的开发集，更多种子不等于新的独立任务。新增论文与借鉴范围见[前沿清单](literature/frontier-rlt-2026-09-30.md)。
+本矩阵运行时，Jev 完整在线队列仍等待 GPU 2 空闲且没有绕过资源限制；它随后于晚间完成，见本页追加。数据仍为已查看的开发集，更多种子不等于新的独立任务。新增论文与借鉴范围见[前沿清单](literature/frontier-rlt-2026-09-30.md)。
 
 ### 已完成的 CPU 对照与一轮基于结果的修正
 
@@ -63,6 +65,16 @@ tmux new-session -s rlt_vr_hil 'bash run_rlt_vr_hil_pilot.sh run; exec bash'
 ```
 
 Windows 继续通过 SSH tunnel 8775 和 `client --online` 接入；启动前按[中英文操作指南](https://github.com/nkd-lkz/UPT_dev/blob/feature/rlt-pico-vr-intervention/experiments/maniskill_rlt/VR_ONLINE.zh-CN.md)输入相同口令。**该入口是 baseline RLT 的单环境单步变体，不是给正在运行的 64 环境、10 步 head 插入接管。** GPU 2 被占用时会拒绝启动，不能保证操作者回来时资源已空闲。
+
+## 晚间追加：Jev online pilot 完成，但没有离开 reference
+
+等待器在 GPU 2 连续两次满足空闲条件后启动。分支 `research/rlt-jev-atomic-decisions` 修复嵌套 FSDP root 和 checkpoint 汇总路径后固定于 `d3618b18`；2-step smoke 与随后从头初始化的 20-step pilot 均正常退出，没有操作 GPU 0/1 的 baseline 作业。
+
+pilot 使用 2 个训练环境、4 个固定评估环境、500 控制步 episode、micro/global batch 8/32，每轮最多 16 次 learner 更新。最终完成 320 次 actor 和 320 次 critic 更新；outer step 4/9/14/19 的 `eval/success_once` 均为 0.5，保存最终 checkpoint 和 4 个评估视频。原始产物留在 NAS，公开的脱敏字段、摘要哈希和解释见 [JSON](../data/jev-atomic-pilot-2026-09-30.json)。
+
+这次运行通过的是完整工程链路，不是算法优越性。learner batch 的 reference probability 始终约 0.901，`greedy_nonreference_fraction` 与 `target_nonreference_fraction` 的最小值和最大值均为 0。critic loss 从 0.03769 降至 0.00683，但选择目标没有偏好任何非 reference 候选。因此不能把 50% 归因于原子动作修正，也不能与 Stage 1 的 20 回合 40%直接比较：环境数、评估 cohort、运行协议和训练状态均不同。
+
+下一轮必须先运行相同 4 个固定环境的 reference-only control，再检查候选 Q 排序、BC 权重、reference prior 与 replay 支持。只有出现可审计的非 reference 选择后，才值得比较有限候选与同幅度连续 residual；重复当前 20-step pilot不能回答该问题。
 
 ## 原审查：先区分实现通过与能力收益
 

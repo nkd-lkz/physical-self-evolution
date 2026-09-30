@@ -1,6 +1,16 @@
 [
   {
     "date": "2026-09-30",
+    "title": "Jev启发分支完成GPU 2的20-step online pilot",
+    "summary": "提交d3618b18完成2-step smoke后，从头运行2训练/4固定评估环境的20-step pilot；actor/critic各更新320次，4次评估success_once均为0.5并保存checkpoint和4个视频。但reference probability约0.901，greedy/target non-reference fraction全程为0，尚无证据表明有限候选修正改善了VLA reference。"
+  },
+  {
+    "date": "2026-09-30",
+    "title": "四条RLT探索线完成晚间证据边界更新",
+    "summary": "FLARE显示动作输入有预测价值但时序敏感性弱；Zeva自适应清理在合成响应突变后降低短期误差；VR已准备单环境可恢复HIL pilot但真人跨机器闭环未验收；baseline Stage 2晚间至少274/5000且更新超过96,000。各分支继续隔离。"
+  },
+  {
+    "date": "2026-09-30",
     "title": "三分支完成42组小模型训练与3个单rank FSDP检查",
     "summary": "FLARE 9组1000更新预测消融、Zeva 15组历史响应probe、Jev 18组合成离散/连续对照完成。另各做20次小模型actor/critic FSDP更新与权重恢复。物理GPU 2仅受限共存，不改变GPU 0/1任务；完整Jev在线队列仍等待资源。结果与图见research/three-branch-audit-2026-09-30.md。"
   },

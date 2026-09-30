@@ -14,8 +14,8 @@
       "label": "ManiSkill Stage 1 step 2000 固定闭环评测成功率40%"
     },
     {
-      "value": "196+/5000",
-      "label": "09-30下午只读快照：baseline仍在GPU 0/1运行，配置和作业未改动"
+      "value": "274+/5000",
+      "label": "09-30晚间只读快照：baseline仍在GPU 0/1运行，更新已超过96,000"
     },
     {
       "value": "35.9–42.2%",
@@ -30,8 +30,8 @@
       "label": "FLARE在线latent_world张量真实更新；不等于控制提升"
     },
     {
-      "value": "195 / 203 / 205",
-      "label": "FLARE / Zeva / Jev最新CPU通过数；各1skip、1已知依赖排除"
+      "value": "20 steps / 320 updates",
+      "label": "Jev GPU 2 pilot完整退出；4次固定评估均50%，但selector未偏离reference"
     },
     {
       "value": "2.44e-5",
@@ -48,8 +48,16 @@
   ],
   "timeline": [
     {
+      "title": "09-30晚间 · Jev完整online pilot完成",
+      "body": "2训练/4固定评估环境、20 outer steps、320次actor/critic更新、checkpoint与4个视频均完成；工程链路正常退出。"
+    },
+    {
+      "title": "50%评估不能归因为有限候选修正",
+      "body": "reference probability约0.901，greedy/target non-reference fraction全程为0；下一步先做matched reference-only control与selector数据支持诊断。"
+    },
+    {
       "title": "09-30下午 · 99次预定诊断与12次追加拟合完成",
-      "body": "GPU 2上只共存缓存小模型，采样进程显存约574 MiB；GPU 0/1既有作业未操作。FLARE、Zeva、Jev分支分别提交，完整Jev在线队列仍等空闲GPU。"
+      "body": "GPU 2上只共存缓存小模型，采样进程显存约574 MiB；GPU 0/1既有作业未操作。该矩阵与晚间Jev完整online pilot分开记录。"
     },
     {
       "title": "结果驱动修正，而不是只延长训练",
@@ -77,7 +85,7 @@
     },
     {
       "title": "正式baseline Stage 2正在运行",
-      "body": "64训练环境、256固定评估环境、5000步预算、expert关闭。下午只读快照至少196步；35.9%–42.2%是此前五次评估范围，不是最新或最终成绩。"
+      "body": "64训练环境、256固定评估环境、5000步预算、expert关闭。晚间只读快照至少274步、更新超过96,000；35.9%–42.2%是此前五次评估范围，不是最新或最终成绩。"
     },
     {
       "title": "FLARE 100轮在线对照未显示控制收益",
@@ -92,8 +100,8 @@
       "body": "最多17个reference-relative候选、本地选择器、实际动作critic和精确候选bootstrap已实现；不调用Jev API，也不使用模拟器预演。"
     },
     {
-      "title": "Jev分支早期CPU学习诊断通过",
-      "body": "先前229项范围较广的回归通过；三seed合成任务暴露并修复selector饱和。本轮另做204项组件回归与小模型FSDP；完整ManiSkill smoke仍在队列等待。"
+      "title": "Jev从CPU诊断推进到完整GPU pilot",
+      "body": "修复selector饱和、嵌套FSDP root与checkpoint汇总后，smoke和20-step pilot均完成；当前瓶颈是selector仍只偏好reference。"
     },
     {
       "title": "Zeva与VR证据边界保持",
@@ -112,8 +120,8 @@
     },
     {
       "priority": "P0",
-      "action": "在GPU 2空闲后验收Jev分支最小smoke",
-      "evidence": "placement probe、2-step rollout/replay/FSDP更新、候选分布、checkpoint保存恢复；不占用GPU 0/1"
+      "action": "为Jev运行matched reference control并诊断selector",
+      "evidence": "同4个固定环境和预算；报告候选Q排序、实际非reference选择、BC/reference prior、数据支持与checkpoint"
     },
     {
       "priority": "P1",

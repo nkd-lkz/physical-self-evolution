@@ -161,22 +161,22 @@
       <h2>05 · 当前证据与严格口径</h2>
       <div class="grid four metrics">
         <article class="card"><div class="metric">8/20</div><div class="muted">ManiSkill Stage 1 step 2000固定闭环评测成功率40%</div></article>
-        <article class="card"><div class="metric">149+/5000</div><div class="muted">正式baseline Stage 2仍在GPU 0/1运行；不是最终结果</div></article>
+        <article class="card"><div class="metric">274+/5000</div><div class="muted">正式baseline Stage 2仍在GPU 0/1运行；更新超过96,000，不是最终结果</div></article>
         <article class="card"><div class="metric">35.9–42.2%</div><div class="muted">Stage 2前五次256环境周期评估范围，尚未收敛</div></article>
         <article class="card"><div class="metric">0/10 vs 0/10</div><div class="muted">100轮matched smoke中baseline与FLARE评估均无成功</div></article>
         <article class="card"><div class="metric">50/54</div><div class="muted">FLARE在线latent_world张量真实更新；不等于控制提升</div></article>
-        <article class="card"><div class="metric">229 passed</div><div class="muted">Jev启发有限动作决策CPU回归；GPU smoke尚未运行</div></article>
+        <article class="card"><div class="metric">20 / 320</div><div class="muted">Jev GPU pilot完成20步、320次更新；selector仍未偏离reference</div></article>
         <article class="card"><div class="metric">17/17</div><div class="muted">Zeva memory reader真实更新，但learned reader无稳定优势</div></article>
         <article class="card"><div class="metric">5 isolated lines</div><div class="muted">baseline / FLARE / Zeva / Jev / VR保持单变量隔离</div></article>
       </div>
 
       <div class="timeline">
         <div><b>09-30 · Stage 1固定20回合完成</b><p>step 2000得到8/20成功、return 0.4、平均episode长度335.25；job正常退出。20回合点估计不能证明充分收敛。</p></div>
-        <div><b>正式baseline Stage 2正在运行</b><p>64训练环境、256固定评估环境、5000步预算、expert关闭。截至快照至少149步；前五次评估35.9%–42.2%，只能作为在途状态。</p></div>
+        <div><b>正式baseline Stage 2正在运行</b><p>64训练环境、256固定评估环境、5000步预算、expert关闭。晚间快照至少274步、更新超过96,000；前五次评估35.9%–42.2%，只能作为在途状态。</p></div>
         <div><b>FLARE 100轮在线对照未显示控制收益</b><p>baseline与FLARE均正常退出，但各10次单环境评估全部失败；训练成功只发生在actor接管前的VLA reference阶段。</p></div>
         <div><b>FLARE预测模块确实在线更新</b><p>54个latent_world张量中50个变化，预测loss后段低于前段；replay分布也在变化，因此不能据此宣称收敛或成功率提升。</p></div>
         <div><b>新增Jev启发的有限动作决策分支</b><p>最多17个reference-relative候选、本地选择器、实际动作critic和精确候选bootstrap已实现；不调用Jev API，也不使用模拟器预演。</p></div>
-        <div><b>Jev分支CPU学习诊断通过</b><p>229项回归通过；三seed合成任务暴露并修复selector饱和。GPU只读预检通过，真实ManiSkill smoke尚未执行。</p></div>
+        <div><b>Jev GPU online pilot完成但未采用修正</b><p>20步、320次actor/critic更新和4次固定评估均完成；评估为50%，但greedy/target非reference比例全程为0，不能归因为有限候选。</p></div>
         <div><b>Zeva与VR证据边界保持</b><p>Zeva reader会更新但暂无稳定收益；VR本地控制与scripted learner smoke通过，真实PICO跨机器人工闭环仍未验收。</p></div>
         <div><b>当前科研结论</b><p>已有可运行baseline与三个独立经验机制原型，但仍未证明加快RL收敛、减少人工干预、通用物理规律或跨任务迁移。</p></div>
       </div>
@@ -189,7 +189,7 @@
           <thead><tr><th>优先级</th><th>下一步</th><th>必须留下的证据</th></tr></thead>
           <tbody>
             <tr><td>P0</td><td>保护并持续审计正式Stage 2 baseline</td><td>每25步固定256环境评估、每50步checkpoint；记录success曲线、更新数、停止条件和最终选择规则</td></tr>
-            <tr><td>P0</td><td>在GPU 2空闲后验收Jev分支最小smoke</td><td>placement probe、2-step rollout/replay/FSDP更新、候选分布、checkpoint保存恢复；不占用GPU 0/1</td></tr>
+            <tr><td>P0</td><td>为Jev运行matched reference control并诊断selector</td><td>同4个固定环境和预算；报告候选Q排序、实际非reference选择、BC/reference prior与数据支持</td></tr>
             <tr><td>P1</td><td>做Jev离散选择与同边界连续residual对照</td><td>相同reference、radius、seed、interaction和评估预算；区分限制探索与离散化的贡献</td></tr>
             <tr><td>P1</td><td>重做FLARE在线实验合同</td><td>统一FSDP配置，先验证BC热身与reference跟随，再用至少20个固定初态比较success、transition、时延和显存</td></tr>
             <tr><td>P1</td><td>完成一个真实PICO到learner的端到端回合</td><td>人工动作、实际执行、上传ack、update_step、policy_version和返回动作全部可审计</td></tr>

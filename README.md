@@ -15,6 +15,14 @@ Living research website for **Universal Physical Token, robot self-improvement, 
 
 **https://nkd-lkz.github.io/physical-self-evolution/**
 
+## ManiSkill RLT 晚间实验更新 — 2026-09-30
+
+- Jev 启发分支 `d3618b18` 已完成 GPU 2 的 2-step smoke 和独立 20-step pilot：320 次 actor/critic 更新，4 次固定评估均为 50%，checkpoint 和 4 个视频已保存。[完整日报](research/progress-2026-09-30-maniskill-rlt.md)与[脱敏 JSON](data/jev-atomic-pilot-2026-09-30.json)记录协议和边界。
+- 该结果不能解释为有限候选带来 50%：reference probability 约 0.901，greedy/target non-reference fraction 全程为 0，选择器没有表现出采用修正的证据。下一步是 matched reference-only control 与 selector/data-support 诊断，而不是直接延长训练。
+- Baseline Stage 2 晚间至少到 274/5000、更新超过 96,000，仍在 GPU 0/1 运行且没有人工干预。FLARE matched pilot、Zeva 变化条件记忆诊断和 VR 单环境 HIL 入口均保持独立；真人 PICO 在线闭环尚未完成。
+
+这些是工程与开发实验结果，仍未证明更快收敛、减少人工干预、跨任务迁移或通用物理规律。
+
 ## Physical RSI 资料核验与 RLT 实验入口 — 2026-09-30
 
 - [新资料摄取与三步实验](research/physical-rsi-source-intake-2026-09-30.md)：核验 RPent、Astra 42 任务评测、Axis、Simate、RoboICL 与 IROS 相关原始论文；区分公开证据、团队自述和二次转述，将接触后果监督、经验检索、等预算 RL 分开设计。
@@ -31,7 +39,7 @@ Living research website for **Universal Physical Token, robot self-improvement, 
 
 ## Three-branch audit and research proposals — 2026-09-30
 
-下午续作已完成：[99 次预定诊断＋12 次追加 CPU 拟合与人工接管入口](research/three-branch-audit-2026-09-30.md#下午续作预先固定实验矩阵与人工介入入口)。Zeva 支持度门控降低开发预测误差；Jev 排序随 BC／数据条件变化；FLARE 已补齐动作前缀敏感性和匹配 online 配置。原始统计与新结果图见[结构化记录](data/continuation-2026-09-30.json)。小模型矩阵约 31 分钟完成后已释放 GPU；不是 12 小时大训练，也不是 111 次机器人闭环。完整 Jev online 仍保留 12 小时空闲等待预算。
+下午续作已完成：[99 次预定诊断＋12 次追加 CPU 拟合与人工接管入口](research/three-branch-audit-2026-09-30.md#下午续作预先固定实验矩阵与人工介入入口)。Zeva 支持度门控降低开发预测误差；Jev 排序随 BC／数据条件变化；FLARE 已补齐动作前缀敏感性和匹配 online 配置。原始统计与新结果图见[结构化记录](data/continuation-2026-09-30.json)。小模型矩阵约 31 分钟完成后已释放 GPU；不是 12 小时大训练，也不是 111 次机器人闭环。晚间 Jev online pilot 已完成，结果与限制见上方更新。
 
 VR 单环境 `horizon=1` pilot 已准备，支持真实人工 transition、有限更新、BC 发布门槛和 optimizer/replay 恢复；未接入正式 64 环境，Windows/PICO 跨机器闭环待操作者验收。[启动指南](https://github.com/nkd-lkz/UPT_dev/blob/feature/rlt-pico-vr-intervention/experiments/maniskill_rlt/VR_ONLINE.zh-CN.md)。最新 CPU 套件：FLARE / Zeva / Jev 为 **195 / 203 / 205 passed**，各 1 skip、1 已知排除；VR **34 passed、2 skipped**。以下保留首轮结果，不与续作混算。
 
@@ -39,14 +47,14 @@ VR 单环境 `horizon=1` pilot 已准备，支持真实人工 transition、有�
 - [三个方案的原理、摘要与架构图](research/three-branch-research-plan-2026-09-30.md)：解释物理经验存在哪里、新反馈更新什么，以及通往真机持续学习的验收门槛。三张架构图和一张真实诊断图提供 SVG / PDF / PNG。
 - [前沿邻近工作与创新边界](research/literature/frontier-rlt-2026-09-30.md)：覆盖至 09-30，包含 09-29 修订的 F4R、UniMPA、StateMem、Imagine-RL、RouteRLT 等；不以调研替代新颖性或能力证明。
 - 三分支 CPU 回归分别为 **194 / 201 / 204 passed**；各通过单 rank 小模型 FSDP 更新与恢复。合计包含共用测试；这不是完整机器人在线训练验收。
-- 仅小模型在物理 GPU 2 受限共存；GPU 0/1、baseline 与 VR 未改动。Jev 完整在线队列继续等待资源空闲。当前仍无新增闭环成功率、迁移或减少人工干预的证据。
+- 下午矩阵仅让小模型在物理 GPU 2 受限共存；GPU 0/1、baseline 与 VR 未改动。晚间 Jev 完整 online pilot 已结束，但 selector 没有偏离 reference。当前仍无新增机制改善闭环、迁移或减少人工干预的证据。
 
 ## Earlier ManiSkill RLT snapshot — 2026-09-30
 
 - [完整进度快照](research/progress-2026-09-30-maniskill-rlt.md)：汇总 baseline、FLARE 动作后果表征、Zeva 交互记忆、Jev 有限动作决策和 PICO VR 五条隔离代码线，并列出已验证证据与未完成 Gate。
 - Baseline Stage 1 已完成 2000 step；固定 20 回合闭环评测为 **8/20（40%）**。正式 Stage 2 正在两张 L40 上运行；截至快照至少到 149/5000，前五次 256 环境评估约为 35.9%–42.2%，尚未形成最终结果。
 - FLARE 启发的增量未来 latent 预测保留三初始化离线正向结果。最新 baseline / FLARE 各 100 轮在线对照均正常退出，但两组 10 次单环境评估全部失败；预测网络在更新，控制收益没有得到支持。
-- Jev 启发分支新增最多 17 个 reference-relative 有限动作候选和本地选择器。229 项 CPU 回归通过，三 seed 合成诊断验证修正后的更新方式；GPU 只读预检通过，尚未执行 ManiSkill smoke。
+- Jev 启发分支新增最多 17 个 reference-relative 有限动作候选和本地选择器。CPU 回归和 GPU 2 online/FSDP pilot 均已跑通，但 selector 诊断仍停留在 reference，尚无控制收益结论。
 - Zeva reader 的真实更新和负结果、Windows / PICO 本地调试及服务器 scripted takeover 证据继续保留；两者都没有新增能力结论。
 
 上述内容属于 RLT / Physical Token 项目，不写入 `survey-rsi/`。训练 loss、短 smoke 和参数变化均不等价于任务成功率或自进化能力。

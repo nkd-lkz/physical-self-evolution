@@ -1,10 +1,20 @@
 # 实验日志
 
+## 2026-09-30 晚间 · Jev GPU pilot 完成，四条探索线边界更新
+
+Jev 启发分支 `d3618b18` 在物理 GPU 2 完成 2-step smoke 和独立 20-step ManiSkill pilot，均正常退出。pilot 使用 2 个训练环境、4 个固定评估环境和 500 控制步上限，共完成 320 次 actor/critic 更新；outer step 4/9/14/19 的固定评估 `success_once` 均为 0.5，并保存 checkpoint 与 4 个视频。工程链路已覆盖 rollout、真实执行动作 replay、FSDP 更新、评估与保存。
+
+能力结论仍为负向或未决：reference probability 约 0.901，learner batch 的 greedy/target non-reference fraction 全程为 0。即选择器没有表现出采用原子修正的证据，50% 不能归因为 Jev 式有限候选。下一轮先做 matched reference-only control，并检查 Q 排序、BC/reference prior 和数据支持，不直接延长训练。脱敏结果见[结构化记录](../data/jev-atomic-pilot-2026-09-30.json)。
+
+同日晚间只读快照显示 baseline Stage 2 至少到 274/5000、`rlt/update_step` 超过 96,000，仍在 GPU 0/1 运行且人工干预率为 0。FLARE 的最新动作时序诊断、Zeva 的自适应旧经验清理和 VR 单环境 HIL pilot 均已提交，但没有新增匹配闭环收益或真人跨机器干预结果。四个开发分支与 baseline 继续隔离。
+
+---
+
 ## 2026-09-30 下午 · 99 次预定诊断、12 次追加拟合与 HIL pilot
 
 三条研究分支完成缓存／小模型续作，不改动 GPU 0/1 上正式 baseline；GPU 2 只共存约 574 MiB 的小模型进程，预定矩阵约 31 分钟完成。Zeva 将经验响应先验与支持度门控修正组合，6 种子总体预测 MSE 为 `2.4417e-5`，但物理条件突变与闭环仍待检验。Jev 的连续 residual 在 BC=70、参考动作替换 25% 时反胜有限候选，保留全部 36 次比较，不能宣称离散普遍更优。FLARE 的动作置零／打乱损害预测、逆序影响很小，尚无时序因果能力结论。
 
-新增 FLARE matched pilot 已通过配置一致性与路径检查；VR `run_rlt_vr_hil_pilot.sh` 准备了一个 Windows/PICO 环境到 GPU 2 的单步 learner、有限更新、BC 发布门槛和完整恢复。两者没有新完整在线验收，不能代替正式 64 环境训练。完整 Jev 队列仍等 GPU 2 空闲。代码、统计、论文邻近工作和可编辑图见[续作审查](three-branch-audit-2026-09-30.md)；本条不修改 RSI 综述区。
+新增 FLARE matched pilot 已通过配置一致性与路径检查；VR `run_rlt_vr_hil_pilot.sh` 准备了一个 Windows/PICO 环境到 GPU 2 的单步 learner、有限更新、BC 发布门槛和完整恢复。两者没有新完整在线验收，不能代替正式 64 环境训练。本阶段 Jev 队列仍在等待 GPU 2，随后已于晚间完成，结果见本日志首条。代码、统计、论文邻近工作和可编辑图见[续作审查](three-branch-audit-2026-09-30.md)；本条不修改 RSI 综述区。
 
 ---
 
@@ -16,7 +26,7 @@ ManiSkill Stage 1 step 2000 的固定 20 回合闭环评测已经正常结束：
 
 FLARE 启发分支完成 baseline / sidecar 各 100 global step 的中等 smoke。两组均 exit 0，并各进行 200 次 actor/critic 更新；每 10 step 的 10 次单环境评估全部为 0 成功。训练中的 baseline 1 次、FLARE 2 次成功都发生在第 0 步、`actor_switch_rate=0` 的 VLA reference 阶段，不能归因于新 actor 或 sidecar。FLARE 的 54 个在线张量有 50 个变化，未来预测 loss 前 10/后 10 轮均值约 0.217/0.146，只能证明更新链路，不证明控制收益。下一轮需统一 `use_orig_params` 并延长可验证的 BC 热身。
 
-新增 Jev 启发的 `research/rlt-jev-atomic-decisions` 分支（`020e0cf6`）。它不调用 Jev API，也不使用模拟器候选预演；在冻结 VLA reference 周围构造最多 17 个受限关节 chunk，由本地选择器决策，连续 critic 仍用实际执行动作训练。229 项 CPU 回归通过；合成诊断发现并修正 selector 饱和问题。GPU 2 的只读 `--check` 已通过，但真实 placement probe 和 ManiSkill smoke 尚未执行。
+新增 Jev 启发的 `research/rlt-jev-atomic-decisions` 分支（`020e0cf6`）。它不调用 Jev API，也不使用模拟器候选预演；在冻结 VLA reference 周围构造最多 17 个受限关节 chunk，由本地选择器决策，连续 critic 仍用实际执行动作训练。229 项 CPU 回归通过；合成诊断发现并修正 selector 饱和问题。该阶段 GPU 2 只读 `--check` 已通过、真实 smoke 尚未执行；晚间的后续提交与 pilot 结果见本日志首条。
 
 五条线的提交、指标、边界和下一步 Gate 见[09-30 完整快照](https://nkd-lkz.github.io/physical-self-evolution/reader.html?path=research/progress-2026-09-30-maniskill-rlt.md)。本次不修改 RSI 综述区；Zeva 与 VR 没有新增能力结论。
 

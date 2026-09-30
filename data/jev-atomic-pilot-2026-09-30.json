@@ -1,0 +1,60 @@
+{
+  "as_of": "2026-09-30",
+  "branch": "research/rlt-jev-atomic-decisions",
+  "revision": "d3618b182556b3d9dd18e05b7f7ab1db2f022c9f",
+  "scope": "Bounded ManiSkill engineering and learning pilot; not a matched baseline comparison",
+  "source_summary_sha256": "eb1ee6f4f4779c33c56d927831bf96717b9df831c21088388508df96ddbce41e",
+  "protocol": {
+    "task": "PegInsertionSide",
+    "train_envs": 2,
+    "fixed_eval_envs": 4,
+    "episode_control_steps": 500,
+    "outer_steps": 20,
+    "max_updates_per_outer_step": 16,
+    "candidate_count_max": 17,
+    "automatic_expert": false,
+    "physical_gpu": 2
+  },
+  "engineering": {
+    "status": "completed",
+    "exit_code": 0,
+    "actor_updates": 320,
+    "critic_updates": 320,
+    "checkpoint_saved": true,
+    "evaluation_video_count": 4,
+    "elapsed_seconds": 1425.1096889628097
+  },
+  "evaluations": [
+    {
+      "outer_step": 4,
+      "success_once": 0.5
+    },
+    {
+      "outer_step": 9,
+      "success_once": 0.5
+    },
+    {
+      "outer_step": 14,
+      "success_once": 0.5
+    },
+    {
+      "outer_step": 19,
+      "success_once": 0.5
+    }
+  ],
+  "selector_diagnostics": {
+    "reference_probability_first": 0.9007610082626343,
+    "reference_probability_last": 0.9009075164794922,
+    "greedy_nonreference_fraction_min": 0.0,
+    "greedy_nonreference_fraction_max": 0.0,
+    "target_nonreference_fraction_min": 0.0,
+    "target_nonreference_fraction_max": 0.0,
+    "critic_loss_first": 0.03768893703818321,
+    "critic_loss_last": 0.0068315924145281315
+  },
+  "interpretation": [
+    "The online rollout, replay, FSDP update, evaluation, video and checkpoint path completed.",
+    "The learner-batch selector diagnostics never preferred a non-reference candidate, so the repeated 0.5 evaluation result is not evidence that atomic corrections improved the frozen VLA reference.",
+    "A matched reference-only control and a selector/data-support revision are required before making a control-benefit claim."
+  ]
+}
