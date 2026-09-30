@@ -15,6 +15,13 @@ Living research website for **Universal Physical Token, robot self-improvement, 
 
 **https://nkd-lkz.github.io/physical-self-evolution/**
 
+## Physical RSI 资料核验与 RLT 实验入口 — 2026-09-30
+
+- [新资料摄取与三步实验](research/physical-rsi-source-intake-2026-09-30.md)：核验 RPent、Astra 42 任务评测、Axis、Simate、RoboICL 与 IROS 相关原始论文；区分公开证据、团队自述和二次转述，将接触后果监督、经验检索、等预算 RL 分开设计。
+- [Axis 仿真到真机回流与技能库](notes/axis-capability-library.md)：校正“零真机数据”和纯计算成本的口径；[Astra 笔记](notes/astra-robodojo.md)补入 42 任务论文；[RPent 笔记](notes/rpent.md)补入任务卡对照。
+
+这些是论文/官网阅读与待验证实验，没有新增闭环提升或真机结果。Simate 官网当时标注 RoboDojo 评估进行中，媒体所称榜首未被当作已验证排名。
+
 ## RLT 近邻论文专题 — 2026-09-30
 
 - [注意力可视化、ActGaze 近邻与经验条件视觉证据方案](research/literature/visual-evidence-rlt-2026-09-30.md)：区分热图、输入依赖与闭环控制；新增 FLARE 时序诊断、Zeva 90 条遗忘测试流和 Jev 6 次候选覆盖拟合。CPU 回归更新为 **196 / 206 / 206 passed**；没有新 GPU 作业或第四分支训练。
