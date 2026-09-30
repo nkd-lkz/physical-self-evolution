@@ -15,7 +15,15 @@ Living research website for **Universal Physical Token, robot self-improvement, 
 
 **https://nkd-lkz.github.io/physical-self-evolution/**
 
-## ManiSkill RLT implementation update — 2026-09-30
+## Three-branch audit and research proposals — 2026-09-30
+
+- [代码审查与 42 组小实验](research/three-branch-audit-2026-09-30.md)：FLARE 掩码梯度修复、Zeva 固定响应读取器、Jev 同幅度连续 residual 对照；含负结果、测试范围与结构化证据。
+- [三个方案的原理、摘要与架构图](research/three-branch-research-plan-2026-09-30.md)：解释物理经验存在哪里、新反馈更新什么，以及通往真机持续学习的验收门槛。三张架构图和一张真实诊断图提供 SVG / PDF / PNG。
+- [前沿邻近工作与创新边界](research/literature/frontier-rlt-2026-09-30.md)：覆盖至 09-30，包含 09-29 修订的 F4R、UniMPA、StateMem、Imagine-RL、RouteRLT 等；不以调研替代新颖性或能力证明。
+- 三分支 CPU 回归分别为 **194 / 201 / 204 passed**；各通过单 rank 小模型 FSDP 更新与恢复。合计包含共用测试；这不是完整机器人在线训练验收。
+- 仅小模型在物理 GPU 2 受限共存；GPU 0/1、baseline 与 VR 未改动。Jev 完整在线队列继续等待资源空闲。当前仍无新增闭环成功率、迁移或减少人工干预的证据。
+
+## Earlier ManiSkill RLT snapshot — 2026-09-30
 
 - [完整进度快照](research/progress-2026-09-30-maniskill-rlt.md)：汇总 baseline、FLARE 动作后果表征、Zeva 交互记忆、Jev 有限动作决策和 PICO VR 五条隔离代码线，并列出已验证证据与未完成 Gate。
 - Baseline Stage 1 已完成 2000 step；固定 20 回合闭环评测为 **8/20（40%）**。正式 Stage 2 正在两张 L40 上运行；截至快照至少到 149/5000，前五次 256 环境评估约为 35.9%–42.2%，尚未形成最终结果。

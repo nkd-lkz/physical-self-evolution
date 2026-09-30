@@ -1,6 +1,16 @@
 [
   {
     "date": "2026-09-30",
+    "title": "三分支完成42组小模型训练与3个单rank FSDP检查",
+    "summary": "FLARE 9组1000更新预测消融、Zeva 15组历史响应probe、Jev 18组合成离散/连续对照完成。另各做20次小模型actor/critic FSDP更新与权重恢复。物理GPU 2仅受限共存，不改变GPU 0/1任务；完整Jev在线队列仍等待资源。结果与图见research/three-branch-audit-2026-09-30.md。"
+  },
+  {
+    "date": "2026-09-30",
+    "title": "动作后果与经验读取有信号，但控制/成长收益仍未证明",
+    "summary": "FLARE增量+动作比无动作预测更准，但h=10直接预测更好；Zeva神经reader仍弱于固定响应公式；Jev合成任务中离散选择达到最优，连续actor在critic引导下退化，追加混合数据和热身仍未解决。保留这些反例，不将loss或toy reward替代机器人成功、迁移及减少干预。"
+  },
+  {
+    "date": "2026-09-30",
     "title": "ManiSkill Stage 1 step 2000固定20回合评测为8/20",
     "summary": "修复policy_setup后，20个固定reset、每回合最多500控制步的闭环评测正常退出：success_once/return均为0.4，mean episode length为335.25。该结果建立当前reference点估计，不证明Stage 1充分收敛、没有过拟合或RL token获得通用物理规律。"
   },

@@ -2,6 +2,14 @@
   "as_of": "2026-09-30",
   "metrics": [
     {
+      "value": "42 fits",
+      "label": "三分支小模型消融已完成；不是42次机器人实验"
+    },
+    {
+      "value": "3/3 FSDP",
+      "label": "单rank小模型更新与权重恢复通过；不代表完整online smoke"
+    },
+    {
       "value": "8/20",
       "label": "ManiSkill Stage 1 step 2000 固定闭环评测成功率40%"
     },
@@ -22,8 +30,8 @@
       "label": "FLARE在线latent_world张量真实更新；不等于控制提升"
     },
     {
-      "value": "229 passed",
-      "label": "Jev启发有限动作决策CPU回归；GPU smoke尚未运行"
+      "value": "194 / 201 / 204",
+      "label": "FLARE / Zeva / Jev本轮CPU通过数；各1skip、1已知依赖排除"
     },
     {
       "value": "17/17",
@@ -35,6 +43,18 @@
     }
   ],
   "timeline": [
+    {
+      "title": "09-30 · 三分支审查与42组诊断完成",
+      "body": "修复FLARE masked NaN梯度；加入无动作消融、Zeva经验响应reader与Jev同幅度连续residual。三分支各完成单rank FSDP小模型更新及恢复；未运行新的完整机器人闭环。"
+    },
+    {
+      "title": "预测信息与控制收益分开报告",
+      "body": "FLARE动作输入帮助预测，但1000更新时直接预测在h=10更好。Zeva固定响应公式仍胜学习式reader。Jev合成压力测试暴露连续critic优化退化，不能据此宣称普遍更优。"
+    },
+    {
+      "title": "科研故事形成于实验之后",
+      "body": "完成三个方案摘要、原理、否证条件、三张矢量架构图和一张真实结果图。邻近工作覆盖至09-30，包含09-29修订F4R；经验积累、记忆和residual本身不主张新颖。"
+    },
     {
       "title": "09-30 · Stage 1固定20回合完成",
       "body": "step 2000得到8/20成功、return 0.4、平均episode长度335.25；job正常退出。20回合点估计不能证明充分收敛。"
@@ -56,8 +76,8 @@
       "body": "最多17个reference-relative候选、本地选择器、实际动作critic和精确候选bootstrap已实现；不调用Jev API，也不使用模拟器预演。"
     },
     {
-      "title": "Jev分支CPU学习诊断通过",
-      "body": "229项回归通过；三seed合成任务暴露并修复selector饱和。GPU只读预检通过，真实ManiSkill smoke尚未执行。"
+      "title": "Jev分支早期CPU学习诊断通过",
+      "body": "先前229项范围较广的回归通过；三seed合成任务暴露并修复selector饱和。本轮另做204项组件回归与小模型FSDP；完整ManiSkill smoke仍在队列等待。"
     },
     {
       "title": "Zeva与VR证据边界保持",
@@ -81,8 +101,8 @@
     },
     {
       "priority": "P1",
-      "action": "做Jev离散选择与同边界连续residual对照",
-      "evidence": "相同reference、radius、seed、interaction和评估预算；区分限制探索与离散化的贡献"
+      "action": "把已实现的Jev同边界对照推进到真实online数据",
+      "evidence": "合成数据对照已完成且保留负结果；接下来匹配reference、radius、调参、交互与评估预算，不能把合成最优reward当成功率"
     },
     {
       "priority": "P1",
@@ -96,8 +116,8 @@
     },
     {
       "priority": "P1",
-      "action": "重做交互记忆读取对照",
-      "evidence": "冻结新测试集；无记忆、近期、检索、显式响应统计；包含失败/纠正与隐藏动力学"
+      "action": "解释Zeva神经读取为何弱于固定响应公式",
+      "evidence": "五条件三seed诊断已完成；先保留有效的命令—响应信息，再封存新物理条件，测试闭环而非继续增加模型容量"
     },
     {
       "priority": "Later",
