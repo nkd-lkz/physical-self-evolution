@@ -17,6 +17,8 @@ Living research website for **Universal Physical Token, robot self-improvement, 
 
 ## Three-branch audit and research proposals — 2026-09-30
 
+下午续作：[11 组、99 次诊断的预定矩阵与人工接管入口](research/three-branch-audit-2026-09-30.md#下午续作预先固定实验矩阵与人工介入入口)。新增 action-prefix 诊断、经验响应 residual、critic 校准对照；VR 单环境 pilot 已准备。最多 12 小时的队列执行预设实验，不等于已经完成 99 次拟合。完整 Jev online 仍等待 GPU 2 空闲。以下保留先前一轮已完成结果。
+
 - [代码审查与 42 组小实验](research/three-branch-audit-2026-09-30.md)：FLARE 掩码梯度修复、Zeva 固定响应读取器、Jev 同幅度连续 residual 对照；含负结果、测试范围与结构化证据。
 - [三个方案的原理、摘要与架构图](research/three-branch-research-plan-2026-09-30.md)：解释物理经验存在哪里、新反馈更新什么，以及通往真机持续学习的验收门槛。三张架构图和一张真实诊断图提供 SVG / PDF / PNG。
 - [前沿邻近工作与创新边界](research/literature/frontier-rlt-2026-09-30.md)：覆盖至 09-30，包含 09-29 修订的 F4R、UniMPA、StateMem、Imagine-RL、RouteRLT 等；不以调研替代新颖性或能力证明。

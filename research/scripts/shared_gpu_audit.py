@@ -27,12 +27,19 @@ def main() -> None:
     parser.add_argument("--fsdp", action="store_true")
     parser.add_argument("--actor-start", type=int, default=0)
     parser.add_argument("--actor-lr", type=float, default=1e-3)
+    parser.add_argument("--bc-weight", type=float, default=0.1)
+    parser.add_argument("--reference-fraction", type=float, default=0.0)
+    parser.add_argument("--seed-start", type=int, default=2026)
+    parser.add_argument("--seed-count", type=int, default=3)
     parser.add_argument(
         "--jev-data-mode", choices=("candidate", "mixed"), default="candidate"
     )
     args = parser.parse_args()
     if not 1 <= args.steps <= 1000:
         parser.error("Use 1..1000 updates per small model")
+    if not 1 <= args.seed_count <= 5 or not 0 <= args.seed_start <= 100000:
+        parser.error("Use 1..5 seeds starting in 0..100000")
+    seeds = tuple(range(args.seed_start, args.seed_start + args.seed_count))
     if args.fsdp and not args.shared_gpu2:
         parser.error("The FSDP integration diagnostic requires --shared-gpu2")
     if args.task == "zeva" and args.shared_gpu2 and not args.fsdp:
@@ -112,6 +119,9 @@ def main() -> None:
         "updates_per_model": 20 if args.fsdp else args.steps,
         "experiment_kind": "single_rank_fsdp" if args.fsdp else "mechanism_diagnostic",
         "status": "running",
+        "arguments": {
+            k: str(v) if isinstance(v, Path) else v for k, v in vars(args).items()
+        },
     }
     path = args.output / "manifest.json"
     path.write_text(json.dumps(manifest, indent=2) + "\n")
@@ -131,6 +141,7 @@ def main() -> None:
                 args.output / "models",
                 device=device,
                 steps=args.steps,
+                seeds=seeds,
             )
         elif args.task == "jev":
             from toolkits.rlt.compare_residual import run
@@ -142,12 +153,15 @@ def main() -> None:
                 data_mode=args.jev_data_mode,
                 actor_start=args.actor_start,
                 actor_lr=args.actor_lr,
+                bc_weight=args.bc_weight,
+                reference_fraction=args.reference_fraction,
+                seeds=seeds,
             )
         else:
             from toolkits.rlt.probe_memory_dynamics import audit_empirical, fit
 
             data = STORAGE / "research/zeva_hidden_dynamics_20260927"
-            fit(data, args.output / "models", updates=args.steps)
+            fit(data, args.output / "models", updates=args.steps, seeds=seeds)
             audit_empirical(data, args.output / "empirical")
         manifest["status"] = "completed"
     except BaseException as exc:

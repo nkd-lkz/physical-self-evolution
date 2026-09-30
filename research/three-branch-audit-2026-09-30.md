@@ -4,7 +4,34 @@
 
 本轮代码分别提交并推送为 [FLARE `3ca6f246`](https://github.com/nkd-lkz/UPT_dev/commit/3ca6f246)、[Zeva `547d634e`](https://github.com/nkd-lkz/UPT_dev/commit/547d634e)、[Jev `6c5cf66d`](https://github.com/nkd-lkz/UPT_dev/commit/6c5cf66d)。三个工作树均保持独立，没有合并回 baseline。各分支 `experiments/maniskill_rlt/AUDIT_2026-09-30{,.zh-CN}.md` 包含中英文复查命令。
 
-## 先区分实现通过与能力收益
+## 下午续作：预先固定实验矩阵与人工介入入口
+
+以下是后续开发，不覆盖上面 42 次诊断的记录。新提交为 FLARE `d8ec52ad`、Zeva `80fbec73`、Jev `ef9b2478`、VR `12260ef5`。GPU 0/1 与正式 baseline 分支保持不动。
+
+| 分支 | 本次新增实现 | 预先固定的诊断 |
+| --- | --- | --- |
+| FLARE | 置零手臂命令、仅逆序有效动作前缀；防止短跨度混入未来动作 | 原 3 种预测器，250/1000 updates，新增种子；共 27 次拟合 |
+| Zeva | 固定经验响应 + 零初始化学习修正，允许 validation 选第 0 步 | 6 个读取器 × 6 seeds；共 36 次拟合 |
+| Jev | 所选动作 Q 偏差/绝对误差/双 Q 分歧；配对 BC 与参考数据锚定 | BC=0.1/7/70 × reference_fraction=0/0.25 × 3 seeds × 2 actor；共 36 次拟合 |
+| VR | step 2000、5000-update 单环境 pilot、发布 BC 门槛、接管统计、完整恢复、共享 GPU 2 锁 | CPU RPC/control/learner：34 passed、2 hardware skips；等待操作者 Windows/PICO 验收 |
+
+三个研究分支本次 CPU 回归为 194/202/205 passed，均有 1 项可选 skip、1 项已知 baseline VideoMetadata 失败排除；FLARE 本次命令仅 models/data，与先前额外 worker case 的数量不可直接相减。队列组件 5 项测试通过。图与摘要沿用上面的方案页，所有“持续成长”表述仍是待验证目标。
+
+`research/scripts/experiment_queue.py` 声明 11 组、99 次小模型拟合，最多 12 小时；每组最多一小时。CPU 任务使用单线程，只有缓存特征上的小预测器共享 GPU 2，沿用至少 8 GiB 余量和 4% PyTorch allocator 上限。任何失败/超时停止后续组，只终止本队列创建的 child group，不停止其他用户或 baseline 作业。完成预定矩阵即结束，不为填满时间重复计算。它执行预设实验，不代表后台模型会持续自行改代码。
+
+Jev 完整在线队列仍等待 GPU 2 空闲；本矩阵不绕过其资源限制。数据仍为已查看的开发集，更多种子不等于新的独立任务。新增论文与借鉴范围见[前沿清单](literature/frontier-rlt-2026-09-30.md)。
+
+人工接管可以从独立 VR 分支启动：
+
+```bash
+cd /home/luokz/rlinf_rlt/UPT_vr_dev
+bash run_rlt_vr_hil_pilot.sh check
+tmux new-session -s rlt_vr_hil 'bash run_rlt_vr_hil_pilot.sh run; exec bash'
+```
+
+Windows 继续通过 SSH tunnel 8775 和 `client --online` 接入；启动前按[中英文操作指南](https://github.com/nkd-lkz/UPT_dev/blob/feature/rlt-pico-vr-intervention/experiments/maniskill_rlt/VR_ONLINE.zh-CN.md)输入相同口令。**该入口是 baseline RLT 的单环境单步变体，不是给正在运行的 64 环境、10 步 head 插入接管。** GPU 2 被占用时会拒绝启动，不能保证操作者回来时资源已空闲。
+
+## 原审查：先区分实现通过与能力收益
 
 | 分支 | 本轮代码变化 | 验证 |
 | --- | --- | --- |

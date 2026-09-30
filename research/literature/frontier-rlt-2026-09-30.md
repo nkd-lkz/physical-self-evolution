@@ -4,6 +4,15 @@
 
 ## 最直接影响选题的工作
 
+### 追加核对：价值误差、部署更新与接管信号
+
+- [DAWN：What Makes Value Learning Efficient in Residual Reinforcement Learning?](https://arxiv.org/html/2602.10539v1)（2026-02-11，核对摘要与方法结构）：指出 critic 冷启动与 residual 尺度问题，使用 base-policy 数据锚定与 critic normalization。当前 RLT Q head 已有 LayerNorm；本次只借鉴“补充参考动作样本、测量 Q 偏差”的实验问题，没有复现该算法，也不将额外热身当作必然有效。
+- [Beyond Imitation / Q-Planning](https://arxiv.org/abs/2608.21204)（2026-08-21，摘要级核对）：冻结 BC，只更新小型 off-policy Q，并对 BC 候选进行价值引导选择。这与“冻结 VLA + 小模块积累失败经验”的叙事直接邻近。我们的有限关节修正不是 BC 多次采样；应加入 Q-only 候选选择作为后续对照，尚未实现。
+- [OnEvoMemory](https://arxiv.org/html/2608.08749v1)（2026-08-09，摘要及论文页面核对）：通过轨迹结果更新经验保留机制。不能把“在线写入记忆”独立当作新贡献；当前 Zeva 原型仍缺少跨回合持久经验的独立收益证据。
+- [WHIRL](https://arxiv.org/abs/2609.06009)（2026-09-05，摘要级核对）：将人工接管信号用于预测性风险建模。我们的当前 VR 改动只记录接管段数和控制来源，没有风险 head、额外奖励或安全保证。操作者接管原因、主观阈值和 task 成功必须区分，不能简单把按 grip 当成失败。
+
+这些来源说明，相邻机制已相当成熟。暂时收敛到可检验的小问题：在同样观测与交互预算下，过去的“命令—响应”是否改善下一次修正，而不是声称已经实现通用物理直觉或 RSI。
+
 | 工作与公开时间 | 已有机制 | 对当前项目的影响（我们的判断） |
 | --- | --- | --- |
 | [FLARE](https://research.nvidia.com/labs/gear/flare/)，2025-05-22 | future token 与未来表征对齐，联合动作学习，不必生成像素 | “辅助未来表征监督”已经成立为既有方法；当前冻结 RLT 后训练侧支不是原论文复现 |
