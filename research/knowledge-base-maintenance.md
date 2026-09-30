@@ -50,31 +50,30 @@
 
 ---
 
-## 2. 每日输入如何进入网站
+## 2. 每日输入如何进入网站（2026-09-30 更新）
 
-用户每天可能提供三类内容：
+**统一入口是 [科研工作台](../index.html)。** 目录用于保存源文件，浏览、检索、汇报从首页开始；不再为每次调研新建一份互相竞争的总览。
 
-### A. 实验进度
+| 输入 | 维护位置 | 首页呈现 |
+| --- | --- | --- |
+| 真实开发进度 | `data/experiments.json` 记录日期、标题、结果摘要；可显式填写 `path` 指向已有日报 | 每日科研进度，按日期折叠、搜索、筛选 |
+| 最新实验状态 / 下一步 | `data/current-status.json` 的 `as_of / metrics / timeline / plan` | 当前证据快照与下一步；这是最近记录，不是实时 GPU 监控 |
+| 详细实验证据 | 优先更新当天 `research/progress-YYYY-MM-DD*.md` 或既有专题；总日志保留研究时间线 | 自动进入资料库，日报链接与进度联动 |
+| 论文 / 开源项目 / 调研 | 优先更新同主题 `notes/` 或 `research/literature/` 笔记；阅读状态沿用现有论文卡与总账 | 自动索引；按资料类型、主题和关键词查找 |
+| 当前 idea / 重点阅读 | `data/research-hub.json`，只放少量精选卡与原始笔记路径 | 实验与 idea、重点调研；写清实现、对照和判定 |
+| 原始随想 / 路线变化 | `research/perspectives-and-theses.md`、`decision-log.md` | 首页研究脉络入口与资料检索 |
 
-进入：
-- data/experiments.json
-- research/experiment-log.md
-- 必要时 research/decision-log.md
-- 首页 Current Project State
+一次普通更新的流程：
 
-### B. 新论文 / 新项目
+1. 核验来源或真实实验记录，更新已有主题笔记 / 当日日报。没有新结果就如实写“待运行 / 待核验”，不生成虚构进度。
+2. 只有实验状态变化时更新 `current-status.json`；只有实际开发事件写 `experiments.json`。旧快照保留，后续结果追加，不把历史阶段误称当前状态。
+3. 新论文按原有元数据方式更新阅读总账与论文卡。只有改变当下选择的文献才加入精选；普通新增资料自动收录即可。
+4. 执行 `python research/scripts/build_site_index.py`，生成 `data/knowledge-index.json`。该文件是衍生索引，不手工编辑；合并修改后再次生成。部署会自动重建，避免漏收录。
+5. 检查本地链接、JSON 和首页搜索；提交前执行既有边界检查。发布后确认首页可访问。
 
-先进入：
-- data/frontier.json
-- research/frontier-landscape.md
-- 若精读，再进入 data/papers.json 与 notes/
+索引只扫描项目 `research/`、`notes/` 的 Markdown 与根目录项目元数据；不读 `survey-rsi/`。资料记录日期来自文件日期 / Git 修改日期，不冒充论文发表日期。未建立独立笔记的总账条目保留“阅读清单”标签；“有笔记”也不等于已复现。
 
-### C. 随想 / 观点 / 组会
-
-进入：
-- research/perspectives-and-theses.md
-- Idea Pool
-- 只有形成明确研究决策时才进入 decision-log
+页面组织：研究总览 → 每日科研进度 → 实验与 idea → 调研与阅读库。原详细笔记路径不变；旧首页结构保存在 [09-30 改版前快照](../archive/research-os-before-hub-2026-09-30.html)，仅用于追溯，当前状态以首页数据为准。
 
 ---
 

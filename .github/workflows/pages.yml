@@ -23,8 +23,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      - name: Build unified project index
+        run: python3 research/scripts/build_site_index.py
       - name: Stage RLT project only
         run: python3 .github/scripts/stage_project_site.py "${{ runner.temp }}/rlt-pages"
       - name: Upload artifact

@@ -1,390 +1,51 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <meta name="description" content="Universal Physical Token — 机器人自进化科研记录与具身智能前沿知识库"/>
-  <title>Universal Physical Token · Research OS</title>
-  <link rel="stylesheet" href="assets/style.css"/>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="RLT 科研工作台：每日开发进度、物理经验实验、Physical RSI 调研与论文阅读统一入口。">
+<title>RLT 科研工作台 · Physical Self-Evolution</title>
+<link rel="stylesheet" href="assets/hub.css">
+<script src="assets/app.js" defer></script>
 </head>
 <body>
-  <aside class="sidebar">
-    <div class="brand">Universal Physical Token</div>
-    <div class="sub">Robot Self-Evolution Research OS</div>
-    <nav>
-      <a href="#home">总览</a>
-      <a href="#mainline">当前科研主线</a>
-      <a href="#architecture">Token 接口</a>
-      <a href="#physical">Physical Objectives</a>
-      <a href="#baseline">首轮验证</a>
-      <a href="#status">当前证据</a>
-      <a href="#plan">近期行动</a>
-      <div class="nav-label">持续更新</div>
-      <a href="#logs">每日科研日志</a>
-      <div class="nav-label">RLT 项目文献与观点</div>
-      <a href="#frontier">前沿工作地图</a>
-      <a href="#literature">文献阅读总账</a>
-      <a href="#reading">每日论文计划</a>
-      <a href="#papers">精读论文库</a>
-      <a href="#perspectives">外部观点 / RSI</a>
-      <a href="#ideas">研究假设池</a>
-      <div class="nav-label">资料</div>
-      <a href="#archive">详细资料</a>
-      <div class="nav-label">独立综述库</div>
-      <a href="https://github.com/nkd-lkz/physical-self-evolution/tree/main/survey-rsi">RSI 公开文献 ↗</a>
-      <a href="reader.html?path=research/survey-literature-intake.md">单向文献引入 / 已迁回材料</a>
-    </nav>
-    <div class="side-note">
-      <b>当前 Source of Truth · 2026-09-22</b><br>
-      主问题收敛为：<b>从 action-generation pathway 提取可迁移的 compact Physical Token，并用真实 executed-action consequence 与可靠 physics supervision 做 grounding。</b><br><br>
-      <b>当前最小入口：</b>恢复冻结 reference，验收一类专家纠错，再做缓存特征后果预测。固定专家/门控检验表示，之后单独研究预测式门控；RLT 是可选 learner，尚无减干预结果。
-    </div>
-  </aside>
-
-  <main class="main">
-    <section id="home" class="hero">
-      <p><b>RLT / Physical Token 项目区</b> · 研究观点、实验方案与进度在此维护。<a href="https://github.com/nkd-lkz/physical-self-evolution/tree/main/survey-rsi">RSI 综述文献库 ↗</a>单独整理公开来源。</p>
-      <div class="kicker">Research Focus · 2026-09-22 · 迁移恢复与干预研究合同</div>
-      <h1>Universal Physical Token<br/>for Robot Self-Evolution</h1>
-      <p>核心问题：<b>能否从已有 action-generation head 读出一个紧凑表示，用 measured transition prediction 与有效 physics constraints 对其 grounding，并在在线阶段不重新训练 action model 的情况下适应变化的接触动力学？</b></p>
-      <div class="callout">
-        <b>当前重点已经从“先把 RLT 调收敛”转为“先把 Physical Token 研究问题定义清楚”。</b>
-        现有 baseline 证据说明 online RLT 并不稳定，因此 Physical Token 不再绑定单一 learner。
-        当前优先回答三件事：<b>① action-side token 到底表示什么；② 哪些 physics / measured consequence 监督是真正可部署、可迁移的；③ 如何证明它比 backbone、history-only、action-only 等更有决策价值。</b>
-      </div>
-      <p>
-        <a class="button" href="reader.html?path=research/physical-token-leadership-spec.md">打开领导版主规范</a>
-        <a class="button secondary" href="reader.html?path=research/progress-2026-09-22.md">打开 09-22 评测进展</a>
-        <a class="button secondary" href="reader.html?path=research/migration-recovery-2026-09-22.md">小算力恢复入口</a>
-        <a class="button secondary" href="#ideas">物理经验与减干预假设</a>
-        <a class="button secondary" href="reader.html?path=research/literature/reading-ledger.md">打开 131 项阅读总账</a>
-      </p>
-    </section>
-
-    <section id="mainline">
-      <div class="section-head">
-        <div><h2>01 · 当前科研主线</h2><p class="muted">2026-09-19：暂停继续堆实验变量，先把 Physical Token 的定义、近邻论文、可落地方案与验证合同梳理清楚。</p></div>
-      </div>
-
-      <div class="steps">
-        <div class="step phase-current"><b>A · Define the Physical Token</b><span>明确 token 是 action-side physical consequence state，而不是把任意 action token / proprio latent 改名。</span></div>
-        <div class="step"><b>B · Collision Audit</b><span>精读 FLARE、Pri4R、AGRA、CometVLA、PAR、DyWA、RoboPack、MSDP 等最近邻，逐项排除撞车。</span></div>
-        <div class="step"><b>C · Three Candidate Routes</b><span>Representation-first / Physical Critic / WAM-compatible interface，分别给出最小实现和 No-Go 条件。</span></div>
-        <div class="step"><b>D · Grounding Contract</b><span>严格区分 proposed vs executed action、command vs measured state、known physics vs learned residual physics。</span></div>
-        <div class="step phase-future"><b>E · Learner-Agnostic Validation</b><span>RLT、RECAP、V-GPS/Q-VGM 或 WAM 都可作为 downstream；先证明 representation 本身有额外物理与决策价值。</span></div>
-      </div>
-
-      <div class="grid two">
-        <article class="card">
-          <h3>当前 Research Claim</h3>
-          <p><b>Action-generation features may expose a compact, physically useful control interface.</b></p>
-          <p>要验证的是：在相同 history / proprio / capacity 下，action-side readout 是否比 backbone / history-only / action-only 更能编码真实 interaction consequence，并帮助后续决策。</p>
-        </article>
-        <article class="card">
-          <h3>当前创新边界</h3>
-          <p><b>Compact token、future prediction、physics correction、multisensory latent、cross-head adapter 都已有强近邻。</b></p>
-          <p class="muted">因此创新不能只靠“加 token / 加 physics loss / 冻结大模型”；必须通过 matched ablation 证明 action-side physical representation 的独立价值。</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="architecture">
-      <h2>02 · Physical Token at the Action Head</h2>
-      <div class="grid three">
-        <article class="card"><h3>Action-head feature</h3><p><code>F_t^head</code>：最终动作投影之前的 causal / pre-output features。</p><span class="tag">核心假设：更靠近动作生成</span></article>
-        <article class="card"><h3>Robot history</h3><p>Recent measured state + actual/executed-action history；只使用部署时真实可得信息。</p><span class="tag">禁止 future leakage</span></article>
-        <article class="card"><h3>Robot metadata</h3><p>Morphology、joint/action convention、control metadata，通过轻量 adapter 对齐。</p><span class="tag">跨本体需要实测</span></article>
-      </div>
-
-      <div class="callout">
-        <b>统一接口：</b><code>z_t = E_phi(A_m(F_t^head), h_t, r)</code>，输出固定 <code>K × d</code> 连续 latent，供 small online learner 使用。在线适应阶段 Base model 与 action head 保持冻结。
-      </div>
-
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Action model family</th><th>第一版 readout 约定</th><th>必须注意</th></tr></thead>
-          <tbody>
-            <tr><td>Regression / MLP</td><td>Penultimate activations</td><td>与 final action projection 分开</td></tr>
-            <tr><td>Diffusion / Flow</td><td>Selected sampling-step features</td><td>固定 sampling-time convention；包含 noise/time context</td></tr>
-            <tr><td>Autoregressive</td><td>Causal states before logits</td><td>不能读取 future demonstrated actions</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="muted"><b>关键对照：</b>Action-head tap vs Backbone tap。Action head 是否真的保留更多 decision-relevant physical information，必须由实验回答。</p>
-    </section>
-
-    <section id="physical">
-      <h2>03 · Physical Objectives</h2>
-      <div class="callout"><b>第一版目标：</b><code>L_token = L_ro + λ_dyn L_dyn + λ_phys L_phys</code></div>
-      <div class="grid three">
-        <article class="card"><h3>L_ro · Readout</h3><p>重建 fixed / stop-gradient action-head feature target，保留已有动作与任务信息。</p><p class="muted">不允许该 loss 反向修改 base action model。</p></article>
-        <article class="card"><h3>L_dyn · Transition</h3><p><code>D(z_t, u_t, r) → measured future physical state</code></p><p><code>u_t</code> 对应 actual / executed action；target 来自真实测得的后续状态。</p></article>
-        <article class="card"><h3>L_phys · Constraints</h3><p>第一版优先 kinematic consistency 与 actuator feasibility。</p><p class="muted">Contact / friction / force / rigid-body terms 只有 sensing、model、calibration 有效时才加入。</p></article>
-      </div>
-      <details open>
-        <summary>第一版允许进入 L_phys 的内容</summary>
-        <div class="detail-body">
-          <ul>
-            <li><code>||v_EE - J(q) q_dot||²</code>，且所有量必须在同一 frame / unit / convention 下；</li>
-            <li>joint limit violation；</li>
-            <li>joint / actuator speed limit violation；</li>
-            <li>其他明确存在、可审计的 controller / actuator constraints。</li>
-          </ul>
-          <p><b>不是因为 simulator 能导出 mass / friction / impulse，就默认它们可以成为主实验里的“物理规律监督”。</b></p>
-        </div>
-      </details>
-    </section>
-
-    <section id="baseline">
-      <div class="section-head">
-        <div><h2>04 · 首轮验证：Gate 0 → B0 / B1 / B2</h2><p class="muted">先恢复可信 baseline，再做 Physical Token 的严格递增消融。</p></div>
-        <a class="button" href="reader.html?path=research/rlt-multitask-benchmark.md">打开 Baseline / Validation Protocol</a>
-      </div>
-      <div class="grid four">
-        <article class="card phase-current"><h3>Gate 0 · Recovery</h3><p>可用 Stage1 reference + 固定 execution/timing + 可解释 online baseline。</p><span class="tag">当前</span></article>
-        <article class="card"><h3>B0 · Baseline</h3><p>RL Token / matched action-head readout。</p><span class="tag">compact readout only</span></article>
-        <article class="card"><h3>B1 · + Transition</h3><p>加入 actual/executed-action conditioned measured transition loss。</p><span class="tag">action → measured outcome</span></article>
-        <article class="card"><h3>B2 · + Physics</h3><p>在 B1 上加入 valid kinematic / actuator constraints。</p><span class="tag">physics grounding</span></article>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>必须 matched</th><th>主要结果</th><th>后续才允许扩展</th></tr></thead>
-          <tbody>
-            <tr><td>token size、learner capacity、base model、data、interaction budget、reward、seed、chunk/timing</td><td>success、physical violations、adaptation cost、old-task retention、CI</td><td>physical shift → held-out model family → held-out embodiment</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="callout"><b>Streaming RL 当前后置。</b>先证明 transition / physics grounding 的增益，再比较 replay learner vs streaming learner。</div>
-    </section>
-
-    <section id="status">
-      <h2>05 · 当前证据与严格口径</h2>
-      <div class="grid four metrics">
-        <article class="card"><div class="metric">8/20</div><div class="muted">ManiSkill Stage 1 step 2000固定闭环评测成功率40%</div></article>
-        <article class="card"><div class="metric">274+/5000</div><div class="muted">正式baseline Stage 2仍在GPU 0/1运行；更新超过96,000，不是最终结果</div></article>
-        <article class="card"><div class="metric">35.9–42.2%</div><div class="muted">Stage 2前五次256环境周期评估范围，尚未收敛</div></article>
-        <article class="card"><div class="metric">0/10 vs 0/10</div><div class="muted">100轮matched smoke中baseline与FLARE评估均无成功</div></article>
-        <article class="card"><div class="metric">50/54</div><div class="muted">FLARE在线latent_world张量真实更新；不等于控制提升</div></article>
-        <article class="card"><div class="metric">20 / 320</div><div class="muted">Jev GPU pilot完成20步、320次更新；selector仍未偏离reference</div></article>
-        <article class="card"><div class="metric">17/17</div><div class="muted">Zeva memory reader真实更新，但learned reader无稳定优势</div></article>
-        <article class="card"><div class="metric">5 isolated lines</div><div class="muted">baseline / FLARE / Zeva / Jev / VR保持单变量隔离</div></article>
-      </div>
-
-      <div class="timeline">
-        <div><b>09-30 · Stage 1固定20回合完成</b><p>step 2000得到8/20成功、return 0.4、平均episode长度335.25；job正常退出。20回合点估计不能证明充分收敛。</p></div>
-        <div><b>正式baseline Stage 2正在运行</b><p>64训练环境、256固定评估环境、5000步预算、expert关闭。晚间快照至少274步、更新超过96,000；前五次评估35.9%–42.2%，只能作为在途状态。</p></div>
-        <div><b>FLARE 100轮在线对照未显示控制收益</b><p>baseline与FLARE均正常退出，但各10次单环境评估全部失败；训练成功只发生在actor接管前的VLA reference阶段。</p></div>
-        <div><b>FLARE预测模块确实在线更新</b><p>54个latent_world张量中50个变化，预测loss后段低于前段；replay分布也在变化，因此不能据此宣称收敛或成功率提升。</p></div>
-        <div><b>新增Jev启发的有限动作决策分支</b><p>最多17个reference-relative候选、本地选择器、实际动作critic和精确候选bootstrap已实现；不调用Jev API，也不使用模拟器预演。</p></div>
-        <div><b>Jev GPU online pilot完成但未采用修正</b><p>20步、320次actor/critic更新和4次固定评估均完成；评估为50%，但greedy/target非reference比例全程为0，不能归因为有限候选。</p></div>
-        <div><b>Zeva与VR证据边界保持</b><p>Zeva reader会更新但暂无稳定收益；VR本地控制与scripted learner smoke通过，真实PICO跨机器人工闭环仍未验收。</p></div>
-        <div><b>当前科研结论</b><p>已有可运行baseline与三个独立经验机制原型，但仍未证明加快RL收敛、减少人工干预、通用物理规律或跨任务迁移。</p></div>
-      </div>
-    </section>
-
-    <section id="plan">
-      <h2>06 · 接下来具体做什么</h2>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>优先级</th><th>下一步</th><th>必须留下的证据</th></tr></thead>
-          <tbody>
-            <tr><td>P0</td><td>保护并持续审计正式Stage 2 baseline</td><td>每25步固定256环境评估、每50步checkpoint；记录success曲线、更新数、停止条件和最终选择规则</td></tr>
-            <tr><td>P0</td><td>为Jev运行matched reference control并诊断selector</td><td>同4个固定环境和预算；报告候选Q排序、实际非reference选择、BC/reference prior与数据支持</td></tr>
-            <tr><td>P1</td><td>做Jev离散选择与同边界连续residual对照</td><td>相同reference、radius、seed、interaction和评估预算；区分限制探索与离散化的贡献</td></tr>
-            <tr><td>P1</td><td>重做FLARE在线实验合同</td><td>统一FSDP配置，先验证BC热身与reference跟随，再用至少20个固定初态比较success、transition、时延和显存</td></tr>
-            <tr><td>P1</td><td>完成一个真实PICO到learner的端到端回合</td><td>人工动作、实际执行、上传ack、update_step、policy_version和返回动作全部可审计</td></tr>
-            <tr><td>P1</td><td>重做交互记忆读取对照</td><td>冻结新测试集；无记忆、近期、检索、显式响应统计；包含失败/纠正与隐藏动力学</td></tr>
-            <tr><td>Later</td><td>单变量成立后再组合与迁移</td><td>先跨物理条件，再第二任务；报告旧任务保持，不提前混合FLARE、Zeva、Jev和VR</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <section id="frontier">
-      <div class="section-head">
-        <div><h2>知识库 · 前沿工作地图：别人正在做什么？</h2><p class="muted">Frontier 继续保留，但它现在服务于 Universal Physical Token 的 baseline、边界与实现选择，而不是自动扩展主线。</p></div>
-        <a class="button" href="reader.html?path=research/frontier-landscape.md">打开完整前沿调研总览</a>
-      </div>
-      <div class="callout knowledge-callout"><b>使用原则：</b>RISE、Motus2、LWD、SmoothRL、Zeva、Zetta 等工作可以提供 comparison / ablation / discussion；如果和当前领导方案冲突，先完成领导定义的 B0/B1/B2，再讨论扩展。</div>
-      <div class="grid four" style="margin-top:14px">
-        <article class="card"><h3>Policy / RL</h3><p>RLT、SERL、Q-VGM：small online learner 如何适配部署经验。</p></article>
-        <article class="card"><h3>Physical Representation</h3><p>Pri4R、FD-VLA、HapticVLA：物理监督如何进入 compact representation。</p></article>
-        <article class="card"><h3>World / Consequence</h3><p>RISE、Motus2、SR-WM：Action→Consequence 建模能否提供更好的决策反馈。</p></article>
-        <article class="card"><h3>Execution / System</h3><p>SmoothRL、Zeva、Zetta：异步执行、memory、recovery 如何作为后续扩展。</p></article>
-      </div>
-      <div class="grid two" style="margin-top:14px">
-        <article class="card"><h3>09-22 · UniIntervene</h3><p>减干预方向强近邻：未来后果、价值趋势与记忆恢复。先分清表示、门控和专家的贡献。</p><a href="reader.html?path=notes/uniintervene.md">项目相关笔记 →</a></article>
-        <article class="card"><h3>09-22 · CLAP</h3><p>物理后果与跨本体接口参考：共享知识仍需动作语义对齐；完整视频模型不进入首轮高频控制。</p><a href="reader.html?path=notes/clap.md">项目相关笔记 →</a></article>
-      </div>
-      <div class="filters frontier-filters">
-        <input id="frontierSearch" type="search" placeholder="搜索：physical token / transition / world model / streaming / recovery…"/>
-        <select id="frontierFilter">
-          <option value="all">全部路线</option>
-          <option value="policy">Policy / Online RL</option>
-          <option value="value">Value Guidance</option>
-          <option value="failure">Failure / Recovery</option>
-          <option value="physical">Physical Representation</option>
-          <option value="world">World Model</option>
-          <option value="memory">Context / Memory</option>
-          <option value="execution">Execution / Runtime</option>
-          <option value="harness">Harness / Skill</option>
-          <option value="agent">Agentic Improvement</option>
-          <option value="foundation">Foundation / Fleet</option>
-        </select>
-      </div>
-      <div id="frontierGrid" class="frontier-grid"></div>
-    </section>
-
-    <section id="literature">
-      <div class="section-head">
-        <div>
-          <h2>知识库 · Physical Token 文献阅读总账</h2>
-          <p class="muted">检索到 ≠ 读懂。当前 131 项论文/项目：125 项历史检索与 6 项新增专题；精读状态按实际核验范围记录。</p>
-        </div>
-        <a class="button" href="reader.html?path=research/literature/reading-ledger.md">打开阅读总账</a>
-      </div>
-      <div id="literatureMetrics" class="grid four metrics">
-        <article class="card"><div class="metric">131</div><div class="muted">当前主表文献总数</div></article>
-        <article class="card"><div class="metric">18</div><div class="muted">09-19 批次防撞优先</div></article>
-        <article class="card"><div class="metric">—</div><div class="muted">已精读 / 专题阅读</div></article>
-        <article class="card"><div class="metric">—</div><div class="muted">待系统精读</div></article>
-      </div>
-      <div class="grid three" style="margin-top:14px">
-        <article class="card">
-          <h3>方向地图</h3>
-          <p>Action representation、hidden dynamics、force/tactile、analytic physics、WAM、value/RL、execution/harness、cross-head foundations。</p>
-          <div class="read-more"><a href="reader.html?path=research/literature/physical-token-direction-map.md">打开方向地图 →</a></div>
-        </article>
-        <article class="card">
-          <h3>09-19 原始 125 项防撞审查</h3>
-          <p>每篇包含方法摘要、项目关系、核验边界与一手来源；用于判断“别人已经做到哪一步”。</p>
-          <div class="read-more"><a href="reader.html?path=research/literature/physical-token-literature-audit-2026-09-19.md">打开完整审查 →</a></div>
-        </article>
-        <article class="card">
-          <h3>独立精读笔记</h3>
-          <p>RLT、RISE、Motus2、LWD、Zeva、Zetta、SHAPER、PhysVLA、Harness VLA、ASPIRE、ENPIRE 等。</p>
-          <div class="read-more"><a href="reader.html?path=notes/README.md">打开 Notes Index →</a></div>
-        </article>
-      </div>
-      <div class="callout knowledge-callout" style="margin-top:14px">
-        <b>Wave 0 防撞优先：</b>RLT → FLARE → Pri4R → AGRA → CometVLA → PAR → DyWA → TACO → RoboPack → MSDP → exUMI → Spline Policy → LeTO → V-GPS → FlowDAgger → DSRL → HPT → GeoAAC。
-      </div>
-    </section>
-
-    <section id="reading">
-      <div class="section-head">
-        <div><h2>知识库 · 每日论文计划</h2><p class="muted">阅读问题优先围绕 action-head representation、transition prediction、physics constraints、online adaptation 与 universality。</p></div>
-        <a class="button secondary" href="reader.html?path=research/reading-program.md">打开完整阅读计划</a>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Track</th><th>优先工作</th><th>当前用途</th></tr></thead>
-          <tbody>
-            <tr><td>Compact readout / Online RL</td><td>RLT → SERL → Q-VGM</td><td>Baseline、actor/critic、online adaptation。</td></tr>
-            <tr><td>Physical representation</td><td>Pri4R → FD-VLA → HapticVLA → RMA-Arm</td><td>Transition / dynamics / privileged supervision 的设计边界。</td></tr>
-            <tr><td>Consequence / World Model</td><td>RISE → Motus2 → SR-WM</td><td>理解 action consequence，但当前不把 Full WM 作为首轮方法。</td></tr>
-            <tr><td>Execution efficiency</td><td>SmoothRL → Streaming RL</td><td>Physical Token 成立后的后续 learner / execution 方向。</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <section id="papers">
-      <div class="section-head">
-        <div><h2>知识库 · 精读论文库</h2><p class="muted">保留已有精读；“对当前项目”的解释以后统一服从 Physical Token 主规范。</p></div>
-        <a class="button" href="reader.html?path=research/master-roadmap.md">打开完整研究路线</a>
-      </div>
-      <div class="filters">
-        <input id="paperSearch" type="search" placeholder="搜索论文 / 关键词…"/>
-        <select id="paperFilter">
-          <option value="all">全部</option>
-          <option value="context">Context / Memory</option>
-          <option value="policy">Policy / RL</option>
-          <option value="physical">Physical</option>
-          <option value="execution">Execution</option>
-          <option value="harness">Harness / Skill</option>
-          <option value="failure">Failure / Data</option>
-          <option value="agent">Agentic Improvement</option>
-        </select>
-      </div>
-      <div id="paperGrid" class="grid three"></div>
-    </section>
-
-    <section id="perspectives">
-      <div class="section-head">
-        <div><h2>知识库 · 外部观点 / RSI</h2><p class="muted">行业 RSI / Agent / Foundation 观点继续保留，但与当前 Physical Token 实验事实严格分开。</p></div>
-        <a class="button secondary" href="reader.html?path=research/perspectives-and-theses.md">打开完整观点与研究框架</a>
-      </div>
-      <div class="grid two">
-        <article class="card"><h3>当前自进化定义</h3><p>本项目当前不是开放世界无限自主学习；而是冻结 action model 后，由 compact physical interface + small learner 做局部在线适应。</p></article>
-        <article class="card"><h3>更强 RSI 作为后续</h3><p>完整 world model、memory、fleet consolidation 保留为后续；最小专家恢复现在作为可核验的干预基线，不能把更强专家带来的收益归给 Physical Token。</p></article>
-      </div>
-    </section>
-
-    <section id="ideas">
-      <div class="section-head">
-        <div><h2>知识库 · 当前研究假设池</h2><p class="muted">09-22讨论：从交互后果沉淀物理经验，能否在保留任务能力时减少专家依赖？以下均为待验证方案。</p></div>
-        <a class="button" href="reader.html?path=research/physical-experience-protocol-2026-09-22.md">完整研究合同</a>
-      </div>
-      <p><a class="button secondary" href="reader.html?path=research/uniintervene-clap-project-implications.md">UniIntervene × CLAP：与当前科研问题的关系</a></p>
-      <div class="callout"><b>先拆开两个问题：</b>RLT 的 base→actor 是关键阶段切换，expert takeover 才是纠错；当前 Hammer 只接通了前者。原 RLT 也不能简单理解成“只有语义监督”，本项目检验的是显式 measured action-consequence grounding 的增量。</div>
-      <div class="grid two">
-        <article class="card"><h3>A · 固定门控，验证物理经验</h3><p>固定 base、专家、阶段规则和 learner，后果监督能否减少达到预设无专家成功率所需的累计专家控制时间？</p><span class="tag">主问题 · 先做缓存特征 probe</span></article>
-        <article class="card"><h3>B · 固定策略，验证预判门控</h3><p>在相同专家预算下，预测式 gate 能否比停滞/普通风险规则更早识别需要帮助的状态，并提高辅助成功率？</p><span class="tag">后续独立消融</span></article>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>讨论中的疑问</th><th>当前结论</th><th>验证边界</th></tr></thead>
-          <tbody>
-            <tr><td>100步接管、200步上限？</td><td>H50/C50名义waypoint预算；warmup后通常仅后两个chunk由actor控制。</td><td>工程基线，不是物理时间或最优阶段；3个停滞chunk门槛可能来不及。</td></tr>
-            <tr><td>TOPP能做人工纠错吗？</td><td>需要当前状态恢复策略＋IK/规划＋TOPP；TOPP只处理路径时间。</td><td>先验收一类学生偏离状态；原生play_once成功不证明任意失败可恢复。</td></tr>
-            <tr><td>如何证明减少干预？</td><td>同时记录无专家/辅助成功率、专家秒数、事件数和墙钟吞吐率。</td><td>门槛、专家和资源匹配；一次长期接管不能算作低成本。</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p><a class="button secondary" href="reader.html?path=research/rlt-intervention-2026-09-22.md">RLT / ManiSkill / Hammer机制详解</a> <a class="button secondary" href="reader.html?path=research/migration-recovery-2026-09-22.md">小算力最简切入口</a></p>
-      <div class="grid three">
-        <article class="card"><h3>H0 · Trustworthy Baseline</h3><p>恢复冻结reference；核对H/C-TOPP与实际时长，验收专家纠错和干预计数，再做受控比较。</p><span class="tag">当前 Gate 0</span></article>
-        <article class="card"><h3>H1 · Head vs Backbone</h3><p>Action-head pre-output features 是否比 backbone features 更适合物理 adaptation readout？</p><span class="tag">首轮必须验证</span></article>
-        <article class="card"><h3>H2 · Transition Grounding</h3><p>Measured action→outcome prediction 是否让 compact token 更适合在线 learner？</p><span class="tag">B1</span></article>
-        <article class="card"><h3>H3 · Valid Physics</h3><p>Kinematic / actuator constraints 是否在 transition loss 之外提供独立增益？</p><span class="tag">B2</span></article>
-        <article class="card"><h3>H4 · Online Adaptation</h3><p>冻结大模型时，小 actor/critic 是否能利用 grounded token 更快适应 physical shift？</p><span class="tag">matched budget</span></article>
-        <article class="card"><h3>H5/H6 · Universal / Streaming</h3><p>跨 model/embodiment 与 streaming learner 都是后续强 claim，不与 B1/B2 同时改变。</p><span class="tag">后置</span></article>
-      </div>
-    </section>
-
-    <section id="logs">
-      <h2>07 · 科研日志</h2>
-      <p><a class="button" href="reader.html?path=research/three-branch-audit-2026-09-30.md">09-30 三分支审查、续作与人工接管</a> <a class="button secondary" href="reader.html?path=research/three-branch-research-plan-2026-09-30.md">方法原理、摘要与架构图</a> <a class="button secondary" href="reader.html?path=research/literature/frontier-rlt-2026-09-30.md">最新近邻与创新边界</a></p>
-      <div id="experimentList" class="timeline"></div>
-      <p>
-        <a class="button secondary" href="reader.html?path=research/experiment-log.md">实验日志全文</a>
-        <a class="button secondary" href="reader.html?path=research/decision-log.md">科研决策日志</a>
-      </p>
-    </section>
-
-    <section id="archive">
-      <h2>08 · 详细资料</h2>
-      <div class="grid three">
-        <a class="card link-card" href="reader.html?path=research/rlt-intervention-2026-09-22.md"><h3>RLT干预与100/200步</h3><p>原论文、ManiSkill专家、Hammer阶段切换与TOPP恢复边界。</p></a>
-        <a class="card link-card" href="reader.html?path=research/physical-experience-protocol-2026-09-22.md"><h3>物理经验与干预研究合同</h3><p>固定门控与预测门控分开验证，主指标、基线、反事实与多任务边界。</p></a>
-        <a class="card link-card" href="reader.html?path=research/migration-recovery-2026-09-22.md"><h3>迁移后的小算力入口</h3><p>缺失资产、冻结reference恢复、历史失败分析与缓存特征probe。</p></a>
-        <a class="card link-card" href="reader.html?path=research/progress-2026-09-22.md"><h3>2026-09-22 评测证据补充</h3><p>train450 Stage1 10k：22/40（55%）；reward、时长、视频与重复评测口径。</p></a>
-        <a class="card link-card" href="reader.html?path=research/physical-token-leadership-spec.md"><h3>Leadership Physical Token Spec</h3><p>当前 Source of Truth：action-head interface、physical objectives、online update contract 与首轮实验。</p></a>
-        <a class="card link-card" href="reader.html?path=research/progress-2026-09-15.md"><h3>2026-09-15 Baseline Recovery</h3><p>H/C 协议、Stage1 capability、20k joint recovery 和当前验收顺序。</p></a>
-        <a class="card link-card" href="reader.html?path=research/master-roadmap.md"><h3>Research Roadmap</h3><p>按领导方案重写后的执行主线与 Gate。</p></a>
-        <a class="card link-card" href="reader.html?path=research/rlt-multitask-benchmark.md"><h3>RL Token / Physical Token Validation</h3><p>Gate 0 + B0/B1/B2 matched comparison、指标与 universality protocol。</p></a>
-        <a class="card link-card" href="reader.html?path=research/robodojo-b300-log.md"><h3>RoboDojo on B300</h3><p>独立支线；未实测前不形成兼容性结论。</p></a>
-        <a class="card link-card" href="reader.html?path=research/frontier-landscape.md"><h3>具身自进化前沿地图</h3><p>Related work / inspiration，不覆盖当前领导主线。</p></a>
-        <a class="card link-card" href="reader.html?path=research/knowledge-base-maintenance.md"><h3>知识库维护协议</h3><p>实验、论文、观点、公开脱敏与历史记录规则。</p></a>
-        <a class="card link-card" href="archive/v0.4-original.html"><h3>历史完整快照</h3><p>保留旧 Research OS，避免路线修正时丢失历史知识。</p></a>
-        <a class="card link-card" href="reader.html?path=notes/rlt.md"><h3>RLT</h3><p>当前 baseline：compact readout + lightweight online RL。</p></a>
-        <a class="card link-card" href="reader.html?path=notes/rise.md"><h3>RISE</h3><p>World-model imagination related work，不是当前首轮方法。</p></a>
-      </div>
-    </section>
-
-    <footer>Universal Physical Token · Physical Self-Evolution Research OS · 2026</footer>
-  </main>
-  <script src="assets/app.js"></script>
-</body>
-</html>
+<a class="skip" href="#home">跳至主要内容</a>
+<aside class="sidebar">
+ <a class="brand" href="#home"><span class="brand-mark">P<span>↗</span></span><span>Physical<br>Self-Evolution</span></a>
+ <p class="workspace-label">RLT RESEARCH WORKSPACE</p>
+ <nav aria-label="主导航">
+  <a href="#home" class="active"><span>01</span> 研究总览</a>
+  <a href="#logs"><span>02</span> 每日科研进度</a>
+  <a href="#ideas"><span>03</span> 实验与 idea</a>
+  <a href="#library"><span>04</span> 调研与阅读库</a>
+ </nav>
+ <div class="side-bottom"><span class="small-label">RESEARCH PRINCIPLE</span><p>执行 → 反馈 → 经验<br>验证后，再复用。</p><a href="reader.html?path=research/knowledge-base-maintenance.md">维护与记录规范 ↗</a><a href="https://github.com/nkd-lkz/physical-self-evolution">GitHub 源文件 ↗</a><a href="https://github.com/nkd-lkz/physical-self-evolution/tree/main/survey-rsi">独立 RSI 综述区 ↗</a></div>
+</aside>
+<main>
+<header class="topbar"><span>项目 / <b>科研工作台</b></span><a href="#library">搜索笔记 <kbd>/</kbd></a></header>
+<div id="loadError" class="notice error" hidden role="alert"></div>
+<noscript><p class="notice">启用 JavaScript 可查看进度与筛选资料。也可直接打开 <a href="reader.html?path=research/experiment-log.md">实验总日志</a>或 <a href="research/literature/reading-ledger.md">阅读总账</a>。</p></noscript>
+<section id="home">
+ <div class="eyebrow">PHYSICAL EXPERIENCE → ONLINE LEARNING <span id="asOf">读取最新记录…</span></div>
+ <div class="hero-grid"><div><h1>把每次交互，<br>变成下一次的经验。</h1><p id="focus" class="lead">以 RLT 为基线，探索物理经验与持续学习。</p><p id="question" class="muted"></p><div class="actions"><a class="button primary" href="#logs">查看每日进度 ↗</a><a class="button" href="reader.html?path=research/three-branch-research-plan-2026-09-30.md">当前实验方案</a></div></div><aside class="focus-card"><span class="small-label">当前研究路径</span><ol><li><span>01</span><div><b>先建立可靠基线</b><small>RLT 复现 · 固定评估 · 预算对齐</small></div></li><li><span>02</span><div><b>独立验证三类机制</b><small>动作后果 / 交互记忆 / 有限决策</small></div></li><li><span>03</span><div><b>再证明持续成长</b><small>学习效率 · 干预成本 · 条件迁移</small></div></li></ol></aside></div>
+ <div id="status"><div class="section-heading compact"><h2>当前证据快照</h2><span id="statusDate" class="muted"></span></div><div id="statusMetrics" class="metrics"><p class="muted">正在加载…</p></div><details class="more-evidence"><summary>全部指标与最新判断</summary><div id="allEvidence"></div></details><p class="evidence-rule">证据口径：工程跑通、预测更准、闭环更好、跨任务迁移分别记录；以下均为最近已记录快照。</p></div>
+ <div id="plan" class="next-panel"><div><span class="small-label">NEXT EXPERIMENTS</span><h2>接下来，验证什么？</h2><p class="muted">由最新证据决定优先级。</p></div><div id="nextActions"></div></div>
+</section>
+<section id="logs">
+ <div class="section-heading"><div><div class="eyebrow">02 / DAILY RESEARCH</div><h2>每日科研进度</h2><p class="muted">保留当时的结果与负结果；当前结论以顶部最新快照为准。</p></div><a class="text-link" href="reader.html?path=research/experiment-log.md">完整实验日志 ↗</a></div>
+ <div class="toolbar"><label class="search-label"><span>搜索进度</span><input id="progressSearch" type="search" placeholder="搜索 FLARE、负结果、VR…"></label><label><span>日期</span><select id="progressDate"><option value="all">全部日期</option></select></label></div>
+ <p id="progressCount" class="result-count" aria-live="polite"></p><div id="progressFeed"></div><button id="moreProgress" class="button load-more" hidden>查看更多日期</button>
+</section>
+<section id="ideas">
+ <div class="section-heading"><div><div class="eyebrow">03 / HYPOTHESES & EXPERIMENTS</div><h2>实验与 idea</h2><p class="muted">每个想法都有实现入口、必要对照与否证条件。</p></div><a class="text-link" href="reader.html?path=research/three-branch-audit-2026-09-30.md">实验审查与负结果 ↗</a></div>
+ <div id="ideaGrid" class="idea-grid"></div><div class="inline-links"><span>研究脉络</span><a href="reader.html?path=research/perspectives-and-theses.md">原始随想</a><a href="reader.html?path=research/decision-log.md">决策与路线变化</a><a href="reader.html?path=research/physical-token-leadership-spec.md">Physical Token 定义</a><a href="reader.html?path=research/master-roadmap.md">完整路线图</a></div>
+</section>
+<section id="library">
+ <div class="section-heading"><div><div class="eyebrow">04 / RESEARCH LIBRARY</div><h2>调研与阅读库</h2><p class="muted">论文、项目、实验方案与随想，从这里统一查找。</p></div><a class="text-link" href="reader.html?path=research/literature/reading-ledger.md">论文阅读总账 ↗</a></div>
+ <div id="featuredGrid" class="featured-grid"></div>
+ <div id="libraryStats" class="library-stats"></div>
+ <div class="toolbar library-toolbar"><label class="search-label"><span>搜索资料</span><input id="librarySearch" type="search" placeholder="标题、摘要或关键词，例如 physical RSI、记忆、FLARE"></label><label><span>资料类型</span><select id="kindFilter"><option value="all">全部类型</option></select></label><label><span>研究主题</span><select id="topicFilter"><option value="all">全部主题</option></select></label><button id="clearFilters" class="button">清除</button></div>
+ <div class="result-row"><p id="libraryCount" class="result-count" aria-live="polite"></p><span class="muted">按笔记记录日期排序 · 未读条目单独标记</span></div>
+ <div id="libraryList" class="library-list"></div><button id="moreLibrary" class="button load-more" hidden>加载更多资料</button>
+</section>
+<footer><div><b>Physical Self-Evolution</b><p>统一入口，持续记录。科研结论由可复查的实验支持。</p></div><a href="reader.html?path=research/knowledge-base-maintenance.md">如何更新这里 ↗</a></footer>
+</main></body></html>

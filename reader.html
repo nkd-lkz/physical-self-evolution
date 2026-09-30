@@ -9,8 +9,9 @@
 </head>
 <body class="reader-page">
 <header class="reader-topbar">
-  <a class="button secondary" href="index.html">← 返回 Research OS</a>
+  <a class="button secondary" href="index.html">← 科研工作台</a>
   <div class="reader-tools">
+    <a class="button secondary" href="index.html#library" style="white-space:nowrap">全部资料</a>
     <input id="docSearch" type="search" placeholder="搜索本文…">
     <button class="button secondary" id="clearSearch">清除</button>
   </div>
@@ -124,7 +125,7 @@ if(!/^(research|notes)\/[a-zA-Z0-9._\/-]+\.md$/.test(path)||path.split('/').some
   content.textContent='非法路径';
 }else{
   fetch(path).then(r=>r.ok?r.text():Promise.reject(new Error('HTTP '+r.status)))
-    .then(t=>{ content.innerHTML=marked.parse(normalizeMarkdown(t)); resolveDocumentLinks(); buildToc(); })
+    .then(t=>{ content.innerHTML=marked.parse(normalizeMarkdown(t)); resolveDocumentLinks(); buildToc(); document.title=(content.querySelector("h1")?.textContent||"Research Note")+" · RLT"; })
     .catch(e=>{content.textContent='读取失败：'+path+' · '+e.message;});
 }
 let searchTimer;

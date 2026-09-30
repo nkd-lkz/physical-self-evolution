@@ -1,0 +1,3282 @@
+{
+  "as_of": "2026-09-30",
+  "stats": {
+    "project_documents": 73,
+    "reading_ledger": 134,
+    "read_status_counts": {
+      "已精读/已有独立笔记": 8,
+      "已初读/讨论过，待系统精读": 17,
+      "待精读": 96,
+      "已阅读/已有专题笔记": 13
+    },
+    "progress_entries": 48,
+    "progress_days": 12
+  },
+  "documents": [
+    {
+      "id": "doc:research/experiment-log.md",
+      "title": "实验日志",
+      "path": "research/experiment-log.md",
+      "kind": "实验进度",
+      "date": "2026-09-30",
+      "summary": "Jev 启发分支 d3618b18 在物理 GPU 2 完成 2-step smoke 和独立 20-step ManiSkill pilot，均正常退出。pilot 使用 2 个训练环境、4 个固定评估环境和 500 控制步上限，共完成 320 次 actor/critic 更新；outer step 4/9/14/19 的固定评估 success_once 均为 0.5，并保存 checkpoint 与 4 个视频。工程链路已覆盖 rollout、真实执行动作 replay、FSDP 更新、评估与保存。",
+      "topics": [
+        "物理经验 / 接触",
+        "强化学习",
+        "动作 / 决策",
+        "基线 / 工程"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "实验日志 Jev 启发分支 d3618b18 在物理 GPU 2 完成 2-step smoke 和独立 20-step ManiSkill pilot，均正常退出。pilot 使用 2 个训练环境、4 个固定评估环境和 500 控制步上限，共完成 320 次 actor/critic 更新；outer step 4/9/14/19 的固定评估 success_once 均为 0.5，并保存 checkpoint 与 4 个视频。工程链路已覆盖 rollout、真实执行动作 replay、FSDP 更新、评估与保存。 2026-09-30 晚间 · Jev GPU pilot 完成，四条探索线边界更新 2026-09-30 下午 · 99 次预定诊断、12 次追加拟合与 HIL pilot 2026-09-30 · Stage 1 eval20、Stage 2 baseline、FLARE 对照与 Jev 分支 2026-09-28 · ManiSkill RLT baseline、FLARE、Zeva 与 PICO VR 进展 2026-09-22 · 迁移核查与干预讨论整理（无新增GPU运行） 2026-09-22 · train450 Stage1 10k评测摘要补充（不新增独立样本） 事实与来源 解释边界 下一步（待执行） 2026-09-18 · train450 Stage1 10k复测 + B0 Stage2退化诊断 事实 解释 下一步 2026-09-17 · RoboDojo D3/D5 真实验证完成 事实 解释 下一步 2026-09-17 · Stage1 固定20-seed能力曲线 + clean500全量审计 + clean490准备 事实 解释 影响哪个研究假设 下一步最便宜的证伪实验 2026-09-15 · 日报快照：Stage1 运行中 + clean500 + RoboDojo D0–D4【历史快照】 事实 解释 2026-09-15 · Hammer RLT baseline recovery：先恢复可信 B0，再进入 Physical Token 事实 解释 2026-09-14 · 领导方案约束后的科研主线修正 事实 解释 2026-09-12 · RLT Phase 0 关键推进 事实 2026-09-11 · 历史探索：进入 Phase 0 记录模板 日期 · 标题 "
+    },
+    {
+      "id": "doc:research/literature/visual-evidence-rlt-2026-09-30.md",
+      "title": "从注意力可视化到交互证据：RLT 新方向评估",
+      "path": "research/literature/visual-evidence-rlt-2026-09-30.md",
+      "kind": "调研与观点",
+      "date": "2026-09-30",
+      "summary": "这份记录评估“关键操作时应该看哪里”是否值得成为独立 RLT 探索，并记录三条现有分支的追加实验。结论是值得做低成本诊断，但“让注意力集中到目标区域”已有直接近邻，不能单独作为创新主张。本轮已修改、测试 FLARE／Zeva／Jev 的诊断代码；视觉分支仍是方案，尚未建立新 worktree、提取当前模型热力图或启动注意力训练。",
+      "topics": [
+        "强化学习",
+        "记忆 / 适应",
+        "世界模型",
+        "动作 / 决策"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "从注意力可视化到交互证据：RLT 新方向评估 这份记录评估“关键操作时应该看哪里”是否值得成为独立 RLT 探索，并记录三条现有分支的追加实验。结论是值得做低成本诊断，但“让注意力集中到目标区域”已有直接近邻，不能单独作为创新主张。本轮已修改、测试 FLARE／Zeva／Jev 的诊断代码；视觉分支仍是方案，尚未建立新 worktree、提取当前模型热力图或启动注意力训练。 先确定失误来自哪个环节 最接近的公开工作 当前代码中需要分开的两条路径 建议的新切入口：经验指导视觉证据选择 用什么证据决定继续或停止 三个现有分支本轮新增了什么 "
+    },
+    {
+      "id": "doc:research/three-branch-research-plan-2026-09-30.md",
+      "title": "从“发出动作”到“利用执行经验”：三条可验证的 RLT 研究线",
+      "path": "research/three-branch-research-plan-2026-09-30.md",
+      "kind": "科研方案",
+      "date": "2026-09-30",
+      "summary": "这份分享稿解释三个原型如何分别学习动作后果、读取交互经验和限制决策范围，并明确它们距离真机持续成长还缺哪些证据。材料形成于代码修改和小实验之后；摘要是研究方案摘要，不是已完成论文的成果宣称。实际结果、负结果和测试范围见 审查记录。",
+      "topics": [
+        "物理经验 / 接触",
+        "强化学习",
+        "动作 / 决策"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "从“发出动作”到“利用执行经验”：三条可验证的 RLT 研究线 这份分享稿解释三个原型如何分别学习动作后果、读取交互经验和限制决策范围，并明确它们距离真机持续成长还缺哪些证据。材料形成于代码修改和小实验之后；摘要是研究方案摘要，不是已完成论文的成果宣称。实际结果、负结果和测试范围见 审查记录。 共同起点：机器人发出了命令，不等于发生了预期运动 一、FLARE 启发：让状态表征接受执行后果监督 研究方案摘要 一条真实数据怎样进入网络 二、Zeva 启发：将命令与实际响应保留为可查询证据 研究方案摘要 记住什么，什么时候才能使用 实验推动的一次简化：有用经验不应被预测头抹掉 三、Jev 启发：把自由动作优化变成有限、可审计的改进选择 研究方案摘要 选择器不是动作平均器，也不是语言模型 怎样走向真机与持续成长 分享与出图 "
+    },
+    {
+      "id": "doc:research/literature/frontier-rlt-2026-09-30.md",
+      "title": "三条 RLT 探索线的前沿邻近工作与创新边界",
+      "path": "research/literature/frontier-rlt-2026-09-30.md",
+      "kind": "调研与观点",
+      "date": "2026-09-30",
+      "summary": "本次调研判断“预测后果、积累记忆、选择有限动作”各自已被研究到哪里，以及当前 RLT 原型还需要证明什么。检索截止 2026-09-30；来源限定为论文原文、作者项目页和源码。这里的“高度重合”是研究判断，不是抄袭判定，也不是穷尽检索或新颖性保证。没有复现表中其他方法，不能跨任务比较其成功率。",
+      "topics": [
+        "物理经验 / 接触",
+        "强化学习",
+        "记忆 / 适应",
+        "世界模型",
+        "动作 / 决策",
+        "基线 / 工程"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "三条 RLT 探索线的前沿邻近工作与创新边界 本次调研判断“预测后果、积累记忆、选择有限动作”各自已被研究到哪里，以及当前 RLT 原型还需要证明什么。检索截止 2026-09-30；来源限定为论文原文、作者项目页和源码。这里的“高度重合”是研究判断，不是抄袭判定，也不是穷尽检索或新颖性保证。没有复现表中其他方法，不能跨任务比较其成功率。 最直接影响选题的工作 09-28／09-29 的新邻近工作 追加核对：价值误差、部署更新与接管信号 不能遗漏的基础对照 Jev 到底借鉴了什么 值得继续的窄问题 "
+    },
+    {
+      "id": "doc:research/three-branch-audit-2026-09-30.md",
+      "title": "三分支审查与续作：代码、实验证据和下一步门槛",
+      "path": "research/three-branch-audit-2026-09-30.md",
+      "kind": "实验进度",
+      "date": "2026-09-30",
+      "summary": "这份记录区分首轮 42 次诊断与下午续作。首轮修复了 FLARE 的掩码梯度问题，并为 Zeva、Jev 补齐可解释且可执行的对照；该轮 baseline 与 VR 未改动。下午新增人工接管入口，但仍未改动正式 baseline。首轮运行目录为 three_branch_audit_20260930_1247，结构化结果见 JSON，原始权重与日志留在服务器 NAS 的 research/ 下。首轮测试使用开发工作树，manifest 同时记录基准 commit、diff 哈希与源文件哈希，而不是冒称运行于最终提交。",
+      "topics": [
+        "记忆 / 适应",
+        "世界模型",
+        "动作 / 决策",
+        "基线 / 工程"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "三分支审查与续作：代码、实验证据和下一步门槛 这份记录区分首轮 42 次诊断与下午续作。首轮修复了 FLARE 的掩码梯度问题，并为 Zeva、Jev 补齐可解释且可执行的对照；该轮 baseline 与 VR 未改动。下午新增人工接管入口，但仍未改动正式 baseline。首轮运行目录为 three_branch_audit_20260930_1247，结构化结果见 JSON，原始权重与日志留在服务器 NAS 的 research/ 下。首轮测试使用开发工作树，manifest 同时记录基准 commit、diff 哈希与源文件哈希，而不是冒称运行于最终提交。 下午续作：预先固定实验矩阵与人工介入入口 已完成的 CPU 对照与一轮基于结果的修正 矩阵完成与可复查结果图 晚间追加：Jev online pilot 完成，但没有离开 reference 原审查：先区分实现通过与能力收益 FLARE：动作有信息，但并非所有 horizon 都该选同一种预测器 Zeva：历史确有信息，当前神经读取仍未充分利用 Jev：有限候选能限制 critic 外推，但当前对照还不是论文结果 审查范围与没有完成的部分 下一步按证据推进 等待队列交接 "
+    },
+    {
+      "id": "doc:notes/unimpa.md",
+      "title": "UniMPA：以动作落地的状态转移连接预测、记忆与动作",
+      "path": "notes/unimpa.md",
+      "kind": "论文笔记",
+      "date": "2026-09-30",
+      "summary": "双向视觉动作记忆、持续 latent/关键阶段 pixel 监督与检索动作原型偏置 flow source；World Expert 推理保留，未来解码头关闭。",
+      "topics": [
+        "记忆 / 适应",
+        "世界模型",
+        "动作 / 决策"
+      ],
+      "status": "已阅读/已有专题笔记",
+      "source": "https://arxiv.org/html/2609.11875v1",
+      "search": "UniMPA：以动作落地的状态转移连接预测、记忆与动作 双向视觉动作记忆、持续 latent/关键阶段 pixel 监督与检索动作原型偏置 flow source；World Expert 推理保留，未来解码头关闭。 一句话与直白解释 问题、框架与训练 作者结果与能证明到哪里 与 RLT 的重合与真正可试的窄问题 读论文时必须追问 原始来源 "
+    },
+    {
+      "id": "doc:notes/rpent.md",
+      "title": "RPent：把经验保存在系统中，如何与策略学习区分？",
+      "path": "notes/rpent.md",
+      "kind": "论文笔记",
+      "date": "2026-09-30",
+      "summary": "连接规划器、VLA/解析技能、环境接口与记忆的开源系统；关联论文为已有Harness VLA，不重复计作另一篇论文。",
+      "topics": [
+        "记忆 / 适应",
+        "RSI / Harness"
+      ],
+      "status": "官方文档专题阅读 · 2026-09-21；未复现",
+      "source": "https://github.com/RLinf/RPent",
+      "search": "RPent：把经验保存在系统中，如何与策略学习区分？ 连接规划器、VLA/解析技能、环境接口与记忆的开源系统；关联论文为已有Harness VLA，不重复计作另一篇论文。 1. 技术定位 2. Flash Mode 的实际边界 3. RoboTwin 与榜单证据 4. 对“自进化”的可检验拆分 5. 如何避免 Agent 增益掩盖 Token 增益 6. 与 ForceDelta、RLT 的统一位置 2026-09-30 再摄取：任务卡的可借鉴部分 借鉴执行证据链、经验来源版本和探索/评测隔离；未来用policy×memory对照分离策略学习与系统恢复收益。"
+    },
+    {
+      "id": "doc:notes/physicalrsi-mmlab.md",
+      "title": "PhysicalRSI 1.0：程序与技能的自改进，对 RLT 的边界和启发",
+      "path": "notes/physicalrsi-mmlab.md",
+      "kind": "论文笔记",
+      "date": "2026-09-30",
+      "summary": "2026-09-30 阅读 HKU MMLab 项目原页（直接检查页面文本与其可见任务表）；RoboDojo 官方基准。这是项目发布页及作者展示，不等于已核验的论文全文、开源复现或 RLT 对照。页面提供结果和演示入口；截至本次阅读未在页面找到可直接核对的论文或代码仓库链接。",
+      "topics": [
+        "物理经验 / 接触",
+        "强化学习",
+        "RSI / Harness",
+        "基线 / 工程"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "PhysicalRSI 1.0：程序与技能的自改进，对 RLT 的边界和启发 2026-09-30 阅读 HKU MMLab 项目原页（直接检查页面文本与其可见任务表）；RoboDojo 官方基准。这是项目发布页及作者展示，不等于已核验的论文全文、开源复现或 RLT 对照。页面提供结果和演示入口；截至本次阅读未在页面找到可直接核对的论文或代码仓库链接。 一句话与直白版 方法中真正更新的对象 与我们当前 RLT/Physical Token 的关系 最可借鉴的一个新增实验：经验适用范围门控 "
+    },
+    {
+      "id": "doc:research/literature/reading-ledger.md",
+      "title": "Physical Token 文献阅读总账",
+      "path": "research/literature/reading-ledger.md",
+      "kind": "调研与观点",
+      "date": "2026-09-30",
+      "summary": "建立日期：2026-09-19 更新日期：2026-09-30 范围：134 项论文/项目，另列 2 项观点；09-30 新增 P133 UniMPA 与 P134 F4R 项目侧专题笔记。09-26 对 P106–P111 六项既有工作做联合导读，不重复计数。 原则：检索到 ≠ 读懂；摘要笔记 ≠ 全文精读。 所有条目先保留检索笔记，只有完成方法、实验、附录/代码核验后才升级为“精读”。",
+      "topics": [
+        "物理经验 / 接触"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "Physical Token 文献阅读总账 建立日期：2026-09-19 更新日期：2026-09-30 范围：134 项论文/项目，另列 2 项观点；09-30 新增 P133 UniMPA 与 P134 F4R 项目侧专题笔记。09-26 对 P106–P111 六项既有工作做联合导读，不重复计数。 原则：检索到 ≠ 读懂；摘要笔记 ≠ 全文精读。 所有条目先保留检索笔记，只有完成方法、实验、附录/代码核验后才升级为“精读”。 0. 当前进度 1. 状态定义 2. 近期阅读顺序 09-30：UniMPA 与 F4R，直面 RLT 创新边界 09-26：六篇自进化工作与 Zeva 精读 09-25：GLOW 与 Real2sim2real 09-25：FLARE 等六篇既有论文与 PI 演讲观点 09-22 项目相关增量 09-21 增量 Wave 0 · 防撞优先（09-19 批次） Wave 1 · Physical representation / supervision Wave 2 · Learner / value / action selection Wave 3 · WAM / world-action interface Wave 4 · Execution / recovery / harness 3. 每篇精读必须填满的 10 个问题 4. 原始 125 项目录（09-19 快照） 动作侧表征与最邻近工作 动力学充分表示、历史辨识与表征理论 力触觉、接触与多模态物理监督 显式物理模型、可微约束与安全控制 世界—动作模型与潜空间未来预测 离线／在线RL、价值引导与冻结策略适配 执行时序、失败恢复与非参数自进化 通用动作头、动作tokenizer与跨本体底座 5. 阅读升级规则 5. 2026-09-21 新增专题 6. 2026-09-21 追加：恢复经验与物理判定 7. 09-22 增量：UniIntervene 与 CLAP 8. 09-25 补录：企业系统与观点分开统计 9. 09-25 初读更新与演讲观点 10. 09-30 新增：预测—记忆—动作与失败定向闭环 "
+    },
+    {
+      "id": "doc:notes/README.md",
+      "title": "Paper Notes Index",
+      "path": "notes/README.md",
+      "kind": "论文笔记",
+      "date": "2026-09-30",
+      "summary": "规则：独立 notes 表示已经专题阅读/精读的论文或系统；134 项论文/项目总账（另列 2 项观点）在 research/literature/reading-ledger.md 中维护。新增 P133/P134 为正文/实验/附录专题阅读，尚未代码复现；原 125 项历史检索稿仍为检索级 mini-note。",
+      "topics": [
+        "记忆 / 适应",
+        "基线 / 工程"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "Paper Notes Index 规则：独立 notes 表示已经专题阅读/精读的论文或系统；134 项论文/项目总账（另列 2 项观点）在 research/literature/reading-ledger.md 中维护。新增 P133/P134 为正文/实验/附录专题阅读，尚未代码复现；原 125 项历史检索稿仍为检索级 mini-note。 2026-09-30：RLT 两篇直接近邻 2026-09-26：六篇联合导读与 Zeva 精读 2026-09-25：六篇当日初读与 PI 演讲观点 2026-09-25：GLOW 与 Real2sim2real 2026-09-22：只保留与当前项目相关的两项 2026-09-21 追加专题 2026-09-21 新增专题 2026-09-30 项目侧增量 已有独立笔记 阅读总账 "
+    },
+    {
+      "id": "doc:research/progress-2026-09-30-maniskill-rlt.md",
+      "title": "ManiSkill RLT 复现与探索进展 — 2026-09-30",
+      "path": "research/progress-2026-09-30-maniskill-rlt.md",
+      "kind": "实验进度",
+      "date": "2026-09-30",
+      "summary": "这份快照把 ManiSkill PegInsertionSide 的 baseline 复现和四条研究探索线放在同一证据表中。Stage 1 的 20 回合闭环评测已经完成，正式 baseline Stage 2 正在运行；FLARE 启发分支完成了 100 轮在线对照但没有出现评估成功；Jev 启发分支在晚间完成了 20-step GPU 2 pilot，但选择器诊断没有离开 VLA reference；Zeva 与 PICO VR 继续保持隔离。当前没有证据证明任一新增机制已经加快在线 RL 收敛、减少人工干预或实现跨任务迁移。",
+      "topics": [
+        "强化学习",
+        "记忆 / 适应",
+        "世界模型",
+        "动作 / 决策",
+        "基线 / 工程"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "ManiSkill RLT 复现与探索进展 — 2026-09-30 这份快照把 ManiSkill PegInsertionSide 的 baseline 复现和四条研究探索线放在同一证据表中。Stage 1 的 20 回合闭环评测已经完成，正式 baseline Stage 2 正在运行；FLARE 启发分支完成了 100 轮在线对照但没有出现评估成功；Jev 启发分支在晚间完成了 20-step GPU 2 pilot，但选择器诊断没有离开 VLA reference；Zeva 与 PICO VR 继续保持隔离。当前没有证据证明任一新增机制已经加快在线 RL 收敛、减少人工干预或实现跨任务迁移。 代码与实验边界 Baseline：Stage 1 得到 40%，Stage 2 正在运行 FLARE 启发：预测链路有效，控制收益尚未出现 Jev 启发：限制探索空间，而不是增加外部决策 API Zeva 与 VR：经验保留诊断推进，真人闭环仍待完成 当前判断与下一步 Gate "
+    },
+    {
+      "id": "doc:notes/astra-robodojo.md",
+      "title": "GPT-6 Astra × RoboDojo：Direct / π0.5 Hybrid / In-Context Adaptation",
+      "path": "notes/astra-robodojo.md",
+      "kind": "论文笔记",
+      "date": "2026-09-30",
+      "summary": "一手技术报告显示：在 RoboDojo 10-task subset 上，π0.5 提供熟练动作先验、Astra 只在少量关键步骤审核/修正；Hybrid 48% success、62.60 Score，Direct 26%/37.81，且 Astra 只替换 14.4% executed control steps。",
+      "topics": [
+        "记忆 / 适应",
+        "RSI / Harness",
+        "动作 / 决策"
+      ],
+      "status": "已读 · 2026-09-16",
+      "source": "https://anonymous-report-421.github.io/public-website/",
+      "search": "GPT-6 Astra × RoboDojo：Direct / π0.5 Hybrid / In-Context Adaptation 一手技术报告显示：在 RoboDojo 10-task subset 上，π0.5 提供熟练动作先验、Astra 只在少量关键步骤审核/修正；Hybrid 48% success、62.60 Score，Direct 26%/37.81，且 Astra 只替换 14.4% executed control steps。 0. 领导讨论后的最终定位 1. 先分清证据等级 2. 已核验：π0.5 + GPT-6 Astra Hybrid 3. 最值得观察的行为机制 3.1 Sparse intervention / targeted correction 3.2 Outcome review 与 next-intent review 分离 3.3 “动作目标”不等于“物理结果” 3.4 Chunk-boundary feedback 仍太慢 4. 42 任务直接策略评测：2026-09-30 一手来源补核 4.1 语义强、精密接触弱 4.2 交互后的 adaptation 值得观察 5. 对 Universal Physical Token 的可借鉴点：只保留 actor-side 相关部分 Borrow A：Expected vs Actual Transition Mismatch Borrow B：Failure / Operating-Range Probe 仅作为表示诊断 Borrow C：Safety Hard Constraint 与 Learned Physics 分开 Borrow D：Base Actor Capability 必须先验收 6. 当前项目动作 7. Source guardrail 直接强化当前 Physical Token 设计的三点：actual/executed action→measured consequence、base-policy operating-range/failure-onset probe、hard safety 与 learned regularization 分离。当前不引入 Astra planner/correction，仍先完成 Gate0→B0→B1→B2。"
+    },
+    {
+      "id": "doc:notes/f4r.md",
+      "title": "F4R：从真实失败定位到仿真再训练的闭环",
+      "path": "notes/f4r.md",
+      "kind": "论文笔记",
+      "date": "2026-09-30",
+      "summary": "真机失败诊断→交互场景重建与定向随机化→纠偏示范 sim-real 共训→目标化 PPO 与旧数据防遗忘→再部署。",
+      "topics": [
+        "记忆 / 适应",
+        "基线 / 工程"
+      ],
+      "status": "已阅读/已有专题笔记",
+      "source": "https://arxiv.org/html/2609.35575v2",
+      "search": "F4R：从真实失败定位到仿真再训练的闭环 真机失败诊断→交互场景重建与定向随机化→纠偏示范 sim-real 共训→目标化 PPO 与旧数据防遗忘→再部署。 一句话与直白解释 四段闭环：数据从哪里来、哪些参数在更新 作者结果、成本与限制 与 RLT 工程主线的关系 原始来源 "
+    },
+    {
+      "id": "doc:notes/axis-capability-library.md",
+      "title": "Axis：仿真专家、筛选数据与部署回流",
+      "path": "notes/axis-capability-library.md",
+      "kind": "论文笔记",
+      "date": "2026-09-30",
+      "summary": "2026-09-30；Axis 官方博客，2026-09-25。这是团队披露的工程观察，没有开放逐回合轨迹与完整可复现方法；不是同行评审论文或本项目复现。",
+      "topics": [
+        "基线 / 工程"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "Axis：仿真专家、筛选数据与部署回流 2026-09-30；Axis 官方博客，2026-09-25。这是团队披露的工程观察，没有开放逐回合轨迹与完整可复现方法；不是同行评审论文或本项目复现。 项目侧试验：不要借“RSI”代替学习曲线 "
+    },
+    {
+      "id": "doc:research/physical-rsi-source-intake-2026-09-30.md",
+      "title": "2026-09-30 新资料摄取：把 Physical RSI 落到 RLT 的可检验增量",
+      "path": "research/physical-rsi-source-intake-2026-09-30.md",
+      "kind": "调研与观点",
+      "date": "2026-09-30",
+      "summary": "项目侧研究备忘；原始论文/官方项目与媒体转述分开。没有新增 RLT 训练结果或论文新颖性结论。 既有基线、失败结果和计算限制以 09-30 审计、进度快照为准。",
+      "topics": [
+        "物理经验 / 接触",
+        "强化学习",
+        "RSI / Harness",
+        "基线 / 工程"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "2026-09-30 新资料摄取：把 Physical RSI 落到 RLT 的可检验增量 项目侧研究备忘；原始论文/官方项目与媒体转述分开。没有新增 RLT 训练结果或论文新颖性结论。 既有基线、失败结果和计算限制以 09-30 审计、进度快照为准。 先给这批材料分层 对自己的问题重新定义 三个小实验，各自有可否证结果 下次组会可做的决定 "
+    },
+    {
+      "id": "doc:research/progress-2026-09-28-maniskill-rlt.md",
+      "title": "ManiSkill RLT 复现与探索分支进展 — 2026-09-28",
+      "path": "research/progress-2026-09-28-maniskill-rlt.md",
+      "kind": "实验进度",
+      "date": "2026-09-28",
+      "summary": "这份快照记录新的 ManiSkill PegInsertionSide 实验线。它与仓库此前的 Hammer / RoboTwin clean490 记录是不同的数据、任务实现和 checkpoint 系列，成功率与训练 step 不可直接横向合并。当前已经完成 Stage 1 训练，并分别建立 FLARE 启发的动作后果表征、Zeva 启发的交互记忆和 PICO VR 接管三个隔离分支；尚未得到 Stage 2 收敛加速、减少人工干预或跨任务迁移的证据。",
+      "topics": [
+        "物理经验 / 接触",
+        "强化学习",
+        "记忆 / 适应",
+        "世界模型",
+        "动作 / 决策",
+        "基线 / 工程"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "ManiSkill RLT 复现与探索分支进展 — 2026-09-28 这份快照记录新的 ManiSkill PegInsertionSide 实验线。它与仓库此前的 Hammer / RoboTwin clean490 记录是不同的数据、任务实现和 checkpoint 系列，成功率与训练 step 不可直接横向合并。当前已经完成 Stage 1 训练，并分别建立 FLARE 启发的动作后果表征、Zeva 启发的交互记忆和 PICO VR 接管三个隔离分支；尚未得到 Stage 2 收敛加速、减少人工干预或跨任务迁移的证据。 可复现代码边界 Baseline：Stage 1 完成，闭环能力仍在评估 FLARE 启发：动作条件化未来表征 Zeva 启发：完成交互的显式记忆 VR 接管：工具链与算法证据分开 当前判断与下一步 Gate "
+    },
+    {
+      "id": "doc:research/discussions/physical-experience-theses.md",
+      "title": "研究随想：让实践留下能再次使用的物理经验",
+      "path": "research/discussions/physical-experience-theses.md",
+      "kind": "项目资料",
+      "date": "2026-09-26",
+      "summary": "整理者研究立场，2026-09-24。 根据研究者提供的随想与 loss-first 讨论整理。以下是问题意识和候选假设，不是文献共同结论，不替换仓库既有实验事实。",
+      "topics": [
+        "物理经验 / 接触",
+        "动作 / 决策"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "研究随想：让实践留下能再次使用的物理经验 整理者研究立场，2026-09-24。 根据研究者提供的随想与 loss-first 讨论整理。以下是问题意识和候选假设，不是文献共同结论，不替换仓库既有实验事实。 我真正想研究的对象 把几个词分开 我愿意先承担的两个可证伪判断 模块职责与当下取舍 收敛原则 "
+    },
+    {
+      "id": "doc:research/experiments/rlt-contact-memory/implementation.md",
+      "title": "最小接入合同与实施清单",
+      "path": "research/experiments/rlt-contact-memory/implementation.md",
+      "kind": "科研方案",
+      "date": "2026-09-26",
+      "summary": "这里只定义接口，并提供标准库日志校验脚本；不是 RLinf 训练实现。没有配置真实 checkpoint、环境版本或 GPU 任务，也不提供虚构的 train_rlt.py 命令。",
+      "topics": [
+        "强化学习"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "最小接入合同与实施清单 这里只定义接口，并提供标准库日志校验脚本；不是 RLinf 训练实现。没有配置真实 checkpoint、环境版本或 GPU 任务，也不提供虚构的 train_rlt.py 命令。 1. 从 rollout 取得一行 transition 2. 现在可以运行的命令 3. 接入 RLinf 的五个 hook（接口名为提案，不是现有 API） 4. 预期失败与处理 "
+    },
+    {
+      "id": "doc:research/prototypes/zeva_rlt_memory/README.md",
+      "title": "已完成接触经验的时序原型",
+      "path": "research/prototypes/zeva_rlt_memory/README.md",
+      "kind": "项目资料",
+      "date": "2026-09-26",
+      "summary": "本目录是为 RLT 接入准备的独立 Python 标准库原型。它实现 BIT/PIM 的时间和 episode 边界，尚未接入 RLinf、RLT、Zeva 权重或任何训练过程。",
+      "topics": [
+        "物理经验 / 接触",
+        "强化学习",
+        "记忆 / 适应"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "已完成接触经验的时序原型 本目录是为 RLT 接入准备的独立 Python 标准库原型。它实现 BIT/PIM 的时间和 episode 边界，尚未接入 RLinf、RLT、Zeva 权重或任何训练过程。  "
+    },
+    {
+      "id": "doc:research/six-papers-guided-reading-2026-09-26.md",
+      "title": "六篇论文导读：从“自进化”到 RLT 接触实验",
+      "path": "research/six-papers-guided-reading-2026-09-26.md",
+      "kind": "调研与观点",
+      "date": "2026-09-26",
+      "summary": "2026-09-26。核对公开论文/代码；这是论文阅读与实验选择，没有在 RLinf 训练或完成六篇复现。现有独立笔记保留： Zeva、Harness VLA、SHAPER、ASPIRE、ENPIRE、Zetta。下表的“适配”是对我们当前 RLT 目标的判断，不是论文作者的结论。",
+      "topics": [
+        "物理经验 / 接触",
+        "强化学习",
+        "记忆 / 适应",
+        "RSI / Harness",
+        "基线 / 工程"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "六篇论文导读：从“自进化”到 RLT 接触实验 2026-09-26。核对公开论文/代码；这是论文阅读与实验选择，没有在 RLinf 训练或完成六篇复现。现有独立笔记保留： Zeva、Harness VLA、SHAPER、ASPIRE、ENPIRE、Zetta。下表的“适配”是对我们当前 RLT 目标的判断，不是论文作者的结论。 先带着一张图看六篇 推荐今天的阅读顺序（约 2.5 小时） 精读 Zeva 时写在纸上的问题 本轮决定 来源与版本 "
+    },
+    {
+      "id": "doc:research/literature/survey-project-extracts-2026-09-26.md",
+      "title": "从综述区迁回的项目解读",
+      "path": "research/literature/survey-project-extracts-2026-09-26.md",
+      "kind": "调研与观点",
+      "date": "2026-09-26",
+      "summary": "2026-09-26 整理。以下为此前混入文献卡的项目推论与待验证提案，原意保留；不是原论文结论，也没有新增实验结果。仅在 RLT / Physical Token 项目区维护。",
+      "topics": [
+        "物理经验 / 接触",
+        "强化学习"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "从综述区迁回的项目解读 2026-09-26 整理。以下为此前混入文献卡的项目推论与待验证提案，原意保留；不是原论文结论，也没有新增实验结果。仅在 RLT / Physical Token 项目区维护。 knowin-glow simate-autoresearch skild-physical-self-play zeva-ego The Gaussian Is Enough "
+    },
+    {
+      "id": "doc:research/discussions/physical-rsi-sept24.md",
+      "title": "三条新线索与 GLOW 补充：什么能进入 RLT 实验？",
+      "path": "research/discussions/physical-rsi-sept24.md",
+      "kind": "项目资料",
+      "date": "2026-09-26",
+      "summary": "研究库首页 · 案例 · 研究随想 · 可执行实验包",
+      "topics": [
+        "强化学习"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "三条新线索与 GLOW 补充：什么能进入 RLT 实验？ 研究库首页 · 案例 · 研究随想 · 可执行实验包 四种更新对象 最新近邻改变了什么 当前选择：先做什么，暂时保留什么 三个特别容易误读的数字 从“有闭环”到“改进器更强”还差什么 "
+    },
+    {
+      "id": "doc:notes/zeva.md",
+      "title": "Zeva: In-Context Causal Learning for Generalizable Embodied Manipulation",
+      "path": "notes/zeva.md",
+      "kind": "论文笔记",
+      "date": "2026-09-26",
+      "summary": "冻结 policy，不做梯度更新；把“执行动作 → 状态变化”编码成因果交互信号，写入双时间尺度 Memory，再作为 Context 影响后续动作。",
+      "topics": [
+        "记忆 / 适应",
+        "动作 / 决策"
+      ],
+      "status": "已读 · Day 1",
+      "source": "https://github.com/air-embodied-brain/Zeva",
+      "search": "Zeva: In-Context Causal Learning for Generalizable Embodied Manipulation 冻结 policy，不做梯度更新；把“执行动作 → 状态变化”编码成因果交互信号，写入双时间尺度 Memory，再作为 Context 影响后续动作。 一句话 1. 它解决什么问题？ 2. 核心表示：Action–Effect Transition 3. Causal Interaction Extractor Phase Token Causal Interaction Signal 4. 双时间尺度 Memory Brief Interaction Trace（BIT） Persistent Interaction Memory（PIM） 5. Memory 如何影响 Policy？ 6. 为什么它可以叫“自进化”？ RoboCasa365 ChemLab-Evo 真机 7. Benchmark 结果 8. Cross-Task Effect Retrieval：非常值得我们关注 9. One-Shot Human Warm-Up 10. 对当前项目的真正意义 11. 对我们的创新边界 12. 今日讨论问题 把 Physical Experience 的基本单位从单帧 state 提升到 action–effect transition；长期探索 Fast Memory + Slow RL。"
+    },
+    {
+      "id": "doc:research/zeva-rlt-implementation-2026-09-26.md",
+      "title": "Zeva 精读及 RLT 最小可实验接口",
+      "path": "research/zeva-rlt-implementation-2026-09-26.md",
+      "kind": "科研方案",
+      "date": "2026-09-26",
+      "summary": "2026-09-26 · 基于 论文 v2、公开 代码/复现说明、现有 RLT 合同。仅完成代码审阅、原型和单元检查，尚无 RLinf 接入或效果结果。 本文的 RLT 扩展都是待验证假设；原论文不是 RLT 在线 RL 方法。",
+      "topics": [
+        "强化学习",
+        "记忆 / 适应",
+        "基线 / 工程"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "Zeva 精读及 RLT 最小可实验接口 2026-09-26 · 基于 论文 v2、公开 代码/复现说明、现有 RLT 合同。仅完成代码审阅、原型和单元检查，尚无 RLinf 接入或效果结果。 本文的 RLT 扩展都是待验证假设；原论文不是 RLT 在线 RL 方法。 直白解释 原论文机制与训练边界 论文与开放代码需要对齐的细节 在 RLT 上先做什么：P0 到 P3 最小矩阵与停止条件 当前代码状态与接入位置 "
+    },
+    {
+      "id": "doc:research/survey-literature-intake.md",
+      "title": "RSI 公开文献 → RLT 项目：单向使用入口",
+      "path": "research/survey-literature-intake.md",
+      "kind": "项目资料",
+      "date": "2026-09-26",
+      "summary": "2026-09-26。这里属于 RLT / Universal Physical Token 项目区；它可以引用公开综述材料，项目判断在此形成并保留。",
+      "topics": [
+        "物理经验 / 接触",
+        "强化学习",
+        "RSI / Harness"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "RSI 公开文献 → RLT 项目：单向使用入口 2026-09-26。这里属于 RLT / Universal Physical Token 项目区；它可以引用公开综述材料，项目判断在此形成并保留。 两个独立入口 从综述区迁回的内容 可单向引用的公开材料 单向规则与访问边界 "
+    },
+    {
+      "id": "doc:research/experiments/rlt-contact-memory/README.md",
+      "title": "RLT 接触经验实验：先验证 loss，再验证记忆",
+      "path": "research/experiments/rlt-contact-memory/README.md",
+      "kind": "项目资料",
+      "date": "2026-09-26",
+      "summary": "2026-09-24｜执行提案，未训练、未复现、无性能结果。 延续仓库的 09-22 物理经验合同，不替换现有路线。当前优先完成数据合同和离线 probe；在线比较依赖可信 reference、learner 与干预闭环。这里的可运行代码仅是日志校验器，RLinf rollout adapter、特征导出和训练接入仍待实现。",
+      "topics": [
+        "物理经验 / 接触",
+        "强化学习",
+        "记忆 / 适应",
+        "基线 / 工程"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "RLT 接触经验实验：先验证 loss，再验证记忆 2026-09-24｜执行提案，未训练、未复现、无性能结果。 延续仓库的 09-22 物理经验合同，不替换现有路线。当前优先完成数据合同和离线 probe；在线比较依赖可信 reference、learner 与干预闭环。这里的可运行代码仅是日志校验器，RLinf rollout adapter、特征导出和训练接入仍待实现。 1. 同事讨论时先讲清的一个问题 2. 第一版 physical 的操作定义 3. 损失和梯度究竟加在哪里 4. 分阶段矩阵：本周不用把所有组都跑一遍 5. 记忆库最小实现：先存结构化响应，不先造语言知识库 6. 自进化的三种实验必须分开 7. 预算、指标与验收 8. 本周明确产物与分工接口 "
+    },
+    {
+      "id": "doc:research/knowledge-base-maintenance.md",
+      "title": "Knowledge Base Maintenance Protocol",
+      "path": "research/knowledge-base-maintenance.md",
+      "kind": "项目资料",
+      "date": "2026-09-26",
+      "summary": "1. Project OS：监督当前科研主线、实验进度、失败诊断和下一步。 2. Frontier Knowledge Base：积累具身自进化相关论文、项目、观点、方法边界和可借鉴点。",
+      "topics": [
+        "RSI / Harness"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "Knowledge Base Maintenance Protocol 1. Project OS：监督当前科研主线、实验进度、失败诊断和下一步。 2. Frontier Knowledge Base：积累具身自进化相关论文、项目、观点、方法边界和可借鉴点。 目标 1. 三层结构 Layer A · Project Mainline Layer B · Frontier Knowledge Layer C · Historical Archive 2. 每日输入如何进入网站（2026-09-30 更新） 3. Public Repository Redaction Policy 可以公开 默认不公开 写法原则 4. 新论文最小 schema 5. 论文什么时候进入主线？ 6. 网站应该回答的五个问题 7. 每周维护动作 Project Review Frontier Review Archive 8. 长期目标 9. RSI 综述与项目区隔离（2026-09-26） "
+    },
+    {
+      "id": "doc:notes/knowin-glow.md",
+      "title": "Knowin GLOW：把交互经验编译成监督，而非只积累成功视频",
+      "path": "notes/knowin-glow.md",
+      "kind": "论文笔记",
+      "date": "2026-09-26",
+      "summary": "从企业系统中提取执行回执、标签来源和监督分流；补齐主阅读总账，关联已有 RSI 案例。",
+      "topics": [
+        "记忆 / 适应",
+        "RSI / Harness"
+      ],
+      "status": "专题阅读 · 2026-09-25；未复现",
+      "source": "https://knowinai.com/tech.html",
+      "search": "Knowin GLOW：把交互经验编译成监督，而非只积累成功视频 从企业系统中提取执行回执、标签来源和监督分流；补齐主阅读总账，关联已有 RSI 案例。 来源与机制 对 Physical Token 的判断 最小可借鉴接口：执行回执 能立即提出的实验 阅读边界 先比较同容量实测后果监督；记忆检索另做同预算消融。"
+    },
+    {
+      "id": "doc:research/discussions/optional-components.md",
+      "title": "Jev、注意力、TTA 与 Astra/harness：分别承担什么",
+      "path": "research/discussions/optional-components.md",
+      "kind": "项目资料",
+      "date": "2026-09-26",
+      "summary": "这些是候选实验，不是已实现能力，也不作为 loss-first 第一轮的必选组件。 强基模负责提供先验；小型控制 learner、任务记忆和研究 Agent 的更新频率与评价对象应分开。",
+      "topics": [
+        "记忆 / 适应",
+        "RSI / Harness",
+        "动作 / 决策"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "Jev、注意力、TTA 与 Astra/harness：分别承担什么 这些是候选实验，不是已实现能力，也不作为 loss-first 第一轮的必选组件。 强基模负责提供先验；小型控制 learner、任务记忆和研究 Agent 的更新频率与评价对象应分开。 1. Jev：候选选择可以借，快速和物理正确需实测 2. 注意力：先证明失败来自错误依赖，再尝试约束 3. Astra 与 harness：把研究过程变得可追溯 4. Skild 启发的课程：待表示稳定后再试 "
+    },
+    {
+      "id": "doc:research/archive/2026-09-24-physical-rsi-cases.md",
+      "title": "2026-09-24 同日追加：Physical RSI 案例、研究随想与实验落点",
+      "path": "research/archive/2026-09-24-physical-rsi-cases.md",
+      "kind": "项目资料",
+      "date": "2026-09-26",
+      "summary": "本轮按用户给出的三条新闻/项目线索和另一份附件回查原始来源。没有新增机器人训练、平台试用或论文复现。 保留当天早间与 follow-up 日志，不重复计算此前成果。",
+      "topics": [
+        "物理经验 / 接触",
+        "RSI / Harness",
+        "基线 / 工程"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "2026-09-24 同日追加：Physical RSI 案例、研究随想与实验落点 本轮按用户给出的三条新闻/项目线索和另一份附件回查原始来源。没有新增机器人训练、平台试用或论文复现。 保留当天早间与 follow-up 日志，不重复计算此前成果。 本轮增量 原始来源覆盖与边界 最值得保留的研究决策 本轮校验范围 "
+    },
+    {
+      "id": "doc:research/perspectives-and-theses.md",
+      "title": "观点与研究框架：具身 RSI、Physical AI 与分层自进化",
+      "path": "research/perspectives-and-theses.md",
+      "kind": "调研与观点",
+      "date": "2026-09-25",
+      "summary": "新增Real2sim2real 观点专题，并关联 GLOW 的经验编译与执行回执。截图强调强模型、仿真、训练和部署闭环；本库保留这一问题意识，但不将未核实演示、AR 优越性或无限自进化当作事实。",
+      "topics": [
+        "物理经验 / 接触",
+        "RSI / Harness",
+        "基线 / 工程"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "观点与研究框架：具身 RSI、Physical AI 与分层自进化 新增Real2sim2real 观点专题，并关联 GLOW 的经验编译与执行回执。截图强调强模型、仿真、训练和部署闭环；本库保留这一问题意识，但不将未核实演示、AR 优越性或无限自进化当作事实。 2026-09-25 · 从“生成世界”收紧到“校验响应” 2026-09-22 · 交互物理经验与减少干预 1. 从“及格”到“可用” 2. SeeAct / 具身 RSI 观点：三套基础系统 World Engine Evaluator / Reward Model RL / Policy Base 3. 能力拓展自顶向下，能力增强自底向上 Top-down Capability Expansion Bottom-up Capability Improvement 4. 为什么 Harness 不会因为 Foundation Model 变强就消失？ 5. 一个重要的系统分层 6. Agent、VLA、WAM、RL 谁会赢？ Agent / System 2 VLA / System 1 WAM / World Model RL 7. 四种“自进化”必须分开 Level 1 · Context Evolution Level 2 · Skill / Harness Evolution Level 3 · Policy Evolution Level 4 · Foundation Evolution 8. Fast Memory + Slow RL 9. 单机器人为什么最终不够？ 10. 我们自己的长期综合判断 11. 2026-09-21：从动作后果到可恢复性（待验证） "
+    },
+    {
+      "id": "doc:research/frontier-landscape.md",
+      "title": "具身智能自进化前沿工作地图：别人正在做什么，我们能借什么",
+      "path": "research/frontier-landscape.md",
+      "kind": "调研与观点",
+      "date": "2026-09-25",
+      "summary": "最小实验提案把两者落到同容量后果监督、同预算记忆检索、响应校准。保持知识库层与项目事实分离。",
+      "topics": [
+        "物理经验 / 接触",
+        "记忆 / 适应",
+        "RSI / Harness"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "具身智能自进化前沿工作地图：别人正在做什么，我们能借什么 最小实验提案把两者落到同容量后果监督、同预算记忆检索、响应校准。保持知识库层与项目事实分离。 2026-09-25：经验编译与响应校准 2026-09-22：UniIntervene 与 CLAP 的项目相关取舍 2026-09-21 追加：XPACE 与 EmbodiedJev 2026-09-21 增量：ForceDelta-VLA 与 RPent 0. 为什么要单独维护这张地图？ 1.1 RLT：冻结大模型，让小策略在线学 1.2 SERL：真正的机器人 RL 是一整套系统 1.3 Q-VGM：不再只训练小 actor，而是让 Flow VLA 本体吃 Q-gradient 2.1 FailSafe：系统性地产生 failure-action pairs 2.2 RedFlow：把失败直接改写成 action-level correction 2.3 RL²-VLA：不是每一步都纠正，而是先学“什么时候需要 steering” 3.1 Pri4R：未来几何 supervision 3.2 PHR-VLA：普通 future latent 可能已经很强 3.3 FD-VLA / HapticVLA：训练时用力 / 触觉，部署时不用 3.4 MSDP：actor 和 critic 不一定应该看同样的信息 4.1 SR-WM：不是预测像素，而是预测角色、关系和 phase 4.2 PIN-WM：显式 physics-informed world model 5.1 Zeva：Action → State Change 变成 Causal Memory Fast Adaptation Slow Adaptation 5.2 Rapid Motor Adaptation：history 本身就是物理传感器 6.1 VLA-Corrector：open-loop action chunk 的盲区 6.2 BCP：学习“继续执行还是重新规划” 6.3 SmoothRL：异步以后，RL transition 定义都会变 6.4 Strict Streaming RL：最后再讨论 7.1 Harness VLA：把 VLA 当成可验证 primitive Primitive Failure Orchestration Failure 7.2 SHAPER：演化外部 skill + harness，而不是权重 7.3 ASPIRE：把“训练”重新定义成 skill refinement 7.4 Zetta：三个时间尺度的 Harness Self-Evolution 高频 rollout 级 skill 更新级 7.5 ENPIRE：Coding Agent 参与“研究 / 训练闭环” 8.1 PLD：RL specialist 只是经验生成器 8.2 Learning While Deploying：机器人 fleet 共享经验 规则 A：Phase 0 不因为新论文而改变 规则 B：每篇论文必须被压成“项目动作” 规则 C：把新工作放进“更新对象”坐标系 "
+    },
+    {
+      "id": "doc:research/flare-rlt-contact-experiments-2026-09-25.md",
+      "title": "从 FLARE 到 RLT：接触后果监督、在线收敛与跨任务迁移",
+      "path": "research/flare-rlt-contact-experiments-2026-09-25.md",
+      "kind": "科研方案",
+      "date": "2026-09-25",
+      "summary": "2026-09-25 · 探索实验方案，全部未实施。沿用 现有研究合同和 loss-first 低成本对照；本页只写新增的“FLARE 启发 → 可在 RLT 上实现的接口 → 什么时候算控制收益”。相关 六篇速记。",
+      "topics": [
+        "物理经验 / 接触",
+        "强化学习",
+        "世界模型"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "从 FLARE 到 RLT：接触后果监督、在线收敛与跨任务迁移 2026-09-25 · 探索实验方案，全部未实施。沿用 现有研究合同和 loss-first 低成本对照；本页只写新增的“FLARE 启发 → 可在 RLT 上实现的接口 → 什么时候算控制收益”。相关 六篇速记。 0. 问题要拆开 1. 先恢复可对照的 RLT 2. 第一优先级：loss-first 的“未来后果”读出 3. 零阶段诊断与匹配消融 4. 第二优先级：小型后果模型约束探索（与 loss-first 分开） 5. 第三优先级：历史经验与多任务迁移 6. 预注册的成功门槛与停机规则 可考虑的论文切入点 "
+    },
+    {
+      "id": "doc:research/real2sim2real-scaling-perspective.md",
+      "title": "Real2sim2real——具身的 scaling 起点：观点拆解与实验边界",
+      "path": "research/real2sim2real-scaling-perspective.md",
+      "kind": "调研与观点",
+      "date": "2026-09-25",
+      "summary": "拆分场景重建、动力学响应和策略迁移；不计为论文。",
+      "topics": [],
+      "status": "截图已梳理 · 2026-09-25；公开来源待核实",
+      "source": "https://nkd-lkz.github.io/physical-self-evolution/reader.html?path=research/real2sim2real-scaling-perspective.md",
+      "search": "Real2sim2real——具身的 scaling 起点：观点拆解与实验边界 拆分场景重建、动力学响应和策略迁移；不计为论文。 文章的核心主张 五个判断，分别需要什么证据 Real2sim2real 的三个合同 不是从 Astra 才开始的方向 对 RLT / Physical Token 的可执行取舍 建议的下一项实验 "
+    },
+    {
+      "id": "doc:research/glow-real2sim2real-experiments.md",
+      "title": "GLOW × Real2sim2real：三项最小可证伪实验",
+      "path": "research/glow-real2sim2real-experiments.md",
+      "kind": "科研方案",
+      "date": "2026-09-25",
+      "summary": "2026-09-25 · 本库研究提案，全部未执行。来源分别见 GLOW 专题与Real2sim2real 观点。优先级为 A → B → C；不是一次叠加三个模块，也不替换当前研究合同。",
+      "topics": [],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "GLOW × Real2sim2real：三项最小可证伪实验 2026-09-25 · 本库研究提案，全部未执行。来源分别见 GLOW 专题与Real2sim2real 观点。优先级为 A → B → C；不是一次叠加三个模块，也不替换当前研究合同。 共同前置：先让标签可信 A · loss-first：实测响应是否改善紧凑表示？ B · 记忆库：检索物理响应比检索语义更有用吗？ C · 响应校准：比更像真的画面更有价值吗？ Agent / harness 的具体位置 "
+    },
+    {
+      "id": "doc:research/chelsea-finn-physical-rsi-talk-2026-09-25.md",
+      "title": "Chelsea Finn 的物理自改进与通用性：演讲整理的核验笔记",
+      "path": "research/chelsea-finn-physical-rsi-talk-2026-09-25.md",
+      "kind": "调研与观点",
+      "date": "2026-09-25",
+      "summary": "2026-09-25 · 演讲二次整理/观点，不是新论文、不是独立评测、也不是本项目实验结果。由用户提供的 SourceMind 中文整理稿提取问题；可核验的论文数据以 PI 官方 RECAP 博客、RECAP 论文、π0.7 官方博客和 π0.7 论文为准。会议来源：Actuate 26 日程。没有全文转载外部整理稿。",
+      "topics": [
+        "物理经验 / 接触",
+        "RSI / Harness"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "Chelsea Finn 的物理自改进与通用性：演讲整理的核验笔记 2026-09-25 · 演讲二次整理/观点，不是新论文、不是独立评测、也不是本项目实验结果。由用户提供的 SourceMind 中文整理稿提取问题；可核验的论文数据以 PI 官方 RECAP 博客、RECAP 论文、π0.7 官方博客和 π0.7 论文为准。会议来源：Actuate 26 日程。没有全文转载外部整理稿。 一句话与直白版 原文观点、可核对证据与边界 把演讲观点压成可验证的三个问题 核验状态 "
+    },
+    {
+      "id": "doc:research/literature/reading-notes-2026-09-25.md",
+      "title": "2026-09-25 · 六篇相邻工作速记：未来、几何、注意力与动作接口",
+      "path": "research/literature/reading-notes-2026-09-25.md",
+      "kind": "调研与观点",
+      "date": "2026-09-25",
+      "summary": "用样条参数压缩动作轨迹，支持多种策略架构，并结合结构化轨迹约束。",
+      "topics": [
+        "世界模型",
+        "动作 / 决策"
+      ],
+      "status": "已初读/讨论过，待系统精读",
+      "source": "https://arxiv.org/abs/2606.07386",
+      "search": "2026-09-25 · 六篇相邻工作速记：未来、几何、注意力与动作接口 用样条参数压缩动作轨迹，支持多种策略架构，并结合结构化轨迹约束。 FLARE：Robot Learning with Implicit World Modeling Pri4R：Learning World Dynamics for Vision-Language-Action Models with Privileged 4D Representation AGRA：Making Foresight Actionable Spline Policy：A Structured Representation for Robot Policies CometVLA：Co-Training on an Embodied Data Pyramid towards Physical Understanding PAR：Physical Autoregressive Model for Robotic Manipulation without Action Pretraining 共同科研判断 "
+    },
+    {
+      "id": "doc:research/migration-recovery-2026-09-22.md",
+      "title": "迁移后如何接回进度：冻结 reference 与小规模物理后果实验",
+      "path": "research/migration-recovery-2026-09-22.md",
+      "kind": "项目资料",
+      "date": "2026-09-24",
+      "summary": "2026-09-22；依据迁移快照的代码/元数据/历史日志核查、用户评测截图和本仓库历史记录。没有在新机器上重新训练或重跑55%评测。<br 脱敏核查摘要 · 干预机制 · 研究合同",
+      "topics": [
+        "物理经验 / 接触",
+        "记忆 / 适应"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "迁移后如何接回进度：冻结 reference 与小规模物理后果实验 2026-09-22；依据迁移快照的代码/元数据/历史日志核查、用户评测截图和本仓库历史记录。没有在新机器上重新训练或重跑55%评测。<br 脱敏核查摘要 · 干预机制 · 研究合同 1. 当前到底做到哪里？ 2. 最简切入口 2.1 最小资产清单 2.2 代码恢复顺序 3. 现在没有模型也能做什么？ 4. 小算力探索清单 5. 第一轮验收与后续门槛 "
+    },
+    {
+      "id": "doc:research/decision-log.md",
+      "title": "科研决策日志",
+      "path": "research/decision-log.md",
+      "kind": "项目资料",
+      "date": "2026-09-24",
+      "summary": "- 当前入口改为冻结reference恢复、最小专家纠错和缓存特征probe；大规模RLT收敛不是离线表示研究的前提，正式在线归因仍需可信matched learner。 - reference→actor关键阶段、expert纠错、terminal/reward分别记录；100/200是Hammer历史名义步协议，不是通用关键时刻或物理时间。 - 先固定专家/门控验证后果监督，再单独改gate；不通过放宽阈值制造“干预减少”。主成本使用专家控制时长，并约束无专家成功率和吞吐率。 - TOPP只完成路径时间参数化；脚本专家须先从学生偏离状态验证恢复。没有",
+      "topics": [
+        "物理经验 / 接触",
+        "强化学习",
+        "记忆 / 适应",
+        "动作 / 决策"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "科研决策日志 - 当前入口改为冻结reference恢复、最小专家纠错和缓存特征probe；大规模RLT收敛不是离线表示研究的前提，正式在线归因仍需可信matched learner。 - reference→actor关键阶段、expert纠错、terminal/reward分别记录；100/200是Hammer历史名义步协议，不是通用关键时刻或物理时间。 - 先固定专家/门控验证后果监督，再单独改gate；不通过放宽阈值制造“干预减少”。主成本使用专家控制时长，并约束无专家成功率和吞吐率。 - TOPP只完成路径时间参数化；脚本专家须先从学生偏离状态验证恢复。没有专家模型/适配时，不能宣称已有人工干预。 - RLT不能定性成只有语义监督；保留state/history、prefix/head、expert-only、同纠正数据BC/DAgger等对照。多任务、物理规律迁移均为后续假设。 2026-09-22 · 干预研究合同与小算力恢复（待实施） 2026-09-18 · B0 Stage2退化后，先做reference-consistency诊断再重启online RL 2026-09-17 · RoboDojo D3 / D5 已通过，下一门槛固定为 D6 reference-only adapter 2026-09-17 · RoboDojo 14D state 按字段记录 measured / command provenance 2026-09-17 · RoboDojo policy action 不按一个 physics tick 处理 2026-09-17 · 历史 doctor import PASS 不再作为 RoboDojo runtime 的充分证据 2026-09-17 · clean500 全量审计后正式收敛为 clean490 / train450 / eval40 2026-09-17 · Contact / impulse 弱标签保留轨迹，但必须按标签 mask 2026-09-17 · 12k 是当前 Stage1 开发候选，不是最终 reference 2026-09-17 · 新 clean490 Stage1 默认 30k / 每5k保存，正式 GPU 训练尚未启动 2026-09-17 · B1 数据合同显式区分 command 与 measured execution 2026-09-16 · 领导明确：Astra / Harness 属于 planner 侧参考，本项目坚持 actor-side Universal Physical Token 2026-09-15 · clean500 固定 train450 / val50【历史预案，已被 2026-09-17 取代】 2026-09-15 · RoboDojo 按 D0–D10 Gate 严格推进【D3/D5 于 2026-09-17 已通过】 2026-09-15 · RoboDojo simulator 与 policy runtime 继续隔离依赖 2026-09-15 · 在 B0/B1/B2 之前增加 Gate 0：Baseline Recovery 2026-09-15 · H50/C50 是当前 RoboTwin Stage1 能力锚点；H50/C10 只保留为历史诊断 2026-09-15 · Stage1 recovery 优先 base + alpha1 joint training【后续由 clean490 新方案继续】 2026-09-15 · Stage1 checkpoint 不能按最低训练 loss 选择 2026-09-14 · 领导约束后：主线改为 Universal Physical Token 2026-09-14 · Physical Token 固定在 action-head readout 2026-09-14 · Universal 是 empirical hypothesis，不是现有结果 2026-09-14 · Physical objective 首轮固定为 reconstruction + transition + valid physics 2026-09-14 · 首轮主实验固定为 B0/B1/B2，Streaming RL 后置 2026-09-14 · Online self-improvement 的参数冻结边界 2026-09-14 · 现有视频只记为 RL Token qualitative baseline 2026-09-12 · Paper-aligned Stage 1 口径纠正 2026-09-12 · Stage 2 C=10【历史工程口径】 2026-09-12 · Reference 正式评估前固定双重随机性 2026-09-12 · Physics sidecar 暂不进入 baseline observation 2026-09-11 · 四阶段主线【已被 2026-09-14 主线取代】 2026-09-11 · Hammer 的重新定位 2026-09-11 · Paper Reading Guardrail "
+    },
+    {
+      "id": "doc:research/physical-experience-protocol-2026-09-22.md",
+      "title": "物理经验能否减少干预：可证伪的研究合同",
+      "path": "research/physical-experience-protocol-2026-09-22.md",
+      "kind": "科研方案",
+      "date": "2026-09-24",
+      "summary": "2026-09-22 讨论整理，全部为待验证假设与实验设计。没有新增 Physical Token、干预或在线学习结果。<br 关联：机制与100/200步解释 · 恢复与小算力入口",
+      "topics": [
+        "物理经验 / 接触"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "物理经验能否减少干预：可证伪的研究合同 2026-09-22 讨论整理，全部为待验证假设与实验设计。没有新增 Physical Token、干预或在线学习结果。<br 关联：机制与100/200步解释 · 恢复与小算力入口 1. 保留研究愿景，收紧首轮问题 2. 对“原 RLT 只是语义监督”的修正 3. “沉淀经验”具体存什么、更新什么？ 4. 多层级信号不等于第一天就造多个 token 5. 从低成本机制检查走向正式对照 5.1 离线 probe：先回答表征有没有新增信息 5.2 正式学习比较：表示和干预基础设施分别验收 5.3 Gate 研究：之后单独做 6. 指标：避免“干预次数更少”的假象 7. 风险、需要帮助与可恢复性不同 8. 适合当前机器的顺序与停止条件 "
+    },
+    {
+      "id": "doc:research/xpace-jev-rlt-ideas.md",
+      "title": "从 XPACE 与 EmbodiedJev 借什么：RLT 的可恢复性与经验选择实验",
+      "path": "research/xpace-jev-rlt-ideas.md",
+      "kind": "科研方案",
+      "date": "2026-09-24",
+      "summary": "2026-09-21 · 研究提案，未实施、无实验结果。保留现有 RLT 复现与项目 gate；本文件是新增候选问题，不替换 master roadmap。",
+      "topics": [
+        "强化学习",
+        "动作 / 决策",
+        "基线 / 工程"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "从 XPACE 与 EmbodiedJev 借什么：RLT 的可恢复性与经验选择实验 2026-09-21 · 研究提案，未实施、无实验结果。保留现有 RLT 复现与项目 gate；本文件是新增候选问题，不替换 master roadmap。 2026-09-22 后续讨论 1. 建议抓住的问题 2. 严格定义 physical 与 recoverability 3. 第一步：用最少成本证伪表示假设 4. 第二步：恢复标签与数据怎么产生 5. 五组实验分开表示与数据的贡献 6. 实验结果如何决定论文写法 7. 与两种自进化目标对齐 8. 本周最小行动 "
+    },
+    {
+      "id": "doc:notes/zetta.md",
+      "title": "Zetta ζ: An Efficient Closed-Loop Embodied Harness for Self-Evolving Physical Intelligence",
+      "path": "notes/zetta.md",
+      "kind": "论文笔记",
+      "date": "2026-09-24",
+      "summary": "执行critic、恢复候选和validation-gated技能更新构成系统闭环。",
+      "topics": [
+        "物理经验 / 接触",
+        "强化学习",
+        "RSI / Harness",
+        "动作 / 决策"
+      ],
+      "status": "已精读/已有独立笔记",
+      "source": "https://arxiv.org/abs/2608.16590",
+      "search": "Zetta ζ: An Efficient Closed-Loop Embodied Harness for Self-Evolving Physical Intelligence 执行critic、恢复候选和validation-gated技能更新构成系统闭环。 1. 一句话 2. 它解决什么问题？ 3. 三个时间尺度的闭环 Loop 1 · Action-frequency Governance Loop 2 · Rollout-batch Candidate Optimization Loop 3 · Validation-Gated Skill Update 4. “Aha Moment” 是什么？ 5. 为什么它能跨任务迁移？ 6. 主要结果 7. 对当前项目最值得借的 4 点 A. Physical 外挂可以是 Critic + Recovery，而不一定是新 Policy B. Failure 要定位“最早 observable divergence” C. 经验写回必须有 Validation Gate D. 区分 Policy Failure 与 Harness Failure 8. 对我们的创新边界 9. 今日讨论问题 "
+    },
+    {
+      "id": "doc:notes/xpace.md",
+      "title": "XPACE：从异构经验到可筛选的恢复监督",
+      "path": "notes/xpace.md",
+      "kind": "论文笔记",
+      "date": "2026-09-24",
+      "summary": "共享视频骨干支持动作生成与给定骨架条件的视觉模拟；在示范附近生成恢复片段，筛选后辅助策略微调。正文数据规模约5000小时。",
+      "topics": [
+        "物理经验 / 接触",
+        "强化学习",
+        "世界模型",
+        "动作 / 决策"
+      ],
+      "status": "正文专题阅读 · 2026-09-21；未复现",
+      "source": "https://arxiv.org/abs/2609.17372",
+      "search": "XPACE：从异构经验到可筛选的恢复监督 共享视频骨干支持动作生成与给定骨架条件的视觉模拟；在示范附近生成恢复片段，筛选后辅助策略微调。正文数据规模约5000小时。 1. 先纠正三个容易误读的点 2. 架构与数据如何分工 3. 恢复数据的真实来源 4. 实验到底支持到哪里 5. 对 RLT 的借鉴优先级 先在RoboTwin验证真实物理恢复数据价值；补充等更新量原数据、随机恢复与定向恢复对照，分离表示与数据效应。"
+    },
+    {
+      "id": "doc:research/physical-token-leadership-spec.md",
+      "title": "Universal Physical Token：领导约束后的研究主线",
+      "path": "research/physical-token-leadership-spec.md",
+      "kind": "科研方案",
+      "date": "2026-09-24",
+      "summary": "版本：2026-09-22（补充干预研究合同与迁移状态）<br 状态：当前项目主规范 / Source of Truth<br 说明：本页根据领导提供的 Physical Token 方案、后续讨论与最新实验事实持续维护。此前 Research OS 中更宽泛的 Physical Experience / Self-Evolution / Agent/Harness / World Model 路线只保留为历史与知识库背景。",
+      "topics": [
+        "物理经验 / 接触",
+        "记忆 / 适应",
+        "RSI / Harness",
+        "世界模型"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "Universal Physical Token：领导约束后的研究主线 版本：2026-09-22（补充干预研究合同与迁移状态）<br 状态：当前项目主规范 / Source of Truth<br 说明：本页根据领导提供的 Physical Token 方案、后续讨论与最新实验事实持续维护。此前 Research OS 中更宽泛的 Physical Experience / Self-Evolution / Agent/Harness / World Model 路线只保留为历史与知识库背景。 0. 核心命题 0.1 2026-09-22 · 当前最小问题与执行约束 0.2 当前工程前置：Gate 0 — Baseline Recovery / Validation 2026-09-17 最新 Stage1 证据 新 clean490 baseline recovery 0.2 Planner / Harness 与本项目的边界 1. Physical Token 放在哪里？ 1.1 首选：Action Head / Action Expert 1.2 不同 action model 的 extraction contract 1.3 必须保留的对照 2. Universal 的严格定义 3. Physical Token 如何训练？ 3.1 `L_ro` · Readout / Reconstruction 3.2 `L_dyn` · Measured Transition Prediction 必须区分四类量 3.3 `L_phys` · Physics Constraints 3.4 2026-09-17 新增：Physics label validity 是方法合同的一部分 4. Online Self-Improvement 的严格定义 5. 第一组必须做的实验 6. Representation evidence 7. Actor / Critic 怎么使用？ 8. 当前已有结果如何解释？ 已有证据 当前没有的证据 9. Streaming RL 的位置 10. 当前执行顺序 11. 当前禁止的过度叙事 "
+    },
+    {
+      "id": "doc:research/master-roadmap.md",
+      "title": "Universal Physical Token：研究总路线",
+      "path": "research/master-roadmap.md",
+      "kind": "科研方案",
+      "date": "2026-09-24",
+      "summary": "版本：2026-09-22<br 当前状态：小算力恢复、最小干预闭环与离线表示probe；正式在线比较仍需可信matched B0<br 主规范：physical-token-leadership-spec.md<br 最新评测口径：09-22进展；当前执行：恢复入口；研究设计：干预合同",
+      "topics": [
+        "物理经验 / 接触"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "Universal Physical Token：研究总路线 版本：2026-09-22<br 当前状态：小算力恢复、最小干预闭环与离线表示probe；正式在线比较仍需可信matched B0<br 主规范：physical-token-leadership-spec.md<br 最新评测口径：09-22进展；当前执行：恢复入口；研究设计：干预合同 0. 当前研究问题 Scope boundary 0.1 2026-09-22 · 物理经验与干预的可检验目标 1. 当前执行门槛：Gate 0 1.1 旧 clean50 Stage1 证据 1.2 新 train450 Stage1 证据 1.3 B0 Stage2 现状 2. 数据基座：clean500 → clean490 2.1 全量审计 2.2 Physics label validity 2.3 Command state 与 measured state 分离 3. 新 clean490 Stage1 baseline recovery 4. 核心结构 5. Physical Token 目标 5.1 `L_ro` · Readout / Reconstruction 5.2 `L_dyn` · Measured Transition Prediction 5.3 `L_phys` · Valid Physics Constraints 6. 第一组正式实验 必须增加的 readout 对照 7. Online self-improvement 8. 指标与证据链 8.1 Representation evidence 8.2 Decision evidence 8.3 Intervention evidence（2026-09-22） 8.4 Online control evidence 9. Physical shift 与 Universal test 10. RoboDojo 的位置 11. Streaming / WAM / Agent 的触发条件 12. 当前禁止的过度表述 "
+    },
+    {
+      "id": "doc:research/literature/physical-token-literature-audit-2026-09-19.md",
+      "title": "Universal Physical Token：125项相关文献与创新重合审查",
+      "path": "research/literature/physical-token-literature-audit-2026-09-19.md",
+      "kind": "调研与观点",
+      "date": "2026-09-24",
+      "summary": "编号与Excel一致。P0=最近邻优先核验，P1=方法/强基线，P2=背景或后续扩展。每项将“来源支持的方法”与“对项目的分析”分开。作者录用声明不与正式论文集混同；未复核正式会议的条目只按arXiv记录。没有逐仓安装、跑代码或确认复现成功。",
+      "topics": [
+        "物理经验 / 接触",
+        "基线 / 工程"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "Universal Physical Token：125项相关文献与创新重合审查 编号与Excel一致。P0=最近邻优先核验，P1=方法/强基线，P2=背景或后续扩展。每项将“来源支持的方法”与“对项目的分析”分开。作者录用声明不与正式论文集混同；未复核正式会议的条目只按arXiv记录。没有逐仓安装、跑代码或确认复现成功。 如何使用 检索范围与边界 高重合近邻：18项必须优先补读 P001 · RLT P003 · FLARE P002 · Pri4R P004 · AGRA P005 · CometVLA P006 · PAR P014 · DyWA P023 · TACO P040 · RoboPack P033 · MSDP P036 · exUMI P010 · Spline Policy P055 · LeTO P086 · V-GPS P089 · FlowDAgger P088 · DSRL P123 · HPT P103 · GeoAAC 给本项目的判断：不是给 RLT 换名字，而是提出可证伪的接口假设 三条仍值得验证的方案 必须排除的混杂 今天与同事讨论时应形成的输出 A｜动作侧表征与最邻近工作 P001 · RLT [P0] P002 · Pri4R [P0] P003 · FLARE [P0] P004 · AGRA [P0] P005 · CometVLA [P0] P006 · PAR [P0] P007 · PhysGen [P1] P008 · SA-VLA [P1] P009 · ActionPiece [P1] P010 · Spline Policy [P0] P011 · PhysVLA [P1] P012 · MCF-Proto [P1] P013 · X-DiffVLA [P1] P014 · DyWA [P0] P015 · GAP [P1] P016 · VLA物理/空间复审 [P1] B｜动力学充分表示、历史辨识与表征理论 P017 · UP-OSI [P1] P018 · RMA [P1] P019 · Manipulator RMA [P1] P020 · DeepMDP [P1] P021 · DBC [P1] P022 · SPR [P1] P023 · TACO [P0] P024 · TD-MPC [P1] P025 · TD-MPC2 [P1] P026 · R3M [P1] P027 · VIP [P1] P028 · Offline meta-RL [P2] P029 · Situational dynamics [P1] C｜力触觉、接触与多模态物理监督 P030 · Making Sense [P1] P031 · FD-VLA [P0] P032 · HapticVLA [P0] P033 · MSDP [P0] P034 · MuSe [P1] P035 · DeCAL [P0] P036 · exUMI [P0] P037 · TacX [P1] P038 · Sparsh [P1] P039 · UpViTaL [P1] P040 · RoboPack [P0] P041 · See, feel, act [P1] P042 · Deep Haptic MPC [P1] P043 · UniTac-NV [P1] D｜显式物理模型、可微约束与安全控制 P044 · PIN-WM [P0] P045 · DeLaN [P1] P046 · ContactNets [P1] P047 · GNS [P1] P048 · DPI-Net [P1] P049 · RoboCraft [P1] P050 · SAM-RL [P1] P051 · PROMPT [P2] P052 · One-Shot Real-to-Sim [P1] P053 · PhysDreamer [P1] P054 · PhysMani [P1] P055 · LeTO [P0] P056 · DDAT [P1] P057 · DPCC [P1] P058 · MDOC [P2] P059 · Learned CBF [P1] P060 · Safe Learning review [P1] P061 · Learning-Based MPC review [P1] P062 · UMI-on-Air [P1] P063 · HFVC Preconditions [P1] P064 · Fill the Seam [P2] P065 · Diffused Orientation Fields [P2] P066 · Prof. Robot [P1] E｜世界—动作模型与潜空间未来预测 P067 · RepWAM [P1] P068 · OA-WAM [P1] P069 · Riemann-1.0 [P1] P070 · WAM-RL [P1] P071 · RISE [P1] P072 · Motus2 [P1] P073 · CauVA [P1] P074 · DINO-WM [P1] P075 · V-JEPA 2 [P1] P076 · DreamerV3 [P1] P077 · Human-video structured WM [P1] P078 · DiWA [P1] P079 · EgoWAM [P1] P080 · GlanceWAM [P1] P081 · Video2Act [P1] P082 · PointWorld [P1] F｜离线／在线RL、价值引导与冻结策略适配 P083 · RECAP / π*0.6 [P0] P084 · LWD [P1] P085 · Q-VGM [P0] P086 · V-GPS [P0] P087 · RedFlow [P1] P088 · DSRL [P0] P089 · FlowDAgger [P0] P090 · Policy Decorator [P1] P091 · IQL [P1] P092 · CQL [P1] P093 · Cal-QL [P1] P094 · RLPD [P1] P095 · DPPO [P1] P096 · FQL [P1] P097 · ConRFT [P1] P098 · HIL-SERL [P1] P099 · D2PPO [P1] G｜执行时序、失败恢复与非参数自进化 P100 · SmoothRL [P1] P101 · VLA-Corrector [P1] P102 · BCP [P1] P103 · GeoAAC [P0] P104 · RL²-VLA [P1] P105 · FailSafe [P2] P106 · Zeva [P0] P107 · Harness VLA [P1] P108 · SHAPER [P1] P109 · ASPIRE [P1] P110 · ENPIRE [P1] P111 · Zetta ζ [P1] P112 · AGM [P2] P113 · ForeAct [P1] P114 · SEAM [P2] "
+    },
+    {
+      "id": "doc:notes/uniintervene.md",
+      "title": "UniIntervene：动作后果、停滞判断与记忆恢复",
+      "path": "notes/uniintervene.md",
+      "kind": "论文笔记",
+      "date": "2026-09-24",
+      "summary": "动作条件未来特征与价值趋势判断停滞，检索恢复目标并生成纠正动作；是物理经验减少干预叙事的强近邻。",
+      "topics": [
+        "物理经验 / 接触",
+        "强化学习",
+        "记忆 / 适应",
+        "世界模型",
+        "动作 / 决策"
+      ],
+      "status": "方法、实验与相关附录专题阅读 · 2026-09-22；未复现",
+      "source": "https://arxiv.org/html/2606.12372v1",
+      "search": "UniIntervene：动作后果、停滞判断与记忆恢复 动作条件未来特征与价值趋势判断停滞，检索恢复目标并生成纠正动作；是物理经验减少干预叙事的强近邻。 1. 工作定位与已验证事实 2. 对本项目最有价值的三点 3. 与当前 RLT / Hammer 链路如何衔接 4. 实现与证据边界 一手来源 P0：先固定专家与 gate 验证实测后果表征；后单独比较门控，区分触发质量、可恢复性和专家时长。"
+    },
+    {
+      "id": "doc:research/uniintervene-clap-project-implications.md",
+      "title": "UniIntervene × CLAP：只保留对 Physical Token / RLT 项目有用的部分",
+      "path": "research/uniintervene-clap-project-implications.md",
+      "kind": "科研方案",
+      "date": "2026-09-24",
+      "summary": "2026-09-22 · 文献增量与研究分析。没有新增 GPU 实验、在线 RL 收益或已实现模块。依据当前研究合同和迁移恢复入口，不替换已确定的基线恢复与单因素验证顺序。",
+      "topics": [
+        "物理经验 / 接触",
+        "强化学习",
+        "基线 / 工程"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "UniIntervene × CLAP：只保留对 Physical Token / RLT 项目有用的部分 2026-09-22 · 文献增量与研究分析。没有新增 GPU 实验、在线 RL 收益或已实现模块。依据当前研究合同和迁移恢复入口，不替换已确定的基线恢复与单因素验证顺序。 1. 两篇放在什么位置 2. 对问题定义的实质影响 “预测后果来减少干预”已经不是足够具体的新问题 “物理共享”需要明确共享什么 3. 三条可以借鉴、但要分别验证的方向 A. 从成功/失败分数扩展到可复用的实际后果 B. 以当前专家的可恢复性组织经验 C. 把门控作为独立决策问题 4. 对当前实现必须保留的约束 5. 这次更新带来的科研判断 "
+    },
+    {
+      "id": "doc:notes/smoothrl.md",
+      "title": "SmoothRL: Online Reinforcement Learning During Asynchronous Execution",
+      "path": "notes/smoothrl.md",
+      "kind": "论文笔记",
+      "date": "2026-09-24",
+      "summary": "把异步执行下的 action chunk 划分为 committed / execution / discarded，只让 actor 的 value gradient 通过真正执行的 region。",
+      "topics": [
+        "物理经验 / 接触",
+        "强化学习",
+        "动作 / 决策"
+      ],
+      "status": "已读",
+      "source": "https://arxiv.org/abs/2608.29768",
+      "search": "SmoothRL: Online Reinforcement Learning During Asynchronous Execution 把异步执行下的 action chunk 划分为 committed / execution / discarded，只让 actor 的 value gradient 通过真正执行的 region。 一句话 1. 与 RLT 的关系 2. 三个区域 3. RL 为什么会出问题？ 4. 对当前项目的意义 5. 与 RTC 的区别 若以后从 synchronous chunk 转 async，必须先修正 transition / credit assignment，而不是只把线程并行化。"
+    },
+    {
+      "id": "doc:notes/shaper.md",
+      "title": "SHAPER: Self-Evolving Embodied Agents via Skill-Harness Evolution",
+      "path": "notes/shaper.md",
+      "kind": "论文笔记",
+      "date": "2026-09-24",
+      "summary": "冻结 planner 与 executor，通过 target-environment rollouts 做局部 action-effect 诊断和 episode summarization，先演化 reusable skill，再演化 context-code harness，实现 non-parametric self-improvement。",
+      "topics": [
+        "RSI / Harness",
+        "动作 / 决策"
+      ],
+      "status": "已读 · 2026-09-16",
+      "source": "https://arxiv.org/abs/2608.11350",
+      "search": "SHAPER: Self-Evolving Embodied Agents via Skill-Harness Evolution 冻结 planner 与 executor，通过 target-environment rollouts 做局部 action-effect 诊断和 episode summarization，先演化 reusable skill，再演化 context-code harness，实现 non-parametric self-improvement。 1. 一句话 2. 它到底更新什么？ 3. 核心方法：Rollout → Textual Gradient → Artifact Evolution 3.1 局部 round-level diagnosis 3.2 Episode summarization 3.3 Two-stage evolution 4. VLABench 上到底学到了什么？ Seed skill 的问题 Evolved skill 5. Harness 到底学了什么？ 6. 实验结果 VLABench ESI-Bench Optimization cost 7. 论文边界 8. 与 Harness VLA 的区别 Harness VLA SHAPER 9. 对 Universal Physical Token 项目的真正可借鉴点 9.1 最值得借：把“模型问题”和“harness / execution 问题”彻底拆开 9.2 借 rollout-guided hierarchical diagnosis，不借完整 agent system 9.3 借 validation gate 9.4 暂时不借：skill/harness evolution 本身 10. 当前项目动作 11. 一个值得继续讨论的问题 最值得借的不是把 Agent 加进主线，而是强化 Gate 0 的归因纪律：policy/representation capability 与 execution harness 必须分开。可把 before→executed action→after→outcome 的层级诊断借到 hammer/RoboDojo failure analysis；当前不改变 B0→B1→B2。"
+    },
+    {
+      "id": "doc:research/robodojo-contact-task-reference-selection-2026-09-17.md",
+      "title": "RoboDojo 接触动力学任务与 π0.5 Reference 选型",
+      "path": "research/robodojo-contact-task-reference-selection-2026-09-17.md",
+      "kind": "科研方案",
+      "date": "2026-09-24",
+      "summary": "日期：2026-09-17 定位：第二平台科研任务与 reference 选型记录 边界：公开脱敏；不包含内部绝对路径、账号、私有 run 标识或凭据",
+      "topics": [
+        "物理经验 / 接触"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "RoboDojo 接触动力学任务与 π0.5 Reference 选型 日期：2026-09-17 定位：第二平台科研任务与 reference 选型记录 边界：公开脱敏；不包含内部绝对路径、账号、私有 run 标识或凭据 1. 决策摘要 2. 固定源码下的任务语义 3. 官方 ARX X5 π0.5 checkpoint 已确认存在 4. Dojo-Eval 与 RLinf/RLT 需要两条不同验收路线 Route A · Dojo-Eval reference Route B · RLinf / RLT feature model 5. 冻结 VLA、只训练 RLT Transformer：可行但有前提 6. 公开示教：按任务下载，不全库拉取 7. 当前版本兼容风险：RGB 与 observation timing 8. 当前 CPU reference boundary 9. 与 Universal Physical Token 的关系 `plug_in_charger` `push_T` 10. 下一步 "
+    },
+    {
+      "id": "doc:research/robodojo-b300-log.md",
+      "title": "RoboDojo on B300 · Bring-up / RLinf Integration Log",
+      "path": "research/robodojo-b300-log.md",
+      "kind": "实验进度",
+      "date": "2026-09-24",
+      "summary": "定位：第二实验平台 bring-up，不抢占 hammer / Physical Token 主线。 当前状态（2026-09-17）：D0–D5 已完成；D6–D10 待执行。 本页为公开脱敏记录，不保存内部绝对路径、账号、私有 run 标识、GPU UUID 或不必要的完整命令。",
+      "topics": [
+        "物理经验 / 接触"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "RoboDojo on B300 · Bring-up / RLinf Integration Log 定位：第二实验平台 bring-up，不抢占 hammer / Physical Token 主线。 当前状态（2026-09-17）：D0–D5 已完成；D6–D10 待执行。 本页为公开脱敏记录，不保存内部绝对路径、账号、私有 run 标识、GPU UUID 或不必要的完整命令。 0. 当前目标 1. Gate 总览 2. 固定版本与运行边界 3. D0 / D1：源码、子模块与资产 已核实 4. D2：独立 runtime，以及历史 doctor 结论纠正 5. D3：B300 renderer gate 已通过 调试过程中发现的问题 最终通过证据 6. D4：XPolicyLab CPU protocol 已通过 7. RoboDojo 原生 state / action 契约 8. 控制时间语义 9. Reward / success / terminal 契约 10. D5：原生 `stack_bowls / arx_x5 / joint` 单集已通过 中间调试事实 最终 D5 证据 11. 当前 RLinf bridge：CPU contract 已预验收，真实 D8 未开始 12. 下一步 D6 / D7：Dojo-Eval 关键门槛 13. D8 / D9：Dojo-RL 14. 当前与 Universal Physical Token 的关系 15. 公开结论边界 "
+    },
+    {
+      "id": "doc:research/rlt-intervention-2026-09-22.md",
+      "title": "RLT 的关键阶段、仿真专家干预与 Hammer 时间语义",
+      "path": "research/rlt-intervention-2026-09-22.md",
+      "kind": "项目资料",
+      "date": "2026-09-24",
+      "summary": "2026-09-22 讨论与代码核查；没有新增训练结果。本文区分原论文、RLinf 官方示例、迁移快照和拟议实现。<br 配套：小算力恢复入口 · 物理经验与干预研究合同",
+      "topics": [
+        "物理经验 / 接触",
+        "强化学习"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "RLT 的关键阶段、仿真专家干预与 Hammer 时间语义 2026-09-22 讨论与代码核查；没有新增训练结果。本文区分原论文、RLinf 官方示例、迁移快照和拟议实现。<br 配套：小算力恢复入口 · 物理经验与干预研究合同 1. 先回答：之前 Stage2 下降时，启动人工接管了吗？ 2. 三个不同的决策 3. RLinf 如何在 ManiSkill 中模拟干预？ 3.1 任务状态机决定“何时” 3.2 额外的 SFT 模型决定“做什么” 3.3 专家动作如何参与学习？ 4. “强 SFT 专家”的数据从哪里来，要重新训练吗？ 5. 既然专家更强，为何还要 RL？ 6. Hammer 的 H50/C50、100步与200步 6.1 不等于200次物理仿真或200次闭环观测 6.2 为什么选100和200，而不是其他数字？ 6.3 本地可复核代码位置 7. 可以用 RoboTwin + TOPP 实现纠错吗？ 8. 每个任务都要手写规则吗，有没有通用一些的？ "
+    },
+    {
+      "id": "doc:notes/rlt.md",
+      "title": "RL Token: Bootstrapping Online RL with Vision-Language-Action Models",
+      "path": "notes/rlt.md",
+      "kind": "论文笔记",
+      "date": "2026-09-24",
+      "summary": "冻结大 VLA / 紧凑读出，以 reference-conditioned 轻量 actor–critic 在真实机器人上做样本高效 Online RL。",
+      "topics": [
+        "强化学习",
+        "动作 / 决策"
+      ],
+      "status": "核心基线",
+      "source": "https://arxiv.org/abs/2604.23073",
+      "search": "RL Token: Bootstrapping Online RL with Vision-Language-Action Models 冻结大 VLA / 紧凑读出，以 reference-conditioned 轻量 actor–critic 在真实机器人上做样本高效 Online RL。 一句话 1. 两阶段 Stage 1 Stage 2 2. Reference Action 3. Action Chunk 4. 为什么是当前 baseline？ 5. 当前本地实现必须特别注意 6. 当前最重要的问题 7. 2026-09-22 · 关键阶段与专家纠错核查 当前项目的技术脚手架和共同 baseline；上位故事改为 Physical Interaction + Self-Improvement。"
+    },
+    {
+      "id": "doc:research/rlt-multitask-benchmark.md",
+      "title": "RL Token Baseline & Universal Physical Token Initial Validation",
+      "path": "research/rlt-multitask-benchmark.md",
+      "kind": "项目资料",
+      "date": "2026-09-24",
+      "summary": "当前角色：Baseline / Initial Validation Protocol 上位主线：physical-token-leadership-spec.md 当前执行：Gate 0 — B0 diagnosis / recovery 最新证据补充：progress-2026-09-22.md；完整执行快照：progress-2026-09-18.md",
+      "topics": [
+        "物理经验 / 接触",
+        "强化学习",
+        "基线 / 工程"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "RL Token Baseline & Universal Physical Token Initial Validation 当前角色：Baseline / Initial Validation Protocol 上位主线：physical-token-leadership-spec.md 当前执行：Gate 0 — B0 diagnosis / recovery 最新证据补充：progress-2026-09-22.md；完整执行快照：progress-2026-09-18.md 2026-09-22 补充：低算力与干预变量 0. 为什么现在还不能直接进入正式在线 B1 / B2？ 1. Gate 0A · Stage1 reference capability 1.1 旧 clean50 reference 1.2 新 train450 reference line 2. Gate 0B · Data quality contract 2.1 clean500 全量审计 2.2 Physics-label validity mask 3. 新 clean490 Stage1 recovery 3.1 已完成的准备与训练状态 3.2 原始训练计划（历史；未完成30k） 3.3 最终 reference 门槛 4. Gate 0C · B0 Online Baseline 4.1 首个H50/C50 B0结果：退化，已停止 4.2 当前诊断合同 5. RLT / RL Token 与 Physical Token 正式比较 6. Action-head extraction contract 7. B1 · Measured Transition Grounding 7.1 必须区分四类字段 7.2 第一版 targets 8. B2 · Valid Physics Constraints Kinematic consistency Actuator/controller feasibility 后置 9. Representation probes 10. Actor / Critic 使用方式 11. Physical Shift Protocol 12. Universal Hypothesis 13. 当前完成标准 "
+    },
+    {
+      "id": "doc:notes/rise.md",
+      "title": "RISE: Self-Improving Robot Policy with Compositional World Model",
+      "path": "notes/rise.md",
+      "kind": "论文笔记",
+      "date": "2026-09-24",
+      "summary": "组合动力学与价值模型，在想象环境中改进机器人策略。",
+      "topics": [
+        "世界模型"
+      ],
+      "status": "已精读/已有独立笔记",
+      "source": "https://arxiv.org/abs/2602.11075",
+      "search": "RISE: Self-Improving Robot Policy with Compositional World Model 组合动力学与价值模型，在想象环境中改进机器人策略。 1. 一句话 2. 解决什么问题？ 3. Compositional World Model 为什么叫“Compositional”？ 3.1 Controllable Dynamics Model 3.2 Progress Value Model 4. Advantage 怎么算？ 5. Policy Warm-up：为什么先用真实数据？ 6. Self-Improving Loop：真正怎么“自我改进”？ Rollout Stage Training Stage 7. 它与 Motus2 的关键区别 Motus2 RISE 8. 它与 LWD / RLT 的关系 RLT LWD RISE 9. 实验 10. 我认为最重要的创新点 A. World Model 不再只是“规划辅助”，而是 Online RL Environment B. Dynamics / Value 解耦 C. 中间 progress advantage D. Imagined failures 也有学习价值 11. 对当前 Physical Self-Evolution 项目的启发 11.1 Action Consequence 必须服务 decision 11.2 Compositional 比“万能 Physical Token”更值得考虑 11.3 Real / Imagined Experience 应严格区分 11.4 Phase 0 仍不改变 12. 后续最值得讨论的问题 13. 最简总结 "
+    },
+    {
+      "id": "doc:research/reading-program.md",
+      "title": "Physical Token 文献精读计划：从检索地图到逐篇读懂",
+      "path": "research/reading-program.md",
+      "kind": "调研与观点",
+      "date": "2026-09-24",
+      "summary": "更新：2026-09-19 当前目标：先把 Physical Token / action-side physical representation 的创新边界读透，再决定具体算法。RLT 只是 baseline / reference 之一，不再是阅读计划的唯一中心。 阅读总账：literature/reading-ledger.md 125项防撞审查：literature/physical-token-literature-audit-2026-09-19.md",
+      "topics": [
+        "物理经验 / 接触",
+        "强化学习",
+        "动作 / 决策",
+        "基线 / 工程"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "Physical Token 文献精读计划：从检索地图到逐篇读懂 更新：2026-09-19 当前目标：先把 Physical Token / action-side physical representation 的创新边界读透，再决定具体算法。RLT 只是 baseline / reference 之一，不再是阅读计划的唯一中心。 阅读总账：literature/reading-ledger.md 125项防撞审查：literature/physical-token-literature-audit-2026-09-19.md 0. 当前阅读纪律 阅读状态 第一批必须啃完的防撞队列 1. 每篇论文固定回答 7 个问题 2. 当前第一优先阅读 Track Track A · Compact Readout / Online RL Track B · Transition / Physical Representation Track C · Action Consequence / World Model Track D · Online Efficiency / Streaming（后置） Track E · Self-Evolution Systems（知识库） 3. 当前精读优先级 一级：直接影响近期代码与实验 二级：帮助定义 consequence / value 边界 三级：Physical Token 成立后再深入 长期知识库 4. 每日群里分享模板 Paper One Sentence Mechanism Evidence Physical Token Relevance Boundary One Discussion Question 5. 每周复盘 6. 网站维护规则 精读完成的最低标准 "
+    },
+    {
+      "id": "doc:research/literature/physical-token-direction-map.md",
+      "title": "Physical Token Research Direction Map",
+      "path": "research/literature/physical-token-direction-map.md",
+      "kind": "调研与观点",
+      "date": "2026-09-24",
+      "summary": "日期：2026-09-19 用途：在逐篇精读之前，先建立“这个领域有哪些路线、哪些已经有人做、我们的空间在哪里”的心智地图。 完整125项：physical-token-literature-audit-2026-09-19.md 阅读状态：reading-ledger.md",
+      "topics": [
+        "物理经验 / 接触"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "Physical Token Research Direction Map 日期：2026-09-19 用途：在逐篇精读之前，先建立“这个领域有哪些路线、哪些已经有人做、我们的空间在哪里”的心智地图。 完整125项：physical-token-literature-audit-2026-09-19.md 阅读状态：reading-ledger.md 1. 研究对象先拆清楚 2. 八条主要文献路线 A. Action-side representation / compact readout B. Hidden dynamics / history adaptation C. Force / tactile / multisensory representation D. Analytic physics / constraints / safe control E. World / World-Action Models F. Value / Offline / Online RL G. Execution / failure / recovery / harness H. Cross-head / cross-embodiment foundations 3. 当前最重要的防撞论文 4. 当前仍值得验证的三个核心 hypothesis H1 · Action-side physical sufficiency H2 · Decision relevance H3 · Transferability 5. 当前建议的三个实验故事 Story A · Representation-first Story B · Physical Critic Story C · WAM-compatible interface 6. 和同事分工 你负责 真机同事优先确认 7. 研究判断的更新规则 "
+    },
+    {
+      "id": "doc:notes/physvla.md",
+      "title": "PhysVLA：Towards Physically-Grounded VLA for Embodied Robotic Manipulation",
+      "path": "notes/physvla.md",
+      "kind": "论文笔记",
+      "date": "2026-09-24",
+      "summary": "对已有VLA增加物理相关的推理期执行修正。",
+      "topics": [
+        "物理经验 / 接触"
+      ],
+      "status": "已阅读/已有专题笔记",
+      "source": "https://arxiv.org/abs/2606.13886",
+      "search": "PhysVLA：Towards Physically-Grounded VLA for Embodied Robotic Manipulation 对已有VLA增加物理相关的推理期执行修正。 1. 一句话 2. 核心结构 3. Branch A：phase-aware FSM 4. Branch B：Euler–Lagrange gate 5. 真机 Sim-to-Real 的关键边界 6. 与我们的 Physical Token 区别 PhysVLA Our candidate 7. 对我们最有价值的启发 Known physics Unknown / effective physics 8. 作为 baseline 怎么比较 9. 当前结论 10. Source "
+    },
+    {
+      "id": "doc:notes/odyssey3.md",
+      "title": "Odyssey-3：Foundation World Model / Physical Agents",
+      "path": "notes/odyssey3.md",
+      "kind": "论文笔记",
+      "date": "2026-09-24",
+      "summary": "Odyssey 官方把同一个 autoregressive diffusion-transformer world model 作为共享 foundation representation，再用较小的 system-specific action decoder / policy 适配机器人、Humanoid、车辆、无人机和游戏。",
+      "topics": [
+        "物理经验 / 接触",
+        "RSI / Harness",
+        "世界模型",
+        "动作 / 决策"
+      ],
+      "status": "已读 · 2026-09-16",
+      "source": "https://odyssey.systems/introducing-odyssey-3",
+      "search": "Odyssey-3：Foundation World Model / Physical Agents Odyssey 官方把同一个 autoregressive diffusion-transformer world model 作为共享 foundation representation，再用较小的 system-specific action decoder / policy 适配机器人、Humanoid、车辆、无人机和游戏。 0. Source confidence 1. 核心结构 2. 官方报告的机器人相关信号 3. 跨系统适配的官方例子 4. 对 Universal Physical Token 最直接的三个启发 4.1 更加强化 `backbone tap vs action-head tap` 必须做 4.2 “Universal”更应该定义成 adapter-efficient transfer，而不是同一个 action head 到处直接用 4.3 recovery 只能作为 representation prior 的证据线索，不能直接变成“学会物理规律”的结论 5. PROWL / recursive self-improvement：长期相关，但现在后置 6. 对当前项目的实际动作 最直接的作用是强化 action-head tap vs backbone tap 必须做：Odyssey 代表强 backbone physical/world prior 假设。其 shared representation + lightweight system adapter 也与 Universal 的严格定义相邻，但当前不转向 full world model。"
+    },
+    {
+      "id": "doc:notes/motus2.md",
+      "title": "Motus2: A Self-Evolving General World Model for Dexterous Manipulation",
+      "path": "notes/motus2.md",
+      "kind": "论文笔记",
+      "date": "2026-09-24",
+      "summary": "把 WAM policy、action-conditioned world model 和 value model 做成同一共享参数模型的三个因果接口，再用预测后果与价值反馈做 Best-of-N planning 和 DiffusionNFT policy update。",
+      "topics": [
+        "物理经验 / 接触",
+        "记忆 / 适应",
+        "RSI / Harness",
+        "世界模型",
+        "动作 / 决策"
+      ],
+      "status": "已读 · 2026-09-12",
+      "source": "https://arxiv.org/abs/2608.30237",
+      "search": "Motus2: A Self-Evolving General World Model for Dexterous Manipulation 把 WAM policy、action-conditioned world model 和 value model 做成同一共享参数模型的三个因果接口，再用预测后果与价值反馈做 Best-of-N planning 和 DiffusionNFT policy update。 1. 一句话 2. 它解决什么问题？ 3. 核心创新 1：一个模型，三个接口 为什么重要？ 4. 核心创新 2：Action-first 防止“偷看未来” 5. 核心创新 3：不同质量的数据，不做同一种监督 成功 expert trajectory Failure / suboptimal trajectory 6. 核心创新 4：Self-Evolution = Planning + Policy Update A. Best-of-N Planning B. MBRL Policy Optimization 7. Progress-Based Value Model 8. Memory：长期历史本身是状态 9. Tactile Expert：高频物理反馈不需要重跑完整 backbone 10. 数据路线：Human Ego → Robot Domain 11. 这篇论文中的“Self-Evolution”应该如何理解？ 12. 对当前项目最值得借的 6 点 ① Failure Data 的用途分流 ② Action Consequence 必须服务 Action Ranking ③ Value Model 可以成为 Failure Diagnosis 模块 ④ 先测 History，再设计 Physical Token ⑤ 慢 Backbone + 快 Physical Expert ⑥ World Model 与 RLT 可以是两条不同尺度 13. 与我们的主线位置 14. 一句总结 当前仅作为 related work：它提醒我们 transition / consequence supervision 应服务 decision，但当前主线不转向 General World Model。优先验证领导定义的 action-head Physical Token：B0 matched readout、B1 + measured transition loss、B2 + valid physics loss。"
+    },
+    {
+      "id": "doc:notes/lwd.md",
+      "title": "LWD：Learning While Deploying — Fleet-Scale Reinforcement Learning for Generalist Robot Policies",
+      "path": "notes/lwd.md",
+      "kind": "论文笔记",
+      "date": "2026-09-24",
+      "summary": "把真实部署本身变成训练阶段：16 台机器人共享 autonomous rollout、failure 与 human intervention，通过 DIVL + QAM 持续更新同一个 generalist π0.5 policy。",
+      "topics": [
+        "物理经验 / 接触",
+        "强化学习",
+        "基线 / 工程"
+      ],
+      "status": "已读 · 2026-09-12",
+      "source": "https://arxiv.org/abs/2605.00416",
+      "search": "LWD：Learning While Deploying — Fleet-Scale Reinforcement Learning for Generalist Robot Policies 把真实部署本身变成训练阶段：16 台机器人共享 autonomous rollout、failure 与 human intervention，通过 DIVL + QAM 持续更新同一个 generalist π0.5 policy。 1. 一句话 2. 解决什么问题？ 3. 关键创新 3.1 Fleet-scale Learning While Deploying 3.2 Offline → Online 使用统一 RL 目标 3.3 DIVL：Distributional Implicit Value Learning 3.4 QAM：让 Q-gradient 更新 Flow-based VLA 4. 最重要实验结果 5. 对“具身自进化”的启发 5.1 部署本身就是训练阶段 5.2 Physical Experience 是可积累资产 5.3 从 Local Adaptation 走向 Generalist Evolution 6. 最值得借到当前项目的 5 点 A. 从 Phase 0 就统一 transition schema B. 不要只保存成功 demo C. Critic / Value 可以成为 Failure Diagnosis 工具 D. Offline → Online 尽量共用 learner / data contract E. 把 Experience Selection 提前列为未来研究问题 7. 现在不要照搬的部分 8. 作者明确给出的未来方向 9. 我们后续最值得追的 5 个问题 10. 在我们的 Self-Evolution Map 中的位置 最重要的长期启发是 Physical Experience Flywheel：RLT 先解决局部 policy adaptation，未来再研究跨任务 pooled replay、experience selection、validation gate 和 generalist consolidation。"
+    },
+    {
+      "id": "doc:notes/harness-vla.md",
+      "title": "Harness VLA：Steering Frozen VLAs into Reliable Manipulation Primitives via Memory-Guided Agents",
+      "path": "notes/harness-vla.md",
+      "kind": "论文笔记",
+      "date": "2026-09-24",
+      "summary": "通过Agent、解析primitive和记忆改善冻结VLA的局部调用。 **项目关系（研究分析）：**系统层恢复是不同贡献；operating-range相关probe可借鉴，但不直接验证你的token。",
+      "topics": [
+        "记忆 / 适应",
+        "RSI / Harness"
+      ],
+      "status": "已阅读/已有专题笔记",
+      "source": "https://arxiv.org/abs/2607.08448",
+      "search": "Harness VLA：Steering Frozen VLAs into Reliable Manipulation Primitives via Memory-Guided Agents 通过Agent、解析primitive和记忆改善冻结VLA的局部调用。 **项目关系（研究分析）：**系统层恢复是不同贡献；operating-range相关probe可借鉴，但不直接验证你的token。 1. 一句话 2. 核心结构 3. 最值得记的概念：Operating Range 4. Memory 5. 与我们的项目边界 6. 可借鉴 7. Source "
+    },
+    {
+      "id": "doc:notes/forcedelta-vla.md",
+      "title": "ForceDelta-VLA：力条件动作修正蒸馏",
+      "path": "notes/forcedelta-vla.md",
+      "kind": "论文笔记",
+      "date": "2026-09-24",
+      "summary": "缓存参考动作上分别预测力修正与延迟修正，让快速反馈无需等待完整 VLA 重新生成动作。",
+      "topics": [
+        "物理经验 / 接触",
+        "强化学习",
+        "世界模型",
+        "动作 / 决策"
+      ],
+      "status": "专题阅读 · 2026-09-21；附录/代码待核查",
+      "source": "https://arxiv.org/abs/2609.18242",
+      "search": "ForceDelta-VLA：力条件动作修正蒸馏 缓存参考动作上分别预测力修正与延迟修正，让快速反馈无需等待完整 VLA 重新生成动作。 1. 问题与机制 2. 证据与限制 3. 对 RLT / Physical Token 的创新边界 4. 可以立即追加的实验 5. 哪些结果允许哪些结论 6. 阅读与实现待办 补充同观测历史、同容量、同反馈频率与缓存年龄对照；区分教师修正差监督和真实动作后果监督。"
+    },
+    {
+      "id": "doc:notes/embodied-jev.md",
+      "title": "EmbodiedJev：决策概率、物理结果与学习更新必须分开",
+      "path": "notes/embodied-jev.md",
+      "kind": "论文笔记",
+      "date": "2026-09-24",
+      "summary": "以MuJoCo工作台比较技能、短步XYZ与分层候选决策；Jev文本输入、程序几何/IK与物理预演的作用明确分开。",
+      "topics": [
+        "物理经验 / 接触",
+        "强化学习",
+        "动作 / 决策"
+      ],
+      "status": "文档与关键源码专题阅读 · 2026-09-21；未运行",
+      "source": "https://github.com/FBddcz/embodied-jev",
+      "search": "EmbodiedJev：决策概率、物理结果与学习更新必须分开 以MuJoCo工作台比较技能、短步XYZ与分层候选决策；Jev文本输入、程序几何/IK与物理预演的作用明确分开。 1. 它是什么 2. 值得借鉴的三个接口 3. 结果与评估边界 4. 概率不是物理成功率 5. 与当前主线如何连接 借鉴动作后果证据链与概率校准；先用部署可得输入做可恢复性probe，再考虑恢复选择器，不直接引入云端Jev改变RLT主线。"
+    },
+    {
+      "id": "doc:notes/enpire.md",
+      "title": "ENPIRE：Agentic Robot Policy Self-Improvement in the Real World",
+      "path": "notes/enpire.md",
+      "kind": "论文笔记",
+      "date": "2026-09-24",
+      "summary": "将真机实验、验证和策略/算法改进组织为agentic闭环。",
+      "topics": [
+        "RSI / Harness"
+      ],
+      "status": "已阅读/已有专题笔记",
+      "source": "https://arxiv.org/abs/2606.19980",
+      "search": "ENPIRE：Agentic Robot Policy Self-Improvement in the Real World 将真机实验、验证和策略/算法改进组织为agentic闭环。 1. 一句话 2. 核心循环 3. 对我们的直接价值 4. 边界 5. Source "
+    },
+    {
+      "id": "doc:notes/clap.md",
+      "title": "CLAP：可共享的世界知识与本体动作接口",
+      "path": "notes/clap.md",
+      "kind": "论文笔记",
+      "date": "2026-09-24",
+      "summary": "通过潜动作、末端动作及课程式对齐训练跨本体世界模型；为共享后果接口与本体适配提供参考。",
+      "topics": [
+        "物理经验 / 接触",
+        "强化学习",
+        "世界模型",
+        "动作 / 决策"
+      ],
+      "status": "方法、实验与相关附录专题阅读 · 2026-09-22；未复现",
+      "source": "https://arxiv.org/html/2608.27406v1",
+      "search": "CLAP：可共享的世界知识与本体动作接口 通过潜动作、末端动作及课程式对齐训练跨本体世界模型；为共享后果接口与本体适配提供参考。 1. 它解决什么问题 2. 对 Physical Token 最重要的启发 3. 对当前算力与 RLT 的实际取舍 一手来源 P1：借动作映射、历史/时长条件与迁移验证原则；先做小模型后果 probe，完整视频模型留作后续对照。"
+    },
+    {
+      "id": "doc:notes/aspire.md",
+      "title": "ASPIRE：Agentic /Skills Discovery for Robotics",
+      "path": "notes/aspire.md",
+      "kind": "论文笔记",
+      "date": "2026-09-24",
+      "summary": "执行trace驱动控制程序诊断、修复和可复用技能积累。",
+      "topics": [
+        "RSI / Harness"
+      ],
+      "status": "已阅读/已有专题笔记",
+      "source": "https://arxiv.org/abs/2607.00272",
+      "search": "ASPIRE：Agentic /Skills Discovery for Robotics 执行trace驱动控制程序诊断、修复和可复用技能积累。 1. 一句话 2. 核心机制 3. 与 Physical Token 最相关的地方 4. 边界 5. Source "
+    },
+    {
+      "id": "doc:research/progress-2026-09-22.md",
+      "title": "2026-09-22 实验进展补充：train450 Stage1 10k 评测口径与复测边界",
+      "path": "research/progress-2026-09-22.md",
+      "kind": "实验进度",
+      "date": "2026-09-24",
+      "summary": "入库日期：2026-09-22；本日期不代表新增 GPU run 的执行日期。 证据：用户提供的评测摘要截图；本轮未直接读取原始 rollout、W&B 或训练日志。 关联：仓库 2026-09-18 已有相同 checkpoint、22/40 双设备复测与平均长度的记录。本次补充指标解释；缺少独立 run ID，暂不增加运行次数或独立 seed 数。",
+      "topics": [],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "2026-09-22 实验进展补充：train450 Stage1 10k 评测口径与复测边界 入库日期：2026-09-22；本日期不代表新增 GPU run 的执行日期。 证据：用户提供的评测摘要截图；本轮未直接读取原始 rollout、W&B 或训练日志。 关联：仓库 2026-09-18 已有相同 checkpoint、22/40 双设备复测与平均长度的记录。本次补充指标解释；缺少独立 run ID，暂不增加运行次数或独立 seed 数。 1. 本次截图提供的信息 2. 可以形成的科研结论 3. 与现有记录的关系 4. 下一步最小核验（待执行） 5. 同日补充：迁移与干预讨论（不新增本次评测证据） "
+    },
+    {
+      "id": "doc:research/progress-2026-09-18.md",
+      "title": "2026-09-18 科研进展：train450 Stage1 10k 复测、旧 B0 Stage2 退化与诊断转向",
+      "path": "research/progress-2026-09-18.md",
+      "kind": "实验进度",
+      "date": "2026-09-24",
+      "summary": "状态：公开脱敏科研记录 主线：Universal Physical Token for Robot Self-Evolution 当前阶段：Gate 0 / trustworthy RLT baseline → B0 diagnosis",
+      "topics": [
+        "物理经验 / 接触",
+        "强化学习",
+        "RSI / Harness",
+        "基线 / 工程"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "2026-09-18 科研进展：train450 Stage1 10k 复测、旧 B0 Stage2 退化与诊断转向 状态：公开脱敏科研记录 主线：Universal Physical Token for Robot Self-Evolution 当前阶段：Gate 0 / trustworthy RLT baseline → B0 diagnosis 1. 今日结论 2. 新 train450 Stage1：10k checkpoint 能力验收 2.1 训练配置与停止状态 2.2 10k eval40 双卡复测 2.3 当前允许的解释 3. 旧 B0 Stage2：出现明显性能退化，已停止 3.1 Baseline 配置 3.2 性能变化 4. Stage2 下一步：先诊断，不继续盲目加预算 5. clean490 / data contract 状态保持 6. RoboDojo 状态 7. 迁移与可复现性 8. 下一步 P0 · Stage1 / reference P0 · B0 Stage2 P1 · Physical Token 9. 当前允许的结论 "
+    },
+    {
+      "id": "doc:research/progress-2026-09-17.md",
+      "title": "2026-09-17 科研进展：clean490 Stage1 启动、B0 Stage2 启动与 RoboDojo reference 选型",
+      "path": "research/progress-2026-09-17.md",
+      "kind": "实验进度",
+      "date": "2026-09-24",
+      "summary": "状态：公开脱敏科研记录 主线：Universal Physical Token for Robot Self-Evolution 当前阶段：Gate 0 / trustworthy RLT baseline → B0 online baseline in progress",
+      "topics": [
+        "物理经验 / 接触",
+        "强化学习",
+        "RSI / Harness",
+        "基线 / 工程"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "2026-09-17 科研进展：clean490 Stage1 启动、B0 Stage2 启动与 RoboDojo reference 选型 状态：公开脱敏科研记录 主线：Universal Physical Token for Robot Self-Evolution 当前阶段：Gate 0 / trustworthy RLT baseline → B0 online baseline in progress 1. 今日结论 2. Hammer clean500 → clean490：全量数据审计完成 2.1 10 条强轨迹异常 2.2 10 条 contact / impulse 弱标签 3. clean490 数据划分与 normalization 4. 新 clean490 Stage1：已正式启动 运行快照 5. 旧 clean50 Stage1：统一 20-seed 能力曲线 6. B0 Stage2：正式训练已经启动 已完成前置 正式 Stage2 当前设置 7. RoboDojo：D3/D5 已通过，科研任务开始收敛 当前 Gate 接触 / 动力学科研任务候选 8. RoboDojo π0.5 reference 候选 9. RoboDojo 版本兼容风险 10. 对 Universal Physical Token 的直接影响 10.1 Proposed action ≠ Executed action 10.2 Command state ≠ Measured state 10.3 Physics labels 必须带 validity 11. 下一步 P0 · Hammer baseline P1 · RoboDojo P2 · Physical Token 12. 当前允许的结论 "
+    },
+    {
+      "id": "doc:research/progress-2026-09-15.md",
+      "title": "2026-09-15 · Hammer RLT Baseline Recovery + Data Scaling + RoboDojo Bring-up",
+      "path": "research/progress-2026-09-15.md",
+      "kind": "实验进度",
+      "date": "2026-09-24",
+      "summary": "本页只记录公开、脱敏、已有证据支持的项目状态。内部绝对路径、账号、私有监控标识与不必要的完整命令不进入公开仓库。 快照边界：本页末次运行快照来自 2026-09-15 13:29 UTC。两个 GPU 长任务当时仍在运行，因此下面的 step / trajectory 数量不是最终结果。",
+      "topics": [
+        "强化学习",
+        "基线 / 工程"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "2026-09-15 · Hammer RLT Baseline Recovery + Data Scaling + RoboDojo Bring-up 本页只记录公开、脱敏、已有证据支持的项目状态。内部绝对路径、账号、私有监控标识与不必要的完整命令不进入公开仓库。 快照边界：本页末次运行快照来自 2026-09-15 13:29 UTC。两个 GPU 长任务当时仍在运行，因此下面的 step / trajectory 数量不是最终结果。 1. 今日一句话状态 2. 旧 Stage1 的两个独立问题仍需分开解释 2.1 H/C 与 RoboTwin TOPP 执行协议 2.2 Stage1 capability / training budget 3. H50/C50 配对证据 4. 新 Stage1 20k：已从“待启动”进入“运行中” 13:29 UTC 运行快照 checkpoint 选择规则不变 5. clean500：成功示范数据扩充已启动 13:29 UTC 快照 clean500 后处理协议 6. RoboDojo：从“未实测”推进到 D0–D2 + D4 已通过 D0 / D1：源码、子模块与资产 D2：独立 runtime D4：XPolicyLab CPU closed loop 依赖隔离 RLinf bridge 准备 7. RoboDojo 当前 Gate 8. 资源协调 9. 对 Universal Physical Token 主线的影响 10. 下一步 Hammer / Stage1 clean500 RoboDojo 11. 当前不允许的过度结论 "
+    },
+    {
+      "id": "doc:research/progress-2026-09-12.md",
+      "title": "2026-09-12 · 项目科研与实验进展",
+      "path": "research/progress-2026-09-12.md",
+      "kind": "实验进度",
+      "date": "2026-09-24",
+      "summary": "本页只记录已经有实验/测试/日志证据支持的事实；未实测的 RoboDojo/B300 兼容性仍记为待验证。",
+      "topics": [],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "2026-09-12 · 项目科研与实验进展 本页只记录已经有实验/测试/日志证据支持的事实；未实测的 RoboDojo/B300 兼容性仍记为待验证。 1. 今日一句话状态 2. Hammer task-SFT reference：完成快筛，但尚未完成正式 reference 已完成 重要限制 当前决定 3. RLT Stage 1：paper-aligned base-init smoke 已通过 主线口径纠正 paper-aligned 1-step smoke post-SFT 路径 下一步 4. RLT Stage 2：代码语义已进一步对齐，真实 rollout 尚未验收 已实现 / 已验证 需要继续明确的本地差异 下一门槛 5. RoboTwin 2.0：版本路线进一步澄清 6. 多任务计划：先逐任务独立复现，不急着 joint multi-task training 7. Physics sidecar：资产价值进一步明确 8. RoboDojo / B300：目前仍是“待实测支线” 9. 明日/下一轮最小动作 主线 P0 支线 S0 10. 今日科研判断变化 "
+    },
+    {
+      "id": "阅读清单:P115",
+      "title": "π0: A Vision-Language-Action Flow Model for General Robot Control",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "预训练视觉语言模型结合flow-matching动作专家生成连续动作块。",
+      "topics": [
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2410.24164",
+      "search": "π0: A Vision-Language-Action Flow Model for General Robot Control 预训练视觉语言模型结合flow-matching动作专家生成连续动作块。 第一种head family；抽取位置、采样时刻、噪声条件必须固定。  "
+    },
+    {
+      "id": "阅读清单:P116",
+      "title": "π0.5: a Vision-Language-Action Model with Open-World Generalization",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "联合多源数据和层级推理/动作学习，提升开放世界泛化。",
+      "topics": [
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2504.16054",
+      "search": "π0.5: a Vision-Language-Action Model with Open-World Generalization 联合多源数据和层级推理/动作学习，提升开放世界泛化。 当前π0.5底座；不要把原任务语义适应与物理token增益混算。  "
+    },
+    {
+      "id": "阅读清单:P083",
+      "title": "π*0.6: a VLA That Learns From Experience",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "结合示范、自主经验与纠正，以价值/优势条件化策略进行改进。",
+      "topics": [],
+      "status": "已初读/讨论过，待系统精读",
+      "source": "https://arxiv.org/abs/2511.14759",
+      "search": "π*0.6: a VLA That Learns From Experience 结合示范、自主经验与纠正，以价值/优势条件化策略进行改进。 是下游候选而非天然轻量冻结外挂；不能由别处成功率推断一定比你的RLT稳定。  "
+    },
+    {
+      "id": "阅读清单:P036",
+      "title": "exUMI: Extensible Robot Teaching System with Action-aware Task-agnostic Tactile Representation",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "动作感知、任务无关的触觉表示学习及可扩展示教系统。",
+      "topics": [
+        "物理经验 / 接触",
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://proceedings.mlr.press/v305/xu25e.html",
+      "search": "exUMI: Extensible Robot Teaching System with Action-aware Task-agnostic Tactile Representation 动作感知、任务无关的触觉表示学习及可扩展示教系统。 action-aware/task-agnostic physical representation已有；需要核查时序预测目标与泛化设置。  "
+    },
+    {
+      "id": "阅读清单:P013",
+      "title": "X-DiffVLA: X-Embodied Diffusion Action Heads for Vision-Language-Action Models",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "统一扩散动作头，结合embodiment forcing和形态树，迁移不同末端执行器的数据。",
+      "topics": [
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2605.25044",
+      "search": "X-DiffVLA: X-Embodied Diffusion Action Heads for Vision-Language-Action Models 统一扩散动作头，结合embodiment forcing和形态树，迁移不同末端执行器的数据。 跨本体动作头不是空白；其共享机器人基座/异构末端条件限制需与自己的transfer协议对齐。  "
+    },
+    {
+      "id": "阅读清单:P070",
+      "title": "WAM-RL: World-Action Model Reinforcement Learning with Reconstruction Rewards and Online Video SFT",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "重建奖励与在线视频监督服务世界动作模型的强化学习。",
+      "topics": [
+        "物理经验 / 接触",
+        "强化学习",
+        "世界模型",
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2606.17906",
+      "search": "WAM-RL: World-Action Model Reinforcement Learning with Reconstruction Rewards and Online Video SFT 重建奖励与在线视频监督服务世界动作模型的强化学习。 WAM和RL耦合已有；需要分离表征改进、奖励改变和模型更新三个变量。  "
+    },
+    {
+      "id": "阅读清单:P081",
+      "title": "Video2Act: A Dual-System Video Diffusion Policy with Robotic Spatio-Motional Modeling",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "从视频生成的空间/运动特征条件化动作策略。",
+      "topics": [
+        "世界模型",
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2512.03044",
+      "search": "Video2Act: A Dual-System Video Diffusion Policy with Robotic Spatio-Motional Modeling 从视频生成的空间/运动特征条件化动作策略。 视频内部特征→动作接口与action-side读出相邻；需精读接口位置与冻结范围。  "
+    },
+    {
+      "id": "阅读清单:P101",
+      "title": "VLA-Corrector: Lightweight Detect-and-Correct Inference for Adaptive Action Horizon",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "比较预测与实测变化，检测偏离并修正/截断陈旧动作。",
+      "topics": [
+        "记忆 / 适应",
+        "RSI / Harness",
+        "世界模型",
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2607.01804",
+      "search": "VLA-Corrector: Lightweight Detect-and-Correct Inference for Adaptive Action Horizon 比较预测与实测变化，检测偏离并修正/截断陈旧动作。 failure-onset及adaptive-horizon是强对照；不能凭增加监控头就称物理表示创新。  "
+    },
+    {
+      "id": "阅读清单:P016",
+      "title": "VLA Models Are More Generalizable Than You Think: Revisiting Physical and Spatial Modeling",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "重新分析VLA物理与空间建模的泛化来源。",
+      "topics": [
+        "物理经验 / 接触",
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://openaccess.thecvf.com/content/CVPR2026/html/Li_VLA_Models_Are_More_Generalizable_Than_You_Think_Revisiting_Physical_CVPR_2026_paper.html",
+      "search": "VLA Models Are More Generalizable Than You Think: Revisiting Physical and Spatial Modeling 重新分析VLA物理与空间建模的泛化来源。 失败可能是空间/观测标定而非缺物理；应先排除替代解释。  "
+    },
+    {
+      "id": "阅读清单:P027",
+      "title": "VIP: Towards Universal Visual Reward and Representation via Value-Implicit Pre-Training",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "从无动作标注的人类视频学习可迁移表示与视觉奖励。",
+      "topics": [
+        "记忆 / 适应",
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2210.00030",
+      "search": "VIP: Towards Universal Visual Reward and Representation via Value-Implicit Pre-Training 从无动作标注的人类视频学习可迁移表示与视觉奖励。 比较几何预测是否真的优于价值相关表征；注意VIP并非动作条件动力学模型。  "
+    },
+    {
+      "id": "阅读清单:P075",
+      "title": "V-JEPA 2: Self-Supervised Video Models Enable Understanding, Prediction and Planning",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "视频latent预测预训练，并引入动作条件学习服务规划。",
+      "topics": [
+        "世界模型",
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2506.09985",
+      "search": "V-JEPA 2: Self-Supervised Video Models Enable Understanding, Prediction and Planning 视频latent预测预训练，并引入动作条件学习服务规划。 要证明动作head读出是否优于通用视频预测特征；视觉世界模型是必须面对的基线。  "
+    },
+    {
+      "id": "阅读清单:P039",
+      "title": "UpViTaL: Unpaired Visual-Tactile Self-Supervised Representation Learning for Dexterous Robotic Manipulation",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "不成对的视觉触觉自监督表示学习，用于灵巧操作。",
+      "topics": [
+        "物理经验 / 接触"
+      ],
+      "status": "待精读",
+      "source": "https://ieeexplore.ieee.org/document/11127230/",
+      "search": "UpViTaL: Unpaired Visual-Tactile Self-Supervised Representation Learning for Dexterous Robotic Manipulation 不成对的视觉触觉自监督表示学习，用于灵巧操作。 privileged物理与视觉对齐未必要求逐帧配对；可借鉴降低标注成本。  "
+    },
+    {
+      "id": "阅读清单:P043",
+      "title": "UniTac-NV: A Unified Tactile Representation For Non-Vision-Based Tactile Sensors",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "传感器专用编码器与共享潜空间实现非视觉触觉跨传感器迁移。",
+      "topics": [
+        "物理经验 / 接触"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2506.19699",
+      "search": "UniTac-NV: A Unified Tactile Representation For Non-Vision-Based Tactile Sensors 传感器专用编码器与共享潜空间实现非视觉触觉跨传感器迁移。 shared latent＋specific adapter已有强相关先例；你的通用性须以跨head/机器人迁移证明。  "
+    },
+    {
+      "id": "阅读清单:P062",
+      "title": "UMI-on-Air: Embodiment-Aware Guidance for Embodiment-Agnostic Visuomotor Policies",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "利用下层控制器tracking cost梯度引导扩散策略，适应不同机器人动力学。",
+      "topics": [
+        "物理经验 / 接触",
+        "记忆 / 适应"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2510.02614",
+      "search": "UMI-on-Air: Embodiment-Aware Guidance for Embodiment-Agnostic Visuomotor Policies 利用下层控制器tracking cost梯度引导扩散策略，适应不同机器人动力学。 不改预训练策略的跨本体动力学外挂已有；需比较控制器成本指导与物理token。  "
+    },
+    {
+      "id": "前沿条目:batch-stream",
+      "title": "Towards Batch-to-Streaming Deep Reinforcement Learning for Continuous Control",
+      "path": null,
+      "kind": "前沿条目",
+      "date": "",
+      "summary": "研究从 batch RL 训练范式向逐步流式更新的连续控制迁移。",
+      "topics": [
+        "物理经验 / 接触",
+        "强化学习"
+      ],
+      "status": "背景",
+      "source": "https://arxiv.org/abs/2603.08588",
+      "search": "Towards Batch-to-Streaming Deep Reinforcement Learning for Continuous Control 研究从 batch RL 训练范式向逐步流式更新的连续控制迁移。  若未来 replay / update latency 成为真实系统瓶颈，可用它定义严格 Streaming Phase。 当前 RLT Phase 0 不需要为追求“streaming”而主动删除 replay。"
+    },
+    {
+      "id": "阅读清单:P024",
+      "title": "Temporal Difference Learning for Model Predictive Control",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "联合学习task-oriented latent dynamics、价值和短期规划。",
+      "topics": [
+        "记忆 / 适应"
+      ],
+      "status": "待精读",
+      "source": "https://proceedings.mlr.press/v162/hansen22a.html",
+      "search": "Temporal Difference Learning for Model Predictive Control 联合学习task-oriented latent dynamics、价值和短期规划。 task-oriented latent dynamics是成熟范式；你应证明预训练head信息的不可替代价值。  "
+    },
+    {
+      "id": "阅读清单:P037",
+      "title": "Tactile Beyond Pixels: Multisensory Touch Representations for Robot Manipulation",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "跨图像、声音、运动、压力等触觉信号学习多感官表示。",
+      "topics": [
+        "物理经验 / 接触"
+      ],
+      "status": "待精读",
+      "source": "https://proceedings.mlr.press/v305/higuera25a.html",
+      "search": "Tactile Beyond Pixels: Multisensory Touch Representations for Robot Manipulation 跨图像、声音、运动、压力等触觉信号学习多感官表示。 共享多传感器latent已有；传感器适配与动作head适配应分别验证。  "
+    },
+    {
+      "id": "阅读清单:P025",
+      "title": "TD-MPC2: Scalable, Robust World Models for Continuous Control",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "可扩展latent世界模型与连续控制，关注稳定训练和跨任务容量。",
+      "topics": [
+        "记忆 / 适应",
+        "世界模型"
+      ],
+      "status": "待精读",
+      "source": "https://proceedings.iclr.cc/paper_files/paper/2024/hash/cf73d57b6dcda32b293df7c2d5341f49-Abstract-Conference.html",
+      "search": "TD-MPC2: Scalable, Robust World Models for Continuous Control 可扩展latent世界模型与连续控制，关注稳定训练和跨任务容量。 共享latent + 多任务控制不是空白；以其表征/归一化经验作机制参照。  "
+    },
+    {
+      "id": "阅读清单:P023",
+      "title": "TACO: Temporal Latent Action-Driven Contrastive Loss for Visual Reinforcement Learning",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "用latent动作序列与未来状态的时序对比目标学习控制相关表示。",
+      "topics": [
+        "物理经验 / 接触",
+        "记忆 / 适应",
+        "世界模型",
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://www.microsoft.com/en-us/research/publication/taco-temporal-latent-action-driven-contrastive-loss-for-visual-reinforcement-learning/?lang=ja",
+      "search": "TACO: Temporal Latent Action-Driven Contrastive Loss for Visual Reinforcement Learning 用latent动作序列与未来状态的时序对比目标学习控制相关表示。 action-conditioned、temporal、可接在线/离线RL都已有近邻；需比较真实后果/跨head增量。  "
+    },
+    {
+      "id": "阅读清单:P077",
+      "title": "Structured World Models from Human Videos",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "从人类视频学习结构化世界模型服务控制。",
+      "topics": [
+        "世界模型",
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://roboticsproceedings.org/rss19/p012.html",
+      "search": "Structured World Models from Human Videos 从人类视频学习结构化世界模型服务控制。 跨数据来源的world prior可借鉴，但human-video动态不自动等于机器人action-conditioned反馈。  "
+    },
+    {
+      "id": "前沿条目:vgps",
+      "title": "Steering Your Generalists: Improving Robotic Foundation Models via Value Guidance (V-GPS)",
+      "path": null,
+      "kind": "前沿条目",
+      "date": "",
+      "summary": "用价值函数对 generalist policy 产生的候选动作进行筛选 / 重排，而不是立刻重训大模型。",
+      "topics": [
+        "动作 / 决策"
+      ],
+      "status": "推荐",
+      "source": "https://arxiv.org/abs/2410.13816",
+      "search": "Steering Your Generalists: Improving Robotic Foundation Models via Value Guidance (V-GPS) 用价值函数对 generalist policy 产生的候选动作进行筛选 / 重排，而不是立刻重训大模型。  D2 的关键 baseline；如果 candidate oracle headroom 很大，价值 / ranking 可能比 representation 更优先。 候选集合没有好动作时，value guidance 上限有限。"
+    },
+    {
+      "id": "阅读清单:P086",
+      "title": "Steering Your Generalists: Improving Robotic Foundation Models via Value Guidance",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "冻结通用策略，用学习的价值函数选择候选动作；验证跨多种策略架构。",
+      "topics": [
+        "动作 / 决策"
+      ],
+      "status": "已初读/讨论过，待系统精读",
+      "source": "https://proceedings.mlr.press/v270/nakamoto25a.html",
+      "search": "Steering Your Generalists: Improving Robotic Foundation Models via Value Guidance 冻结通用策略，用学习的价值函数选择候选动作；验证跨多种策略架构。 同一个value模块服务多种冻结策略已有；learner-agnostic与多head不能单独当创新。  "
+    },
+    {
+      "id": "阅读清单:P088",
+      "title": "Steering Your Diffusion Policy with Latent Space Reinforcement Learning",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "冻结扩散策略，在噪声latent空间学习引导策略。",
+      "topics": [
+        "物理经验 / 接触"
+      ],
+      "status": "已初读/讨论过，待系统精读",
+      "source": "https://proceedings.mlr.press/v305/wagenmaker25a.html",
+      "search": "Steering Your Diffusion Policy with Latent Space Reinforcement Learning 冻结扩散策略，在噪声latent空间学习引导策略。 冻结生成策略+小latent learner已有；需要证明physical token比噪声/动作latent更有用。  "
+    },
+    {
+      "id": "阅读清单:P038",
+      "title": "Sparsh: Self-supervised touch representations for vision-based tactile sensing",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "跨视觉式触觉传感器的自监督预训练，并建立TacBench。",
+      "topics": [
+        "物理经验 / 接触"
+      ],
+      "status": "待精读",
+      "source": "https://proceedings.mlr.press/v270/higuera25a.html",
+      "search": "Sparsh: Self-supervised touch representations for vision-based tactile sensing 跨视觉式触觉传感器的自监督预训练，并建立TacBench。 触觉通用表示的重要teacher/基线；不能仅以多传感器共享token主张普适。  "
+    },
+    {
+      "id": "阅读清单:P029",
+      "title": "Situationally-aware dynamics learning",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "情境感知的自适应动力学学习。",
+      "topics": [
+        "记忆 / 适应"
+      ],
+      "status": "待精读",
+      "source": "https://journals.sagepub.com/doi/abs/10.1177/02783649261431863",
+      "search": "Situationally-aware dynamics learning 情境感知的自适应动力学学习。 与历史推断局部系统状态相邻；需要进一步精读辨识变量与更新规则。  "
+    },
+    {
+      "id": "阅读清单:P033",
+      "title": "Self-Supervised Multisensory Pretraining for Contact-Rich Robot Reinforcement Learning",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "masked多感官预训练；冻结表示后critic采用动态cross-attention，actor采用稳定pooling。",
+      "topics": [
+        "物理经验 / 接触",
+        "强化学习"
+      ],
+      "status": "已初读/讨论过，待系统精读",
+      "source": "https://arxiv.org/abs/2511.14427",
+      "search": "Self-Supervised Multisensory Pretraining for Contact-Rich Robot Reinforcement Learning masked多感官预训练；冻结表示后critic采用动态cross-attention，actor采用稳定pooling。 多模态latent及actor/critic非对称用法已有；不能把critic用更多物理信息当成独立创新。  "
+    },
+    {
+      "id": "前沿条目:pld",
+      "title": "Self-Improving Vision-Language-Action Models with Data Generation via Residual RL (PLD)",
+      "path": null,
+      "kind": "前沿条目",
+      "date": "",
+      "summary": "用 residual RL 在基础策略薄弱区域生成更优部署分布经验，再把新经验蒸馏 / 回写基础 VLA。",
+      "topics": [
+        "强化学习",
+        "动作 / 决策",
+        "基线 / 工程"
+      ],
+      "status": "推荐",
+      "source": "https://arxiv.org/abs/2511.00091",
+      "search": "Self-Improving Vision-Language-Action Models with Data Generation via Residual RL (PLD) 用 residual RL 在基础策略薄弱区域生成更优部署分布经验，再把新经验蒸馏 / 回写基础 VLA。  如果 RLT 后续能稳定生成 recovery / correction data，PLD 是 Phase 3 experience consolidation 的自然近邻。 Residual RL→SFT 已有先例；创新应来自经验选择、跨任务复用或 physical feedback。"
+    },
+    {
+      "id": "阅读清单:P041",
+      "title": "See, feel, act: Hierarchical learning for complex manipulation skills with multisensory fusion",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "多感官融合支持复杂接触操作和分层技能学习。",
+      "topics": [
+        "物理经验 / 接触"
+      ],
+      "status": "待精读",
+      "source": "https://doi.org/10.1126/scirobotics.aav3123",
+      "search": "See, feel, act: Hierarchical learning for complex manipulation skills with multisensory fusion 多感官融合支持复杂接触操作和分层技能学习。 物理交互、触觉表示与动作决策的历史根基；不是VLA才出现的问题。  "
+    },
+    {
+      "id": "阅读清单:P123",
+      "title": "Scaling Proprioceptive-Visual Learning with Heterogeneous Pre-trained Transformers",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "异构机器人输入经过适配后形成共享Transformer表示。",
+      "topics": [
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://papers.nips.cc/paper_files/paper/2024/hash/e0f393e7980a24fd12fa6f15adfa25fb-Abstract-Conference.html",
+      "search": "Scaling Proprioceptive-Visual Learning with Heterogeneous Pre-trained Transformers 异构机器人输入经过适配后形成共享Transformer表示。 共享token、机器人专用适配器与跨本体学习已有人做；需证明动作后果目标的新增价值。  "
+    },
+    {
+      "id": "阅读清单:P060",
+      "title": "Safe Learning in Robotics: From Learning-Based Control to Safe Reinforcement Learning",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "综述学习控制、安全RL及保证成立所需假设。",
+      "topics": [
+        "物理经验 / 接触"
+      ],
+      "status": "待精读",
+      "source": "https://www.annualreviews.org/content/journals/10.1146/annurev-control-042920-020211",
+      "search": "Safe Learning in Robotics: From Learning-Based Control to Safe Reinforcement Learning 综述学习控制、安全RL及保证成立所需假设。 用于给安全、鲁棒、约束满足做严格定义；不是一个新算法结果。  "
+    },
+    {
+      "id": "前沿条目:serl",
+      "title": "SERL: A Software Suite for Sample-Efficient Robotic Reinforcement Learning",
+      "path": null,
+      "kind": "前沿条目",
+      "date": "",
+      "summary": "把机器人 RL 的 reward、reset、controller、demo、intervention 和 off-policy learner 做成完整可复现实用栈。",
+      "topics": [
+        "物理经验 / 接触",
+        "强化学习",
+        "基线 / 工程"
+      ],
+      "status": "强工程参考",
+      "source": "https://arxiv.org/abs/2401.16013",
+      "search": "SERL: A Software Suite for Sample-Efficient Robotic Reinforcement Learning 把机器人 RL 的 reward、reset、controller、demo、intervention 和 off-policy learner 做成完整可复现实用栈。  提醒我们 Phase 0 不只是算法复现；reset、reward、controller、干预和日志同样决定 baseline 能否成立。 不是 VLA-specific，也不解决 flow-matching VLA 的参数化与 credit-assignment 问题。"
+    },
+    {
+      "id": "阅读清单:P050",
+      "title": "SAM-RL: Sensing-Aware Model-Based Reinforcement Learning via Differentiable Physics-Based Simulation and Rendering",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "可微物理仿真和渲染参与模型式RL与感知适配。",
+      "topics": [
+        "物理经验 / 接触",
+        "强化学习"
+      ],
+      "status": "待精读",
+      "source": "https://roboticsproceedings.org/rss19/p040.html",
+      "search": "SAM-RL: Sensing-Aware Model-Based Reinforcement Learning via Differentiable Physics-Based Simulation and Rendering 可微物理仿真和渲染参与模型式RL与感知适配。 仿真特权监督/可微物理已有；需要校准real-to-sim与部署输入边界。  "
+    },
+    {
+      "id": "阅读清单:P008",
+      "title": "SA-VLA: State-aware tokenizer for improving Vision-Language-Action Models' performance",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "动作tokenizer/decoder利用机器人状态，缓解脱离当前状态的动作编码问题。",
+      "topics": [
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2606.30113",
+      "search": "SA-VLA: State-aware tokenizer for improving Vision-Language-Action Models' performance 动作tokenizer/decoder利用机器人状态，缓解脱离当前状态的动作编码问题。 状态感知action token已有；需要比较状态输入本身与物理监督的独立作用。  "
+    },
+    {
+      "id": "阅读清单:P040",
+      "title": "RoboPack: Learning Tactile-Informed Dynamics Models for Dense Packing",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "触觉与视觉历史帮助学习物体级动力学模型，用于密集装填控制。",
+      "topics": [
+        "物理经验 / 接触",
+        "记忆 / 适应"
+      ],
+      "status": "待精读",
+      "source": "https://www.roboticsproceedings.org/rss20/p130.html",
+      "search": "RoboPack: Learning Tactile-Informed Dynamics Models for Dense Packing 触觉与视觉历史帮助学习物体级动力学模型，用于密集装填控制。 隐藏物理属性latent→动作后果→MPC是强近邻；需验证token与真实接触响应的对应。  "
+    },
+    {
+      "id": "阅读清单:P049",
+      "title": "RoboCraft: Learning to see, simulate, and shape elasto-plastic objects in 3D with graph networks",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "视觉粒子化、图动力学与规划结合，实现弹塑性物体形状操作。",
+      "topics": [
+        "物理经验 / 接触"
+      ],
+      "status": "待精读",
+      "source": "https://journals.sagepub.com/doi/10.1177/02783649231219020",
+      "search": "RoboCraft: Learning to see, simulate, and shape elasto-plastic objects in 3D with graph networks 视觉粒子化、图动力学与规划结合，实现弹塑性物体形状操作。 已有action-conditioned consequence→planner闭环；区别控制读出与完整物理模拟。  "
+    },
+    {
+      "id": "阅读清单:P069",
+      "title": "Riemann-1.0: An Embodied World Action Model for Physical AI",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "统一观测、状态与动作的世界动作模型。",
+      "topics": [
+        "物理经验 / 接触",
+        "世界模型",
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2608.27033",
+      "search": "Riemann-1.0: An Embodied World Action Model for Physical AI 统一观测、状态与动作的世界动作模型。 WAM扩展需明确究竟读动作模块还是视频模块，而不是把任何视频模型当action head。  "
+    },
+    {
+      "id": "阅读清单:P114",
+      "title": "Rethinking Intermediate Representation for VLM-based Robot Manipulation",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "以操作词汇和语法构成可泛化的语义中间表示。",
+      "topics": [
+        "RSI / Harness"
+      ],
+      "status": "待精读",
+      "source": "https://ri.cuhk.edu.hk/en/research/projects/rethinking-intermediate-representation-for-vlm-based-robot-manipulation",
+      "search": "Rethinking Intermediate Representation for VLM-based Robot Manipulation 以操作词汇和语法构成可泛化的语义中间表示。 不是低层动力学token；用于清楚区分semantic interface与physical interface。  "
+    },
+    {
+      "id": "阅读清单:P067",
+      "title": "RepWAM: World Action Modeling with Representation Visual-Action Tokenizers",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "表示层视觉—动作tokenization与世界动作联合建模。",
+      "topics": [
+        "世界模型",
+        "动作 / 决策"
+      ],
+      "status": "已初读/讨论过，待系统精读",
+      "source": "https://arxiv.org/abs/2606.13674",
+      "search": "RepWAM: World Action Modeling with Representation Visual-Action Tokenizers 表示层视觉—动作tokenization与世界动作联合建模。 共享视觉动作latent不是空白；需区分生成模型token和下游通用物理读出。  "
+    },
+    {
+      "id": "阅读清单:P087",
+      "title": "RedFlow: Redirect Failure into Action-Level Corrections for Flow-matching VLA Policy",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "把失败经验转化为动作级纠正监督，改善flow VLA。",
+      "topics": [
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2607.27782",
+      "search": "RedFlow: Redirect Failure into Action-Level Corrections for Flow-matching VLA Policy 把失败经验转化为动作级纠正监督，改善flow VLA。 失败轨迹利用并非只有reward；需比较counterfactual/corrective目标与你的物理target。  "
+    },
+    {
+      "id": "阅读清单:P019",
+      "title": "Rapid Motor Adaptation for Robotic Manipulator Arms",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "利用动作与本体状态历史推断影响机械臂控制的隐藏条件。",
+      "topics": [
+        "记忆 / 适应",
+        "动作 / 决策"
+      ],
+      "status": "已初读/讨论过，待系统精读",
+      "source": "https://openaccess.thecvf.com/content/CVPR2024/html/Liang_Rapid_Motor_Adaptation_for_Robotic_Manipulator_Arms_CVPR_2024_paper.html",
+      "search": "Rapid Motor Adaptation for Robotic Manipulator Arms 利用动作与本体状态历史推断影响机械臂控制的隐藏条件。 与你的history-aware physical token直接相邻；原始历史加小模型应成为必做对照。  "
+    },
+    {
+      "id": "前沿条目:rma-arm",
+      "title": "Rapid Motor Adaptation for Robotic Manipulator Arms",
+      "path": null,
+      "kind": "前沿条目",
+      "date": "",
+      "summary": "利用动作和执行反馈历史推断隐藏动力学并快速适应机械臂。",
+      "topics": [
+        "记忆 / 适应",
+        "动作 / 决策"
+      ],
+      "status": "推荐",
+      "source": "https://arxiv.org/abs/2312.04670",
+      "search": "Rapid Motor Adaptation for Robotic Manipulator Arms 利用动作和执行反馈历史推断隐藏动力学并快速适应机械臂。  D1 强基线：actual q + short history 若已经解释大部分收益，Physical Token 的必要性会下降。 不是 VLA，任务与传感器设置不能直接等价到 contact-rich VLA。"
+    },
+    {
+      "id": "阅读清单:P018",
+      "title": "RMA: Rapid Motor Adaptation for Legged Robots",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "训练特权环境编码器，再以历史观测适应模块替代不可见物理参数。",
+      "topics": [
+        "物理经验 / 接触",
+        "记忆 / 适应"
+      ],
+      "status": "待精读",
+      "source": "https://www.roboticsproceedings.org/rss17/p011.html",
+      "search": "RMA: Rapid Motor Adaptation for Legged Robots 训练特权环境编码器，再以历史观测适应模块替代不可见物理参数。 latent物理适应/privileged teacher并不新；迁移到操作需明确新机制。  "
+    },
+    {
+      "id": "阅读清单:P104",
+      "title": "RL²-VLA: Adaptive RL Latent Compositional Steering with Test-Time Scaling for Vision-Language-Action Models",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "通过latent RL steering与测试时计算改善VLA执行。",
+      "topics": [
+        "强化学习",
+        "记忆 / 适应",
+        "RSI / Harness",
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2607.26991",
+      "search": "RL²-VLA: Adaptive RL Latent Compositional Steering with Test-Time Scaling for Vision-Language-Action Models 通过latent RL steering与测试时计算改善VLA执行。 latent steering与failure条件下介入已有；需证明physical监督带来新的可转移信息。  "
+    },
+    {
+      "id": "阅读清单:P026",
+      "title": "R3M: A Universal Visual Representation for Robot Manipulation",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "视频时序对比、语言对齐和稀疏性训练冻结视觉表示，服务下游操作学习。",
+      "topics": [
+        "记忆 / 适应"
+      ],
+      "status": "待精读",
+      "source": "https://proceedings.mlr.press/v205/nair23a.html",
+      "search": "R3M: A Universal Visual Representation for Robot Manipulation 视频时序对比、语言对齐和稀疏性训练冻结视觉表示，服务下游操作学习。 冻结通用表示+轻量下游是成熟路线；需要区别视觉表征与动作后果表征。  "
+    },
+    {
+      "id": "阅读清单:P085",
+      "title": "Q-VGM: Q-Guided Value-Gradient Matching for Offline-to-Online RL of Flow-Matching VLA Policies",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "action-sensitive chunk critic与局部速度匹配目标引导flow action expert，避免整段去噪反传。",
+      "topics": [
+        "强化学习",
+        "动作 / 决策"
+      ],
+      "status": "已初读/讨论过，待系统精读",
+      "source": "https://arxiv.org/abs/2606.08015",
+      "search": "Q-VGM: Q-Guided Value-Gradient Matching for Offline-to-Online RL of Flow-Matching VLA Policies action-sensitive chunk critic与局部速度匹配目标引导flow action expert，避免整段去噪反传。 可作物理token下游，但会改action expert；应与完全冻结base的主实验分开。  "
+    },
+    {
+      "id": "阅读清单:P066",
+      "title": "Prof. Robot: Differentiable Robot Rendering Without Static and Self-Collisions",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "可微机器人渲染与碰撞相关几何模型，为轨迹调整提供梯度。",
+      "topics": [
+        "物理经验 / 接触"
+      ],
+      "status": "待精读",
+      "source": "https://openaccess.thecvf.com/content/CVPR2025/html/Ruan_Prof._Robot_Differentiable_Robot_Rendering_Without_Static_and_Self-Collisions_CVPR_2025_paper.html",
+      "search": "Prof. Robot: Differentiable Robot Rendering Without Static and Self-Collisions 可微机器人渲染与碰撞相关几何模型，为轨迹调整提供梯度。 碰撞约束外挂属于已有路线；应对照解析/可微几何模块而非只对照原始VLA。  "
+    },
+    {
+      "id": "前沿条目:pri4r",
+      "title": "Pri4R: Learning World Dynamics for VLA with Privileged 4D Representation",
+      "path": null,
+      "kind": "前沿条目",
+      "date": "",
+      "summary": "用训练期 privileged future geometry / trajectories 塑造 VLA 表征，部署保持原输入接口。",
+      "topics": [
+        "物理经验 / 接触",
+        "世界模型",
+        "基线 / 工程"
+      ],
+      "status": "推荐",
+      "source": "https://arxiv.org/abs/2603.01549",
+      "search": "Pri4R: Learning World Dynamics for VLA with Privileged 4D Representation 用训练期 privileged future geometry / trajectories 塑造 VLA 表征，部署保持原输入接口。  Phase 2 若做 action consequence，必须证明 decision-relevant consequence 比一般 future geometry supervision 多了什么。 不等于在线 RL，也不回答 failure recovery / action ranking。"
+    },
+    {
+      "id": "阅读清单:P017",
+      "title": "Preparing for the Unknown: Learning a Universal Policy with Online System Identification",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "通过在线系统辨识估计隐藏动力学，再条件化通用策略。",
+      "topics": [
+        "记忆 / 适应"
+      ],
+      "status": "待精读",
+      "source": "https://faculty.cc.gatech.edu/~turk/paper_pages/2017_learning_universal_policy/index.html",
+      "search": "Preparing for the Unknown: Learning a Universal Policy with Online System Identification 通过在线系统辨识估计隐藏动力学，再条件化通用策略。 从执行历史推断物理上下文已有长期先例；必须加入history-only基线。  "
+    },
+    {
+      "id": "阅读清单:P098",
+      "title": "Precise and dexterous robotic manipulation via human-in-the-loop reinforcement learning",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "人类介入、视觉RL和系统工程支持精密操作学习。",
+      "topics": [
+        "物理经验 / 接触",
+        "基线 / 工程"
+      ],
+      "status": "待精读",
+      "source": "https://hil-serl.github.io/",
+      "search": "Precise and dexterous robotic manipulation via human-in-the-loop reinforcement learning 人类介入、视觉RL和系统工程支持精密操作学习。 真实接触学习强基线；要报告人类成本、reset、感知输入与交互预算。  "
+    },
+    {
+      "id": "阅读清单:P090",
+      "title": "Policy Decorator: Model-Agnostic Online Refinement for Large Policy Model",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "残差策略与受控探索改进冻结的大型模仿策略，覆盖Diffusion/Behavior Transformer。",
+      "topics": [],
+      "status": "待精读",
+      "source": "https://policydecorator.github.io/",
+      "search": "Policy Decorator: Model-Agnostic Online Refinement for Large Policy Model 残差策略与受控探索改进冻结的大型模仿策略，覆盖Diffusion/Behavior Transformer。 多模型小外挂、residual、稳定探索都已有；action correction改名不改变其残差定义。  "
+    },
+    {
+      "id": "阅读清单:P082",
+      "title": "PointWorld: Scaling 3D World Models for In-The-Wild Robotic Manipulation",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "把机器人动作和场景状态统一为3D点流，跨本体学习动作后果并用于MPC。",
+      "topics": [
+        "物理经验 / 接触",
+        "世界模型",
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://point-world.github.io/",
+      "search": "PointWorld: Scaling 3D World Models for In-The-Wild Robotic Manipulation 把机器人动作和场景状态统一为3D点流，跨本体学习动作后果并用于MPC。 统一物理动作坐标 + consequence + 跨本体已存在；要证明head latent较3D统一空间的价值。  "
+    },
+    {
+      "id": "阅读清单:P054",
+      "title": "PhysMani: Physics-principled 3D World Model for Dynamic Object Manipulation",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "物理约束3D Gaussian速度场预测动态场景，learnable token cross-attention向策略注入未来信息。",
+      "topics": [
+        "物理经验 / 接触",
+        "世界模型"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2607.01938",
+      "search": "PhysMani: Physics-principled 3D World Model for Dynamic Object Manipulation 物理约束3D Gaussian速度场预测动态场景，learnable token cross-attention向策略注入未来信息。 物理世界模型+token注入策略是直接邻居；需与action-head后读出区分并检验额外计算。  "
+    },
+    {
+      "id": "阅读清单:P053",
+      "title": "PhysDreamer: Physics-Based Interaction with 3D Objects via Video Generation",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "视频生成先验为可微物理物体交互提供监督。",
+      "topics": [
+        "物理经验 / 接触",
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://physdreamer.github.io/",
+      "search": "PhysDreamer: Physics-Based Interaction with 3D Objects via Video Generation 视频生成先验为可微物理物体交互提供监督。 从视频提取物理先验已有；生成像真的运动不等于经过真实动作干预检验的因果模型。  "
+    },
+    {
+      "id": "阅读清单:P044",
+      "title": "PIN-WM: Learning Physics-INformed World Models for Non-Prehensile Manipulation",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "将可微物理与视觉世界模型结合，用于非抓取操作。",
+      "topics": [
+        "物理经验 / 接触",
+        "世界模型"
+      ],
+      "status": "已初读/讨论过，待系统精读",
+      "source": "https://www.roboticsproceedings.org/rss21/p153.html",
+      "search": "PIN-WM: Learning Physics-INformed World Models for Non-Prehensile Manipulation 将可微物理与视觉世界模型结合，用于非抓取操作。 physics-informed world model已有；应证明紧凑读出比完整物理模型更合适，而非只比较无物理模型。  "
+    },
+    {
+      "id": "前沿条目:pin-wm",
+      "title": "PIN-WM: Learning Physics-INformed World Models for Non-Prehensile Manipulation",
+      "path": null,
+      "kind": "前沿条目",
+      "date": "",
+      "summary": "显式把物理结构和系统辨识融入 non-prehensile manipulation world model。",
+      "topics": [
+        "物理经验 / 接触",
+        "世界模型"
+      ],
+      "status": "背景",
+      "source": "https://arxiv.org/abs/2504.16693",
+      "search": "PIN-WM: Learning Physics-INformed World Models for Non-Prehensile Manipulation 显式把物理结构和系统辨识融入 non-prehensile manipulation world model。  用于提醒我们：如果主张 Physical World Model，必须明确比普通 latent dynamics 多了什么物理约束或可解释变量。 与 VLA online post-training 的问题设定不同。"
+    },
+    {
+      "id": "前沿条目:phr-vla",
+      "title": "PHR-VLA: Planning Horizon Reasoning for Vision-Language-Action Models",
+      "path": null,
+      "kind": "前沿条目",
+      "date": "",
+      "summary": "围绕 planning horizon 与未来局部视觉表征，强化 VLA 对即将发生的局部交互变化建模。",
+      "topics": [
+        "物理经验 / 接触",
+        "世界模型",
+        "动作 / 决策"
+      ],
+      "status": "待读",
+      "source": "https://arxiv.org/abs/2608.27609",
+      "search": "PHR-VLA: Planning Horizon Reasoning for Vision-Language-Action Models 围绕 planning horizon 与未来局部视觉表征，强化 VLA 对即将发生的局部交互变化建模。  D3 中应该把 physical consequence 与普通 future latent 做公平对照。 未来视觉预测不等于显式接触 / 力学建模。"
+    },
+    {
+      "id": "阅读清单:P117",
+      "title": "OpenVLA: An Open-Source Vision-Language-Action Model",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "开放的视觉语言动作模型，以离散动作token自回归生成控制。",
+      "topics": [
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2406.09246",
+      "search": "OpenVLA: An Open-Source Vision-Language-Action Model 开放的视觉语言动作模型，以离散动作token自回归生成控制。 可作为AR动作头对照；teacher forcing隐藏态不得泄漏未来示范动作。  "
+    },
+    {
+      "id": "阅读清单:P052",
+      "title": "One-Shot Real-to-Sim via End-to-End Differentiable Simulation and Rendering",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "通过可微仿真与渲染从现实观测辨识仿真属性。",
+      "topics": [
+        "物理经验 / 接触"
+      ],
+      "status": "待精读",
+      "source": "https://ieeexplore.ieee.org/document/10982102/",
+      "search": "One-Shot Real-to-Sim via End-to-End Differentiable Simulation and Rendering 通过可微仿真与渲染从现实观测辨识仿真属性。 隐藏属性辨识可显式做，也可latent做；应对比辨识误差与控制用途。  "
+    },
+    {
+      "id": "阅读清单:P091",
+      "title": "Offline Reinforcement Learning with Implicit Q-Learning",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "expectile状态价值回归、数据内Q备份与优势加权行为克隆。",
+      "topics": [
+        "物理经验 / 接触"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2110.06169",
+      "search": "Offline Reinforcement Learning with Implicit Q-Learning expectile状态价值回归、数据内Q备份与优势加权行为克隆。 可用于稳健价值学习对照；不是explicit regression，也不保证任意数据覆盖下成功。  "
+    },
+    {
+      "id": "阅读清单:P028",
+      "title": "Offline Meta-Reinforcement Learning with Online Self-Supervision",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "用无奖励在线数据减轻离线meta-RL适应时的分布偏移。",
+      "topics": [
+        "物理经验 / 接触",
+        "记忆 / 适应"
+      ],
+      "status": "待精读",
+      "source": "https://proceedings.mlr.press/v162/pong22a.html",
+      "search": "Offline Meta-Reinforcement Learning with Online Self-Supervision 用无奖励在线数据减轻离线meta-RL适应时的分布偏移。 无奖励执行反馈促进适应已有方法；借鉴离线—部署分布漂移控制。  "
+    },
+    {
+      "id": "阅读清单:P121",
+      "title": "Octo: An Open-Source Generalist Robot Policy",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "可适配不同观测和动作空间的通用机器人策略。",
+      "topics": [
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2405.12213",
+      "search": "Octo: An Open-Source Generalist Robot Policy 可适配不同观测和动作空间的通用机器人策略。 跨本体输入输出适配已有工作；统一接口不能单独证明泛化。  "
+    },
+    {
+      "id": "阅读清单:P065",
+      "title": "Object-centric task representation and transfer using diffused orientation fields",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "以物体中心的方向场研究任务表示与迁移。",
+      "topics": [
+        "物理经验 / 接触"
+      ],
+      "status": "待精读",
+      "source": "https://doi.org/10.1126/scirobotics.aea1762",
+      "search": "Object-centric task representation and transfer using diffused orientation fields 以物体中心的方向场研究任务表示与迁移。 几何结构化任务表示的期刊对照；本轮只完成题录级筛查，不声称已精读其动力学机制。  "
+    },
+    {
+      "id": "阅读清单:P068",
+      "title": "OA-WAM: Object-Addressable World Action Model for Robust Robot Manipulation",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "可寻址对象/机器人结构参与世界与动作建模。",
+      "topics": [
+        "世界模型",
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2605.06481",
+      "search": "OA-WAM: Object-Addressable World Action Model for Robust Robot Manipulation 可寻址对象/机器人结构参与世界与动作建模。 结构化object/contact token的参考；不能把人为分成几个token本身当贡献。  "
+    },
+    {
+      "id": "阅读清单:P034",
+      "title": "Multisensory Continual Learning: Adapting Pretrained Visuomotor Policies to Force",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "将新的力模态纳入已有视觉运动策略，同时考虑原能力保持。",
+      "topics": [
+        "物理经验 / 接触",
+        "记忆 / 适应"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2606.30988",
+      "search": "Multisensory Continual Learning: Adapting Pretrained Visuomotor Policies to Force 将新的力模态纳入已有视觉运动策略，同时考虑原能力保持。 后加物理模态与持续学习已有；需用旧任务保持和传感器缺失测试区分。  "
+    },
+    {
+      "id": "阅读清单:P058",
+      "title": "Model-Based Diffusion Optimal Control for Multi-Robot Motion Planning",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "已知动力学与CBF投影结合扩散控制，并扩展到多机器人规划。",
+      "topics": [
+        "物理经验 / 接触"
+      ],
+      "status": "待精读",
+      "source": "https://www.roboticsproceedings.org/rss22/p041.html",
+      "search": "Model-Based Diffusion Optimal Control for Multi-Robot Motion Planning 已知动力学与CBF投影结合扩散控制，并扩展到多机器人规划。 解析安全与学习物理表示应分层；此类保证依赖其明确模型假设。  "
+    },
+    {
+      "id": "阅读清单:P076",
+      "title": "Mastering diverse control tasks through world models",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "在latent世界模型想象中进行跨多任务的策略价值学习。",
+      "topics": [
+        "世界模型",
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://www.nature.com/articles/s41586-025-08744-2",
+      "search": "Mastering diverse control tasks through world models 在latent世界模型想象中进行跨多任务的策略价值学习。 通用latent控制与稳定训练有成熟先例；真实机器人上的证据仍须独立检验。  "
+    },
+    {
+      "id": "阅读清单:P030",
+      "title": "Making Sense of Vision and Touch: Learning Multimodal Representations for Contact-Rich Tasks",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "自监督融合视觉、触觉/力和机器人状态，学习接触操作表示供控制使用。",
+      "topics": [
+        "物理经验 / 接触"
+      ],
+      "status": "待精读",
+      "source": "https://ieeexplore.ieee.org/document/9043710/",
+      "search": "Making Sense of Vision and Touch: Learning Multimodal Representations for Contact-Rich Tasks 自监督融合视觉、触觉/力和机器人状态，学习接触操作表示供控制使用。 紧凑多感官latent+接触控制并非新概念；应与早期多模态表征学习定位比较。  "
+    },
+    {
+      "id": "阅读清单:P061",
+      "title": "Learning-Based Model Predictive Control: Toward Safe Learning in Control",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "综述学习增强MPC、模型误差与安全学习。",
+      "topics": [
+        "物理经验 / 接触"
+      ],
+      "status": "待精读",
+      "source": "https://doi.org/10.1146/annurev-control-090419-075625",
+      "search": "Learning-Based Model Predictive Control: Toward Safe Learning in Control 综述学习增强MPC、模型误差与安全学习。 未来physical critic/预测后果引导决策需处理不确定性和模型误差。  "
+    },
+    {
+      "id": "阅读清单:P047",
+      "title": "Learning to Simulate Complex Physics with Graph Networks",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "图网络学习多类物理系统动力学。",
+      "topics": [
+        "物理经验 / 接触"
+      ],
+      "status": "待精读",
+      "source": "https://proceedings.mlr.press/v119/sanchez-gonzalez20a.html",
+      "search": "Learning to Simulate Complex Physics with Graph Networks 图网络学习多类物理系统动力学。 对象/关系结构是可选物理归纳偏置；需比较结构latent与无结构token。  "
+    },
+    {
+      "id": "阅读清单:P064",
+      "title": "Learning to Fill the Seam by Vision: Sub-millimeter Peg-in-hole on Unseen Shapes in Real World",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "面向未见形状的视觉精细插入，研究亚毫米级装配。",
+      "topics": [
+        "物理经验 / 接触"
+      ],
+      "status": "待精读",
+      "source": "https://ieeexplore.ieee.org/document/9812429/",
+      "search": "Learning to Fill the Seam by Vision: Sub-millimeter Peg-in-hole on Unseen Shapes in Real World 面向未见形状的视觉精细插入，研究亚毫米级装配。 说明精密任务要看几何与控制协议，不能直接以任务名称推断接触物理难度。  "
+    },
+    {
+      "id": "阅读清单:P063",
+      "title": "Learning Preconditions of Hybrid Force-Velocity Controllers for Contact-Rich Manipulation",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "学习混合力-速度控制器何时可成功的前提条件，并用于接触操作规划。",
+      "topics": [
+        "物理经验 / 接触"
+      ],
+      "status": "待精读",
+      "source": "https://proceedings.mlr.press/v205/liang23a.html",
+      "search": "Learning Preconditions of Hybrid Force-Velocity Controllers for Contact-Rich Manipulation 学习混合力-速度控制器何时可成功的前提条件，并用于接触操作规划。 operating range/能力边界不是新概念；Physical Token的失败probe要与此类先例对照。  "
+    },
+    {
+      "id": "阅读清单:P007",
+      "title": "Learning Physics from Pretrained Video Models: A Multimodal Continuous and Sequential World Interaction Models for Robotic Manipulation",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "视频与动作共享连续physical tokens，通过视频预训练、因果建模和高效解码学习交互。",
+      "topics": [
+        "物理经验 / 接触",
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2603.00110",
+      "search": "Learning Physics from Pretrained Video Models: A Multimodal Continuous and Sequential World Interaction Models for Robotic Manipulation 视频与动作共享连续physical tokens，通过视频预训练、因果建模和高效解码学习交互。 命名与物理latent概念有重合；ICMR是相关多媒体会议，不在此冒充机器人旗舰会议。  "
+    },
+    {
+      "id": "阅读清单:P048",
+      "title": "Learning Particle Dynamics for Manipulating Rigid Bodies, Deformable Objects, and Fluids",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "粒子和交互网络模拟不同材料物体的动态变化。",
+      "topics": [
+        "物理经验 / 接触"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/1810.01566",
+      "search": "Learning Particle Dynamics for Manipulating Rigid Bodies, Deformable Objects, and Fluids 粒子和交互网络模拟不同材料物体的动态变化。 表示需随物理对象与接触关系变化；跨刚体/软体不能只靠相同latent维数。  "
+    },
+    {
+      "id": "阅读清单:P021",
+      "title": "Learning Invariant Representations for Reinforcement Learning without Reconstruction",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "用bisimulation相关度量保留奖励与转移相关信息，而非重建全部视觉细节。",
+      "topics": [
+        "物理经验 / 接触",
+        "记忆 / 适应"
+      ],
+      "status": "待精读",
+      "source": "https://ai.meta.com/research/publications/learning-invariant-representations-for-reinforcement-learning-without-reconstruction/",
+      "search": "Learning Invariant Representations for Reinforcement Learning without Reconstruction 用bisimulation相关度量保留奖励与转移相关信息，而非重建全部视觉细节。 物理充分表示须保留可控/价值相关差异，也应丢掉无关纹理。  "
+    },
+    {
+      "id": "阅读清单:P120",
+      "title": "Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "低成本双臂遥操作结合变分模型与Transformer动作分块。",
+      "topics": [
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2304.13705",
+      "search": "Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware 低成本双臂遥操作结合变分模型与Transformer动作分块。 回归/块级动作基线；temporal ensembling与执行时域必须和token变量分开。  "
+    },
+    {
+      "id": "阅读清单:P059",
+      "title": "Learning Control Barrier Functions from Expert Demonstrations",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "由专家示范学习控制障碍函数。",
+      "topics": [
+        "物理经验 / 接触"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2004.03315",
+      "search": "Learning Control Barrier Functions from Expert Demonstrations 由专家示范学习控制障碍函数。 安全约束学习与任务表示学习不同；比较硬控制保护和soft物理loss。  "
+    },
+    {
+      "id": "阅读清单:P055",
+      "title": "LeTO: Learning Constrained Visuomotor Policy with Differentiable Trajectory Optimization",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "把可微轨迹优化层放进视觉运动策略，联合动作拟合、平滑与约束。",
+      "topics": [
+        "物理经验 / 接触",
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://docs.lib.purdue.edu/iepubs/14/",
+      "search": "LeTO: Learning Constrained Visuomotor Policy with Differentiable Trajectory Optimization 把可微轨迹优化层放进视觉运动策略，联合动作拟合、平滑与约束。 可微物理/运动学约束的动作外挂已有；应与解析投影而非只有无约束策略比较。  "
+    },
+    {
+      "id": "阅读清单:P124",
+      "title": "Latent Action Pretraining from Videos",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "从视频学习潜在动作，再迁移到真实控制动作。",
+      "topics": [
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/45d74e190008c7bff2845ffc8e3facd3-Abstract-Conference.html",
+      "search": "Latent Action Pretraining from Videos 从视频学习潜在动作，再迁移到真实控制动作。 从变化中提取潜在动作的先例；与actor-side后果状态表示区分。  "
+    },
+    {
+      "id": "阅读清单:P032",
+      "title": "HapticVLA: Contact-Rich Manipulation via Vision-Language-Action Model without Inference-Time Tactile Sensing",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "利用训练期触觉信息塑造VLA，部署时不依赖相同触觉输入。",
+      "topics": [
+        "物理经验 / 接触",
+        "动作 / 决策",
+        "基线 / 工程"
+      ],
+      "status": "已初读/讨论过，待系统精读",
+      "source": "https://arxiv.org/abs/2603.15257",
+      "search": "HapticVLA: Contact-Rich Manipulation via Vision-Language-Action Model without Inference-Time Tactile Sensing 利用训练期触觉信息塑造VLA，部署时不依赖相同触觉输入。 训练特权触觉蒸馏不是空白；关注监督位置、teacher以及动作生成方式。  "
+    },
+    {
+      "id": "阅读清单:P080",
+      "title": "GlanceWAM: Sparse Test-Time Imagination for World-Action Models",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "慢速异步未来想象与快速latent动作解码解耦，处理预测陈旧性。",
+      "topics": [
+        "世界模型",
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2608.23927",
+      "search": "GlanceWAM: Sparse Test-Time Imagination for World-Action Models 慢速异步未来想象与快速latent动作解码解耦，处理预测陈旧性。 WAM对接必须考虑生成时间、observation age与控制延迟，而不只hidden维数。  "
+    },
+    {
+      "id": "阅读清单:P103",
+      "title": "GeoAAC: Geometry-Based Adaptive Action Chunking from Denoising Trajectories in VLA Policies",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "从flow去噪轨迹几何估计前缀可靠性，自适应选执行horizon，无额外训练。",
+      "topics": [
+        "记忆 / 适应",
+        "RSI / Harness",
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2609.20776",
+      "search": "GeoAAC: Geometry-Based Adaptive Action Chunking from Denoising Trajectories in VLA Policies 从flow去噪轨迹几何估计前缀可靠性，自适应选执行horizon，无额外训练。 动作生成过程特征可直接提供不确定性；对照能检验你是否只是重学去噪可靠性。  "
+    },
+    {
+      "id": "阅读清单:P113",
+      "title": "ForeAct: Steering Your VLA with Efficient Visual Foresight Planning",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "用未来图像与子任务描述引导VLA，接口可通过视觉输入对接。",
+      "topics": [
+        "RSI / Harness",
+        "世界模型"
+      ],
+      "status": "待精读",
+      "source": "https://openaccess.thecvf.com/content/CVPR2026/html/Zhang_ForeAct_Steering_Your_VLA_with_Efficient_Visual_Foresight_Planning_CVPR_2026_paper.html",
+      "search": "ForeAct: Steering Your VLA with Efficient Visual Foresight Planning 用未来图像与子任务描述引导VLA，接口可通过视觉输入对接。 世界预测外挂可不读action head；是检验额外观测/规划解释的强对照。  "
+    },
+    {
+      "id": "阅读清单:P089",
+      "title": "FlowDAgger: Human-in-the-Loop Adaptation of Generative Robot Policies in Latent Space",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "把人工纠正逆映射到生成噪声空间，训练小型latent策略适配冻结生成策略，包含VLA与WAM。",
+      "topics": [
+        "记忆 / 适应",
+        "世界模型"
+      ],
+      "status": "已初读/讨论过，待系统精读",
+      "source": "https://arxiv.org/abs/2607.08877",
+      "search": "FlowDAgger: Human-in-the-Loop Adaptation of Generative Robot Policies in Latent Space 把人工纠正逆映射到生成噪声空间，训练小型latent策略适配冻结生成策略，包含VLA与WAM。 冻结VLA/WAM + 轻量通用适配的直接竞品；必须精读能否共享learner、哪些参数冻结。  "
+    },
+    {
+      "id": "阅读清单:P096",
+      "title": "Flow Q-Learning",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "把flow行为先验与Q引导的一步策略提取结合。",
+      "topics": [],
+      "status": "待精读",
+      "source": "https://proceedings.mlr.press/v267/park25f.html",
+      "search": "Flow Q-Learning 把flow行为先验与Q引导的一步策略提取结合。 可作为离线/在线learner候选；不能与物理token同时换算法后归因给表示。  "
+    },
+    {
+      "id": "阅读清单:P122",
+      "title": "Fine-Tuning Vision-Language-Action Models: Optimizing Speed and Success",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "比较连续动作、并行解码、动作分块和微调配置。",
+      "topics": [
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2502.19645",
+      "search": "Fine-Tuning Vision-Language-Action Models: Optimizing Speed and Success 比较连续动作、并行解码、动作分块和微调配置。 较便宜的连续回归头对照；不能把整套工程优化的收益算成token收益。  "
+    },
+    {
+      "id": "阅读清单:P105",
+      "title": "FailSafe: Reasoning and Recovery from Failures in Vision-Language-Action Models",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "失败识别、解释和恢复服务VLA。",
+      "topics": [
+        "RSI / Harness",
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2510.01642",
+      "search": "FailSafe: Reasoning and Recovery from Failures in Vision-Language-Action Models 失败识别、解释和恢复服务VLA。 错误恢复能力并不等同于物理机制识别；可作failure taxonomy参照。  "
+    },
+    {
+      "id": "阅读清单:P031",
+      "title": "FD-VLA: Force-Distilled Vision-Language-Action Model for Contact-Rich Manipulation",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "以真实力latent监督视觉/状态条件的learnable query，推理时注入力token而不要求同样力传感器。",
+      "topics": [
+        "物理经验 / 接触",
+        "动作 / 决策"
+      ],
+      "status": "已初读/讨论过，待系统精读",
+      "source": "https://arxiv.org/abs/2602.02142",
+      "search": "FD-VLA: Force-Distilled Vision-Language-Action Model for Contact-Rich Manipulation 以真实力latent监督视觉/状态条件的learnable query，推理时注入力token而不要求同样力传感器。 力蒸馏、query token、部署去传感器已做；需证明不同于force surrogate。  "
+    },
+    {
+      "id": "阅读清单:P118",
+      "title": "FAST: Efficient Action Tokenization for Vision-Language-Action Models",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "利用频域压缩构建高效的动作序列tokenizer。",
+      "topics": [
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2501.09747",
+      "search": "FAST: Efficient Action Tokenization for Vision-Language-Action Models 利用频域压缩构建高效的动作序列tokenizer。 压缩动作序列≠物理状态表示；必须区分action token与你的Physical Token。  "
+    },
+    {
+      "id": "阅读清单:P079",
+      "title": "EgoWAM: World Action Models Beyond Pixels with In-the-Wild Egocentric Human Data",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "研究像素以外的world-action表示及真实第一视角数据。",
+      "topics": [
+        "世界模型",
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2607.08436",
+      "search": "EgoWAM: World Action Models Beyond Pixels with In-the-Wild Egocentric Human Data 研究像素以外的world-action表示及真实第一视角数据。 不同future target的对比很适合物理token；人类数据迁移和机器人标签作用应拆开。  "
+    },
+    {
+      "id": "阅读清单:P094",
+      "title": "Efficient Online Reinforcement Learning with Offline Data",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "用少量关键设计使off-policy RL有效使用离线数据。",
+      "topics": [
+        "物理经验 / 接触"
+      ],
+      "status": "待精读",
+      "source": "https://proceedings.mlr.press/v202/ball23a.html",
+      "search": "Efficient Online Reinforcement Learning with Offline Data 用少量关键设计使off-policy RL有效使用离线数据。 数据混合、更新比和critic设计可影响结果；不要把其工程改进误判为物理表示收益。  "
+    },
+    {
+      "id": "前沿条目:enpire",
+      "title": "ENPIRE: Agentic Robot Policy Self-Improvement in the Real World",
+      "path": null,
+      "kind": "前沿条目",
+      "date": "",
+      "summary": "让 coding agent 围绕真实机器人 rollout、verification、日志和训练代码形成 policy self-improvement loop，而不是只做一次性 task planning。",
+      "topics": [
+        "RSI / Harness"
+      ],
+      "status": "重点跟踪",
+      "source": "https://research.nvidia.com/labs/gear/enpire/",
+      "search": "ENPIRE: Agentic Robot Policy Self-Improvement in the Real World 让 coding agent 围绕真实机器人 rollout、verification、日志和训练代码形成 policy self-improvement loop，而不是只做一次性 task planning。  未来可以把我们的实验日志、failure diagnosis、训练配置和自动复现实验接入 agentic research loop。 属于更上层 system / agentic improvement，需要与直接 sensorimotor policy adaptation 分开。"
+    },
+    {
+      "id": "阅读清单:P014",
+      "title": "DyWA: Dynamics-adaptive World Action Model for Generalizable Non-prehensile Manipulation",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "结合历史交互、未来状态预测和动作学习，适应非抓取任务中的质量与摩擦变化。",
+      "topics": [
+        "记忆 / 适应",
+        "世界模型",
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://openaccess.thecvf.com/content/ICCV2025/html/Lyu_DyWA_Dynamics-adaptive_World_Action_Model_for_Generalizable_Non-prehensile_Manipulation_ICCV_2025_paper.html",
+      "search": "DyWA: Dynamics-adaptive World Action Model for Generalizable Non-prehensile Manipulation 结合历史交互、未来状态预测和动作学习，适应非抓取任务中的质量与摩擦变化。 history + dynamics + action联合建模是直接近邻；必须纳入推动/摩擦任务的强对照。  "
+    },
+    {
+      "id": "阅读清单:P057",
+      "title": "Diffusion Predictive Control with Constraints",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "约束收紧和模型投影进入扩散采样，处理训练时未见的状态/动作约束。",
+      "topics": [
+        "物理经验 / 接触",
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2412.09342",
+      "search": "Diffusion Predictive Control with Constraints 约束收紧和模型投影进入扩散采样，处理训练时未见的状态/动作约束。 测试时新物理约束适应已有；需检验learned token对比显式投影的额外价值。  "
+    },
+    {
+      "id": "阅读清单:P119",
+      "title": "Diffusion Policy: Visuomotor Policy Learning via Action Diffusion",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "条件迭代去噪生成动作块，采用滚动时域执行。",
+      "topics": [
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://journals.sagepub.com/doi/10.1177/02783649241273668",
+      "search": "Diffusion Policy: Visuomotor Policy Learning via Action Diffusion 条件迭代去噪生成动作块，采用滚动时域执行。 连续生成头重要底座；采样步序号与物理时间不是同一个维度。  "
+    },
+    {
+      "id": "阅读清单:P095",
+      "title": "Diffusion Policy Policy Optimization",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "把多步扩散采样纳入策略优化结构，微调扩散策略。",
+      "topics": [],
+      "status": "待精读",
+      "source": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/c0749c39aaff9e9e4c91f7118bf21b1e-Abstract-Conference.html",
+      "search": "Diffusion Policy Policy Optimization 把多步扩散采样纳入策略优化结构，微调扩散策略。 直接优化生成策略是一条不同backend；必须匹配交互和算力预算。  "
+    },
+    {
+      "id": "阅读清单:P078",
+      "title": "DiWA: Diffusion Policy Adaptation with World Models",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "在离线学得的世界模型内用RL适配扩散策略，减少额外真实交互。",
+      "topics": [
+        "记忆 / 适应",
+        "世界模型",
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://proceedings.mlr.press/v305/chandra25a.html",
+      "search": "DiWA: Diffusion Policy Adaptation with World Models 在离线学得的世界模型内用RL适配扩散策略，减少额外真实交互。 绕开昂贵online交互已有直接方案；需比较模型偏差及BC保持，不应预设离线必稳。  "
+    },
+    {
+      "id": "阅读清单:P020",
+      "title": "DeepMDP: Learning Continuous Latent Space Models for Representation Learning",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "用奖励和latent状态转移预测约束控制表征，并分析价值保持。",
+      "topics": [
+        "记忆 / 适应",
+        "世界模型"
+      ],
+      "status": "待精读",
+      "source": "https://proceedings.mlr.press/v97/gelada19a.html",
+      "search": "DeepMDP: Learning Continuous Latent Space Models for Representation Learning 用奖励和latent状态转移预测约束控制表征，并分析价值保持。 为“对决策充分”提供理论参照；预测任意物理量不自动等于价值充分。  "
+    },
+    {
+      "id": "阅读清单:P045",
+      "title": "Deep Lagrangian Networks: Using Physics as Model Prior for Deep Learning",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "把拉格朗日结构嵌入动力学网络。",
+      "topics": [
+        "物理经验 / 接触"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/1907.04490",
+      "search": "Deep Lagrangian Networks: Using Physics as Model Prior for Deep Learning 把拉格朗日结构嵌入动力学网络。 动力学结构约束不能只写方程；必须核查力矩、惯量和实际控制器是否可识别。  "
+    },
+    {
+      "id": "阅读清单:P042",
+      "title": "Deep Haptic Model Predictive Control for Robot-Assisted Dressing",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "用历史末端触觉/运动观测和候选动作预测未来受力，再通过MPC减小危险力。",
+      "topics": [
+        "物理经验 / 接触",
+        "记忆 / 适应",
+        "世界模型",
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/1709.09735",
+      "search": "Deep Haptic Model Predictive Control for Robot-Assisted Dressing 用历史末端触觉/运动观测和候选动作预测未来受力，再通过MPC减小危险力。 candidate action→force consequence→control早已有明确实现；可借鉴物理target和闭环设计。  "
+    },
+    {
+      "id": "阅读清单:P035",
+      "title": "DeCAL: Towards Physically-Grounded Dexterous Vision-Language-Action Models via Contact-Aware Latent Co-Imagination",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "contact-aware视觉触觉门控及latent co-imagination，统一理解、预测和动作。",
+      "topics": [
+        "物理经验 / 接触",
+        "世界模型",
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2609.09119",
+      "search": "DeCAL: Towards Physically-Grounded Dexterous Vision-Language-Action Models via Contact-Aware Latent Co-Imagination contact-aware视觉触觉门控及latent co-imagination，统一理解、预测和动作。 contact-aware latent world knowledge高度相关；重点比较重型联合模型与小型冻结外挂。  "
+    },
+    {
+      "id": "阅读清单:P022",
+      "title": "Data-Efficient Reinforcement Learning with Self-Predictive Representations",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "从当前latent和动作预测未来表征，改善数据效率。",
+      "topics": [
+        "物理经验 / 接触",
+        "记忆 / 适应",
+        "世界模型",
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2007.05929",
+      "search": "Data-Efficient Reinforcement Learning with Self-Predictive Representations 从当前latent和动作预测未来表征，改善数据效率。 预测未来latent用于RL早已有之；仅增加预测头不构成充分新意。  "
+    },
+    {
+      "id": "阅读清单:P074",
+      "title": "DINO-WM: World Models on Pre-trained Visual Features enable Zero-shot Planning",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "基于冻结DINO视觉特征学习动作条件latent动力学，实现零样本规划。",
+      "topics": [
+        "世界模型",
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://proceedings.mlr.press/v267/zhou25t.html",
+      "search": "DINO-WM: World Models on Pre-trained Visual Features enable Zero-shot Planning 基于冻结DINO视觉特征学习动作条件latent动力学，实现零样本规划。 冻结表征 + 小预测模型 + 不改策略规划是重要对照；并非必须action-head才能做到。  "
+    },
+    {
+      "id": "阅读清单:P056",
+      "title": "DDAT: Diffusion Policies Enforcing Dynamically Admissible Robot Trajectories",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "训练与推理中将扩散轨迹投影到动力学可实现集合。",
+      "topics": [
+        "物理经验 / 接触"
+      ],
+      "status": "待精读",
+      "source": "https://iconlab.negarmehr.com/DDAT/",
+      "search": "DDAT: Diffusion Policies Enforcing Dynamically Admissible Robot Trajectories 训练与推理中将扩散轨迹投影到动力学可实现集合。 物理可行轨迹生成已有强基线；不要把joint-limit penalty等价于更强安全保证。  "
+    },
+    {
+      "id": "阅读清单:P099",
+      "title": "D2PPO: Diffusion Policy Policy Optimization with Dispersive Loss",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "以dispersive表示正则缓解扩散策略RL中的特征坍缩。",
+      "topics": [
+        "RSI / Harness"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2508.02644",
+      "search": "D2PPO: Diffusion Policy Policy Optimization with Dispersive Loss 以dispersive表示正则缓解扩散策略RL中的特征坍缩。 hidden-feature改进可能来自通用正则而非物理；应加同容量非物理辅助loss对照。  "
+    },
+    {
+      "id": "阅读清单:P102",
+      "title": "Continue or Replan? Bernoulli-Continuation Policy Learning for Adaptive Horizon Execution",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "学习继续执行或重规划的控制决策。",
+      "topics": [
+        "记忆 / 适应",
+        "RSI / Harness",
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2608.03483",
+      "search": "Continue or Replan? Bernoulli-Continuation Policy Learning for Adaptive Horizon Execution 学习继续执行或重规划的控制决策。 二值continuation head已有；如果你的下游也是replan，应匹配此类基线。  "
+    },
+    {
+      "id": "阅读清单:P046",
+      "title": "ContactNets: Learning Discontinuous Contact Dynamics with Smooth, Implicit Representations",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "学习signed distance和contact Jacobian，并以互补性、最大耗散结构处理非连续接触。",
+      "topics": [
+        "物理经验 / 接触"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2009.11193",
+      "search": "ContactNets: Learning Discontinuous Contact Dynamics with Smooth, Implicit Representations 学习signed distance和contact Jacobian，并以互补性、最大耗散结构处理非连续接触。 连续平滑损失未必适合冲击/粘滑；真正接触物理需要结构或有效事件目标。  "
+    },
+    {
+      "id": "阅读清单:P092",
+      "title": "Conservative Q-Learning for Offline Reinforcement Learning",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "抑制数据分布外动作价值过估计。",
+      "topics": [
+        "物理经验 / 接触",
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://proceedings.neurips.cc/paper/2020/hash/0d2b2061826a5df3221116a5085a6052-Abstract.html",
+      "search": "Conservative Q-Learning for Offline Reinforcement Learning 抑制数据分布外动作价值过估计。 物理critic也会在未覆盖动作上失真；必须与保守价值学习区分。  "
+    },
+    {
+      "id": "阅读清单:P097",
+      "title": "ConRFT: A Reinforced Fine-tuning Method for VLA Models via Consistency Policy",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "离线BC/Q学习后，以consistency policy及人工干预进行在线微调。",
+      "topics": [
+        "物理经验 / 接触"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2502.05450",
+      "search": "ConRFT: A Reinforced Fine-tuning Method for VLA Models via Consistency Policy 离线BC/Q学习后，以consistency policy及人工干预进行在线微调。 接触任务稳定改进的候选；需区分完整VLA微调与小外挂的参数预算。  "
+    },
+    {
+      "id": "阅读清单:P073",
+      "title": "Causal World Modeling for Robot Control",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "因果信息流下建模视频与动作，为机器人控制提供世界预测。",
+      "topics": [
+        "世界模型",
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://www.roboticsproceedings.org/rss22/p016.html",
+      "search": "Causal World Modeling for Robot Control 因果信息流下建模视频与动作，为机器人控制提供世界预测。 训练期未来信息泄漏需要明确屏蔽；causal mask本身也已有研究。  "
+    },
+    {
+      "id": "阅读清单:P093",
+      "title": "Cal-QL: Calibrated Offline RL Pre-Training for Efficient Online Fine-Tuning",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "校准离线价值学习，使在线微调的尺度与初始化更合理。",
+      "topics": [
+        "强化学习"
+      ],
+      "status": "待精读",
+      "source": "https://proceedings.neurips.cc/paper_files/paper/2023/hash/c44a04289beaf0a7d968a94066a1d696-Abstract-Conference.html",
+      "search": "Cal-QL: Calibrated Offline RL Pre-Training for Efficient Online Fine-Tuning 校准离线价值学习，使在线微调的尺度与初始化更合理。 表征失效与Q校准错误是不同问题；应保留learner稳定性诊断。  "
+    },
+    {
+      "id": "阅读清单:P012",
+      "title": "Beyond World-Frame Action Heads: Motion-Centric Action Frames for Vision-Language-Action Models",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "动作头学习SO(3)局部运动坐标系与动作原型，形成紧凑几何组织。",
+      "topics": [
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2605.11809",
+      "search": "Beyond World-Frame Action Heads: Motion-Centric Action Frames for Vision-Language-Action Models 动作头学习SO(3)局部运动坐标系与动作原型，形成紧凑几何组织。 head结构化和几何泛化已有；需分清坐标改进、动作压缩与动力学适应。  "
+    },
+    {
+      "id": "前沿条目:sr-wm",
+      "title": "Beyond Instance Slots: Semantically Rich World Models for Physical Interaction Planning (SR-WM)",
+      "path": null,
+      "kind": "前沿条目",
+      "date": "",
+      "summary": "把 world state 拆成 gripper / target / goal / relation / phase 等任务角色，并预测动作后的语义关系与接触变化。",
+      "topics": [
+        "物理经验 / 接触",
+        "世界模型",
+        "动作 / 决策"
+      ],
+      "status": "重点跟踪",
+      "source": "https://arxiv.org/abs/2608.22294",
+      "search": "Beyond Instance Slots: Semantically Rich World Models for Physical Interaction Planning (SR-WM) 把 world state 拆成 gripper / target / goal / relation / phase 等任务角色，并预测动作后的语义关系与接触变化。  如果 Phase 2 发现局部 consequence 有价值，SR-WM 提供从“预测未来”走向“预测与决策相关的关系变化”的清晰范式。 完整 world model 比我们当前轻量在线 RL 复杂得多，应等局部 consequence 先证明价值。"
+    },
+    {
+      "id": "阅读清单:P125",
+      "title": "Behavior Generation with Latent Actions",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "利用离散潜动作与Transformer建模多模态行为。",
+      "topics": [
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://proceedings.mlr.press/v235/lee24y.html",
+      "search": "Behavior Generation with Latent Actions 利用离散潜动作与Transformer建模多模态行为。 动作压缩潜变量与物理上下文潜变量不能仅靠名字区分。  "
+    },
+    {
+      "id": "阅读清单:P009",
+      "title": "ActionPiece: Rethinking Action Tokenization for Autoregressive Vision-Language-Action Models",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "物理距离排序一致性监督离散动作表示与量化，保留动作间局部关系。",
+      "topics": [
+        "物理经验 / 接触",
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2609.18487",
+      "search": "ActionPiece: Rethinking Action Tokenization for Autoregressive Vision-Language-Action Models 物理距离排序一致性监督离散动作表示与量化，保留动作间局部关系。 动作几何关系不等于接触动力学；但physics-oriented action-token loss已有，必须比较目标语义。  "
+    },
+    {
+      "id": "阅读清单:P015",
+      "title": "Action-Geometry Prediction with 3D Geometric Prior for Bimanual Manipulation",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "融合几何latent、2D语义和proprio，联合预测动作chunk与未来3D latent/pointmap。",
+      "topics": [
+        "世界模型",
+        "动作 / 决策"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2602.23814",
+      "search": "Action-Geometry Prediction with 3D Geometric Prior for Bimanual Manipulation 融合几何latent、2D语义和proprio，联合预测动作chunk与未来3D latent/pointmap。 动作和未来几何联合预测已有；重点区分几何预测与接触效果判别。  "
+    },
+    {
+      "id": "阅读清单:P051",
+      "title": "Ab Initio Particle-based Object Manipulation",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "粒子式对象表示支持操作推理与控制。",
+      "topics": [
+        "物理经验 / 接触"
+      ],
+      "status": "待精读",
+      "source": "https://roboticsproceedings.org/rss17/p071.html",
+      "search": "Ab Initio Particle-based Object Manipulation 粒子式对象表示支持操作推理与控制。 对象物理表示+操作决策的早期参照；用于回溯引用，不是直接VLA竞品。  "
+    },
+    {
+      "id": "前沿条目:aspire",
+      "title": "ASPIRE: Agentic /Skills Discovery for Robotics",
+      "path": null,
+      "kind": "前沿条目",
+      "date": "",
+      "summary": "通过 Iterative Robot Exploration 自动编写和修正 Code-as-Policy，把验证成功的修复沉淀成 reusable skill library。",
+      "topics": [
+        "RSI / Harness"
+      ],
+      "status": "重点跟踪",
+      "source": "https://research.nvidia.com/labs/gear/aspire/",
+      "search": "ASPIRE: Agentic /Skills Discovery for Robotics 通过 Iterative Robot Exploration 自动编写和修正 Code-as-Policy，把验证成功的修复沉淀成 reusable skill library。  最值得借的是 failure attribution → local repair → validated consolidation，而不是让 LLM 直接生成高频控制。 代码擅长流程和离散恢复，不适合直接替代高频接触控制。"
+    },
+    {
+      "id": "阅读清单:P112",
+      "title": "AGM: Achievement-Grounded Memory for Closed-Loop Agents with Frozen VLA Policies",
+      "path": null,
+      "kind": "阅读清单",
+      "date": "",
+      "summary": "以实际完成结果组织记忆，改善冻结策略的闭环Agent。",
+      "topics": [
+        "记忆 / 适应",
+        "RSI / Harness"
+      ],
+      "status": "待精读",
+      "source": "https://arxiv.org/abs/2608.29537",
+      "search": "AGM: Achievement-Grounded Memory for Closed-Loop Agents with Frozen VLA Policies 以实际完成结果组织记忆，改善冻结策略的闭环Agent。 成功判定与记忆更新是系统层对照，不作为actor-side物理收益。  "
+    }
+  ],
+  "progress": [
+    {
+      "date": "2026-09-30",
+      "title": "Jev启发分支完成GPU 2的20-step online pilot",
+      "summary": "提交d3618b18完成2-step smoke后，从头运行2训练/4固定评估环境的20-step pilot；actor/critic各更新320次，4次评估success_once均为0.5并保存checkpoint和4个视频。但reference probability约0.901，greedy/target non-reference fraction全程为0，尚无证据表明有限候选修正改善了VLA reference。",
+      "path": "research/progress-2026-09-30-maniskill-rlt.md",
+      "topics": [
+        "动作 / 决策"
+      ]
+    },
+    {
+      "date": "2026-09-30",
+      "title": "四条RLT探索线完成晚间证据边界更新",
+      "summary": "FLARE显示动作输入有预测价值但时序敏感性弱；Zeva自适应清理在合成响应突变后降低短期误差；VR已准备单环境可恢复HIL pilot但真人跨机器闭环未验收；baseline Stage 2晚间至少274/5000且更新超过96,000。各分支继续隔离。",
+      "path": "research/progress-2026-09-30-maniskill-rlt.md",
+      "topics": [
+        "强化学习"
+      ]
+    },
+    {
+      "date": "2026-09-30",
+      "title": "三分支完成42组小模型训练与3个单rank FSDP检查",
+      "summary": "FLARE 9组1000更新预测消融、Zeva 15组历史响应probe、Jev 18组合成离散/连续对照完成。另各做20次小模型actor/critic FSDP更新与权重恢复。物理GPU 2仅受限共存，不改变GPU 0/1任务；完整Jev在线队列仍等待资源。结果与图见research/three-branch-audit-2026-09-30.md。",
+      "path": "research/three-branch-audit-2026-09-30.md",
+      "topics": []
+    },
+    {
+      "date": "2026-09-30",
+      "title": "动作后果与经验读取有信号，但控制/成长收益仍未证明",
+      "summary": "FLARE增量+动作比无动作预测更准，但h=10直接预测更好；Zeva神经reader仍弱于固定响应公式；Jev合成任务中离散选择达到最优，连续actor在critic引导下退化，追加混合数据和热身仍未解决。保留这些反例，不将loss或toy reward替代机器人成功、迁移及减少干预。",
+      "path": "research/progress-2026-09-30-maniskill-rlt.md",
+      "topics": [
+        "物理经验 / 接触",
+        "动作 / 决策"
+      ]
+    },
+    {
+      "date": "2026-09-30",
+      "title": "ManiSkill Stage 1 step 2000固定20回合评测为8/20",
+      "summary": "修复policy_setup后，20个固定reset、每回合最多500控制步的闭环评测正常退出：success_once/return均为0.4，mean episode length为335.25。该结果建立当前reference点估计，不证明Stage 1充分收敛、没有过拟合或RL token获得通用物理规律。",
+      "path": "research/progress-2026-09-30-maniskill-rlt.md",
+      "topics": []
+    },
+    {
+      "date": "2026-09-30",
+      "title": "正式baseline Stage 2启动并进入在线更新",
+      "summary": "两张L40、64训练环境、256固定评估环境、5000步预算，自动expert关闭。截至快照至少149/5000、update_step=46400；前五次评估约37.89%/36.33%/40.23%/35.94%/42.19%。这是同一在途run的周期指标，不是独立实验或最终收敛结论。",
+      "path": "research/progress-2026-09-30-maniskill-rlt.md",
+      "topics": [
+        "基线 / 工程"
+      ]
+    },
+    {
+      "date": "2026-09-30",
+      "title": "FLARE 100轮在线对照链路通过，但未显示成功率收益",
+      "summary": "baseline与FLARE均完成100个global step并正常退出；各10次单环境评估全部失败。训练中的1次与2次成功均发生在actor接管前的VLA reference阶段。FLARE 50/54个在线张量更新、预测loss下降只证明学习链路，不能证明控制提升。下一轮需统一FSDP并验证BC热身。",
+      "path": "research/progress-2026-09-30-maniskill-rlt.md",
+      "topics": [
+        "世界模型"
+      ]
+    },
+    {
+      "date": "2026-09-30",
+      "title": "Jev启发的RLT有限动作决策分支完成首版开发",
+      "summary": "research/rlt-jev-atomic-decisions提交020e0cf6：围绕VLA reference构造最多17个受限关节候选，由本地选择器决策，连续critic仍学习实际执行动作；不调用Jev API或模拟器预演。229项CPU回归通过，三seed合成诊断修复selector饱和；GPU只读预检通过，真实smoke未运行。",
+      "path": "research/progress-2026-09-30-maniskill-rlt.md",
+      "topics": [
+        "强化学习",
+        "动作 / 决策"
+      ]
+    },
+    {
+      "date": "2026-09-28",
+      "title": "ManiSkill RLT Stage 1 完成 2000 step，固定20回合评测进行中",
+      "summary": "两张L40上的Stage 1从step 750保留optimizer恢复并完成2000/2000，最终权重已导出。首次eval20因policy_setup缺失在动作转换前失败，不计有效episode；提交853e664c修复Panda joint-action pass-through后，GPU 2重跑已进入rollout与完整拼接视频录制。成功率尚未产生，不能用训练loss替代。",
+      "path": "research/progress-2026-09-28-maniskill-rlt.md",
+      "topics": [
+        "强化学习"
+      ]
+    },
+    {
+      "date": "2026-09-27",
+      "title": "FLARE启发的增量未来latent预测完成三初始化复测",
+      "summary": "固定split、300 updates、seed 2026/2027/2028下，增量预测在horizon 1/5/10的独立测试cosine error均低于状态保持与直接预测；真实Stage 2 smoke、参数变化审计和step 2→4续跑通过。结果支持动作后果预测形式选择，不证明在线成功率、收敛加速或跨任务迁移。",
+      "path": "research/experiment-log.md",
+      "topics": [
+        "世界模型"
+      ]
+    },
+    {
+      "date": "2026-09-27",
+      "title": "Zeva启发的交互记忆完成真实更新，并保留读取负结果",
+      "summary": "修复FSDP optimizer分组后，真实smoke与续跑中17/17 memory reader张量更新。成功示范及隐藏PD刚度诊断中，learned reader没有稳定优于无记忆对照；固定历史响应公式显著更准，说明历史有信息但当前读取网络仍是瓶颈。",
+      "path": "research/experiment-log.md",
+      "topics": [
+        "记忆 / 适应"
+      ]
+    },
+    {
+      "date": "2026-09-27",
+      "title": "PICO VR单环境在线learner完成脚本接管smoke",
+      "summary": "GPU 2隔离运行40条仿真transition，其中12条为scripted takeover，actor/critic各更新33次并验证发布、去重和checkpoint恢复。Windows/PICO已进入本地机械臂控制调试，但真实PICO→校园网→learner→动作回传尚未整链验收，scripted样本不计人工干预。",
+      "path": "research/experiment-log.md",
+      "topics": [
+        "基线 / 工程"
+      ]
+    },
+    {
+      "date": "2026-09-22",
+      "title": "迁移与干预讨论入库（代码核查/研究设计，非新增GPU实验）",
+      "summary": "明确旧clean50/12k Stage2未启用Hammer专家；解释H50/C50、100步切换与200名义步。新增冻结reference恢复、最小脚本专家、缓存后果probe和固定expert/gate的研究合同；55%仍沿用既有截图证据，不增加独立样本。",
+      "path": "research/progress-2026-09-22.md",
+      "topics": []
+    },
+    {
+      "date": "2026-09-22",
+      "title": "train450 Stage1 10k评测摘要补充：55%与复测统计边界",
+      "summary": "用户截图报告GPU6为22/40成功（55%）、18/40失败、return=0.55、按步平均reward约0.00287、平均episode length=196.25/200；与此前GPU7聚合结果一致。W&B已同步但0 media仅表示未上传媒体，不能推出本地无视频。该结果与09-18已有双复测记录一致；缺少新run ID，按证据补充入库，不追加独立运行/seed数。未证明逐seed轨迹一致、优于旧clean50/12k的50%，或RLT表征收益。",
+      "path": "research/progress-2026-09-22.md",
+      "topics": []
+    },
+    {
+      "date": "2026-09-18",
+      "title": "train450 Stage1 step10k eval40 双复测均为22/40",
+      "summary": "新clean490/train450 Stage1的10k checkpoint在相同H50/C50 native_macro、eval40、固定prompt/action seed协议下完成两次独立设备运行，均为22/40=55%，return约0.55、mean episode length约196.25。聚合一致支持当前开发协议下的可复现性，但不是80个独立seed，也不能与旧clean50/12k的10/20直接宣称显著提升。",
+      "path": "research/progress-2026-09-18.md",
+      "topics": []
+    },
+    {
+      "date": "2026-09-18",
+      "title": "新train450 Stage1主动停止于约10823/30k",
+      "summary": "原计划30k的generic pi05_base + alpha1联合VLA/RLT Stage1因迁移安排主动停止，当前完整checkpoint为5k和10k。停止前loss/rlt_loss/vla_loss约0.05317/0.05236/0.000808；这些只作为训练健康度，不等价于闭环能力。",
+      "path": "research/progress-2026-09-18.md",
+      "topics": []
+    },
+    {
+      "date": "2026-09-18",
+      "title": "旧clean50/12k B0 Stage2出现退化并停止",
+      "summary": "H50/C50 native_macro Stage2使用旧clean50/12k frozen reference。周期20-seed评测早期约45%，后期降至约15%，约985外层round后主动停止。最后critic/BC loss较低不能证明Q或actor正确；当前转入BC-only/reference-consistency、action deviation、dropout、BC/Q比例和critic calibration诊断。",
+      "path": "research/progress-2026-09-18.md",
+      "topics": []
+    },
+    {
+      "date": "2026-09-18",
+      "title": "RoboDojo状态保持D0–D5完成",
+      "summary": "本日RoboDojo无新增算法结论：D3渲染与D5原生单集工程验收保持通过，D6 real reference、D7 Dojo-Eval、D8真实transition和online RLT仍待完成。",
+      "path": "research/progress-2026-09-18.md",
+      "topics": []
+    },
+    {
+      "date": "2026-09-17",
+      "title": "clean490 Stage1 正式启动，运行至约3.8k/30k",
+      "summary": "train450 + train-only norm 的新Stage1已从generic pi05_base正式启动，alpha1、H50、global batch64、双卡数据并行、最大30k steps、每5k保存。当前实时快照约3798/30000，仅说明训练在运行；首个有意义门槛是5k checkpoint后的固定eval40闭环评测，不能按train loss提前判断能力。",
+      "path": "research/progress-2026-09-17.md",
+      "topics": []
+    },
+    {
+      "date": "2026-09-17",
+      "title": "H50/C50 B0 Stage2 正式启动，当前仍在warmup",
+      "summary": "冻结12k reference在统一20-seed H50/C50协议下为10/20成功。修复action space与observation字段传输后，相关CPU测试通过；新的4-env Stage2已启动，batch64，warmup目标512条transition并准备2000次critic更新，总预算3000轮。当前仍在收集warmup数据，尚无validated learner update、actor takeover或性能提升结论。",
+      "path": "research/progress-2026-09-17.md",
+      "topics": []
+    },
+    {
+      "date": "2026-09-17",
+      "title": "RoboDojo contact-task 与 π0.5 reference 选型完成首轮审计",
+      "summary": "stack_bowls保持工程回归；推荐plug_in_charger作为精密接触主任务、push_T作为摩擦/动力学对照。公开RoboDojo仓库已核查到ARX X5 joint π0.5 step-59999 checkpoint candidates及14D norm，但尚未恢复/评测。正式D6/D7前还需核验近期RGB字节通道与get_obs一帧对齐修复的版本兼容性。",
+      "path": "research/progress-2026-09-17.md",
+      "topics": [
+        "物理经验 / 接触"
+      ]
+    },
+    {
+      "date": "2026-09-17",
+      "title": "RoboDojo reference I/O CPU边界扩展到45项测试",
+      "summary": "在独立bridge中补齐reference observation/action边界，覆盖三路RGB、instruction、14D state、绝对关节rad与gripper[0,1]动作语义等；schema/transition/reference合计45项CPU测试通过。该结果仍只是接口准备，不等于D6真实policy、D7多seed或D8真实transition通过。",
+      "path": "research/progress-2026-09-17.md",
+      "topics": []
+    },
+    {
+      "date": "2026-09-17",
+      "title": "RoboDojo D3 B300 headless RGB gate 通过",
+      "summary": "在显式共享GPU授权下完成B300最小renderer实测。最终USD测试场景正常退出，RGB为240×320×3 uint8、动态范围约85–247，并通过人工可见性检查。此前近全黑run保留为失败证据，不计作通过。该结果证明当前节点存在可用的最小Isaac/USD/camera RGB路径，但不代表所有RoboDojo GPU功能已验证。",
+      "path": "research/progress-2026-09-17.md",
+      "topics": []
+    },
+    {
+      "date": "2026-09-17",
+      "title": "RoboDojo D5 原生 stack_bowls 单集闭环通过",
+      "summary": "stack_bowls / ARX X5 / joint 单环境完成800-action原生episode与三路640×480、25FPS、801帧视频，result/video/client链路完整。debug policy输出近零目标，因此success=0/score=0只作为基础设施结果，不评价VLA/RLT能力。下一步进入D6 reference-only adapter，不能直接复用Hammer/ALOHA的14D checkpoint或norm。",
+      "path": "research/progress-2026-09-17.md",
+      "topics": []
+    },
+    {
+      "date": "2026-09-17",
+      "title": "RoboDojo state/time contract 审核完成",
+      "summary": "ARX X5 arm joint state来自真实joint_pos，而gripper scalar来自previous control的command-derived state；14D proprio不能整体称为measured state。一次policy target还会被内部插值/hold执行，不等于一个physics tick。后续D8/RLT必须显式记录executed duration、terminal observation和success/timeout/failure语义。",
+      "path": "research/progress-2026-09-17.md",
+      "topics": []
+    },
+    {
+      "date": "2026-09-17",
+      "title": "Stage1 6k–12k 统一20-seed能力曲线完成",
+      "summary": "在同一开发cohort、H50/C50 native_macro、固定training prompt与action-sampling seed下，6k/8k/10k/12k分别为8/20、7/20、8/20、10/20（40%/35%/40%/50%）。12k是当前最高开发候选，但曲线非单调且仍有10/20失败；不能宣布泛化问题解决或把训练量写成唯一根因。旧clean50长run最终停在约12.3k，因此20k目标未完成。",
+      "path": "research/progress-2026-09-17.md",
+      "topics": []
+    },
+    {
+      "date": "2026-09-17",
+      "title": "clean500全量审计完成，正式候选收敛为clean490",
+      "summary": "500条raw/main/physics/video全部完整、500个seed唯一；全量数值、318,116张四相机RGB与79,529个MP4帧解码/时序对齐通过。识别10条强动作轨迹异常并从新训练候选排除，原始证据保留；另有10条动作连续但contact/impulse证据偏弱，Stage1保留、contact辅助监督必须mask。正式开发数据固定为train450/eval40，norm仅由train450计算。",
+      "path": "research/progress-2026-09-17.md",
+      "topics": [
+        "动作 / 决策"
+      ]
+    },
+    {
+      "date": "2026-09-17",
+      "title": "clean490新Stage1 CPU准备完成【历史快照，现已启动】",
+      "summary": "train450/eval40转换、train-only norm、OpenPI loader检查、Hydra train/eval dry-run与focused CPU tests已完成。随后新Stage1已正式启动，本条仅保留启动前准备状态。",
+      "path": "research/progress-2026-09-17.md",
+      "topics": [
+        "记忆 / 适应"
+      ]
+    },
+    {
+      "date": "2026-09-16",
+      "title": "领导讨论：Astra 是 planner-side reference，不改 Universal Physical Token 主线",
+      "summary": "领导明确：Astra/Harness 类工作重点是 planner/reviewer 如何使用已有策略；当前项目与其有本质区别，目标是从 actor/action-generation head 提取通用 compact token，通过 transition/physics grounding 与轻量 online learner 提升最终物理交互成功率。后续只观察 Astra 的使用方式与 failure/recovery 组织，不把 LLM planner、zero-shot reasoning、memory 或 skill evolution 并入 B0/B1/B2。",
+      "path": "research/experiment-log.md",
+      "topics": [
+        "物理经验 / 接触"
+      ]
+    },
+    {
+      "date": "2026-09-16",
+      "title": "四篇公众号/报告阅读：GPT-6 Astra × RoboDojo + Odyssey-3",
+      "summary": "今天把四篇公众号/配套材料按证据等级整理进 Research OS：Astra×π0.5 技术报告的一手可核验结论是 Hybrid 在 RoboDojo selected 10-task paired set 上 48% success / 62.60 Score、Direct 26% / 37.81，且 Astra 只修正14.4% executed steps；最值得当前项目借的是 actual action→measured outcome、operating-range/failure-onset probe、sparse intervention 与 hard safety。另一篇 RoboDojo Astra 大规模/真机报道暂按二手转述记录，待锁定一手 artifact 后再升级证据等级。Odyssey-3 官方博客则代表 shared world representation + lightweight action decoder 路线，直接强化 backbone tap vs action-head tap 必须做 matched comparison。两条 frontier 都不改变 Gate0→B0→B1→B2。",
+      "path": "research/experiment-log.md",
+      "topics": []
+    },
+    {
+      "date": "2026-09-16",
+      "title": "SHAPER 精读：Skill-Harness Evolution",
+      "summary": "SHAPER 冻结 planner 与 executor，用 target-environment rollout 做 round-level action-effect diagnosis、episode summarization 和 textual gradient，先优化 reusable skill，再优化 context-code harness。对当前 Universal Physical Token 的直接作用是强化 Gate 0 归因纪律：policy/representation capability 与 H/C、TOPP、context/execution harness 必须分开；可借层级 diagnosis 与 validation gate，但不把 planner/skill evolution 引入 B0/B1/B2。",
+      "path": "research/experiment-log.md",
+      "topics": [
+        "RSI / Harness"
+      ]
+    },
+    {
+      "date": "2026-09-15",
+      "title": "Stage1 20k joint recovery 已启动【历史快照，后续停于约12.3k】",
+      "summary": "13:29 UTC 快照：generic pi05_base + rlt_alpha=1 joint Stage1运行到2459/20000并保存step2000。该run后续未完成20k，最终在约12.3k停止；6k/8k/10k/12k已于2026-09-17完成统一20-seed闭环评测。",
+      "path": "research/progress-2026-09-15.md",
+      "topics": [
+        "记忆 / 适应"
+      ]
+    },
+    {
+      "date": "2026-09-15",
+      "title": "Hammer clean500 成功示范采集进行中【历史快照】",
+      "summary": "13:29 UTC 快照时为160/500条成功raw trajectories。2026-09-17已完成全500导出与全量质量审计，并在排除10条强轨迹异常后收敛为clean490。",
+      "path": "research/progress-2026-09-15.md",
+      "topics": [
+        "记忆 / 适应"
+      ]
+    },
+    {
+      "date": "2026-09-15",
+      "title": "RoboDojo D0–D2 与 D4 已通过，D3 renderer 待实测【历史快照】",
+      "summary": "当时已完成固定源码/子模块/assets、独立runtime与XPolicyLab CPU WebSocket closed loop；D3尚未执行。2026-09-17已完成D3和D5，本条仅保留历史进度。",
+      "path": "research/progress-2026-09-15.md",
+      "topics": [
+        "记忆 / 适应"
+      ]
+    },
+    {
+      "date": "2026-09-15",
+      "title": "Hammer RLT 进入 Baseline Recovery gate",
+      "summary": "旧 base-init Stage1 2k 与旧 Stage2 继续保留为工程证据，但不再直接作为 Physical Token B0 性能基线。当前先恢复可信 Stage1 reference：严格区分 H50/C50 原生 RoboTwin TOPP 能力锚点与历史 H50/C10 执行协议。",
+      "path": "research/progress-2026-09-15.md",
+      "topics": [
+        "强化学习",
+        "基线 / 工程"
+      ]
+    },
+    {
+      "date": "2026-09-15",
+      "title": "H50/C50 配对暴露 Stage1-specific capability gap",
+      "summary": "在固定 H50/C50 开发协议中，存在 SFT20k 成功而旧 Stage1 失败的配对，也存在二者都成功的正对照。结果说明旧 Stage1 并非完全失效，但存在能力不足风险；不能把训练步数或单一因素写成唯一根因。",
+      "path": "research/progress-2026-09-15.md",
+      "topics": []
+    },
+    {
+      "date": "2026-09-14",
+      "title": "主线按领导方案收敛为 Universal Physical Token",
+      "summary": "根据领导提供的 Physical Token 方案，项目上位问题改为：从 action-generation head 读取 compact token，用 measured transition prediction 与有效 physics constraints grounding，再让冻结 action model 通过小型 online learner 适应变化的接触动力学。此前更宽泛的四阶段路线降级为历史探索。",
+      "path": "research/experiment-log.md",
+      "topics": [
+        "物理经验 / 接触"
+      ]
+    },
+    {
+      "date": "2026-09-14",
+      "title": "首轮 Physical Token 实验合同固定",
+      "summary": "第一组正式比较固定为 B0 RL Token/matched head-readout baseline、B1 + measured transition loss、B2 + valid physics loss；token size、learner capacity、base model、data、interaction budget、reward、seed 与 chunk/timing 必须匹配。Streaming RL 后置，避免与 representation 变量耦合。",
+      "path": "research/experiment-log.md",
+      "topics": [
+        "物理经验 / 接触"
+      ]
+    },
+    {
+      "date": "2026-09-14",
+      "title": "现有 RL Token 视频重新定性",
+      "summary": "Block assembly 与 drawer opening + placement 只作为 RL Token qualitative reproduction / baseline demonstrations；当前没有 Physical Token、transition loss、physics loss 或 Universal transfer 的定量结果。",
+      "path": "research/experiment-log.md",
+      "topics": [
+        "强化学习"
+      ]
+    },
+    {
+      "date": "2026-09-13",
+      "title": "RISE 初读",
+      "summary": "RISE 把 Compositional World Model 作为 imagined RL environment；当前只作为 Frontier related work，不改变领导定义的 Physical Token 主实验合同。",
+      "path": "research/experiment-log.md",
+      "topics": []
+    },
+    {
+      "date": "2026-09-12",
+      "title": "Hammer RLT Stage 1 paper-aligned smoke 通过",
+      "summary": "通用 π0.5 base-init、rlt_alpha=1.0 的 1-step Stage 1 smoke 已通过；该结果保留为 baseline engineering evidence，不定义上位研究故事。",
+      "path": "research/progress-2026-09-12.md",
+      "topics": [
+        "强化学习",
+        "基线 / 工程"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "title": "Hammer task-SFT checkpoint 快筛完成",
+      "summary": "5k/10k/15k/20k 的开发期快筛为 1/4、0/4、2/4、2/4；早期只固定 environment reset seed，因此只作快筛。",
+      "path": "research/progress-2026-09-12.md",
+      "topics": []
+    },
+    {
+      "date": "2026-09-12",
+      "title": "Stage 2 C=10 时序语义完成工程验证",
+      "summary": "C=10、reference H=50、dropout=0.5 的 transition/replay/update 基础设施继续保留为工程证据；2026-09-15 起 H50/C10 不再作为 Stage1 reference 能力锚点。",
+      "path": "research/progress-2026-09-12.md",
+      "topics": [
+        "基线 / 工程"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "title": "RoboTwin 2.0 复现与迁移阶段分离",
+      "summary": "RoboTwin 2.0 / RLinf_support 与 latest-main bridge 的工程证据继续保留，用于 baseline 与 controlled ablation。",
+      "path": "research/progress-2026-09-12.md",
+      "topics": [
+        "基线 / 工程"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "title": "Zeva + Zetta 加深阅读",
+      "summary": "Zeva / Zetta 继续作为 Context / Harness self-improvement 的 Frontier 参考，不直接改写 Universal Physical Token 主实验。",
+      "path": "research/progress-2026-09-12.md",
+      "topics": [
+        "记忆 / 适应"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "title": "Motus2 初读",
+      "summary": "Motus2 的 Action→Consequence→Value 思路保留为 related work；当前不转向 General World Model。",
+      "path": "research/progress-2026-09-12.md",
+      "topics": []
+    },
+    {
+      "date": "2026-09-12",
+      "title": "LWD 初读",
+      "summary": "LWD 的 fleet-scale online learning 保留为长期 related work；当前不把 fleet/generalist consolidation 引入首轮实验。",
+      "path": "research/progress-2026-09-12.md",
+      "topics": []
+    },
+    {
+      "date": "2026-09-11",
+      "title": "历史探索：四阶段 Research OS",
+      "summary": "此前四阶段路线保留作历史记录与知识库组织，但 2026-09-14 起不再作为当前 Source of Truth。",
+      "path": "research/experiment-log.md",
+      "topics": [
+        "记忆 / 适应"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "updated": "2026-09-30",
+  "focus": "以 RLT 为基线，把真实执行后果变成可学习、可复用的物理经验。",
+  "question": "能否在相同交互预算下，加快 RL 学习、减少人工纠正，并迁移到新的物理条件？",
+  "featured": [
+    {
+      "path": "notes/physicalrsi-mmlab.md",
+      "label": "Physical RSI",
+      "why": "H(F) 自改写 harness；借鉴技能适用范围与验证后继承。"
+    },
+    {
+      "path": "research/physical-rsi-source-intake-2026-09-30.md",
+      "label": "RSI 综合调研",
+      "why": "RPent、Axis、Simate、Astra：来源核验与三步实验入口。"
+    },
+    {
+      "path": "research/literature/visual-evidence-rlt-2026-09-30.md",
+      "label": "注意力与视觉证据",
+      "why": "先验证输入依赖，再决定是否加入注意力监督。"
+    },
+    {
+      "path": "research/literature/frontier-rlt-2026-09-30.md",
+      "label": "近邻与创新边界",
+      "why": "UniMPA、F4R、StateMem、Imagine-RL 等强近邻。"
+    }
+  ],
+  "ideas": [
+    {
+      "id": "flare",
+      "name": "FLARE · 动作后果监督",
+      "stage": "独立实验线",
+      "tag": "Loss-first",
+      "hypothesis": "用真实后继观测监督紧凑表征，比仅重建当前特征更有助于接触控制。",
+      "design": "冻结 VLA；轻量 encoder + 动作条件预测器，预测未来 latent / proprio 变化；actor / critic 读取状态编码。",
+      "control": "原 RLT、同容量无动作预测、直接 / 增量预测；统一 BC、历史、更新与交互预算。",
+      "gate": "预测改善只是中间指标；最终比较固定初态成功率、达到目标的交互数和人工控制时长。",
+      "path": "research/flare-rlt-contact-experiments-2026-09-25.md"
+    },
+    {
+      "id": "zeva",
+      "name": "Zeva · 交互经验记忆",
+      "stage": "独立实验线",
+      "tag": "Memory",
+      "hypothesis": "过去“命令 → 实际响应”能够帮助判断当前执行偏差；条件变化时，旧经验需要失效或降权。",
+      "design": "记录已完成动作、起始状态、实际位移与有效时长；比较短历史、局部响应公式与支持度门控 reader。",
+      "control": "无记忆、同容量短历史、随机检索、固定响应公式；冻结评测记忆，防止未来信息回填。",
+      "gate": "先封存物理条件变化测试，再进闭环；验证适应速度与旧任务保持，不以训练 MSE 代替成长。",
+      "path": "research/zeva-rlt-implementation-2026-09-26.md"
+    },
+    {
+      "id": "jev",
+      "name": "Jev 启发 · 有限动作选择",
+      "stage": "独立实验线",
+      "tag": "Bounded exploration",
+      "hypothesis": "围绕 VLA reference 构建有限候选，能否减少无效探索，同时保留必要的纠正能力？",
+      "design": "本地小选择器在 reference-relative 候选中决策；实际执行动作进入 critic 与 replay。",
+      "control": "reference-only 与同半径连续 residual；匹配数据支持、BC 强度、调参和评估预算。",
+      "gate": "必须先证明选择器实际采用修正，再判断控制收益；不是调用 Jev API，也没有 oracle 仿真预演。",
+      "path": "research/three-branch-research-plan-2026-09-30.md"
+    },
+    {
+      "id": "transfer",
+      "name": "经验适用范围 · 变化与迁移",
+      "stage": "待验证 idea",
+      "tag": "Physical RSI",
+      "hypothesis": "经验条目的适用条件与预测残差，能否决定何时复用、遗忘或重新探索？",
+      "design": "先做缓存 / 离线变化点诊断；记录条件、命令、后果、支持度、残差，再测试受限重试中的经验复用。",
+      "control": "清空、滑动窗口、固定衰减、误差驱动更新；相同容量与动作历史。",
+      "gate": "先跨物理条件，再第二任务。Harness 负责实验版本和证据；单次纠错、热图或成功任务卡不等于 RSI。",
+      "path": "notes/physicalrsi-mmlab.md"
+    }
+  ]
+}

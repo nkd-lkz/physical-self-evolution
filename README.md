@@ -15,6 +15,17 @@ Living research website for **Universal Physical Token, robot self-improvement, 
 
 **https://nkd-lkz.github.io/physical-self-evolution/**
 
+## 从统一科研工作台开始
+
+调研、idea 和每日开发进度统一在 **[首页](https://nkd-lkz.github.io/physical-self-evolution/index.html)** 浏览：
+
+- [研究总览与最新证据](https://nkd-lkz.github.io/physical-self-evolution/index.html#home)
+- [每日科研进度](https://nkd-lkz.github.io/physical-self-evolution/index.html#logs)：按日期与关键词检索，进入当天详细记录。
+- [实验与 idea](https://nkd-lkz.github.io/physical-self-evolution/index.html#ideas)：实现、对照、判定和后续方案。
+- [调研与阅读库](https://nkd-lkz.github.io/physical-self-evolution/index.html#library)：项目笔记自动收录，按类型与主题筛选。
+
+后续维护遵循 [统一发布流程](research/knowledge-base-maintenance.md)：源文件保留在原目录，首页自动汇总；不再新增竞争性总览。下面保留历次更新摘要供追溯。
+
 ## ManiSkill RLT 晚间实验更新 — 2026-09-30
 
 - Jev 启发分支 `d3618b18` 已完成 GPU 2 的 2-step smoke 和独立 20-step pilot：320 次 actor/critic 更新，4 次固定评估均为 50%，checkpoint 和 4 个视频已保存。[完整日报](research/progress-2026-09-30-maniskill-rlt.md)与[脱敏 JSON](data/jev-atomic-pilot-2026-09-30.json)记录协议和边界。
