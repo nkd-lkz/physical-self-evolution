@@ -15,6 +15,10 @@ Living research website for **Universal Physical Token, robot self-improvement, 
 
 **https://nkd-lkz.github.io/physical-self-evolution/**
 
+## RLT 近邻论文专题 — 2026-09-30
+
+- [UniMPA：预期转移、历史可执行动作与 flow 生成](notes/unimpa.md)；[F4R：失败诊断、目标化仿真与再训练闭环](notes/f4r.md)。两项是项目研究所需的独立文献笔记，未复现代码或真机；与现有 [三分支前沿对照](research/literature/frontier-rlt-2026-09-30.md)衔接。
+
 ## Three-branch audit and research proposals — 2026-09-30
 
 - [代码审查与 42 组小实验](research/three-branch-audit-2026-09-30.md)：FLARE 掩码梯度修复、Zeva 固定响应读取器、Jev 同幅度连续 residual 对照；含负结果、测试范围与结构化证据。
@@ -52,7 +56,7 @@ Living research website for **Universal Physical Token, robot self-improvement, 
 - [Six concise paper notes](research/literature/reading-notes-2026-09-25.md): FLARE, Pri4R, AGRA, Spline Policy, CometVLA and PAR; existing entries promoted to an initial discussion, no reproduction claimed.
 - [Chelsea Finn talk perspective](research/chelsea-finn-physical-rsi-talk-2026-09-25.md): distinguishes secondary talk coverage, PI primary RECAP / π0.7 evidence, and open verification questions.
 - [FLARE-inspired RLT experiments](research/flare-rlt-contact-experiments-2026-09-25.md): matched future/outcome loss controls, separate candidate-action screening, intervention accounting and held-out-task transfer; all are proposals.
-- [Reading ledger](research/literature/reading-ledger.md): 132 existing paper/project entries and 2 separately counted perspectives.
+- [Reading ledger](research/literature/reading-ledger.md): 134 paper/project entries and 2 separately counted perspectives as of 2026-09-30.
 
 ## Discussion update — 2026-09-22
 

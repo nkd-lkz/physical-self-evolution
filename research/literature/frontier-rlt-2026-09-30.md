@@ -9,7 +9,7 @@
 | [FLARE](https://research.nvidia.com/labs/gear/flare/)，2025-05-22 | future token 与未来表征对齐，联合动作学习，不必生成像素 | “辅助未来表征监督”已经成立为既有方法；当前冻结 RLT 后训练侧支不是原论文复现 |
 | [Zeva](https://arxiv.org/abs/2608.30880v2)，首发 2026-08-31，修订 09-22 | 执行动作与实际状态变化构成交互单元，双时间尺度记忆，在冻结 policy 中读取 | 不能把“动作＋变化＋检索记忆”本身写成新贡献；必须明确我们的监督、接口及可测差异 |
 | [Zeva-Ego](https://arxiv.org/abs/2609.24411v2)，首发 09-21，修订 09-22 | action-centric ego mid-training 与部署时交互记忆结合 | 大规模离线经验与在线交互衔接已有强近邻；当前项目没有相应数据规模和跨任务证据 |
-| [UniMPA](https://arxiv.org/abs/2609.11875)，09-10 | 用 action-grounded transition 串联未来预测、视觉动作记忆、动作原型与 flow 生成 | “把记忆、预测、动作统一起来”也不能单独主张新颖；关注完成交互的证据可用性与严格在线更新合同 |
+| [UniMPA](../../notes/unimpa.md)（[原文](https://arxiv.org/abs/2609.11875)），09-10 | 用 action-grounded transition 串联未来预测、视觉动作记忆、动作原型与 flow 生成；训练期未来头关闭后 World Expert 仍参与推理 | “把记忆、预测、动作统一起来”也不能单独主张新颖；关注完成交互的证据可用性与严格在线更新合同 |
 | [StateMem](https://arxiv.org/abs/2609.22684)，09-19 | 预测误差更新持久记忆 token，并调节缓存前缀刷新 | “预测残差更新记忆 token”已有直接邻近方案；不能只换 token 名称 |
 | [ForceRFT](https://arxiv.org/abs/2609.22840)，09-19 | 执行时力反馈条件化残差 RL，结合人工修正和自主价值更新 | 真机接触修正已有强参照。当前仅关节位置与命令不能当成力觉的替代品；干预段与自主段应分别核算 |
 | [Imagine-RL](https://arxiv.org/abs/2609.24033)，09-21 | 冻结视觉／力矩世界模型预测候选动作后果，历史预测残差为 critic 的未来信息提供可信度权重 | 与未来想做的“预测后果帮助 critic＋误差校准”高度接近。当前代码没有这条完整路径，不应借用其能力描述 |
@@ -17,7 +17,7 @@
 | [RouteRLT](https://arxiv.org/abs/2609.26467)，09-22 | 学习何时、选择哪个 RL specialist，并处理切换时未执行的 chunk 后缀 | 自动阶段切换不宜再作为空白创新点；论文真机采用 operator-aligned handoff，不能描述成完全无人协助 |
 | [Training-free Behavior Cloning](https://arxiv.org/abs/2609.30134)，09-24 | 从示范检索行为，并以闭式响应修正补偿局部变化 | Zeva 线必须比较简单检索／经验响应，不能只与无历史比较 |
 | [VLaRL](https://arxiv.org/abs/2609.30868)，09-25 | 冻结 VLA，利用内部 latent 条件化仿真训练的 residual，并映射到真机 | “冻结 VLA＋小 residual＋latent”不是创新；区别应落在部署后新证据如何持续改变动作与旧能力保持 |
-| [F4R](https://arxiv.org/abs/2609.35575v2)，首发 09-28，修订 09-29 | 识别真实失败，重建物体中心仿真，定向 sim-real co-training 与 RL，再部署收集新失败 | 对“反复实践持续成长”叙事的最新直接近邻。可借鉴失败条件驱动测试，但当前没有其场景重建与完整再部署系统 |
+| [F4R](../../notes/f4r.md)（[原文](https://arxiv.org/abs/2609.35575v2)），首发 09-28，修订 09-29 | 识别真实失败，重建物体中心仿真，定向 sim-real co-training 与 RL，再部署收集新失败 | 对“反复实践持续成长”叙事的最新直接近邻。可借鉴失败条件驱动测试，但当前没有其场景重建与完整再部署系统 |
 | [ARMS / Watch, Recall, Act](https://arxiv.org/abs/2609.28429)，09-23 | π0.5 加入异步感知、具身状态与动作历史上下文，处理持续多模态任务流 | “记录自己做过什么再读取”不是空白；要区分异步上下文组织与在线参数学习 |
 | [MessyMem](https://arxiv.org/abs/2609.15976v2)，首发 09-14，修订 09-15 | 交互结果与视觉线索写入空间场景图，供后续移动操作任务读取 | 真正的跨访问、跨任务持久知识已有近邻；我们的 reset 默认清空短期记忆远未达到相同范围 |
 | [MPC Scaffolding](https://arxiv.org/abs/2609.14878v2)，首发 09-14，修订 09-16 | MPC 先验轨迹预训练 actor/critic，在线间歇引导采集，逐步交接给 RL | 强化了先验证参考跟随／热身、再接管的实验依据；不能把额外 MPC 模型与轨迹的收益算成同信息算法优势 |

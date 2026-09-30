@@ -1,10 +1,10 @@
 {
-  "as_of": "2026-09-25",
+  "as_of": "2026-09-30",
   "status_counts": {
     "已精读/已有独立笔记": 8,
     "已初读/讨论过，待系统精读": 17,
     "待精读": 96,
-    "已阅读/已有专题笔记": 11
+    "已阅读/已有专题笔记": 13
   },
   "papers": [
     {
@@ -1985,6 +1985,36 @@
       "source_url": "https://knowinai.com/tech.html",
       "read_status": "已阅读/已有专题笔记",
       "note_path": "notes/knowin-glow.md",
+      "note_level": "topic-note"
+    },
+    {
+      "id": "P133",
+      "short_title": "UniMPA",
+      "title": "UniMPA: A Unified Memory-Prediction-Action Model via Action-Grounded Transition Modeling",
+      "priority": "P0",
+      "category": "未来转移、视觉动作记忆与生成动作接口",
+      "venue": "arXiv v1，2026-09-10；作者备注 submitted to TPAMI，未视作已接收",
+      "method_note": "双向视觉动作记忆、持续 latent/关键阶段 pixel 监督与检索动作原型偏置 flow source；World Expert 推理保留，未来解码头关闭。",
+      "project_note": "FLARE 未来监督、Zeva 实测交互记忆与 Jev 动作先验的直接邻近；不能把预测+记忆+动作联结作为独占创新。",
+      "verification_boundary": "阅读正文、实验/消融和部署附录；未审计可运行代码、权重或复现。异步扩库与同回合即时使用必须区分。",
+      "source_url": "https://arxiv.org/html/2609.11875v1",
+      "read_status": "已阅读/已有专题笔记",
+      "note_path": "notes/unimpa.md",
+      "note_level": "topic-note"
+    },
+    {
+      "id": "P134",
+      "short_title": "F4R",
+      "title": "F4R: Failure-Driven Recognition, Reconstruction, Refinement, and Redeployment for Continual Robot Self-Improvement",
+      "priority": "P0",
+      "category": "失败驱动的真机—仿真—真机再训练闭环",
+      "venue": "arXiv v2，2026-09-29",
+      "method_note": "真机失败诊断→交互场景重建与定向随机化→纠偏示范 sim-real 共训→目标化 PPO 与旧数据防遗忘→再部署。",
+      "project_note": "持续自改进系统的直接近邻；本项目先做现有仿真中的失败阶段/重置分布消融，不宣称完成场景重建。",
+      "verification_boundary": "阅读正文、主结果、预算附录和限制；未复现诊断、重建、训练或真机；配对的是数据准备时间，不是总成本。",
+      "source_url": "https://arxiv.org/html/2609.35575v2",
+      "read_status": "已阅读/已有专题笔记",
+      "note_path": "notes/f4r.md",
       "note_level": "topic-note"
     }
   ],
