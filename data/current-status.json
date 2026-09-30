@@ -1,6 +1,18 @@
 {
-  "as_of": "2026-09-30",
+  "as_of": "2026-10-01",
   "metrics": [
+    {
+      "value": "12 fits / 324 streams",
+      "label": "10-01 CPU续作：Jev门槛诊断、Zeva延迟反馈；不是机器人闭环"
+    },
+    {
+      "value": "3 checkpoints",
+      "label": "FLARE验证阈值筛选测试，容易状态也被偏好；不代表控制或安全提升"
+    },
+    {
+      "value": "8 visual tests",
+      "label": "独立视觉遮挡接口通过CPU测试；真实VLA适配、热图和控制实验未完成"
+    },
     {
       "value": "99 + 12 fits",
       "label": "续作99次预定诊断＋12次追加拟合已完成；不是机器人成功率实验"
@@ -42,11 +54,15 @@
       "label": "VR单环境pilot已准备；另2项硬件skip，真实PICO在线验收待操作"
     },
     {
-      "value": "5 isolated lines",
-      "label": "baseline / FLARE / Zeva / Jev / VR保持单变量隔离"
+      "value": "6 isolated lines",
+      "label": "baseline / FLARE / Zeva / Jev / VR / visual保持隔离，visual仅离线原型"
     }
   ],
   "timeline": [
+    {
+      "title": "10-01 · 经验可信度诊断与独立视觉分支完成首版",
+      "body": "FLARE阈值只从原始验证回合确定；Zeva保存执行前预测与版本以防迟到反馈反复重置；Jev相对Q门槛减少早期错误也限制后期有效修正。均未改在线默认值。此前训练指标保留原记录日期，本轮没有新增baseline在线成绩。"
+    },
     {
       "title": "09-30晚间 · Jev完整online pilot完成",
       "body": "2训练/4固定评估环境、20 outer steps、320次actor/critic更新、checkpoint与4个视频均完成；工程链路正常退出。"
@@ -113,6 +129,11 @@
     }
   ],
   "plan": [
+    {
+      "priority": "P1",
+      "action": "将诊断推进到独立闭环，而非同时叠加三个新机制",
+      "evidence": "Jev门槛在开发集确定并记录拒绝代价；Zeva版本保护先验收异步执行；视觉先做真实录制帧固定噪声适配；FLARE加入同样本persistence对照。"
+    },
     {
       "priority": "P0",
       "action": "保护并持续审计正式Stage 2 baseline",

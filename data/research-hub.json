@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-30",
+  "updated": "2026-10-01",
   "focus": "以 RLT 为基线，把真实执行后果变成可学习、可复用的物理经验。",
   "question": "能否在相同交互预算下，加快 RL 学习、减少人工纠正，并迁移到新的物理条件？",
   "featured": [
@@ -11,7 +11,7 @@
     {
       "path": "research/physical-rsi-source-intake-2026-09-30.md",
       "label": "RSI 综合调研",
-      "why": "RPent、Axis、Simate、Astra：来源核验与三步实验入口。"
+      "why": "新增PhysicalRSI、EXPO-FT近邻核验与10-01三分支CPU诊断、视觉原型结果。"
     },
     {
       "path": "research/literature/visual-evidence-rlt-2026-09-30.md",
@@ -25,6 +25,17 @@
     }
   ],
   "ideas": [
+    {
+      "id": "visual-evidence",
+      "name": "视觉证据 · 分离参考动作与actor依赖",
+      "stage": "离线接口原型",
+      "tag": "诊断优先",
+      "hypothesis": "过去执行反馈能否帮助判断当前操作关系区域的证据是否充分？",
+      "design": "已实现确定性遮挡接口，分别报告VLA动作、RL token与小actor输出变化；尚未适配真实checkpoint或训练局部读取器。",
+      "control": "固定噪声、等面积背景与任务关系区域、不同遮挡填充；有示范目标才报告有符号动作误差增量。",
+      "gate": "8项CPU合同测试不等于视觉解释成立；先验收真实帧原始输出一致性，再做无历史、近期历史、打乱历史和闭环对照。",
+      "path": "research/physical-rsi-source-intake-2026-09-30.md"
+    },
     {
       "id": "flare",
       "name": "FLARE · 动作后果监督",

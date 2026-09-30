@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-10-01",
+    "title": "三分支经验可信度诊断与视觉证据原型完成",
+    "path": "research/physical-rsi-source-intake-2026-09-30.md",
+    "summary": "FLARE e344bad5完成3个已有checkpoint的验证阈值评估；Zeva abb43823完成324条合成延迟序列，版本保护将迟到结果引起的重复重置从每序列3次降为1次；Jev 311f4e6a完成12次1000-update CPU拟合，保留保守门槛抑制有效修正的负结果。新视觉分支fb45fe75实现独立遮挡诊断，8项CPU测试通过，尚未适配真实VLA。GPU繁忙，因此没有新增GPU作业或online成功率。结果、范围与哈希见data/evidence-gates-2026-10-01.json。"
+  },
+  {
     "date": "2026-09-30",
     "title": "Jev启发分支完成GPU 2的20-step online pilot",
     "summary": "提交d3618b18完成2-step smoke后，从头运行2训练/4固定评估环境的20-step pilot；actor/critic各更新320次，4次评估success_once均为0.5并保存checkpoint和4个视频。但reference probability约0.901，greedy/target non-reference fraction全程为0，尚无证据表明有限候选修正改善了VLA reference。"
