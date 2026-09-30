@@ -17,7 +17,9 @@ Living research website for **Universal Physical Token, robot self-improvement, 
 
 ## Three-branch audit and research proposals — 2026-09-30
 
-下午续作：[11 组、99 次诊断的预定矩阵与人工接管入口](research/three-branch-audit-2026-09-30.md#下午续作预先固定实验矩阵与人工介入入口)。新增 action-prefix 诊断、经验响应 residual、critic 校准对照；VR 单环境 pilot 已准备。最多 12 小时的队列执行预设实验，不等于已经完成 99 次拟合。完整 Jev online 仍等待 GPU 2 空闲。以下保留先前一轮已完成结果。
+下午续作已完成：[99 次预定诊断＋12 次追加 CPU 拟合与人工接管入口](research/three-branch-audit-2026-09-30.md#下午续作预先固定实验矩阵与人工介入入口)。Zeva 支持度门控降低开发预测误差；Jev 排序随 BC／数据条件变化；FLARE 已补齐动作前缀敏感性和匹配 online 配置。原始统计与新结果图见[结构化记录](data/continuation-2026-09-30.json)。小模型矩阵约 31 分钟完成后已释放 GPU；不是 12 小时大训练，也不是 111 次机器人闭环。完整 Jev online 仍保留 12 小时空闲等待预算。
+
+VR 单环境 `horizon=1` pilot 已准备，支持真实人工 transition、有限更新、BC 发布门槛和 optimizer/replay 恢复；未接入正式 64 环境，Windows/PICO 跨机器闭环待操作者验收。[启动指南](https://github.com/nkd-lkz/UPT_dev/blob/feature/rlt-pico-vr-intervention/experiments/maniskill_rlt/VR_ONLINE.zh-CN.md)。最新 CPU 套件：FLARE / Zeva / Jev 为 **195 / 203 / 205 passed**，各 1 skip、1 已知排除；VR **34 passed、2 skipped**。以下保留首轮结果，不与续作混算。
 
 - [代码审查与 42 组小实验](research/three-branch-audit-2026-09-30.md)：FLARE 掩码梯度修复、Zeva 固定响应读取器、Jev 同幅度连续 residual 对照；含负结果、测试范围与结构化证据。
 - [三个方案的原理、摘要与架构图](research/three-branch-research-plan-2026-09-30.md)：解释物理经验存在哪里、新反馈更新什么，以及通往真机持续学习的验收门槛。三张架构图和一张真实诊断图提供 SVG / PDF / PNG。

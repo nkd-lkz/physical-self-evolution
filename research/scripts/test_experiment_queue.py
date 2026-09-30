@@ -45,3 +45,41 @@ def test_summary_keeps_negative_rewards_and_source(tmp_path):
     report = summarize(tmp_path)
     assert report[0]["mean_reward"] == -9.0
     assert report[0]["source"] == str(path / "results.json")
+
+
+def test_publication_rejects_partial_matrix(tmp_path):
+    from publish_continuation import collect
+
+    (tmp_path / "status.json").write_text(json.dumps({"status": "running"}))
+    with pytest.raises(ValueError, match="completed matrix"):
+        collect(tmp_path)
+
+
+def test_publication_rejects_missing_completed_jobs(tmp_path):
+    from publish_continuation import collect
+
+    (tmp_path / "status.json").write_text(
+        json.dumps(
+            {"status": "completed", "completed": [], "plan": [{"name": "missing"}]}
+        )
+    )
+    with pytest.raises(ValueError, match="declared matrix"):
+        collect(tmp_path)
+
+
+def test_followup_keeps_all_conditions_and_records_source(tmp_path):
+    from publish_continuation import collect_followup
+
+    rows = [
+        {"mode": mode, "seed": 1, "test": {"mse": value}}
+        for mode, value in (("response_residual", 0.1), ("response_supported", 0.2))
+    ]
+    (tmp_path / "results.json").write_text(
+        json.dumps({"seeds": [1], "data": {"gpu_uuid": "private"}, "results": rows})
+    )
+    result = collect_followup(tmp_path, "revision")
+    assert result["results"]["results"] == rows
+    assert "gpu_uuid" not in result["results"]["data"]
+    assert len(result["source_sha256"]) == 64
+    with pytest.raises(ValueError):
+        collect_followup(tmp_path, "")

@@ -1,5 +1,13 @@
 # 实验日志
 
+## 2026-09-30 下午 · 99 次预定诊断、12 次追加拟合与 HIL pilot
+
+三条研究分支完成缓存／小模型续作，不改动 GPU 0/1 上正式 baseline；GPU 2 只共存约 574 MiB 的小模型进程，预定矩阵约 31 分钟完成。Zeva 将经验响应先验与支持度门控修正组合，6 种子总体预测 MSE 为 `2.4417e-5`，但物理条件突变与闭环仍待检验。Jev 的连续 residual 在 BC=70、参考动作替换 25% 时反胜有限候选，保留全部 36 次比较，不能宣称离散普遍更优。FLARE 的动作置零／打乱损害预测、逆序影响很小，尚无时序因果能力结论。
+
+新增 FLARE matched pilot 已通过配置一致性与路径检查；VR `run_rlt_vr_hil_pilot.sh` 准备了一个 Windows/PICO 环境到 GPU 2 的单步 learner、有限更新、BC 发布门槛和完整恢复。两者没有新完整在线验收，不能代替正式 64 环境训练。完整 Jev 队列仍等 GPU 2 空闲。代码、统计、论文邻近工作和可编辑图见[续作审查](three-branch-audit-2026-09-30.md)；本条不修改 RSI 综述区。
+
+---
+
 ## 2026-09-30 · Stage 1 eval20、Stage 2 baseline、FLARE 对照与 Jev 分支
 
 ManiSkill Stage 1 step 2000 的固定 20 回合闭环评测已经正常结束：`eval/success_once=0.4`、`return=0.4`、mean episode length `335.25`，即 8/20 成功。该点估计建立了当前 Stage 1 reference，但不能单独证明训练充分收敛、没有过拟合或 RL token 已学到物理规律。
