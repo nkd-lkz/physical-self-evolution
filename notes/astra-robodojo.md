@@ -163,16 +163,16 @@ Hybrid 即使加入强 reasoning，仍有典型失败：chunk 内发生 slip / c
 
 ---
 
-## 4. 公众号转述的大规模 Astra 评测：值得跟踪，但不改项目方法
+## 4. 42 任务直接策略评测：2026-09-30 一手来源补核
 
-公众号称另一组 RoboDojo 报告对 GPT-6 Astra 做了更大规模评测，并转述了两个现象：
+原先这里只能根据公众号转述；现已定位 [An Unexpected Robot Policy 原始论文](https://arxiv.org/abs/2609.24170) 与 [RoboProbe 代码](https://github.com/RoboProbe/RoboProbe)。以下数字属于该论文的**作者评测**，本站未独立复现。42 项任务 × 每项 50 回合，Astra 成功率 22.48%、Score 28.97；同一非学习型动作后处理下 GPT-5.5 为 0.88%，DeepSeek-Flash 为 1.92%（后者每任务仅 10 回合）。其 28.97 是 RoboDojo 维度加权口径；切勿与另一份 10 任务 Hybrid 报告或 RPent 的 LIBERO-PRO 百分比相减。
 
 ### 4.1 语义强、精密接触弱
 
-报道将 Astra 的能力地图描述成：
+原论文给出的能力图谱是：
 
 - open / semantic / spatial tasks 较强；
-- precision、contact、long-horizon 显著较弱；
+- precision、dynamic control、复杂双臂操作较弱；部分 memory、precision、long-horizon 任务弱于当时最优公开策略；
 - 真机安全性尤其暴露问题。
 
 这和 Hybrid 报告的总体方向一致：**知道目标、识别异常、重新规划**与**稳定抓取、摩擦/碰撞控制、连续接触**仍是不同能力层。
@@ -181,9 +181,9 @@ Hybrid 即使加入强 reasoning，仍有典型失败：chunk 内发生 slip / c
 
 ### 4.2 交互后的 adaptation 值得观察
 
-公众号还转述了坐标反转、镜像视图、屏蔽相机等扰动下，模型会根据“预期动作 vs 实际反馈”的差异调整后续控制。
+原论文称单样本演示没有整体增益；部分扰动轨迹中，模型会根据观测后果调整后续动作。这是**回合内上下文修正的案例**，没有证明跨回合学习、稳定恢复或物理参数辨识。其真实硬件部分提前停止，仅作诊断，不能作为完整真机成功率。
 
-如果一手报告后续确认，这一点与当前项目的：
+这一观察与当前项目的：
 
 ```text
 command / expected effect
@@ -193,7 +193,7 @@ actual measured outcome
 representation / learner adapts
 ```
 
-有概念上的相邻性。
+有概念上的相邻性，但不构成后果监督有效的实验结果。
 
 但仍需保持边界：Astra 的 adaptation 发生在 general-model context/reasoning 层；本项目要验证的是 **actor-side token 是否能吸收并利用这种物理差异**。
 

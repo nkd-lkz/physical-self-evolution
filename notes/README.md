@@ -47,6 +47,11 @@
 
 两项为专题阅读，附录/代码复现状态见各笔记，不等同全文精读。
 
+## 2026-09-30 项目侧增量
+
+- [Axis：部署回流、数据筛选与技能适用范围](axis-capability-library.md)（官方博客，自述证据）
+- [Physical RSI 资料核验与 RLT 小实验](../research/physical-rsi-source-intake-2026-09-30.md)（研究备忘；非新增实验结果）
+
 ## 已有独立笔记
 
 - [RLT](rlt.md)
