@@ -30,8 +30,8 @@
       "label": "10-01 合成延迟反馈诊断；不是独立机器人成功次数"
     },
     {
-      "value": "7 个实现",
-      "label": "10-03 RLT 仓库核查；AlphaBrain／LIBERO 待本地验收"
+      "value": "10 个仓库",
+      "label": "10-03 源码与公开资产核查；RLT 与 DSRL 分开，新增候选未运行"
     },
     {
       "value": "0 次新 GPU 实验",
@@ -39,6 +39,10 @@
     }
   ],
   "timeline": [
+    {
+      "title": "10-03 · eRLT 实现来源与仿真 baseline 续查",
+      "body": "真机明确 RLinf，仿真确切作者仓库未核实；增加 DSRL 两套参照与 LIBERO fork。现有 AlphaBrain 成品验收优先级保留，RLinf／π0.5 提供独立 SFT→DSRL 检查路线；无新训练结果。"
+    },
     {
       "title": "10-03 · 按 eRLT／SmoothRL 结构重写论文 v2",
       "body": "英文稿由 LaTeX 编译，含正式公式、算法、2 幅图、7 张表和 26 篇参考文献；修订执行语义，保留预测负结果，旧版单独归档。本次没有新增 GPU 实验。"
@@ -97,6 +101,11 @@
       "priority": "P1",
       "action": "持续核查上游并固定每轮实验 revision",
       "evidence": "关注 replay、resume、OpenPI/RLT、optimizer、terminal 与 reward；上游改动单独验收，不在同一曲线中混用版本。"
+    },
+    {
+      "priority": "P1",
+      "action": "保留 RLinf／π0.5 的独立 LIBERO 检查路线",
+      "evidence": "先纯 SFT 评估，再决定是否跑 DSRL 工程参照；RLT 移植另验。检查固定 reset id、周期评估与动作处理；不同时启动多框架长期训练。"
     }
   ]
 }

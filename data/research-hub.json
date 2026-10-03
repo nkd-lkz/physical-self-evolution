@@ -11,7 +11,7 @@
     {
       "path": "research/literature/rlt-simulation-baselines-2026-10-03.md",
       "label": "RLT 仿真 baseline 核查",
-      "why": "七个实现的证据与两卡验收顺序；AlphaBrain 待独立复现。"
+      "why": "十个仓库、eRLT 仿真来源边界、LIBERO 权重与入口；成品复评优先，尚未独立复现。"
     },
     {
       "path": "research/zeva-rlt-implementation-2026-09-26.md",

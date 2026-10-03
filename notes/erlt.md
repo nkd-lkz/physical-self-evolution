@@ -8,6 +8,8 @@
 
 完整定位见 [RLT 后续工作关系图谱](../research/literature/rlt-followups.md)；本项目 [RLT baseline 笔记](rlt.md) 区分原论文与 RLinf/π0.5 适配。
 
+**10-03 代码续查**：[十个候选仓库与仿真复现入口](../research/literature/rlt-simulation-baselines-2026-10-03.md) 已核对。C.4 明确真机实现基于 RLinf；C.2 只明确仿真采用 DSRL 风格与公开权重，没有说明确切训练仓库。本轮未核实作者独立 eRLT 仿真代码。RLinf 的 LIBERO DSRL 是可用参照，不应标成作者 eRLT 源码。附录的 LIBERO 权重名为 Pi0，而附近文字称 π0.5，精确复现需澄清配置；RLT*、原 RLT 与各社区变体必须分开。
+
 ## 1. 到底改了哪里
 
 | 组件 | eRLT 的设计 | 实现时的含义 |

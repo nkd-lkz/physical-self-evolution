@@ -1,6 +1,12 @@
 [
   {
     "date": "2026-10-03",
+    "title": "源码调研续查：eRLT 仿真实现边界与十个开源 baseline 仓库",
+    "path": "research/literature/rlt-simulation-baselines-2026-10-03.md",
+    "summary": "只读源码／文献／公开权重审计，未运行新 GPU 实验。确认 eRLT 真机 RLinf、仿真 DSRL 风格但确切作者仓库未核实；补充 dsrl_pi0、verl-vla 和 LIBERO Stage 1 fork。核对 AlphaBrain 发布三种权重与 92% 评估 JSON、训练日志后段无新增采样；新增单 GPU 成品评估模板及 RLinf LIBERO 配置注意项。优先验收现成模型，不承诺两卡重训时长或成功率。"
+  },
+  {
+    "date": "2026-10-03",
     "title": "IM-RLT 论文 v2 完成结构与技术重写",
     "path": "research/progress-2026-10-03.md",
     "summary": "对照 eRLT、SmoothRL 原文的单栏论文组织方式，重写为 16 页 LaTeX 科研稿：Introduction、Related Work、Preliminaries、Method、Experiments、Conclusion 与附录；2 幅图、7 张表、26 篇文献。校对已测 MSE、执行前缀与 critic action 的区别、历史快照和冻结参数评估。旧版归档；不是新训练或新控制结果。"
