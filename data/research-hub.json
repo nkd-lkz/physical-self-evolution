@@ -1,30 +1,51 @@
 {
-  "updated": "2026-10-01",
-  "focus": "以 RLT 为基线，把真实执行后果变成可学习、可复用的物理经验。",
-  "question": "能否在相同交互预算下，加快 RL 学习、减少人工纠正，并迁移到新的物理条件？",
+  "updated": "2026-10-03",
+  "focus": "保留 RLT 与 Zeva 双时间尺度结构：Stage 1 学习交互经验，Stage 2 用经验加速低成本 RL。",
+  "question": "可读取、可更新的动作—后果记忆，能否减少接触操作的重新试错，并在新条件与相关任务中复用？",
   "featured": [
+    {
+      "path": "research/zeva-rlt-implementation-2026-09-26.md",
+      "label": "当前主线 · 经验学习与迁移",
+      "why": "10-03 更新：Stage 1b 经验编码、短长期记忆、Stage 2 控制收益；固定公式保留为基线。"
+    },
+    {
+      "path": "notes/erlt.md",
+      "label": "eRLT · 直接近邻",
+      "why": "动作预测监督与 critic 路由；核对实现维度、RLT* 对照和增量实验。"
+    },
+    {
+      "path": "research/literature/rlt-followups.md",
+      "label": "RLT 后续工作图谱",
+      "why": "53 篇引用候选＋补检；区分四篇明确继承工作与平行路线。"
+    },
+    {
+      "path": "notes/rma.md",
+      "label": "RMA · 历史适应",
+      "why": "特权 teacher 到短历史 latent；检验长期经验超越普通适应模块。"
+    },
+    {
+      "path": "notes/pearl.md",
+      "label": "PEARL · Context RL",
+      "why": "概率 context、critic 监督与前置训练成本；经典近邻。"
+    },
     {
       "path": "notes/physicalrsi-mmlab.md",
       "label": "Physical RSI",
-      "why": "H(F) 自改写 harness；借鉴技能适用范围与验证后继承。"
-    },
-    {
-      "path": "research/physical-rsi-source-intake-2026-09-30.md",
-      "label": "RSI 综合调研",
-      "why": "新增PhysicalRSI、EXPO-FT近邻核验与10-01三分支CPU诊断、视觉原型结果。"
-    },
-    {
-      "path": "research/literature/visual-evidence-rlt-2026-09-30.md",
-      "label": "注意力与视觉证据",
-      "why": "先验证输入依赖，再决定是否加入注意力监督。"
-    },
-    {
-      "path": "research/literature/frontier-rlt-2026-09-30.md",
-      "label": "近邻与创新边界",
-      "why": "UniMPA、F4R、StateMem、Imagine-RL 等强近邻。"
+      "why": "保留系统闭环与经验继承视角；论文主张服从实验。"
     }
   ],
   "ideas": [
+    {
+      "id": "zeva",
+      "name": "Zeva–RLT · 学习交互经验并持续读取",
+      "stage": "研究方案更新；现有简化原型",
+      "tag": "当前主线",
+      "hypothesis": "Stage 1 压缩动作—后果经验，Stage 2 条件化小 actor/critic，能否减少重新试错并迁移？",
+      "design": "保留原 RL token/reference；新增 encoder、短期有序记忆、跨尝试长期库和 reader；先冻结编码坐标，只更新 actor/critic。",
+      "control": "零上下文、原始历史、固定响应统计、动作预测监督、critic-only context、短期/长期库消融；匹配预算。",
+      "gate": "先后续后果预测，再固定模型记忆适应、在线 RL 和留出迁移；记录 replay 的历史快照与版本，计入检索和预训练成本。",
+      "path": "research/zeva-rlt-implementation-2026-09-26.md"
+    },
     {
       "id": "visual-evidence",
       "name": "视觉证据 · 分离参考动作与actor依赖",
@@ -38,25 +59,14 @@
     },
     {
       "id": "flare",
-      "name": "FLARE · 动作后果监督",
-      "stage": "独立实验线",
+      "name": "FLARE · 经验学习的后果监督对照",
+      "stage": "既有独立实验线；主线监督候选",
       "tag": "Loss-first",
       "hypothesis": "用真实后继观测监督紧凑表征，比仅重建当前特征更有助于接触控制。",
       "design": "冻结 VLA；轻量 encoder + 动作条件预测器，预测未来 latent / proprio 变化；actor / critic 读取状态编码。",
-      "control": "原 RLT、同容量无动作预测、直接 / 增量预测；统一 BC、历史、更新与交互预算。",
+      "control": "原 RLT、动作预测监督（eRLT 启发）、无动作/无历史、后果监督；同容量、同数据与在线预算。",
       "gate": "预测改善只是中间指标；最终比较固定初态成功率、达到目标的交互数和人工控制时长。",
       "path": "research/flare-rlt-contact-experiments-2026-09-25.md"
-    },
-    {
-      "id": "zeva",
-      "name": "Zeva · 交互经验记忆",
-      "stage": "独立实验线",
-      "tag": "Memory",
-      "hypothesis": "过去“命令 → 实际响应”能够帮助判断当前执行偏差；条件变化时，旧经验需要失效或降权。",
-      "design": "记录已完成动作、起始状态、实际位移与有效时长；比较短历史、局部响应公式与支持度门控 reader。",
-      "control": "无记忆、同容量短历史、随机检索、固定响应公式；冻结评测记忆，防止未来信息回填。",
-      "gate": "先封存物理条件变化测试，再进闭环；验证适应速度与旧任务保持，不以训练 MSE 代替成长。",
-      "path": "research/zeva-rlt-implementation-2026-09-26.md"
     },
     {
       "id": "jev",
@@ -74,11 +84,11 @@
       "name": "经验适用范围 · 变化与迁移",
       "stage": "待验证 idea",
       "tag": "Physical RSI",
-      "hypothesis": "经验条目的适用条件与预测残差，能否决定何时复用、遗忘或重新探索？",
-      "design": "先做缓存 / 离线变化点诊断；记录条件、命令、后果、支持度、残差，再测试受限重试中的经验复用。",
+      "hypothesis": "在新物理条件与相关目标任务中，已学经验能否降低交互、墙钟与人工成本，并保持旧任务能力？",
+      "design": "源记忆冻结，目标适应库独立；空库/相关源库/不匹配库对照，先同实例跨尝试再跨任务。",
       "control": "清空、滑动窗口、固定衰减、误差驱动更新；相同容量与动作历史。",
-      "gate": "先跨物理条件，再第二任务。Harness 负责实验版本和证据；单次纠错、热图或成功任务卡不等于 RSI。",
-      "path": "notes/physicalrsi-mmlab.md"
+      "gate": "单列离线采集、预训练、在线学习与检索成本；预测更准或单步吞吐更低都不预设最终控制结论。",
+      "path": "research/zeva-rlt-implementation-2026-09-26.md"
     }
   ]
 }

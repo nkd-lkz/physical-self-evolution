@@ -1,5 +1,7 @@
 # SmoothRL: Online Reinforcement Learning During Asynchronous Execution
 
+> 2026-10-03 补核：[原文 v1](https://arxiv.org/html/2608.29768v1) §2.1、§3.4 明确说明实现直接沿用 RLT 结构/学习骨架，属于本轮确认的直接继承工作；其 residual actor 是特定实例，不代表原 RLT 的所有实现。参见 [RLT 后续工作图谱](../research/literature/rlt-followups.md)。本次未复现。
+
 ## 一句话
 
 SmoothRL 解决的是：

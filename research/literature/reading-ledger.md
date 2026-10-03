@@ -1,8 +1,8 @@
 # Physical Token 文献阅读总账
 
 > 建立日期：2026-09-19  
-> 更新日期：2026-09-30
-> 范围：134 项论文/项目，另列 2 项观点；09-30 新增 P133 UniMPA 与 P134 F4R 项目侧专题笔记。09-26 对 P106–P111 六项既有工作做联合导读，不重复计数。
+> 更新日期：2026-10-03
+> 范围：145 项论文/项目，另列 2 项观点；10-03 新增 11 项重点文献并补读既有 RMA、SmoothRL。引用候选台账不全部计为已读文献。
 > 原则：**检索到 ≠ 读懂；摘要笔记 ≠ 全文精读。** 所有条目先保留检索笔记，只有完成方法、实验、附录/代码核验后才升级为“精读”。
 
 ## 0. 当前进度
@@ -10,10 +10,10 @@
 | 状态 | 数量 |
 |---|---:|
 | 已精读/已有独立笔记 | 8 |
-| 已阅读/已有专题笔记 | 13 |
-| 已初读/讨论过，待系统精读 | 17 |
-| 待精读 | 96 |
-| **论文/项目总计** | **134** |
+| 已阅读/已有专题笔记 | 16 |
+| 已初读/讨论过，待系统精读 | 26 |
+| 待精读 | 95 |
+| **论文/项目总计** | **145** |
 
 另列 **2 项观点**，不混入论文阅读数量。
 
@@ -27,6 +27,26 @@
 - **待精读**：当前只有检索/摘要级 mini-note；正式写论文前必须继续读正文、实验、附录和代码。
 
 ## 2. 近期阅读顺序
+
+### 10-03：eRLT、RLT 后续关系，以及经验记忆主线更新
+
+[eRLT 专题](../../notes/erlt.md)核对动作预测初始化、critic 路由更新和 RLT* 对照边界；[RLT 后续图谱](rlt-followups.md)记录 53 篇引用候选、两项补检与 35 篇原文关系初筛，确认四篇明确继承工作。引用不等于直接后继，初筛不等于精读。
+
+[RMA](../../notes/rma.md) 为既有 P018 补专题；[PEARL](../../notes/pearl.md)新增。二者是历史/context 适应的经典近邻，不计入 RLT 后继。[Zeva–RLT 方案](../zeva-rlt-implementation-2026-09-26.md)更新为 Stage 1 经验编码＋短长期记忆＋Stage 2 低成本 RL＋迁移；固定响应公式是对照。此次仅调研与研究决策，无新增训练成绩。
+
+| 编号 | 新增重点条目 | 阅读入口 |
+|---|---|---|
+| P135 | eRLT | [专题](../../notes/erlt.md) |
+| P136 | RouteRLT | [关系与方法表](rlt-followups.md) |
+| P137 | BEE | [关系与方法表](rlt-followups.md) |
+| P138 | TORL-VLA | [关系与方法表](rlt-followups.md) |
+| P139 | Imagine-RL | [关系与方法表](rlt-followups.md) |
+| P140 | PARTS | [关系与方法表](rlt-followups.md) |
+| P141 | HALO-WA | [关系与方法表](rlt-followups.md) |
+| P142 | VLaRL | [关系与方法表](rlt-followups.md) |
+| P143 | ARLI | [关系与方法表](rlt-followups.md) |
+| P144 | PHR-VLA | [关系与方法表](rlt-followups.md) |
+| P145 | PEARL | [专题](../../notes/pearl.md) |
 
 ### 09-30：UniMPA 与 F4R，直面 RLT 创新边界
 
@@ -118,7 +138,7 @@ SmoothRL、VLA-Corrector、BCP、GeoAAC、RL²-VLA、Zeva、Harness VLA、SHAPER
 | ID | 论文 | 优先级 | 阅读状态 | 笔记 |
 |---|---|---:|---|---|
 | P017 | [UP-OSI](https://faculty.cc.gatech.edu/~turk/paper_pages/2017_learning_universal_policy/index.html) | P1 | 待精读 | [检索笔记](physical-token-literature-audit-2026-09-19.md) |
-| P018 | [RMA](https://www.roboticsproceedings.org/rss17/p011.html) | P1 | 待精读 | [检索笔记](physical-token-literature-audit-2026-09-19.md) |
+| P018 | [RMA](https://www.roboticsproceedings.org/rss17/p011.html) | P1 | 已阅读/已有专题笔记 | [专题笔记](../../notes/rma.md) |
 | P019 | [Manipulator RMA](https://openaccess.thecvf.com/content/CVPR2024/html/Liang_Rapid_Motor_Adaptation_for_Robotic_Manipulator_Arms_CVPR_2024_paper.html) | P1 | 已初读/讨论过，待系统精读 | [检索笔记](physical-token-literature-audit-2026-09-19.md) |
 | P020 | [DeepMDP](https://proceedings.mlr.press/v97/gelada19a.html) | P1 | 待精读 | [检索笔记](physical-token-literature-audit-2026-09-19.md) |
 | P021 | [DBC](https://ai.meta.com/research/publications/learning-invariant-representations-for-reinforcement-learning-without-reconstruction/) | P1 | 待精读 | [检索笔记](physical-token-literature-audit-2026-09-19.md) |

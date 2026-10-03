@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-10-03",
+    "title": "研究决策：交互经验预训练、双时间尺度记忆与迁移；补充 RLT 后续调研",
+    "path": "research/zeva-rlt-implementation-2026-09-26.md",
+    "summary": "仅调研和方案更新，无新增训练/控制成绩。新增 eRLT、PEARL 等重点条目并补读 RMA；RLT 引用去重53篇，35篇原文关系初筛，明确继承4篇。用户确认固定响应为基线，Stage 1b 学习经验编码，Stage 2 验证样本效率、墙钟、人工成本与迁移。源码本地路径由用户提供，当前会话未访问训练机器。"
+  },
+  {
     "date": "2026-10-01",
     "title": "三分支经验可信度诊断与视觉证据原型完成",
     "path": "research/physical-rsi-source-intake-2026-09-30.md",

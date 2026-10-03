@@ -1,5 +1,7 @@
 # RL Token: Bootstrapping Online RL with Vision-Language-Action Models
 
+> 2026-10-03 阅读入口：[eRLT 专题](erlt.md) · [直接后续与强近邻图谱](../research/literature/rlt-followups.md) · [Zeva–RLT 最新经验学习方案](../research/zeva-rlt-implementation-2026-09-26.md)。新方案保留当前 RL token，增加经验条件，尚未取得收敛或迁移收益证据。
+
 ## 一句话
 
 冻结大型 VLA，提取紧凑 RL Token / representation，并训练轻量 actor–critic，在 VLA 已有策略附近做样本高效 Online RL。

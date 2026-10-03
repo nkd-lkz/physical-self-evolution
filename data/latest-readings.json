@@ -1,5 +1,86 @@
 [
   {
+    "id": "pearl",
+    "title": "PEARL: Efficient Off-Policy Meta-Reinforcement Learning via Probabilistic Context Variables",
+    "year": "2019",
+    "layer": "Representation / Adaptation / RL",
+    "theme": "physical",
+    "status": "专题阅读 · 2026-10-03",
+    "tags": [
+      "RLT近邻",
+      "经验表征",
+      "强化学习"
+    ],
+    "one": "从 transition 推断任务后验，条件化 off-policy actor/critic。",
+    "method": [
+      "ICML 2019；context encoder 由 critic 与 KL 训练",
+      "元训练 replay 与近期 context 分别采样，测试主要更新后验"
+    ],
+    "evidence": "原文方法及协议核验，详见专题；本项目无新增效果结果。",
+    "project": "比较普通 context RL；分别统计前置训练、目标适应与跨任务摊销成本。",
+    "boundary": "已核对原文和作者代码入口，未复现；不是 RLT 后继。",
+    "questions": [
+      "控制收益是否超过预测收益？",
+      "经验能否迁移且摊薄前置成本？"
+    ],
+    "note": "reader.html?path=notes/pearl.md",
+    "url": "https://arxiv.org/abs/1903.08254"
+  },
+  {
+    "id": "rma",
+    "title": "RMA: Rapid Motor Adaptation for Legged Robots",
+    "year": "2021",
+    "layer": "Representation / Adaptation / RL",
+    "theme": "physical",
+    "status": "专题阅读 · 2026-10-03",
+    "tags": [
+      "RLT近邻",
+      "经验表征",
+      "强化学习"
+    ],
+    "one": "用近期状态–动作历史推断环境适应 latent，部署无需更新策略权重。",
+    "method": [
+      "仿真特权 teacher＋历史适应模块",
+      "RSS 2021；部署适应不等于跨任务检索记忆"
+    ],
+    "evidence": "原文方法及协议核验，详见专题；本项目无新增效果结果。",
+    "project": "历史压缩本身不新；长期库需证明超过同容量短历史适应。",
+    "boundary": "已有 P018 补专题；未复现，不计为 RLT 后继。",
+    "questions": [
+      "控制收益是否超过预测收益？",
+      "经验能否迁移且摊薄前置成本？"
+    ],
+    "note": "reader.html?path=notes/rma.md",
+    "url": "https://ashish-kmr.github.io/rma-legged-robots/"
+  },
+  {
+    "id": "erlt",
+    "title": "eRLT: Efficient VLA Reinforcement Learning via Action-Relevant Token Routing",
+    "year": "2026",
+    "layer": "Representation / Adaptation / RL",
+    "theme": "physical",
+    "status": "专题阅读 · 2026-10-03",
+    "tags": [
+      "RLT近邻",
+      "经验表征",
+      "强化学习"
+    ],
+    "one": "动作预测初始化＋critic 反馈，路由冻结 VLA 的跨 token/layer 信息。",
+    "method": [
+      "一个 2048 维 RL token；离线 MSE，在线 TD 更新 router",
+      "仿真 RLT* 使用统一噪声空间骨架；真机采用动作空间 RLT"
+    ],
+    "evidence": "原文方法及协议核验，详见专题；本项目无新增效果结果。",
+    "project": "为经验后果监督加入同容量动作预测对照；先区分表征监督与在线更新收益。",
+    "boundary": "已核对方法/附录；未复现，未核实独立代码发布。",
+    "questions": [
+      "控制收益是否超过预测收益？",
+      "经验能否迁移且摊薄前置成本？"
+    ],
+    "note": "reader.html?path=notes/erlt.md",
+    "url": "https://arxiv.org/abs/2610.00913"
+  },
+  {
     "id": "knowin-glow",
     "title": "Knowin GLOW：执行回执与物理经验监督",
     "year": "2026",
