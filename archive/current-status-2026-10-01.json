@@ -1,0 +1,173 @@
+{
+  "as_of": "2026-10-01",
+  "metrics": [
+    {
+      "value": "12 fits / 324 streams",
+      "label": "10-01 CPU续作：Jev门槛诊断、Zeva延迟反馈；不是机器人闭环"
+    },
+    {
+      "value": "3 checkpoints",
+      "label": "FLARE验证阈值筛选测试，容易状态也被偏好；不代表控制或安全提升"
+    },
+    {
+      "value": "8 visual tests",
+      "label": "独立视觉遮挡接口通过CPU测试；真实VLA适配、热图和控制实验未完成"
+    },
+    {
+      "value": "99 + 12 fits",
+      "label": "续作99次预定诊断＋12次追加拟合已完成；不是机器人成功率实验"
+    },
+    {
+      "value": "3/3 FSDP",
+      "label": "单rank小模型更新与权重恢复通过；不代表完整online smoke"
+    },
+    {
+      "value": "8/20",
+      "label": "ManiSkill Stage 1 step 2000 固定闭环评测成功率40%"
+    },
+    {
+      "value": "274+/5000",
+      "label": "09-30晚间只读快照：baseline仍在GPU 0/1运行，更新已超过96,000"
+    },
+    {
+      "value": "35.9–42.2%",
+      "label": "Stage 2前五次256环境周期评估范围，尚未收敛"
+    },
+    {
+      "value": "0/10 vs 0/10",
+      "label": "100轮matched smoke中baseline与FLARE评估均无成功"
+    },
+    {
+      "value": "50/54",
+      "label": "FLARE在线latent_world张量真实更新；不等于控制提升"
+    },
+    {
+      "value": "20 steps / 320 updates",
+      "label": "Jev GPU 2 pilot完整退出；4次固定评估均50%，但selector未偏离reference"
+    },
+    {
+      "value": "2.44e-5",
+      "label": "Zeva支持度门控预测MSE；固定公式7.39e-5，仍非闭环或迁移证据"
+    },
+    {
+      "value": "34 passed",
+      "label": "VR单环境pilot已准备；另2项硬件skip，真实PICO在线验收待操作"
+    },
+    {
+      "value": "6 isolated lines",
+      "label": "baseline / FLARE / Zeva / Jev / VR / visual保持隔离，visual仅离线原型"
+    }
+  ],
+  "timeline": [
+    {
+      "title": "10-01 · 经验可信度诊断与独立视觉分支完成首版",
+      "body": "FLARE阈值只从原始验证回合确定；Zeva保存执行前预测与版本以防迟到反馈反复重置；Jev相对Q门槛减少早期错误也限制后期有效修正。均未改在线默认值。此前训练指标保留原记录日期，本轮没有新增baseline在线成绩。"
+    },
+    {
+      "title": "09-30晚间 · Jev完整online pilot完成",
+      "body": "2训练/4固定评估环境、20 outer steps、320次actor/critic更新、checkpoint与4个视频均完成；工程链路正常退出。"
+    },
+    {
+      "title": "50%评估不能归因为有限候选修正",
+      "body": "reference probability约0.901，greedy/target non-reference fraction全程为0；下一步先做matched reference-only control与selector数据支持诊断。"
+    },
+    {
+      "title": "09-30下午 · 99次预定诊断与12次追加拟合完成",
+      "body": "GPU 2上只共存缓存小模型，采样进程显存约574 MiB；GPU 0/1既有作业未操作。该矩阵与晚间Jev完整online pilot分开记录。"
+    },
+    {
+      "title": "结果驱动修正，而不是只延长训练",
+      "body": "Zeva用支持度缩放学习修正，保留成熟历史响应；Jev强BC加参考数据时连续对照反胜；FLARE逆序前缀影响很小，尚无强动作时序依赖证据。"
+    },
+    {
+      "title": "人工接管入口与下一轮匹配配置已准备",
+      "body": "VR是一个Windows环境＋GPU 2、horizon=1的独立learner，5000更新预算、BC发布门槛与恢复检查；不是直接接入正式64环境。FLARE matched profile已通过检查，尚未启动完整online。"
+    },
+    {
+      "title": "09-30 · 三分支审查与42组诊断完成",
+      "body": "修复FLARE masked NaN梯度；加入无动作消融、Zeva经验响应reader与Jev同幅度连续residual。三分支各完成单rank FSDP小模型更新及恢复；未运行新的完整机器人闭环。"
+    },
+    {
+      "title": "预测信息与控制收益分开报告",
+      "body": "首轮发现FLARE动作输入帮助预测、Zeva固定公式胜过直接读取器、Jev存在critic外推退化；下午续作进一步修正读取器并验证调参会改变排序，详见实验记录。"
+    },
+    {
+      "title": "科研故事形成于实验之后",
+      "body": "完成三个方案摘要、原理、否证条件、三张矢量架构图和一张真实结果图。邻近工作覆盖至09-30，包含09-29修订F4R；经验积累、记忆和residual本身不主张新颖。"
+    },
+    {
+      "title": "09-30 · Stage 1固定20回合完成",
+      "body": "step 2000得到8/20成功、return 0.4、平均episode长度335.25；job正常退出。20回合点估计不能证明充分收敛。"
+    },
+    {
+      "title": "正式baseline Stage 2正在运行",
+      "body": "64训练环境、256固定评估环境、5000步预算、expert关闭。晚间只读快照至少274步、更新超过96,000；35.9%–42.2%是此前五次评估范围，不是最新或最终成绩。"
+    },
+    {
+      "title": "FLARE 100轮在线对照未显示控制收益",
+      "body": "baseline与FLARE均正常退出，但各10次单环境评估全部失败；训练成功只发生在actor接管前的VLA reference阶段。"
+    },
+    {
+      "title": "FLARE预测模块确实在线更新",
+      "body": "54个latent_world张量中50个变化，预测loss后段低于前段；replay分布也在变化，因此不能据此宣称收敛或成功率提升。"
+    },
+    {
+      "title": "新增Jev启发的有限动作决策分支",
+      "body": "最多17个reference-relative候选、本地选择器、实际动作critic和精确候选bootstrap已实现；不调用Jev API，也不使用模拟器预演。"
+    },
+    {
+      "title": "Jev从CPU诊断推进到完整GPU pilot",
+      "body": "修复selector饱和、嵌套FSDP root与checkpoint汇总后，smoke和20-step pilot均完成；当前瓶颈是selector仍只偏好reference。"
+    },
+    {
+      "title": "Zeva与VR证据边界保持",
+      "body": "Zeva已有局部响应预测改进，暂无闭环或变化条件收益；VR本地控制与scripted learner smoke通过，真实PICO跨机器人工闭环仍未验收。"
+    },
+    {
+      "title": "当前科研结论",
+      "body": "已有可运行baseline与三个独立经验机制原型，但仍未证明加快RL收敛、减少人工干预、通用物理规律或跨任务迁移。"
+    }
+  ],
+  "plan": [
+    {
+      "priority": "P1",
+      "action": "将诊断推进到独立闭环，而非同时叠加三个新机制",
+      "evidence": "Jev门槛在开发集确定并记录拒绝代价；Zeva版本保护先验收异步执行；视觉先做真实录制帧固定噪声适配；FLARE加入同样本persistence对照。"
+    },
+    {
+      "priority": "P0",
+      "action": "保护并持续审计正式Stage 2 baseline",
+      "evidence": "每25步固定256环境评估、每50步checkpoint；记录success曲线、更新数、停止条件和最终选择规则"
+    },
+    {
+      "priority": "P0",
+      "action": "为Jev运行matched reference control并诊断selector",
+      "evidence": "同4个固定环境和预算；报告候选Q排序、实际非reference选择、BC/reference prior、数据支持与checkpoint"
+    },
+    {
+      "priority": "P1",
+      "action": "把已实现的Jev同边界对照推进到真实online数据",
+      "evidence": "合成数据对照已完成且保留负结果；接下来匹配reference、radius、调参、交互与评估预算，不能把合成最优reward当成功率"
+    },
+    {
+      "priority": "P1",
+      "action": "验收FLARE匹配配置与reference跟随",
+      "evidence": "matched profile已统一FSDP、BC热身与batch；先确认4环境pilot，再用至少20个独立固定初态比较success、transition、时延和显存"
+    },
+    {
+      "priority": "P1",
+      "action": "完成一个真实PICO到learner的端到端回合",
+      "evidence": "人工动作、实际执行、上传ack、update_step、policy_version和返回动作全部可审计"
+    },
+    {
+      "priority": "P1",
+      "action": "封存新条件检验Zeva支持度门控",
+      "evidence": "同分布预测已改进；下一步测试物理条件突变、高支持度旧经验失效和真实闭环，不能继续只在已查看的数据上调参"
+    },
+    {
+      "priority": "Later",
+      "action": "单变量成立后再组合与迁移",
+      "evidence": "先跨物理条件，再第二任务；报告旧任务保持，不提前混合FLARE、Zeva、Jev和VR"
+    }
+  ]
+}

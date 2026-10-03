@@ -1,0 +1,180 @@
+{
+  "checked": "2026-10-03",
+  "local_revision": "f2d1cf6486d309eb61785151bc33783bc64a967f",
+  "remote_diagnostic_revision": "abb4382362ae0c89f711009227cc236b6d6f8b4d",
+  "status": "development evidence; not proposed-method control results",
+  "files": {
+    "paired_manifest": {
+      "sha256": "5c2c77ed0da5655741c5743aa70a6b839fdc4fa44d0c8d0a804d8362de1bbab0",
+      "source_id": "paired_manifest",
+      "availability": "Private experiment artifact; original SHA-256 retained, infrastructure path omitted."
+    },
+    "reader_probes": {
+      "sha256": "3360f95a624d3701f627e2314078b99d58f10d3869f1c24f93347ad5f0c35d4a",
+      "source_id": "reader_probes",
+      "availability": "Private experiment artifact; original SHA-256 retained, infrastructure path omitted."
+    },
+    "fixed_formula": {
+      "sha256": "be5f7adc4cd43ea90028821a35034972afa87f4205204600b9faeb847a061fb2",
+      "source_id": "fixed_formula",
+      "availability": "Private experiment artifact; original SHA-256 retained, infrastructure path omitted."
+    },
+    "support_followup": {
+      "sha256": "3e2fc563b93340db427e569af1cda38dba21ba88d2e8874e2c2ad794d4915fb2",
+      "source_id": "support_followup",
+      "availability": "Private experiment artifact; original SHA-256 retained, infrastructure path omitted."
+    },
+    "overnight_log": {
+      "sha256": "621c9124a5de90d362126ac521570e75fa04c0d6c68e7b64e012e0a407663758",
+      "source_id": "overnight_log",
+      "availability": "Private experiment artifact; original SHA-256 retained, infrastructure path omitted."
+    },
+    "zeva_delay0": {
+      "sha256": "b2a89184f7b1b49d48b255915aab430de8bef55d9bae0d948481e0ce1c7a49bf",
+      "rows": 90,
+      "scope": "Synthetic gain shift; no robot, contact, task success or learned weights",
+      "source_id": "zeva_delay0",
+      "availability": "Private experiment artifact; original SHA-256 retained, infrastructure path omitted."
+    },
+    "zeva_delay2": {
+      "sha256": "08e811aafa29b66f79b82ca3760265b3bd59b1e55b9e9b109d41df9e2ce4e9cd",
+      "rows": 90,
+      "scope": "Synthetic gain shift; no robot, contact, task success or learned weights",
+      "source_id": "zeva_delay2",
+      "availability": "Private experiment artifact; original SHA-256 retained, infrastructure path omitted."
+    },
+    "zeva_delay5": {
+      "sha256": "4a0a20739e02edaff6c2de44d57c26e01b965f21a83b0c06794e0a5310cb4f45",
+      "rows": 90,
+      "scope": "Synthetic gain shift; no robot, contact, task success or learned weights",
+      "source_id": "zeva_delay5",
+      "availability": "Private experiment artifact; original SHA-256 retained, infrastructure path omitted."
+    },
+    "zeva_guard_delay0": {
+      "sha256": "678485f45fd1a735c026ef4c0d1cd93bcefdec04d7f6928377c7e5222f25d0a1",
+      "rows": 108,
+      "scope": "Synthetic gain shift; no robot, contact, task success or learned weights",
+      "source_id": "zeva_guard_delay0",
+      "availability": "Private experiment artifact; original SHA-256 retained, infrastructure path omitted."
+    },
+    "zeva_guard_delay2": {
+      "sha256": "ceb70db05800a4c01b3b4e8908d2691fdd768cc0e0cb02391faaf37117543d46",
+      "rows": 108,
+      "scope": "Synthetic gain shift; no robot, contact, task success or learned weights",
+      "source_id": "zeva_guard_delay2",
+      "availability": "Private experiment artifact; original SHA-256 retained, infrastructure path omitted."
+    },
+    "zeva_guard_delay5": {
+      "sha256": "2ac934d9296298c822ed5c15bd383850b09952e1fa0a1dbbc6af227324a878c8",
+      "rows": 108,
+      "scope": "Synthetic gain shift; no robot, contact, task success or learned weights",
+      "source_id": "zeva_guard_delay5",
+      "availability": "Private experiment artifact; original SHA-256 retained, infrastructure path omitted."
+    }
+  },
+  "metrics": {
+    "archive": {
+      "mean_mse": 0.00018267499884435287,
+      "seeds": [
+        2026,
+        2027,
+        2028
+      ],
+      "per_seed_mse": [
+        0.00018129724776372313,
+        0.0001830317050917074,
+        0.00018369604367762804
+      ]
+    },
+    "full": {
+      "mean_mse": 0.00018143304138599584,
+      "seeds": [
+        2026,
+        2027,
+        2028
+      ],
+      "per_seed_mse": [
+        0.00018245016690343618,
+        0.00018034788081422448,
+        0.00018150107644032687
+      ]
+    },
+    "none": {
+      "mean_mse": 0.00018210986066454402,
+      "seeds": [
+        2026,
+        2027,
+        2028
+      ],
+      "per_seed_mse": [
+        0.00018141376494895667,
+        0.00018181971972808242,
+        0.00018309609731659293
+      ]
+    },
+    "recent": {
+      "mean_mse": 0.00018175638009173176,
+      "seeds": [
+        2026,
+        2027,
+        2028
+      ],
+      "per_seed_mse": [
+        0.00018280830408912152,
+        0.000180438844836317,
+        0.00018202199134975672
+      ]
+    },
+    "response": {
+      "mean_mse": 0.00017532872637578598,
+      "seeds": [
+        2026,
+        2027,
+        2028
+      ],
+      "per_seed_mse": [
+        0.00017470117018092424,
+        0.00017879334336612374,
+        0.00017249166558030993
+      ]
+    },
+    "fixed_formula": {
+      "mse": 7.388923404505476e-05,
+      "episode_balanced_mse": 7.388924056783708e-05,
+      "late_mse": 1.6571066225878894e-05
+    },
+    "response_residual": {
+      "mean_mse": 5.670613002924559e-05,
+      "mean_late_mse": 2.3687087680931047e-05,
+      "seeds": [
+        2026,
+        2027,
+        2028,
+        2029,
+        2030,
+        2031
+      ]
+    },
+    "response_supported": {
+      "mean_mse": 2.4416778311812475e-05,
+      "mean_late_mse": 1.65879982887418e-05,
+      "seeds": [
+        2026,
+        2027,
+        2028,
+        2029,
+        2030,
+        2031
+      ]
+    }
+  },
+  "synthetic_method_condition_seed_rows": 594,
+  "synthetic_count_note": "594 method-condition-seed evaluations across six files: 270 legacy plus 324 guarded-follow-up rows. The latest three guarded files alone contain 324 rows (6 methods x 3 conditions x 6 seeds x 3 delays). Methods and versions reuse paired random streams; these are not independent robot trials.",
+  "latest_guarded_followup_rows": 324,
+  "preflight_checks": {
+    "date": "2026-10-03",
+    "baseline_gpu0": "passed config/path check only",
+    "attention_gpu1": "passed config/path check only"
+  },
+  "publication_note": "Public copy: no internal paths; hashes identify private raw evidence and do not imply public availability."
+}

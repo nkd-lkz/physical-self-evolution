@@ -1,0 +1,95 @@
+{
+  "checked": "2026-10-03",
+  "items": [
+    {
+      "sha": "c70606f08cdca259b8dec03d4430926b5b8fac9d",
+      "title": "fix(scheduler): avoid aborts in concurrent group creation (#1645)",
+      "date": "2026-10-02T08:56:10Z",
+      "url": "https://github.com/RLinf/RLinf/commit/c70606f08cdca259b8dec03d4430926b5b8fac9d"
+    },
+    {
+      "sha": "034579cbfc4643f72c184ffc06458f788c09b3e6",
+      "title": "fix(agent): pin OpenTelemetry for AgentLightning (#1643)",
+      "date": "2026-10-01T09:47:10Z",
+      "url": "https://github.com/RLinf/RLinf/commit/034579cbfc4643f72c184ffc06458f788c09b3e6"
+    },
+    {
+      "sha": "d34d4c320d08cb982de034aa9a011f08dc0fa217",
+      "title": "docs(readme): add robotic interface and update IsaacLab doc link (#1633)",
+      "date": "2026-09-30T02:49:26Z",
+      "url": "https://github.com/RLinf/RLinf/commit/d34d4c320d08cb982de034aa9a011f08dc0fa217"
+    },
+    {
+      "sha": "61ba34e640035f2e4ac4ef3c6078f02d43a00c9a",
+      "title": "fix: pin EmbodiChain below 0.3 (#1630)",
+      "date": "2026-09-29T10:36:39Z",
+      "url": "https://github.com/RLinf/RLinf/commit/61ba34e640035f2e4ac4ef3c6078f02d43a00c9a"
+    },
+    {
+      "sha": "7d2dfa77faffa7887304670d5fcaed1128b84ae8",
+      "title": "feat: support new Dagger in Robotwin (#1551)",
+      "date": "2026-09-29T05:27:11Z",
+      "url": "https://github.com/RLinf/RLinf/commit/7d2dfa77faffa7887304670d5fcaed1128b84ae8"
+    },
+    {
+      "sha": "77ed948d68f07f55b4bc433b7643a409b2cd1adb",
+      "title": "docs(embodiment): correct grpo group_size comment (#1616)",
+      "date": "2026-09-29T02:18:06Z",
+      "url": "https://github.com/RLinf/RLinf/commit/77ed948d68f07f55b4bc433b7643a409b2cd1adb"
+    },
+    {
+      "sha": "2f22b5866c98a9a11f60a4921ec1838d0aca11c1",
+      "title": "docs: add Pi0-FAST and Biren support to what's new (#1618)",
+      "date": "2026-09-29T02:13:47Z",
+      "url": "https://github.com/RLinf/RLinf/commit/2f22b5866c98a9a11f60a4921ec1838d0aca11c1"
+    },
+    {
+      "sha": "b32599ade81ee59a8c0a2df0ff0fd497d076ebe8",
+      "title": "fix(replay): honor the effective cache setting (#1572)",
+      "date": "2026-09-29T01:33:06Z",
+      "url": "https://github.com/RLinf/RLinf/commit/b32599ade81ee59a8c0a2df0ff0fd497d076ebe8"
+    },
+    {
+      "sha": "edca3a56ab396e9388aa1d1665ff55413b0d3287",
+      "title": "fix(data): propagate replay prefetch sampling failures (#1571)",
+      "date": "2026-09-28T17:03:03Z",
+      "url": "https://github.com/RLinf/RLinf/commit/edca3a56ab396e9388aa1d1665ff55413b0d3287"
+    },
+    {
+      "sha": "dec2377bb8fa726827b36b12bb99cbfba12657dd",
+      "title": "fix(fsdp): preserve per-rank RNG in DCP checkpoints (#1570)",
+      "date": "2026-09-28T12:46:42Z",
+      "url": "https://github.com/RLinf/RLinf/commit/dec2377bb8fa726827b36b12bb99cbfba12657dd"
+    },
+    {
+      "sha": "20ad900fb8350bb53c980cbdc761d8b5caabb99a",
+      "title": "fix(fsdp2): restore local shards as distributed tensors (#1569)",
+      "date": "2026-09-28T10:07:17Z",
+      "url": "https://github.com/RLinf/RLinf/commit/20ad900fb8350bb53c980cbdc761d8b5caabb99a"
+    },
+    {
+      "sha": "d1bf37cdc73bba24218d523b08c1c88fcffd9deb",
+      "title": "fix(vlm): support transformers 5 in VLM SFT (#1610)",
+      "date": "2026-09-25T13:11:14Z",
+      "url": "https://github.com/RLinf/RLinf/commit/d1bf37cdc73bba24218d523b08c1c88fcffd9deb"
+    },
+    {
+      "sha": "807e5fdd836f0c3671fd351f65faf3bce5ddaf35",
+      "title": "fix(eval): default run_eval.sh rendering to EGL (#1607)",
+      "date": "2026-09-24T14:37:39Z",
+      "url": "https://github.com/RLinf/RLinf/commit/807e5fdd836f0c3671fd351f65faf3bce5ddaf35"
+    },
+    {
+      "sha": "880477d4d4ef4488faf908a2a5bff6e81f607acd",
+      "title": "fix(docker): drop FA4 from the reason image by default (#1604)",
+      "date": "2026-09-24T13:04:38Z",
+      "url": "https://github.com/RLinf/RLinf/commit/880477d4d4ef4488faf908a2a5bff6e81f607acd"
+    },
+    {
+      "sha": "010990e5c81ae17d141d3eab584a3bd1791df950",
+      "title": "fix(cosmos3): make the Cosmos3 SFT and SGLang eval examples run (#1602)",
+      "date": "2026-09-24T09:40:59Z",
+      "url": "https://github.com/RLinf/RLinf/commit/010990e5c81ae17d141d3eab584a3bd1791df950"
+    }
+  ]
+}

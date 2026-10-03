@@ -1,5 +1,15 @@
 # 科研决策日志
 
+## 2026-10-03 · 仿真 baseline 验收先于 Stage 1B
+
+当前聚焦一条 Zeva 启发的交互记忆主线，先确认 baseline 的训练与评估可复现。优先验收 AlphaBrain／LIBERO 配套公开模型，再尝试 full-token RLT 的 Stage 1／Stage 2 重训；RLinf 既有代码与负结果保留。该决定不等于新增候选已安装或复现成功。
+
+通过至少三 seed 的无辅助成功率、交互量和 wall-clock 验收后，再做 none／recent／attention／response；冻结参数重试与变化条件测试用于区分经验本身、权重更新及负迁移。原 Stage 1B 设计保留，但不先扩网络。
+
+依据：[10-03 日报](progress-2026-10-03.md)、[源码与公开结果核查](literature/rlt-simulation-baselines-2026-10-03.md)。
+
+---
+
 ## 2026-09-22 · 干预研究合同与小算力恢复（待实施）
 
 - 当前入口改为冻结reference恢复、最小专家纠错和缓存特征probe；大规模RLT收敛不是离线表示研究的前提，正式在线归因仍需可信matched learner。

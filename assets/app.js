@@ -9,9 +9,10 @@ async function loadJSON(path){const r=await fetch(path);if(!r.ok)throw Error(pat
 function tags(xs){return xs.map(x=>'<span class="tag">'+esc(x)+'</span>').join('');}
 function renderStatus(s){
  $('asOf').textContent='最近记录 '+s.as_of;$('statusDate').textContent=s.as_of+' · 非实时训练监控';
- // Pick representative evidence by meaning, never copy numbers into homepage HTML.
+ // Explicit current priorities take precedence; retain the historical fallback.
  const groups=[/Stage 1/,/Stage 2.*评估/,/matched smoke|baseline与FLARE/,/Jev GPU|Jev.*pilot/];
- const metrics=groups.map(re=>s.metrics.find(m=>re.test(m.label))).filter(Boolean);
+ const selected=s.metrics.filter(m=>m.featured===true);
+ const metrics=selected.length?selected.slice(0,4):groups.map(re=>s.metrics.find(m=>re.test(m.label))).filter(Boolean);
  for(const m of s.metrics){if(metrics.length>=4)break;if(!metrics.includes(m))metrics.push(m);}
  $('statusMetrics').innerHTML=metrics.map(m=>'<article class="metric"><strong>'+esc(m.value)+'</strong><p>'+esc(m.label)+'</p></article>').join('');
  $('allEvidence').innerHTML='<div class="evidence-list">'+s.metrics.map(m=>'<p><b>'+esc(m.value)+'</b><br>'+esc(m.label)+'</p>').join('')+'</div>'+s.timeline.map(t=>'<div class="timeline-note"><b>'+esc(t.title)+'</b><p class="muted">'+esc(t.body)+'</p></div>').join('');

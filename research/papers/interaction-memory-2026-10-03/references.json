@@ -1,0 +1,514 @@
+[
+  {
+    "key": "rlt",
+    "arxiv": "2604.23073",
+    "title": "RL Token: Bootstrapping Online RL with Vision-Language-Action Models",
+    "authors": [
+      "Xu, Charles",
+      "Springenberg, Jost Tobias",
+      "Equi, Michael",
+      "Amin, Ali",
+      "Esmail, Adnan",
+      "Levine, Sergey",
+      "Ke, Liyiming"
+    ],
+    "date": "2026/04/24",
+    "url": "https://arxiv.org/abs/2604.23073",
+    "checked": "2026-10-03",
+    "status": "verified primary metadata"
+  },
+  {
+    "key": "erlt",
+    "arxiv": "2610.00913",
+    "title": "eRLT: Efficient VLA Reinforcement Learning via Action-Relevant Token Routing",
+    "authors": [
+      "Huang, Dehao",
+      "Liu, Jianbang",
+      "Gao, Jianpan",
+      "Tang, Chao",
+      "Cen, Zilang",
+      "Dan, Zedong",
+      "Wang, Jiaheng",
+      "Li, Tingguang",
+      "Wang, Yue",
+      "Zhang, Hong"
+    ],
+    "date": "2026/10/01",
+    "url": "https://arxiv.org/abs/2610.00913",
+    "checked": "2026-10-03",
+    "status": "verified primary metadata"
+  },
+  {
+    "key": "zeva",
+    "arxiv": "2608.30880",
+    "title": "Zeva: In-Context Causal Learning for Generalizable Embodied Manipulation",
+    "authors": [
+      "Chen, Fu",
+      "Ding, Xin",
+      "Huang, Bingjia",
+      "Li, Xiangyu",
+      "Wang, Mingju",
+      "He, Jiawei",
+      "Li, Kun",
+      "Sun, Wei",
+      "Liu, Yunxin",
+      "Wu, Hao",
+      "Cao, Ting"
+    ],
+    "date": "2026/08/31",
+    "url": "https://arxiv.org/abs/2608.30880",
+    "checked": "2026-10-03",
+    "status": "verified primary metadata"
+  },
+  {
+    "key": "flare",
+    "arxiv": "2505.15659",
+    "title": "FLARE: Robot Learning with Implicit World Modeling",
+    "authors": [
+      "Zheng, Ruijie",
+      "Wang, Jing",
+      "Reed, Scott",
+      "Bjorck, Johan",
+      "Fang, Yu",
+      "Hu, Fengyuan",
+      "Jang, Joel",
+      "Kundalia, Kaushil",
+      "Lin, Zongyu",
+      "Magne, Loic",
+      "Narayan, Avnish",
+      "Tan, You Liang",
+      "Wang, Guanzhi",
+      "Wang, Qi",
+      "Xiang, Jiannan",
+      "Xu, Yinzhen",
+      "Ye, Seonghyeon",
+      "Kautz, Jan",
+      "Huang, Furong",
+      "Zhu, Yuke",
+      "Fan, Linxi"
+    ],
+    "date": "2025/05/21",
+    "url": "https://arxiv.org/abs/2505.15659",
+    "checked": "2026-10-03",
+    "status": "verified primary metadata"
+  },
+  {
+    "key": "imagine",
+    "arxiv": "2609.24033",
+    "title": "Imagine-RL: Residual-Confidence-Guided Cross-Attention for World-Model-Augmented VLA Reinforcement Learning",
+    "authors": [
+      "Hu, Kejia",
+      "Zhai, Wentong",
+      "Zhao, Bo",
+      "Liang, Shuai"
+    ],
+    "date": "2026/09/21",
+    "url": "https://arxiv.org/abs/2609.24033",
+    "checked": "2026-10-03",
+    "status": "verified primary metadata"
+  },
+  {
+    "key": "memoryvla",
+    "arxiv": "2508.19236",
+    "title": "MemoryVLA: Perceptual-Cognitive Memory in Vision-Language-Action Models for Robotic Manipulation",
+    "authors": [
+      "Shi, Hao",
+      "Xie, Bin",
+      "Liu, Yingfei",
+      "Sun, Lin",
+      "Liu, Fengrong",
+      "Wang, Tiancai",
+      "Zhou, Erjin",
+      "Fan, Haoqiang",
+      "Zhang, Xiangyu",
+      "Huang, Gao"
+    ],
+    "date": "2025/08/26",
+    "url": "https://arxiv.org/abs/2508.19236",
+    "checked": "2026-10-03",
+    "status": "verified primary metadata"
+  },
+  {
+    "key": "dsrl",
+    "arxiv": "2506.15799",
+    "title": "Steering Your Diffusion Policy with Latent Space Reinforcement Learning",
+    "authors": [
+      "Wagenmaker, Andrew",
+      "Nakamoto, Mitsuhiko",
+      "Zhang, Yunchu",
+      "Park, Seohong",
+      "Yagoub, Waleed",
+      "Nagabandi, Anusha",
+      "Gupta, Abhishek",
+      "Levine, Sergey"
+    ],
+    "date": "2025/06/18",
+    "url": "https://arxiv.org/abs/2506.15799",
+    "checked": "2026-10-03",
+    "status": "verified primary metadata"
+  },
+  {
+    "key": "hilserl",
+    "arxiv": "2410.21845",
+    "title": "Precise and Dexterous Robotic Manipulation via Human-in-the-Loop Reinforcement Learning",
+    "authors": [
+      "Luo, Jianlan",
+      "Xu, Charles",
+      "Wu, Jeffrey",
+      "Levine, Sergey"
+    ],
+    "date": "2024/10/29",
+    "url": "https://arxiv.org/abs/2410.21845",
+    "checked": "2026-10-03",
+    "status": "verified primary metadata"
+  },
+  {
+    "key": "rma",
+    "arxiv": "2107.04034",
+    "title": "RMA: Rapid Motor Adaptation for Legged Robots",
+    "authors": [
+      "Kumar, Ashish",
+      "Fu, Zipeng",
+      "Pathak, Deepak",
+      "Malik, Jitendra"
+    ],
+    "date": "2021/07/08",
+    "url": "https://arxiv.org/abs/2107.04034",
+    "checked": "2026-10-03",
+    "status": "verified primary metadata"
+  },
+  {
+    "key": "pearl",
+    "arxiv": "1903.08254",
+    "title": "Efficient Off-Policy Meta-Reinforcement Learning via Probabilistic Context Variables",
+    "authors": [
+      "Rakelly, Kate",
+      "Zhou, Aurick",
+      "Quillen, Deirdre",
+      "Finn, Chelsea",
+      "Levine, Sergey"
+    ],
+    "date": "2019/03/19",
+    "url": "https://arxiv.org/abs/1903.08254",
+    "checked": "2026-10-03",
+    "status": "verified primary metadata"
+  },
+  {
+    "key": "uposi",
+    "arxiv": "1702.02453",
+    "title": "Preparing for the Unknown: Learning a Universal Policy with Online System Identification",
+    "authors": [
+      "Yu, Wenhao",
+      "Tan, Jie",
+      "Liu, C. Karen",
+      "Turk, Greg"
+    ],
+    "date": "2017/02/08",
+    "url": "https://arxiv.org/abs/1702.02453",
+    "checked": "2026-10-03",
+    "status": "verified primary metadata"
+  },
+  {
+    "key": "varibad",
+    "arxiv": "1910.08348",
+    "title": "VariBAD: A Very Good Method for Bayes-Adaptive Deep RL via Meta-Learning",
+    "authors": [
+      "Zintgraf, Luisa",
+      "Shiarlis, Kyriacos",
+      "Igl, Maximilian",
+      "Schulze, Sebastian",
+      "Gal, Yarin",
+      "Hofmann, Katja",
+      "Whiteson, Shimon"
+    ],
+    "date": "2019/10/18",
+    "url": "https://arxiv.org/abs/1910.08348",
+    "checked": "2026-10-03",
+    "status": "verified primary metadata"
+  },
+  {
+    "key": "spr",
+    "arxiv": "2007.05929",
+    "title": "Data-Efficient Reinforcement Learning with Self-Predictive Representations",
+    "authors": [
+      "Schwarzer, Max",
+      "Anand, Ankesh",
+      "Goel, Rishab",
+      "Hjelm, R Devon",
+      "Courville, Aaron",
+      "Bachman, Philip"
+    ],
+    "date": "2020/07/12",
+    "url": "https://arxiv.org/abs/2007.05929",
+    "checked": "2026-10-03",
+    "status": "verified primary metadata"
+  },
+  {
+    "key": "rliable",
+    "arxiv": "2108.13264",
+    "title": "Deep Reinforcement Learning at the Edge of the Statistical Precipice",
+    "authors": [
+      "Agarwal, Rishabh",
+      "Schwarzer, Max",
+      "Castro, Pablo Samuel",
+      "Courville, Aaron",
+      "Bellemare, Marc G."
+    ],
+    "date": "2021/08/30",
+    "url": "https://arxiv.org/abs/2108.13264",
+    "checked": "2026-10-03",
+    "status": "verified primary metadata"
+  },
+  {
+    "key": "libero",
+    "arxiv": "2306.03310",
+    "title": "LIBERO: Benchmarking Knowledge Transfer for Lifelong Robot Learning",
+    "authors": [
+      "Liu, Bo",
+      "Zhu, Yifeng",
+      "Gao, Chongkai",
+      "Feng, Yihao",
+      "Liu, Qiang",
+      "Zhu, Yuke",
+      "Stone, Peter"
+    ],
+    "date": "2023/06/05",
+    "url": "https://arxiv.org/abs/2306.03310",
+    "checked": "2026-10-03",
+    "status": "verified primary metadata"
+  },
+  {
+    "key": "pi0",
+    "arxiv": "2410.24164",
+    "title": "$\\pi_0$: A Vision-Language-Action Flow Model for General Robot Control",
+    "authors": [
+      "Black, Kevin",
+      "Brown, Noah",
+      "Driess, Danny",
+      "Esmail, Adnan",
+      "Equi, Michael",
+      "Finn, Chelsea",
+      "Fusai, Niccolo",
+      "Groom, Lachy",
+      "Hausman, Karol",
+      "Ichter, Brian",
+      "Jakubczak, Szymon",
+      "Jones, Tim",
+      "Ke, Liyiming",
+      "Levine, Sergey",
+      "Li-Bell, Adrian",
+      "Mothukuri, Mohith",
+      "Nair, Suraj",
+      "Pertsch, Karl",
+      "Shi, Lucy Xiaoyang",
+      "Tanner, James",
+      "Vuong, Quan",
+      "Walling, Anna",
+      "Wang, Haohuan",
+      "Zhilinsky, Ury"
+    ],
+    "date": "2024/10/31",
+    "url": "https://arxiv.org/abs/2410.24164",
+    "checked": "2026-10-03",
+    "status": "verified primary metadata"
+  },
+  {
+    "key": "pi05",
+    "arxiv": "2504.16054",
+    "title": "$\\pi_{0.5}$: a Vision-Language-Action Model with Open-World Generalization",
+    "authors": [
+      "Intelligence, Physical",
+      "Black, Kevin",
+      "Brown, Noah",
+      "Darpinian, James",
+      "Dhabalia, Karan",
+      "Driess, Danny",
+      "Esmail, Adnan",
+      "Equi, Michael",
+      "Finn, Chelsea",
+      "Fusai, Niccolo",
+      "Galliker, Manuel Y.",
+      "Ghosh, Dibya",
+      "Groom, Lachy",
+      "Hausman, Karol",
+      "Ichter, Brian",
+      "Jakubczak, Szymon",
+      "Jones, Tim",
+      "Ke, Liyiming",
+      "LeBlanc, Devin",
+      "Levine, Sergey",
+      "Li-Bell, Adrian",
+      "Mothukuri, Mohith",
+      "Nair, Suraj",
+      "Pertsch, Karl",
+      "Ren, Allen Z.",
+      "Shi, Lucy Xiaoyang",
+      "Smith, Laura",
+      "Springenberg, Jost Tobias",
+      "Stachowicz, Kyle",
+      "Tanner, James",
+      "Vuong, Quan",
+      "Walke, Homer",
+      "Walling, Anna",
+      "Wang, Haohuan",
+      "Yu, Lili",
+      "Zhilinsky, Ury"
+    ],
+    "date": "2025/04/22",
+    "url": "https://arxiv.org/abs/2504.16054",
+    "checked": "2026-10-03",
+    "status": "verified primary metadata"
+  },
+  {
+    "key": "maniskill",
+    "arxiv": "2410.00425",
+    "title": "ManiSkill3: GPU Parallelized Robotics Simulation and Rendering for Generalizable Embodied AI",
+    "authors": [
+      "Tao, Stone",
+      "Xiang, Fanbo",
+      "Shukla, Arth",
+      "Qin, Yuzhe",
+      "Hinrichsen, Xander",
+      "Yuan, Xiaodi",
+      "Bao, Chen",
+      "Lin, Xinsong",
+      "Liu, Yulin",
+      "Chan, Tse-kai",
+      "Gao, Yuan",
+      "Li, Xuanlin",
+      "Mu, Tongzhou",
+      "Xiao, Nan",
+      "Gurha, Arnav",
+      "Rajesh, Viswesh Nagaswamy",
+      "Choi, Yong Woo",
+      "Chen, Yen-Ru",
+      "Huang, Zhiao",
+      "Calandra, Roberto",
+      "Chen, Rui",
+      "Luo, Shan",
+      "Su, Hao"
+    ],
+    "date": "2024/10/01",
+    "url": "https://arxiv.org/abs/2410.00425",
+    "checked": "2026-10-03",
+    "status": "verified primary metadata"
+  },
+  {
+    "key": "conrft",
+    "arxiv": "2502.05450",
+    "title": "ConRFT: A Reinforced Fine-tuning Method for VLA Models via Consistency Policy",
+    "authors": [
+      "Chen, Yuhui",
+      "Tian, Shuai",
+      "Liu, Shugao",
+      "Zhou, Yingting",
+      "Li, Haoran",
+      "Zhao, Dongbin"
+    ],
+    "date": "2025/02/08",
+    "url": "https://arxiv.org/abs/2502.05450",
+    "checked": "2026-10-03",
+    "status": "verified primary metadata"
+  },
+  {
+    "key": "robomme",
+    "arxiv": "2603.04639",
+    "title": "RoboMME: Benchmarking and Understanding Memory for Robotic Generalist Policies",
+    "authors": [
+      "Dai, Yinpei",
+      "Fu, Hongze",
+      "Lee, Jayjun",
+      "Liu, Yuejiang",
+      "Zhang, Haoran",
+      "Yang, Jianing",
+      "Finn, Chelsea",
+      "Fazeli, Nima",
+      "Chai, Joyce"
+    ],
+    "date": "2026/03/04",
+    "url": "https://arxiv.org/abs/2603.04639",
+    "checked": "2026-10-03",
+    "status": "verified primary metadata"
+  },
+  {
+    "key": "td3",
+    "arxiv": "1802.09477",
+    "title": "Addressing Function Approximation Error in Actor-Critic Methods",
+    "authors": [
+      "Fujimoto, Scott",
+      "van Hoof, Herke",
+      "Meger, David"
+    ],
+    "date": "2018/02/26",
+    "url": "https://arxiv.org/abs/1802.09477",
+    "checked": "2026-10-03",
+    "status": "verified primary metadata"
+  },
+  {
+    "key": "sac",
+    "arxiv": "1801.01290",
+    "title": "Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor",
+    "authors": [
+      "Haarnoja, Tuomas",
+      "Zhou, Aurick",
+      "Abbeel, Pieter",
+      "Levine, Sergey"
+    ],
+    "date": "2018/01/04",
+    "url": "https://arxiv.org/abs/1801.01290",
+    "checked": "2026-10-03",
+    "status": "verified primary metadata"
+  },
+  {
+    "key": "her",
+    "arxiv": "1707.01495",
+    "title": "Hindsight Experience Replay",
+    "authors": [
+      "Andrychowicz, Marcin",
+      "Wolski, Filip",
+      "Ray, Alex",
+      "Schneider, Jonas",
+      "Fong, Rachel",
+      "Welinder, Peter",
+      "McGrew, Bob",
+      "Tobin, Josh",
+      "Abbeel, Pieter",
+      "Zaremba, Wojciech"
+    ],
+    "date": "2017/07/05",
+    "url": "https://arxiv.org/abs/1707.01495",
+    "checked": "2026-10-03",
+    "status": "verified primary metadata"
+  },
+  {
+    "key": "rl2",
+    "arxiv": "1611.02779",
+    "title": "RL$^2$: Fast Reinforcement Learning via Slow Reinforcement Learning",
+    "authors": [
+      "Duan, Yan",
+      "Schulman, John",
+      "Chen, Xi",
+      "Bartlett, Peter L.",
+      "Sutskever, Ilya",
+      "Abbeel, Pieter"
+    ],
+    "date": "2016/11/09",
+    "url": "https://arxiv.org/abs/1611.02779",
+    "checked": "2026-10-03",
+    "status": "verified primary metadata"
+  },
+  {
+    "key": "tdmpc2",
+    "arxiv": "2310.16828",
+    "title": "TD-MPC2: Scalable, Robust World Models for Continuous Control",
+    "authors": [
+      "Hansen, Nicklas",
+      "Su, Hao",
+      "Wang, Xiaolong"
+    ],
+    "date": "2023/10/25",
+    "url": "https://arxiv.org/abs/2310.16828",
+    "checked": "2026-10-03",
+    "status": "verified primary metadata"
+  }
+]

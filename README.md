@@ -25,6 +25,12 @@ Living research website for **Universal Physical Token, robot self-improvement, 
 - [调研与阅读库](https://nkd-lkz.github.io/physical-self-evolution/index.html#library)：项目笔记自动收录，按类型与主题筛选。
 
 后续维护遵循 [统一发布流程](research/knowledge-base-maintenance.md)：源文件保留在原目录，首页自动汇总；不再新增竞争性总览。下面保留历次更新摘要供追溯。
+## 论文与 baseline 验收更新 — 2026-10-03
+
+[10-03 日报](research/progress-2026-10-03.md) 汇总当前证据与执行顺序；首页新增英文论文、中文指南及下载入口。论文是方法与评估方案完整的研究初稿，现有开发数据单列，正式控制／收敛／迁移结果待测。[公开材料](research/papers/interaction-memory-2026-10-03/index.html) 包含 PDF、HTML、LaTeX、图表、文献与脱敏证据清单。
+
+[七个 RLT 实现核查](research/literature/rlt-simulation-baselines-2026-10-03.md) 后，优先验收 AlphaBrain／LIBERO，先复评配套成品，再重新训练两阶段；尚未本地运行。Stage 1B 与新记忆网络后移，RLinf 原分支和历史实验保留。本轮没有新增 GPU 训练，也不把作者报告的 92% 当作本项目结果。
+
 ## 经验可信度与视觉诊断更新 — 2026-10-01
 
 [最新实现与实验记录](research/physical-rsi-source-intake-2026-09-30.md#2026-10-01-实现与实验续作)：核对 PhysicalRSI、EXPO-FT 和视觉近邻，完成 FLARE 验证阈值评估、Zeva 延迟反馈版本保护、Jev 相对参考动作准入诊断，并建立独立视觉证据分支。完成 12 次 CPU 小模型拟合、324 条合成延迟序列和 3 个 checkpoint 的缓存评估；保留门槛阻碍有效修正等负结果。没有新增机器人成功率结论，也没有占用正在使用的 GPU 2。[结果与校验值](data/evidence-gates-2026-10-01.json)。

@@ -1,5 +1,13 @@
 # 实验日志
 
+## 2026-10-03 · 论文初稿、证据复核与 baseline 调研
+
+完成英文交互记忆论文、中文执行指南、框架图、25 篇文献与拟议实验矩阵；复核既有 Zeva 响应预测和夜间运行，不新增 GPU 训练或独立评估。七个 RLT 实现核查后，优先对 AlphaBrain／LIBERO 做成品复评与两阶段重训验收；RLT_a 公开 92% 属作者结果，不是本项目复现。Stage 1B 与新记忆结构后移到 baseline 验收之后。
+
+[完整日报与论文下载](progress-2026-10-03.md) · [baseline 核查](literature/rlt-simulation-baselines-2026-10-03.md)。以下旧作业“正在运行”的说法保留当时日期，本轮未重新确认运行状态。
+
+---
+
 ## 2026-09-30 晚间 · Jev GPU pilot 完成，四条探索线边界更新
 
 Jev 启发分支 `d3618b18` 在物理 GPU 2 完成 2-step smoke 和独立 20-step ManiSkill pilot，均正常退出。pilot 使用 2 个训练环境、4 个固定评估环境和 500 控制步上限，共完成 320 次 actor/critic 更新；outer step 4/9/14/19 的固定评估 `success_once` 均为 0.5，并保存 checkpoint 与 4 个视频。工程链路已覆盖 rollout、真实执行动作 replay、FSDP 更新、评估与保存。

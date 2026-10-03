@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="zh"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>RLT 交互记忆实验指南</title><link href="document.css" rel="stylesheet"/></head><body class="zh"><nav><a href="../../../index.html">科研工作台</a> · <a href="index.html">Bundle home</a> · <a href="paper_en.pdf">English PDF</a> · <a href="experiment_guide_zh.pdf">中文指南 PDF</a></nav><h1 id="rlt-交互记忆研究的实验执行指南">RLT
+交互记忆研究的实验执行指南</h1>
+<p>这份指南把英文论文中的假设转换成当前 Zeva
+分支可以依次完成的开发与实验任务。先验收仿真 baseline；通过后在一个分支完成“正确的记忆输入—可学习的经验表征—匹配预算的控制收益—冻结参数后的经验收益”闭环，再扩展迁移和真机。当前最该补的是证据与训练目标，不是更大的网络。</p>
+<p><strong>日期：2026 年 10 月 3 日。目标：CVPR 2027。</strong>
+这是研究执行计划；下文明确区分当前可执行命令、需要开发的能力与已观察结果。本次只编写和验证材料，没有启动新训练。两组
+baseline／attention 只读预检均通过；它们检查路径和配置，不代表本次运行过
+GPU rollout。</p>
+<aside class="publication-note"><p><strong>10 月 3 日发布修订：</strong>先验收仿真 baseline，再开发 Stage 1B 与新记忆模块。AlphaBrain／LIBERO 目前仅完成源码和公开结果核查，尚未在本项目运行。下面第 4、11、13 节已按这一先后关系调整，方法和现有开发数据的证据边界不变。</p><p><a href="../../../reader.html?path=research/literature/rlt-simulation-baselines-2026-10-03.md">查看仓库对比与验收条件</a></p></aside><h2 id="先把研究主张定准确">1. 先把研究主张定准确</h2>
+<p>建议论文主线为：</p>
+<blockquote>
+<p>冻结 VLA
+提供当前场景与任务的表征；已经完成的动作及其真实后果提供执行条件的证据。我们学习如何把这种证据压缩为可检索、可更新的条件表征，供
+RLT 的小 actor／critic
+使用，并检验它是否降低在线交互成本、支持参数冻结后的适应，以及能否在相容的新条件中复用。</p>
+</blockquote>
+<p>这里有三层“经验”，不能混写。replay 中的 transition 通过 RL
+更新权重，是 baseline 已有的学习机制；运行时 memory
+改变下一次决策的输入，是要单独验证的无梯度适应；跨任务复用 source bank
+才涉及记录层面的迁移。权重迁移与记忆迁移必须分别做对照。</p>
+<p>“物理规律”暂时用操作性定义：表征包含对后续命令响应有预测价值的信息。它可以隐式表达执行条件，但不直接等于摩擦系数、刚度、接触力，更不能仅凭预测误差称为因果辨识。机器人不动可能是接触，也可能是饱和、限位或控制器响应不足。</p>
+<p>投稿主张只保留实验能支持的部分。若最终只有 q-only
+响应统计有效，就需要缩小“视觉交互表征”的表述；若 memory
+只改善预测、不改善控制，就不能继续写“加速 RL 收敛”。</p>
+<h2 id="当前代码与拟开发方法分别是什么">2.
+当前代码与拟开发方法分别是什么</h2>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr>
+<th>环节</th>
+<th>当前 Zeva 实现</th>
+<th>论文拟开发版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stage 1</td>
+<td>原 VLA action SFT 与 RL token 训练</td>
+<td>第一轮完全复用既有 checkpoint</td>
+</tr>
+<tr>
+<td>Stage 2 视觉坐标</td>
+<td>VLA／RL token 冻结</td>
+<td>保持冻结</td>
+</tr>
+<tr>
+<td>一条经验</td>
+<td>原始起始 q、执行动作前缀、原始 Δq、有效步 mask、结束标记</td>
+<td>再加入历史 z 与真实后继 z，并学习 event encoder</td>
+</tr>
+<tr>
+<td>短期与 archive</td>
+<td>最近 4 条；archive 容量 32；另检索 4 条</td>
+<td>先保持预算，后比较视觉＋关节检索</td>
+</tr>
+<tr>
+<td>检索</td>
+<td>起点 q 距离</td>
+<td>当前视觉与本体条件；不能使用隐藏物理参数</td>
+</tr>
+<tr>
+<td>读取器</td>
+<td>attention，或无参数 response</td>
+<td>Stage 1B 训练的 64 维 interaction context</td>
+</tr>
+<tr>
+<td>训练信号</td>
+<td>默认 reader 只受 critic TD 更新</td>
+<td>过去历史辅助预测后续动作结果；初版 Stage 2 冻结 reader</td>
+</tr>
+<tr>
+<td>使用位置</td>
+<td>小 actor／critic</td>
+<td>保留接口，先不改 action expert</td>
+</tr>
+<tr>
+<td>跨尝试</td>
+<td>可选，相同实例检查后保留 archive</td>
+<td>增加冻结参数下 retain／clear／shuffle 评估</td>
+</tr>
+<tr>
+<td>跨任务迁移</td>
+<td>尚未实现</td>
+<td>独立 source bank，限定相同 robot／controller／单位</td>
+</tr>
+</tbody>
+</table>
+<p>当前 110 维记录为
+<code>9 + 10×8 + 9 + 10 + 2</code>。记录真实执行的动作，不是 actor
+输出后未被选中的候选；发生 terminal
+时不把未执行尾部当作有效动作；先取得真正的终止后继，再 reset。</p>
+<p>当前 actor 输入为
+<code>[ref_chunk, z_rl, proprio, memory.detach()]</code>，critic 为
+<code>[z_rl, proprio, memory, action]</code>。读取器归 critic optimizer
+管，不能再通过 actor optimizer 重复拥有。原始 q 与经过 VLA transform 的
+proprio 不是同一数值坐标。</p>
+<table>
+<colgroup>
+<col style="width: 50%"/>
+<col style="width: 50%"/>
+</colgroup>
+<thead>
+<tr>
+<th>需要阅读或修改的文件</th>
+<th>当前责任／下一步</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>rlinf/<wbr/>models/<wbr/>embodiment/<wbr/>openpi/<wbr/>pi0.py</code></td>
+<td>核查 Stage 1 action expert 与 token 训练，不把 noisy demonstration
+hidden state 当作部署可见输入</td>
+</tr>
+<tr>
+<td><code>rlinf/<wbr/>models/<wbr/>embodiment/<wbr/>modules/<wbr/>rlt_<wbr/>token_<wbr/>transformer.py</code></td>
+<td>原 token 压缩与重建；先保持不变</td>
+</tr>
+<tr>
+<td><code>rlinf/<wbr/>algorithms/<wbr/>rlt/<wbr/>interaction_<wbr/>memory.py</code></td>
+<td>执行记录、有限容量、快照、reset 语义；扩展 schema 必须版本化</td>
+</tr>
+<tr>
+<td><code>rlinf/<wbr/>models/<wbr/>embodiment/<wbr/>modules/<wbr/>rlt_<wbr/>memory_<wbr/>encoder.py</code></td>
+<td>attention／response 接口；新增 pretrained context 的载入与冻结</td>
+</tr>
+<tr>
+<td><code>rlinf/<wbr/>models/<wbr/>embodiment/<wbr/>mlp_<wbr/>policy/<wbr/>rlt_<wbr/>mlp_<wbr/>policy.py</code></td>
+<td>actor／critic 条件拼接与梯度边界</td>
+</tr>
+<tr>
+<td><code>rlinf/<wbr/>workers/<wbr/>actor/<wbr/>fsdp_<wbr/>rlt_<wbr/>ac_<wbr/>policy_<wbr/>worker.py</code></td>
+<td>critic 所有权、chunk 折扣、BC 与 Q 更新；路径已核实</td>
+</tr>
+<tr>
+<td><code>toolkits/<wbr/>rlt/<wbr/>probe_<wbr/>memory_<wbr/>dynamics.py</code></td>
+<td>现有预测诊断；可复用数据处理思路，不能当完整 Stage 1B</td>
+</tr>
+<tr>
+<td><code>run_<wbr/>rlt_<wbr/>portable.sh</code></td>
+<td>GPU 隔离与预检；需补正式 variant／seed／routing 参数</td>
+</tr>
+<tr>
+<td><code>examples/<wbr/>embodiment/<wbr/>config/<wbr/>experiment/<wbr/>rlt_<wbr/>memory.yaml</code></td>
+<td>现有 overlay；新模块应保持配置显式、可追溯</td>
+</tr>
+</tbody>
+</table>
+<h2 id="最小方法让历史表征为未来结果提供信息">3.
+最小方法：让历史表征为未来结果提供信息</h2>
+<p>训练样本严格按时间构造：<code>过去记录 → 当前条件 c_t → 当前实际执行动作 → 后续 Δq／z</code>。<code>c_t</code>
+中只能包含已经完成的旧事件。预测头可以读取训练目标对应的动作，但不能读取其结果；这条动作完成后才能写入下一个
+memory。</p>
+<p>第一版采用 64 维 event/context，128 隐藏维、两层轻量时序编码器、4 个
+attention heads。保留动作顺序与 valid mask；先做 q 变化 Huber loss
+和后继 z 的 cosine loss。选择直接预测作为初始 latent head，保留 residual
+对照。权重从 <code>lambda_q=1</code>、<code>lambda_z∈{0,0.1,1}</code>
+开始，按训练集标准化，并只用 validation
+选配置。它们是起始设定，不是已有最优参数。Zeva
+已有前／后交互后果预测，因此这一 loss 属于借鉴；reader 训练接到 RLT
+上是否形成足够的新贡献，仍取决于直接近邻对照和新的实证发现，不能由叙事保证。</p>
+<p>不能只让 encoder 重建自己输入的
+Δq。那样只证明会压缩记录，不证明对下一步有用。训练目标必须是后续、互不重叠的
+chunk；同一 trajectory／pair 的所有窗口进入同一 split。norm、候选
+bank、统计阈值均不得接触测试数据。</p>
+<p>先用固定 horizon 的有效非跨 reset 窗口建立预测诊断。完整 terminal
+transition 仍可用于 RL；预测数据若排除了
+terminal，需要单独报告筛选比例与终止附近误差。不能把“已经成功所以提前结束”的长度或
+success flag 作为免费未来提示。用于线上 residual
+检测时，必须在执行前固定预测 horizon，并明确反馈对应哪一次预测。</p>
+<p>Stage 1B 先离线学 encoder／reader／decoder，Stage 2
+初版冻结前两者，只训练 actor／critic，保留全部 baseline
+参数。这样可以检查“已有可用经验坐标是否帮助 RL”。之后再比较
+TD＋辅助预测在线更新 reader；若更新，则旧 replay
+保留原始快照并重新编码，缓存 key 需要版本控制。</p>
+<p>失败数据进入两条路径：真实后果训练 predictor；真实 reward 与
+successor 训练 critic。不要把失败动作自动加入正向
+BC。奖励用于任务价值，不默认写进可迁移的物理 event。接触标签若取自
+simulator，只能是明确标注的 privileged auxiliary supervision，测试
+policy 不得读取。</p>
+<h3 id="stage-1b-的最小数据与-checkpoint-contract">Stage 1B 的最小数据与
+checkpoint contract</h3>
+<p>拟新增缓存每行包含
+<code>trajectory_id, chunk_id, start_z, next_z, start_q[9], next_q[9], executed_actions[10,8], valid_ticks[10], true_terminal, truncation, controller_schema_id</code>。视觉
+z 的实际维度从固定 Stage 1 checkpoint
+读取，不在数据脚本另写一份常数。raw q 必须来自执行环境，不能从归一化
+proprio 反推而不核对 transform。source task 和隐藏 physics 标签只用于
+split／分析，与模型输入字段分开保存。</p>
+<p>样本 builder 先按完整 trajectory/pair 划分
+train／validation／test，再在各自 split 内构造“前四条＋旧
+archive”的快照。训练时重建 past-only bank；测试 source bank
+仅来自训练源任务。缓存需要 Stage 1 权重 hash、controller 单位、action
+scale、simulator revision、训练集 normalizer 与 schema version。若
+successor 是 reset 后状态，丢弃预测样本并修复
+collector；不能把它当随机噪声继续训练。</p>
+<p>拟新增的 Stage 1B trainer 只载入缓存，训练 event encoder、reader
+和预测头，导出包含架构参数、normalizer、schema version、Stage 1
+hash、weights 和 validation 选择依据的 checkpoint。Stage 2
+严格核验这些字段。第一版 decoder 不参与 actor 推理；需要 residual
+监测时另测其时延。测试覆盖 future-record 排除、paired
+split、空记忆、terminal/padding、checkpoint
+不匹配拒绝和冻结参数边界。模块名与 CLI
+需开发后再确定，本文没有把未实现脚本当可执行入口。</p>
+<h2 id="前-72-小时先完成什么">4. 先完成 baseline 验收</h2>
+<p>以下是执行顺序与验收条件，不是已经完成的实验，也不承诺固定小时数内收敛。暂缓新增 Stage 1B、action-expert 约束和多种记忆网络。</p>
+<table><thead><tr><th>阶段</th><th>执行内容</th><th>通过条件</th><th>两张卡如何使用</th></tr></thead><tbody>
+<tr><td>A：公开模型复评</td><td>固定 AlphaBrain 604924b，加载配套 Qwen VLA 与 RLT_a 发布权重；先 task 0／3／6 各 20 回合，再完整 10×50 回合。</td><td>相同初始状态与动作协议；保存逐回合记录。小样本不能直接比较公开整体 92%。</td><td>GPU 0：VLA-only；GPU 1：发布模型。先从少量环境 worker 测资源。</td></tr>
+<tr><td>B：重新训练两阶段</td><td>优先尝试同仓库 full-token RLT 与已验收的 Qwen VLA。显式提供 Stage 1 demonstration 配置；随后训练 Stage 2。</td><td>BC warmup 保持基本能力；实际采样和更新计数正常；保存／恢复后的动作与评估一致。</td><td>先一个 seed 排查，再并行不同 seed；环境数量由实测吞吐和内存决定。</td></tr>
+<tr><td>C：确认 baseline</td><td>至少 3 个训练 seed，在有成功样本且未饱和的任务上对比初始 VLA。</td><td>同时记录无辅助成功率、环境 step、有效 chunk、wall-clock 和成功轨迹数；报告波动及负结果。</td><td>同一实现、同一训练预算。正式关键对照再扩到 5 个 seed。</td></tr>
+<tr><td>D：交互记忆对照</td><td>仅在 baseline 通过后，比较 none／recent／attention／response，再开发 consequence reader。</td><td>统一初始化、routing、数据和交互预算；后续独立测试 retain／clear 与条件变化。</td><td>两张卡跑匹配组或不同 seed，不同时更换多个模块。</td></tr>
+</tbody></table>
+<p>RLT_a 的公开 92% 与 full-token RLT 不是同一方法；前者用于验收仿真链路，后者仍需独立重训。若必须保持 π0.5，需要先确认配套 checkpoint 与数据，不能把 Qwen 结果当 π0.5 复现。Stage 2 不要求 VR，仿真可提供奖励；没有纠正数据时仍需确认初始 VLA 能采到成功轨迹。</p>
+<p>原 ManiSkill 路线保留作为历史证据与候选实现。其 12 小时 memory run、关键阶段 baseline 和短 smoke 采用不同控制与预算，不能直接比较。原先建议的 2,000 chunks 只是 pilot 预算示例，正式预算应由实测吞吐和 baseline 学习曲线确定。</p>
+<h3 id="当前能直接运行的预检">当前能直接运行的预检</h3>
+<p>以下保留的是 ManiSkill 历史预检入口，不是 AlphaBrain 命令。公开版本使用 RLT_REPO 与 RLT_ENV 占位变量，需要先设置为自己的项目目录和环境目录。命令只验证现有配置和资源路径，不启动训练、不创建 Ray
+服务。两个命令应分别检查 GPU 0 和 GPU 1。</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a aria-hidden="true" href="#cb1-1" tabindex="-1"></a><span class="bu">cd</span> "${RLT_REPO}"</span>
+<span id="cb1-2"><a aria-hidden="true" href="#cb1-2" tabindex="-1"></a><span class="va">RLINF_VENV</span><span class="op">=</span>"${RLT_ENV}" <span class="dt">\</span></span>
+<span id="cb1-3"><a aria-hidden="true" href="#cb1-3" tabindex="-1"></a><span class="va">RLT_PHYSICAL_GPU</span><span class="op">=</span>0 <span class="va">RLT_SMOKE_PROFILE</span><span class="op">=</span>overnight <span class="dt">\</span></span>
+<span id="cb1-4"><a aria-hidden="true" href="#cb1-4" tabindex="-1"></a><span class="va">RLT_SMOKE_STEPS</span><span class="op">=</span>2 <span class="va">RLT_EPISODE_STEPS</span><span class="op">=</span>500 <span class="dt">\</span></span>
+<span id="cb1-5"><a aria-hidden="true" href="#cb1-5" tabindex="-1"></a><span class="fu">bash</span> run_rlt_portable.sh <span class="at">--check</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a aria-hidden="true" href="#cb2-1" tabindex="-1"></a><span class="bu">cd</span> "${RLT_REPO}"</span>
+<span id="cb2-2"><a aria-hidden="true" href="#cb2-2" tabindex="-1"></a><span class="va">RLINF_VENV</span><span class="op">=</span>"${RLT_ENV}" <span class="dt">\</span></span>
+<span id="cb2-3"><a aria-hidden="true" href="#cb2-3" tabindex="-1"></a><span class="va">RLT_PHYSICAL_GPU</span><span class="op">=</span>1 <span class="va">RLT_SMOKE_PROFILE</span><span class="op">=</span>overnight <span class="dt">\</span></span>
+<span id="cb2-4"><a aria-hidden="true" href="#cb2-4" tabindex="-1"></a><span class="va">RLT_SMOKE_STEPS</span><span class="op">=</span>2 <span class="va">RLT_EPISODE_STEPS</span><span class="op">=</span>500 <span class="dt">\</span></span>
+<span id="cb2-5"><a aria-hidden="true" href="#cb2-5" tabindex="-1"></a><span class="fu">bash</span> run_rlt_portable.sh <span class="at">--memory</span> <span class="at">--check</span></span></code></pre></div>
+<p>当前 <code>run_rlt_portable.sh --memory</code> 固定选择 attention
+overlay，没有正式的 seed／reader／routing
+参数入口。不要通过设置一个未被脚本读取的环境变量，误以为已经切换
+response 或种子。当前 overnight 辅助路径继承
+<code>always_on</code>，正式关键阶段 baseline 使用不同
+routing；所有对比必须统一。</p>
+<p>以下是<strong>拟开发的配置需求，不是可复制执行的命令</strong>：<code>variant={none,recent,attention,response,consequence}</code>、<code>seed</code>、<code>routing={auto,always_on}</code>、固定
+valid-tick 预算、冻结 encoder 选项、memory reset
+规则、无专家与固定专家预算、独立评估 reset IDs。应使用同一 launcher
+与不同静态 Hydra overlay，避免为每个方法复制一套脚本。</p>
+<h2 id="先补的工程约束">5. 先补的工程约束</h2>
+<ol type="1">
+<li><strong>实验矩阵能真实切换。</strong> response 无可训练 memory
+参数，不能沿用
+<code>audit_adapter --prefix memory_encoder. --require-change</code>
+的成功条件；它应验证 actor／critic
+更新、响应特征正确、无意外参数，而非要求固定读取器变化。模型 shape
+改变时不能直接续训旧 Stage 2 ckpt。</li>
+<li><strong>replay 恢复覆盖 cache eviction。</strong> 小到没有淘汰的
+resume smoke 不够。保存文件、index、sample count、trajectory counter
+与分 rank 恢复需要一致；恢复后再次 append／sample 也要正确。现有 runtime
+memory 不自动随 Ray 环境恢复，应明确 reset，不声称 bitwise mid-episode
+resume。</li>
+<li><strong>执行与时序一致。</strong> 改动 joint memory 时验证被 routing
+选中的动作、提前 terminal、真正 terminal successor、partial reset、owned
+snapshot、NaN padding 和 all-empty attention。测试应放现有对应 component
+文件，不按 bug 新建一堆文件。</li>
+<li><strong>单位明确。</strong> <code>pd_joint_delta_pos</code> 归一化
+command 与 rad 不可直接相减；当前 response arm scale 为
+0.1，必须核对实际 controller。视觉 latent 与经过 transform 的 proprio
+也不能当原始物理量。旧预测诊断把旋转臂关节与直线手指坐标一起平均，不能把整体
+MSE 解释成 rad²；新实验应分别报告 arm／finger
+误差及训练集标准化后的聚合误差。</li>
+<li><strong>证据输入可部署。</strong> 隐藏
+stiffness/friction、真实接触标签、task success、oracle phase
+不能悄悄进入物理 context。若 baseline 原有 phase gate 用 simulator
+state，单列披露并所有组保持一致。</li>
+</ol>
+<p>变更应在同一个 <code>research/rlt-zeva-interaction-memory</code>
+研究分支连续完成，以固定 revision 划分实验，不再并行扩大 FLARE／VR
+支线。远程 <code>abb43823</code> 与本地 <code>f2d1cf64</code>
+的差异先单独查看；本次没有合并。</p>
+<h2 id="两张卡上的正式矩阵与停止条件">6.
+两张卡上的正式矩阵与停止条件</h2>
+<p><strong>优先级不是一次跑完所有方法。</strong>
+先确认一个插入任务，再扩展到三个任务家族；更窄孔洞只能算同任务几何条件。</p>
+<table>
+<colgroup>
+<col style="width: 25%"/>
+<col style="width: 25%"/>
+<col style="width: 25%"/>
+<col style="width: 25%"/>
+</colgroup>
+<thead>
+<tr>
+<th>阶段</th>
+<th>对比</th>
+<th>种子／评估</th>
+<th>开始下一阶段的依据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P0：工程</td>
+<td>baseline、attention、response 的短跑及恢复</td>
+<td>每组 1 次，固定边界测试</td>
+<td>配置、动作、计数、梯度与保存正确</td>
+</tr>
+<tr>
+<td>P1：表征</td>
+<td>current-only、recent、archive、response、consequence；补
+no-action／shuffle</td>
+<td>3 个初始化；按 trajectory group 统计</td>
+<td>新 held-out pair 上有可重复的有效信息读取</td>
+</tr>
+<tr>
+<td>P2：闭环</td>
+<td>original RLT、capacity
+control、recent、attention、response、consequence</td>
+<td>首轮 3 个训练种子；每轮 validation 20 回合；正式测试另留</td>
+<td>consequence 在相同预算下有值得确认的控制信号</td>
+</tr>
+<tr>
+<td>P3：机制</td>
+<td>固定参数下 retain／clear／shuffle；5 次尝试</td>
+<td>配对 100 个实例起步；多训练 seed</td>
+<td>每次尝试的收益不能仅由多次抽样解释</td>
+</tr>
+<tr>
+<td>P4：扩展</td>
+<td>三任务家族；eRLT-style、prediction-only；必要消融</td>
+<td>核心差异争取 5 seeds；次级不少于 3</td>
+<td>AUC、最终成功、wall-clock 结论相容</td>
+</tr>
+<tr>
+<td>P5：迁移／突变</td>
+<td>related／unrelated／empty source bank；旧条件切换</td>
+<td>单独保留未见物理值和任务实例</td>
+<td>量化负迁移、恢复和稳定场景代价</td>
+</tr>
+</tbody>
+</table>
+<p>P1 的 no-action 消融必须同时去掉 history event 中命令信息与 predictor
+当前动作输入，另补“只去掉其中一处”的定位对照；仅将当前动作置零、保留历史动作，会回答不同问题。shuffle
+需在相同记录数量、任务/几何分层中打乱，避免把简单分布外破坏误解为因果证据。评估时突然清空记忆可能有分布偏移，训练中加入预先固定比例的空记忆样本，并报告
+train/test protocol。</p>
+<p>预先指定继续投入的开发标准，例如 3 个 seed 中至少 2
+个方向一致、平均成功 AUC 的绝对差至少 0.03，且 wall-clock
+没有明显恶化。它只是<strong>资源分配阈值</strong>，不是统计显著性或发表门槛。开发阈值在看下一轮新数据前固定；确认阶段按置信区间与预注册主对比判断。</p>
+<p>如果只有预测提升，先做 reader 使用诊断、匹配 optimizer／BC 权重、观察
+actor 是否忽略 context；允许一轮预定的修正预算。仍无控制收益就停止扩张
+archive、改讲负结果或调整问题。若固定 response
+最好，不要为了神经叙事隐藏它；先证明额外视觉和时间结构能解决它失败的场景。</p>
+<h3 id="计算预算以实际-profile-修订">计算预算以实际 profile 修订</h3>
+<p>从 10 月 3 日到正文截止约 44 天，理想容量为两卡约 2,112 GPU-hours。按
+65% 可用于正式实验估算约 1,373
+GPU-hours，其余留给调试、重跑与评估；这只是容量规划，不是已测运行时间。</p>
+<table>
+<colgroup>
+<col style="width: 30%"/>
+<col style="width: 40%"/>
+<col style="width: 30%"/>
+</colgroup>
+<thead>
+<tr>
+<th>工作包</th>
+<th style="text-align: right;">暂定上限</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>核心三任务 × 六组 × 三 seed</td>
+<td style="text-align: right;">648 GPU-hours</td>
+<td>按每次 12 小时估算，先 profile；达到总预算则压缩次要组</td>
+</tr>
+<tr>
+<td>关键 baseline／method 补到五 seed</td>
+<td style="text-align: right;">144 GPU-hours</td>
+<td>三任务 × 两组 × 两新增 seed</td>
+</tr>
+<tr>
+<td>eRLT-style／prediction-only</td>
+<td style="text-align: right;">144 GPU-hours</td>
+<td>先一任务、三 seeds、两组，不直接扩到全矩阵</td>
+</tr>
+<tr>
+<td>表征训练、Zeva-style CTE 对照、关键消融与评估</td>
+<td style="text-align: right;">约 250 GPU-hours</td>
+<td>只有通过前序门槛才支出</td>
+</tr>
+<tr>
+<td>合计</td>
+<td style="text-align: right;">约 1,186 GPU-hours</td>
+<td>留有约 187 小时机动；超过估计就删次要消融</td>
+</tr>
+</tbody>
+</table>
+<p>单卡独立作业优先，不为小 actor／critic 强行使用两卡 DDP。将 GPU
+与方法交叉分配或随机分配，避免方法始终绑定同一卡；不同作业独立输出目录、Ray
+端口和 GPU 锁。正式报告给出环境 ticks 与 GPU-hours，不能拿 outer
+iteration 数作为统一交互成本。</p>
+<h2 id="怎样验证记忆迁移和旧经验失效">7.
+怎样验证记忆、迁移和旧经验失效</h2>
+<p><strong>记忆收益。</strong> 从同一训练 checkpoint
+出发冻结全部权重，固定实例初态与物理条件，做五次尝试。retain
+只保留允许的 archive，clear 每次清空，shuffle
+用等数量错配经验。成功后仍继续安排剩余尝试，避免后面的尝试只剩困难实例。分别报告第
+k
+次无条件成功率、先前失败条件下成功率、累计成功率；累计成功率自然随尝试数上升。</p>
+<p><strong>迁移收益。</strong> 相同 target weights 分别加载空 bank、相关
+source bank、无关但等数量 bank、错误物理条件 bank。同时比较“已预训练
+encoder 但空 bank”与未预训练初始化，区分权重迁移。source
+使用训练任务，目标测试数据不得写回 source bank；target temporary memory
+在实例之间清空。先限定同机器人、动作坐标、控制器与单位；跨 embodiment
+不放进第一版贡献。</p>
+<p><strong>条件变化。</strong> 先只改变一个能从 simulator
+读回验证的参数，避免同时改 stiffness、friction、delay
+后无法解释。比较不清理、立即清理的 oracle
+上界、固定遗忘、只用观测残差的清理。报告突变后前 K
+步损失／失败、恢复所需有效
+ticks、稳定条件误清理率、最终成功。延迟反馈绑定 prediction
+ID／generation；旧代反馈不能再次重置新代 memory。</p>
+<p><strong>接触与碰撞。</strong> 插入成功本来需要接触。不能把所有
+contact
+都当负事件；指定冲击阈值、积分时间和单位，区分正常约束接触、过大冲量和反复无效推进。真机没有力传感器时，q
+响应只能提供歧义证据。先报告可测的“重复无效动作”和 simulator contact
+proxy，不写真实安全性提升。</p>
+<h2 id="统计表必须怎么记">8. 统计表必须怎么记</h2>
+<p>每个 episode 至少保存
+<code>method, training_seed, checkpoint, task, split, instance_id, attempt_id, physical_condition_id_for_analysis, memory_protocol, valid_ticks, success, intervention_ticks, wall_time</code>。隐藏物理标签只进入分析文件，不能进入
+policy observation。每个训练 checkpoint 同时记录训练
+ticks、更新次数、GPU-hours、source data 成本。</p>
+<p>主指标为按固定 interaction horizon 归一化的 success
+AUC；配合最终成功率、达到固定成功阈值所需 ticks 和
+successes/hour。没达到阈值是右删失，不能丢掉后只平均达标
+run。低成功率任务不要用成功回合平均长度掩盖大量失败。</p>
+<p>统计以训练 seed 和实例分层做 paired bootstrap；同一 trajectory
+的窗口不当独立样本，五次 retry 也不当五个独立训练 seed。三 seeds
+只能提供较弱的不确定性估计，核心对比尽量补到五 seeds。100 回合在 p≈0.5
+时单纯二项抽样 95% 半宽约 10 个百分点；若要证明最终成功率“不下降超过 5
+个百分点”，需要更精确的评估，而不能用“不显著”代替等效。</p>
+<p>预先固定一个主对比和主指标，其他确认性对比分组控制多重比较；预测头超参数只看
+validation。最终 test 到实验冻结后再运行，不能每次调参都查看。</p>
+<h2 id="现有证据只能支持哪些结论">9. 现有证据只能支持哪些结论</h2>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr>
+<th>已有观察</th>
+<th>可以支持</th>
+<th>不能支持</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>无历史 MSE 1.8211e-4；attention 1.8143e-4；固定公式 7.3889e-5</td>
+<td>数据中有响应信息，当前神经 reader 利用不足</td>
+<td>新方法有效、任务成功提高、未见刚度泛化</td>
+</tr>
+<tr>
+<td>support-gated 总体 MSE 2.4417e-5；late 1.6588e-5</td>
+<td>补偿在历史充分时可避免破坏固定估计；改善冷启动</td>
+<td>support 是置信度、发现物理规律</td>
+</tr>
+<tr>
+<td>12 小时 memory run，516 outer steps，4 回合评估</td>
+<td>训练路径可运行</td>
+<td>收敛更快或稳定 25% 成功</td>
+</tr>
+<tr>
+<td>新版 324 个 synthetic 方法×条件×seed
+评估记录的版本保护（方法间复用配对数据流）</td>
+<td>延迟反馈时序归属需要修复</td>
+<td>324 次机器人操作成功，接触适应已成立</td>
+</tr>
+</tbody>
+</table>
+<p>所有旧 split 均视为 development
+数据。它们已经用于选方向，下一轮确认要新建独立 scene／command
+groups。英文初稿表 4、表 5 是已测开发证据，表 6
+是待填正式结果；不能在摘要中把待测提升写成过去时。</p>
+<h2 id="文献定位与必须面对的反驳">10. 文献定位与必须面对的反驳</h2>
+<p>英文文稿附 25 篇核实元数据的原始研究文献；查阅截止为 2026 年 10 月 3
+日。广泛调研不等于穷尽所有并行工作，投稿前还需再次检索。</p>
+<table>
+<colgroup>
+<col style="width: 50%"/>
+<col style="width: 50%"/>
+</colgroup>
+<thead>
+<tr>
+<th>审稿人的问题</th>
+<th>必需的回答／实验</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>这是否只是 RLT＋Zeva？</td>
+<td>Zeva 本来已有 pre/post effect prediction；不能把预测 loss
+当新贡献。补 Zeva-style CTE＋同一 RLT controller
+对照，并用闭环收益、冻结记忆干预与可迁移性建立新的实证结论</td>
+</tr>
+<tr>
+<td>eRLT 已改善 RL token，你的瓶颈是否仍存在？</td>
+<td>加强 current representation 的对照；若 gap 消失，收缩 memory
+必要性结论</td>
+</tr>
+<tr>
+<td>RMA、UP-OSI、PEARL 早已从历史适应？</td>
+<td>承认先例；贡献限定到 frozen VLA
+控制、视觉执行证据、有限经验复用与实际预算</td>
+</tr>
+<tr>
+<td>Imagine-RL 已有预测与 residual confidence？</td>
+<td>不宣称首次预测式
+critic／置信门控；本主方法是记忆条件与严格时序监督，无候选动作
+planning</td>
+</tr>
+<tr>
+<td>只是更多训练数据或参数？</td>
+<td>source 数据共享、capacity control、总计算成本表</td>
+</tr>
+<tr>
+<td>“利用失败”有什么新意？</td>
+<td>承认 replay 已利用失败；展示失败带来的可迁移执行表征与 context
+作用</td>
+</tr>
+<tr>
+<td>为什么投 CVPR？</td>
+<td>视觉—动作—后果共同建模、真实视觉歧义场景、visual-memory
+消融与多任务视觉控制证据</td>
+</tr>
+<tr>
+<td>人工干预更少的证据？</td>
+<td>仿真只报告固定规则 correction proxy；真人分钟数留真机测量</td>
+</tr>
+</tbody>
+</table>
+<p>最接近原文：<a href="https://arxiv.org/abs/2604.23073">RLT</a>、<a href="https://arxiv.org/abs/2610.00913">eRLT</a>、<a href="https://arxiv.org/html/2608.30880v2">Zeva</a>、<a href="https://arxiv.org/abs/2609.24033">Imagine-RL</a>、<a href="https://arxiv.org/abs/2505.15659">FLARE</a>。完整条目、作者、链接见随附
+<code>references.bib</code> 和 <code>references.json</code>。</p>
+<h2 id="投稿排期">11. 投稿排期</h2>
+<p><a href="https://cvpr.thecvf.com/Conferences/2027/CallForPapers">CVPR
+2027 官方 CFP</a> 指定：注册 11 月 10 日 AoE，正文 11 月 16 日
+AoE，补充材料 11 月 23 日 AoE。AoE 为 UTC−12；若截止按当日
+23:59，分别对应北京时间次日
+19:59。以官方提交页面最终倒计时为准，不把时区转换当额外延期。官方提示非机构邮箱创建的新
+OpenReview profile
+审核可能需要两周，因此现在就确认全部作者账号，不等到注册前几天。</p>
+<table>
+<colgroup>
+<col style="width: 50%"/>
+<col style="width: 50%"/>
+</colgroup>
+<thead>
+<tr>
+<th>日期</th>
+<th>研究交付</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10 月 3–6 日</td>
+<td>固定候选实现，复评公开权重并验收 baseline 训练链路；立即确认所有作者 OpenReview profile</td>
+</tr>
+<tr>
+<td>10 月 7–12 日</td>
+<td>先完成三 seed baseline 验收；通过后做 memory 最小对照及 consequence reader。未通过则顺延方法扩展，缩小投稿主张</td>
+</tr>
+<tr>
+<td>10 月 13 日</td>
+<td>第一次 go/no-go：有无可重复的控制信号；没有则停止扩网络</td>
+</tr>
+<tr>
+<td>10 月 14–24 日</td>
+<td>三任务家族主实验；必要近邻比较；冻结参数重试</td>
+</tr>
+<tr>
+<td>10 月 25–31 日</td>
+<td>source-bank 迁移、条件突变；核心对比补 seeds</td>
+</tr>
+<tr>
+<td>11 月 1–6 日</td>
+<td>实验冻结、统计、失败案例、论文正文与图表定稿</td>
+</tr>
+<tr>
+<td>11 月 7–10 日</td>
+<td>核对作者与 OpenReview 信息、正式注册、模板与匿名检查</td>
+</tr>
+<tr>
+<td>11 月 11–15 日</td>
+<td>复核主张—证据对应、最终 PDF 和复现资料</td>
+</tr>
+<tr>
+<td>11 月 16 日 AoE</td>
+<td>正文截止；内部截止至少提前一天</td>
+</tr>
+<tr>
+<td>11 月 23 日 AoE</td>
+<td>补充材料截止；不把关键未完成主实验全部推迟到补充</td>
+</tr>
+</tbody>
+</table>
+<p>初稿是扩展版科研文档，尚未套用官方页数与匿名模板。最终模板和 author
+guidelines 以 2027 当届发布内容为准。完整故事并不保证录用；如果到 10
+月中旬仍没有公平闭环结果，优先调整目标而非包装预测诊断。</p>
+<h2 id="官方-rlinf-持续跟踪">12. 官方 RLinf 持续跟踪</h2>
+<p>本次读到官方
+main：<code>c70606f08cdca259b8dec03d4430926b5b8fac9d</code>。对比上次的
+<code>034579c</code>，新增 <a href="https://github.com/RLinf/RLinf/pull/1645">#1645</a> 并发 group
+创建修复，已于 10 月 2 日合并。对 Ray
+并发启动有潜在关联，但没有本地回归结果前不把它写成实验性能修复。</p>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr>
+<th>PR／变更</th>
+<th>10 月 3 日状态</th>
+<th>本研究的适用性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/RLinf/RLinf/pull/1623">#1623 replay
+checkpoint</a></td>
+<td>Open；页面显示 6 commits</td>
+<td>优先：cache 淘汰后保存／恢复；长实验前单独验证</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RLinf/RLinf/pull/1645">#1645 scheduler
+concurrent groups</a></td>
+<td>Merged</td>
+<td>启动稳定性；单独评估是否回移</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RLinf/RLinf/pull/1572">#1572 effective
+replay cache</a></td>
+<td>已进入 main</td>
+<td>核查本地 effective config 行为，不能仅看默认参数</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RLinf/RLinf/pull/1571">#1571 replay
+prefetch errors</a></td>
+<td>已进入 main</td>
+<td>长实验错误传播；不要误判卡死为性能问题</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RLinf/RLinf/pull/1570">#1570 per-rank
+RNG</a></td>
+<td>已进入 main</td>
+<td>与本地 checkpoint backend 和 rank 设置分别核对</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RLinf/RLinf/pull/1639">#1639 reward
+default</a></td>
+<td>Open</td>
+<td>当前环境 reward 路径与未来 learned reward 路径分别核查</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RLinf/RLinf/pull/1641">#1641 empty
+reward splits</a></td>
+<td>Open</td>
+<td>训练 reward classifier 时再纳入必查</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RLinf/RLinf/pull/1635">#1635 OpenVLA
+action chunks</a></td>
+<td>Open</td>
+<td>当前 OpenPI 路径不直接套用；保留环境 transition 合同检查</td>
+</tr>
+</tbody>
+</table>
+<p>执行习惯：每次研究开发开始及每轮新 campaign 前，检查官方 main 和
+recently updated
+PR；保存日期、revision、状态、影响判断。进行中的实验固定
+revision。上游合并不意味着自动更新本地实验，先独立验证，再将所有相关组统一放到新
+revision。网络失败就记录“未验证”，不沿用旧状态冒充最新。</p>
+<p>当前已将这一习惯写入仓库 AGENTS
+指令；本次没有配置后台定时任务，也没有自动合并上游。随附
+<code>upstream_commits.json</code>、<code>upstream_prs.json</code>
+是本次只读检查快照。</p>
+<h2 id="现在首先做的一件事">13. 现在首先做的一件事</h2>
+<p>在独立环境固定 AlphaBrain 版本，整理两卡评估入口并复评配套公开模型。先确认观测变换、动作单位、controller、chunk 长度和逐回合记录，再重新训练 Stage 1／Stage 2。公开模型复评通过也不等于从头训练已经稳定。baseline 验收前，Stage 1B 和新的 memory 结构保持为研究提案。</p>
+<p>完整的执行依据见<a href="../../../reader.html?path=research/literature/rlt-simulation-baselines-2026-10-03.md">10 月 3 日仿真 baseline 核查</a>；所有新训练结果须另建带 revision、配置与评估协议的实验记录。</p>
+</body></html>

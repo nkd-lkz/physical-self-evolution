@@ -1,0 +1,165 @@
+{
+  "checked": "2026-10-03",
+  "items": [
+    {
+      "number": 1623,
+      "title": "fix(replay): checkpoint only retained memory trajectories",
+      "state": "open",
+      "merged_at": null,
+      "updated_at": "2026-10-02T08:56:42Z",
+      "html_url": "https://github.com/RLinf/RLinf/pull/1623"
+    },
+    {
+      "number": 1645,
+      "title": "fix(scheduler): avoid aborts in concurrent group creation",
+      "state": "closed",
+      "merged_at": "2026-10-02T08:56:10Z",
+      "updated_at": "2026-10-02T08:56:11Z",
+      "html_url": "https://github.com/RLinf/RLinf/pull/1645"
+    },
+    {
+      "number": 1647,
+      "title": "feat(algorithms): add DRPO for reasoning",
+      "state": "open",
+      "merged_at": null,
+      "updated_at": "2026-10-02T08:13:34Z",
+      "html_url": "https://github.com/RLinf/RLinf/pull/1647"
+    },
+    {
+      "number": 1637,
+      "title": "docs: add lint and test commands to AGENTS.md",
+      "state": "open",
+      "merged_at": null,
+      "updated_at": "2026-10-02T03:41:08Z",
+      "html_url": "https://github.com/RLinf/RLinf/pull/1637"
+    },
+    {
+      "number": 1646,
+      "title": "fix(config): point is-megatron hf_model_path at rollout.model.model_path",
+      "state": "open",
+      "merged_at": null,
+      "updated_at": "2026-10-01T14:29:49Z",
+      "html_url": "https://github.com/RLinf/RLinf/pull/1646"
+    },
+    {
+      "number": 1644,
+      "title": "fix(ci): isolate the Ascend uv cache by uid",
+      "state": "open",
+      "merged_at": null,
+      "updated_at": "2026-10-01T13:35:08Z",
+      "html_url": "https://github.com/RLinf/RLinf/pull/1644"
+    },
+    {
+      "number": 1643,
+      "title": "fix(agent): pin OpenTelemetry for AgentLightning",
+      "state": "closed",
+      "merged_at": "2026-10-01T09:47:10Z",
+      "updated_at": "2026-10-01T09:47:11Z",
+      "html_url": "https://github.com/RLinf/RLinf/pull/1643"
+    },
+    {
+      "number": 1642,
+      "title": "docs(reward): name the resnet checkpoint to load",
+      "state": "open",
+      "merged_at": null,
+      "updated_at": "2026-10-01T01:00:22Z",
+      "html_url": "https://github.com/RLinf/RLinf/pull/1642"
+    },
+    {
+      "number": 1641,
+      "title": "fix(reward): fail fast on empty reward splits",
+      "state": "open",
+      "merged_at": null,
+      "updated_at": "2026-10-01T01:00:20Z",
+      "html_url": "https://github.com/RLinf/RLinf/pull/1641"
+    },
+    {
+      "number": 1640,
+      "title": "docs(eval): note host memory per libero env",
+      "state": "open",
+      "merged_at": null,
+      "updated_at": "2026-10-01T01:00:17Z",
+      "html_url": "https://github.com/RLinf/RLinf/pull/1640"
+    },
+    {
+      "number": 1639,
+      "title": "fix(reward): restore env_reward_weight default to 0",
+      "state": "open",
+      "merged_at": null,
+      "updated_at": "2026-10-01T01:00:14Z",
+      "html_url": "https://github.com/RLinf/RLinf/pull/1639"
+    },
+    {
+      "number": 1636,
+      "title": "fix(install): use flashinfer 0.4.1 release wheel",
+      "state": "open",
+      "merged_at": null,
+      "updated_at": "2026-09-30T18:50:31Z",
+      "html_url": "https://github.com/RLinf/RLinf/pull/1636"
+    },
+    {
+      "number": 1628,
+      "title": "fix: docs issue",
+      "state": "open",
+      "merged_at": null,
+      "updated_at": "2026-09-30T12:11:42Z",
+      "html_url": "https://github.com/RLinf/RLinf/pull/1628"
+    },
+    {
+      "number": 1635,
+      "title": "fix(embodiment): complete OpenVLA chunked action-token handling",
+      "state": "open",
+      "merged_at": null,
+      "updated_at": "2026-09-30T08:02:02Z",
+      "html_url": "https://github.com/RLinf/RLinf/pull/1635"
+    },
+    {
+      "number": 1611,
+      "title": "fix(embodichain): support version 0.3.0",
+      "state": "open",
+      "merged_at": null,
+      "updated_at": "2026-09-30T04:52:38Z",
+      "html_url": "https://github.com/RLinf/RLinf/pull/1611"
+    },
+    {
+      "number": 1633,
+      "title": "docs(readme): add robotic interface and update IsaacLab doc link",
+      "state": "closed",
+      "merged_at": "2026-09-30T02:49:27Z",
+      "updated_at": "2026-09-30T02:49:27Z",
+      "html_url": "https://github.com/RLinf/RLinf/pull/1633"
+    },
+    {
+      "number": 1596,
+      "title": "feat(lingbotvlav2): support lingbot-vla-v2 model",
+      "state": "open",
+      "merged_at": null,
+      "updated_at": "2026-09-30T01:42:14Z",
+      "html_url": "https://github.com/RLinf/RLinf/pull/1596"
+    },
+    {
+      "number": 1626,
+      "title": "fix: fsdp shards, RNG, replay sampling and cache",
+      "state": "closed",
+      "merged_at": "2026-09-30T01:32:02Z",
+      "updated_at": "2026-09-30T01:32:02Z",
+      "html_url": "https://github.com/RLinf/RLinf/pull/1626"
+    },
+    {
+      "number": 1634,
+      "title": "feat(ascend): support Pi0.5 and GR00T N1.7 on Ascend 950",
+      "state": "open",
+      "merged_at": null,
+      "updated_at": "2026-09-29T21:50:25Z",
+      "html_url": "https://github.com/RLinf/RLinf/pull/1634"
+    },
+    {
+      "number": 1632,
+      "title": "docs(readme): update IsaacLab doc link in what's new",
+      "state": "closed",
+      "merged_at": null,
+      "updated_at": "2026-09-29T15:38:46Z",
+      "html_url": "https://github.com/RLinf/RLinf/pull/1632"
+    }
+  ]
+}
