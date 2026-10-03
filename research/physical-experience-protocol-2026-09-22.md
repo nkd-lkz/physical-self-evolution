@@ -1,5 +1,7 @@
 # 物理经验能否减少干预：可证伪的研究合同
 
+> **历史资料，非现行执行方案。** 以下“当前”保留原记录语境；现在请先读[当前研究方案](zeva-rlt-implementation-2026-09-26.md)与[证据总日志](experiment-log.md)。2026-10-03 添加用途说明，没有改变旧实验结果。
+
 > 2026-09-22 讨论整理，全部为待验证假设与实验设计。没有新增 Physical Token、干预或在线学习结果。<br>
 > 关联：[机制与100/200步解释](https://nkd-lkz.github.io/physical-self-evolution/reader.html?path=research/rlt-intervention-2026-09-22.md) · [恢复与小算力入口](https://nkd-lkz.github.io/physical-self-evolution/reader.html?path=research/migration-recovery-2026-09-22.md)
 

@@ -27,6 +27,8 @@ jobs:
           fetch-depth: 0
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      - name: Validate project document routing
+        run: python3 research/scripts/test_site_index.py
       - name: Build unified project index
         run: python3 research/scripts/build_site_index.py
       - name: Stage RLT project only

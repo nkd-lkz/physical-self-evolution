@@ -63,3 +63,11 @@ mark.search-hit{background:#f4d77b;color:#151515;border-radius:3px;padding:0 2px
 .work-facts span{font-size:11px;color:#bed2e8;border:1px solid #334b65;border-radius:999px;padding:3px 7px;background:#0b141e}
 .work-card p{margin:9px 0}
 @media(max-width:980px){.frontier-grid{grid-template-columns:1fr}}
+
+.document-status { margin:0 0 24px; padding:18px 22px; border:1px solid #b9cfbf; border-left:4px solid #3b7556; border-radius:10px; background:#f3f8f4; overflow-wrap:anywhere; }
+.document-status[data-role="history"] { border-color:#d6c4a0; border-left-color:#9d722b; background:#fcf8ef; }
+.document-status p { margin:6px 0; line-height:1.6; font-size:14px; }
+.document-status a { display:inline-block; margin-top:6px; }
+.reader-body [id] { scroll-margin-top:var(--reader-scroll-offset,160px); }
+.document-status { color:#263c31; }
+.document-status a { color:#176047; }

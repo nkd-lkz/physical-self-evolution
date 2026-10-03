@@ -1,5 +1,7 @@
 # RLT 的关键阶段、仿真专家干预与 Hammer 时间语义
 
+> **历史资料，非现行执行方案。** 以下“当前”保留原记录语境；现在请先读[当前研究方案](zeva-rlt-implementation-2026-09-26.md)与[证据总日志](experiment-log.md)。2026-10-03 添加用途说明，没有改变旧实验结果。
+
 > 2026-09-22 讨论与代码核查；没有新增训练结果。本文区分原论文、RLinf 官方示例、迁移快照和拟议实现。<br>
 > 配套：[小算力恢复入口](https://nkd-lkz.github.io/physical-self-evolution/reader.html?path=research/migration-recovery-2026-09-22.md) · [物理经验与干预研究合同](https://nkd-lkz.github.io/physical-self-evolution/reader.html?path=research/physical-experience-protocol-2026-09-22.md)
 

@@ -1,0 +1,368 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-10-03",
+  "current_path": "research/zeva-rlt-implementation-2026-09-26.md",
+  "roles": {
+    "current": {
+      "label": "当前方案",
+      "note": "现行方法与执行顺序；其中拟议模块和待测实验不代表已经实现。"
+    },
+    "evidence": {
+      "label": "证据汇总",
+      "note": "已记录实验及其适用范围；公开摘要与原始数据可用性需逐项核对，不等于独立复现。"
+    },
+    "literature": {
+      "label": "文献 / 资源调研",
+      "note": "外部作者结果与资料核查；阅读状态见原条目，不作为本地实验结果。"
+    },
+    "history": {
+      "label": "历史记录",
+      "note": "保留当时的方案、结果或讨论。“当前”“下一步”“运行中”仅指原记录时点。"
+    },
+    "draft": {
+      "label": "论文版本",
+      "note": "固定版本初稿；后续协议以当前方案中的版本差异说明为准。"
+    },
+    "maintenance": {
+      "label": "维护说明",
+      "note": "文档或工具维护约定，不是算法有效性证据。"
+    }
+  },
+  "documents": {
+    "research/archive/2026-09-24-physical-rsi-cases.md": {
+      "role": "history",
+      "content_date": "2026-09-24"
+    },
+    "research/archive/project-readme-before-2026-10-03.md": {
+      "role": "history",
+      "content_date": "2026-10-03"
+    },
+    "research/archive/zeva-rlt-before-organization-2026-10-03.md": {
+      "role": "history",
+      "content_date": "2026-10-03"
+    },
+    "research/chelsea-finn-physical-rsi-talk-2026-09-25.md": {
+      "role": "history",
+      "content_date": "2026-09-25"
+    },
+    "research/decision-log.md": {
+      "role": "history",
+      "content_date": "2026-10-03",
+      "reviewed_at": "2026-10-03"
+    },
+    "research/discussions/optional-components.md": {
+      "role": "history",
+      "content_date": ""
+    },
+    "research/discussions/physical-experience-theses.md": {
+      "role": "history",
+      "content_date": ""
+    },
+    "research/discussions/physical-rsi-sept24.md": {
+      "role": "history",
+      "content_date": ""
+    },
+    "research/experiment-log.md": {
+      "role": "evidence",
+      "content_date": "2026-10-03",
+      "reviewed_at": "2026-10-03",
+      "summary": "集中查阅已测指标、原始证据可用性与结论边界；后附原日期实验记录。尚无匹配控制、干预节省或迁移结果。"
+    },
+    "research/experiments/rlt-contact-memory/README.md": {
+      "role": "history",
+      "content_date": ""
+    },
+    "research/experiments/rlt-contact-memory/implementation.md": {
+      "role": "history",
+      "content_date": ""
+    },
+    "research/flare-rlt-contact-experiments-2026-09-25.md": {
+      "role": "history",
+      "content_date": "2026-09-25"
+    },
+    "research/frontier-landscape.md": {
+      "role": "literature",
+      "content_date": ""
+    },
+    "research/glow-real2sim2real-experiments.md": {
+      "role": "history",
+      "content_date": ""
+    },
+    "research/knowledge-base-maintenance.md": {
+      "role": "maintenance",
+      "content_date": "2026-10-03",
+      "reviewed_at": "2026-10-03"
+    },
+    "research/literature/frontier-rlt-2026-09-30.md": {
+      "role": "literature",
+      "content_date": "2026-09-30"
+    },
+    "research/literature/physical-token-direction-map.md": {
+      "role": "literature",
+      "content_date": ""
+    },
+    "research/literature/physical-token-literature-audit-2026-09-19.md": {
+      "role": "literature",
+      "content_date": "2026-09-19"
+    },
+    "research/literature/reading-ledger.md": {
+      "role": "literature",
+      "content_date": ""
+    },
+    "research/literature/reading-notes-2026-09-25.md": {
+      "role": "literature",
+      "content_date": "2026-09-25"
+    },
+    "research/literature/rlt-followups.md": {
+      "role": "literature",
+      "content_date": "2026-10-03",
+      "reviewed_at": "2026-10-03",
+      "summary": "RLT 后续论文的关系与核验状态；作者结果和对照建议不等于本项目实验结论。"
+    },
+    "research/literature/rlt-simulation-baselines-2026-10-03.md": {
+      "role": "literature",
+      "content_date": "2026-10-03",
+      "reviewed_at": "2026-10-03"
+    },
+    "research/literature/survey-project-extracts-2026-09-26.md": {
+      "role": "literature",
+      "content_date": "2026-09-26"
+    },
+    "research/literature/visual-evidence-rlt-2026-09-30.md": {
+      "role": "literature",
+      "content_date": "2026-09-30"
+    },
+    "research/master-roadmap.md": {
+      "role": "history",
+      "content_date": "2026-09-22",
+      "reviewed_at": "2026-10-03"
+    },
+    "research/migration-recovery-2026-09-22.md": {
+      "role": "history",
+      "content_date": "2026-09-22"
+    },
+    "research/perspectives-and-theses.md": {
+      "role": "history",
+      "content_date": ""
+    },
+    "research/physical-experience-protocol-2026-09-22.md": {
+      "role": "history",
+      "content_date": "2026-09-22"
+    },
+    "research/physical-rsi-source-intake-2026-09-30.md": {
+      "role": "history",
+      "content_date": "2026-09-30"
+    },
+    "research/physical-token-leadership-spec.md": {
+      "role": "history",
+      "content_date": "2026-09-22",
+      "reviewed_at": "2026-10-03"
+    },
+    "research/progress-2026-09-12.md": {
+      "role": "history",
+      "content_date": "2026-09-12"
+    },
+    "research/progress-2026-09-15.md": {
+      "role": "history",
+      "content_date": "2026-09-15"
+    },
+    "research/progress-2026-09-17.md": {
+      "role": "history",
+      "content_date": "2026-09-17"
+    },
+    "research/progress-2026-09-18.md": {
+      "role": "history",
+      "content_date": "2026-09-18"
+    },
+    "research/progress-2026-09-22.md": {
+      "role": "history",
+      "content_date": "2026-09-22"
+    },
+    "research/progress-2026-09-28-maniskill-rlt.md": {
+      "role": "history",
+      "content_date": "2026-09-28"
+    },
+    "research/progress-2026-09-30-maniskill-rlt.md": {
+      "role": "history",
+      "content_date": "2026-09-30"
+    },
+    "research/progress-2026-10-03.md": {
+      "role": "history",
+      "content_date": "2026-10-03"
+    },
+    "research/prototypes/zeva_rlt_memory/README.md": {
+      "role": "history",
+      "content_date": ""
+    },
+    "research/reading-program.md": {
+      "role": "literature",
+      "content_date": ""
+    },
+    "research/real2sim2real-scaling-perspective.md": {
+      "role": "history",
+      "content_date": ""
+    },
+    "research/rlt-intervention-2026-09-22.md": {
+      "role": "history",
+      "content_date": "2026-09-22"
+    },
+    "research/rlt-multitask-benchmark.md": {
+      "role": "history",
+      "content_date": ""
+    },
+    "research/robodojo-b300-log.md": {
+      "role": "history",
+      "content_date": ""
+    },
+    "research/robodojo-contact-task-reference-selection-2026-09-17.md": {
+      "role": "history",
+      "content_date": "2026-09-17"
+    },
+    "research/six-papers-guided-reading-2026-09-26.md": {
+      "role": "literature",
+      "content_date": "2026-09-26"
+    },
+    "research/survey-literature-intake.md": {
+      "role": "history",
+      "content_date": ""
+    },
+    "research/three-branch-audit-2026-09-30.md": {
+      "role": "history",
+      "content_date": "2026-09-30"
+    },
+    "research/three-branch-research-plan-2026-09-30.md": {
+      "role": "history",
+      "content_date": "2026-09-30"
+    },
+    "research/uniintervene-clap-project-implications.md": {
+      "role": "history",
+      "content_date": ""
+    },
+    "research/xpace-jev-rlt-ideas.md": {
+      "role": "history",
+      "content_date": ""
+    },
+    "research/zeva-rlt-implementation-2026-09-26.md": {
+      "role": "current",
+      "content_date": "2026-10-03",
+      "reviewed_at": "2026-10-03",
+      "summary": "唯一现行方案：已实现与拟议方法分开，64 维 Stage 1B、固定 expert 纠错对照、验收顺序与论文版本差异。"
+    },
+    "notes/README.md": {
+      "role": "literature",
+      "content_date": ""
+    },
+    "notes/aspire.md": {
+      "role": "literature",
+      "content_date": ""
+    },
+    "notes/astra-robodojo.md": {
+      "role": "literature",
+      "content_date": ""
+    },
+    "notes/axis-capability-library.md": {
+      "role": "literature",
+      "content_date": ""
+    },
+    "notes/clap.md": {
+      "role": "literature",
+      "content_date": ""
+    },
+    "notes/embodied-jev.md": {
+      "role": "literature",
+      "content_date": ""
+    },
+    "notes/enpire.md": {
+      "role": "literature",
+      "content_date": ""
+    },
+    "notes/erlt.md": {
+      "role": "literature",
+      "content_date": ""
+    },
+    "notes/f4r.md": {
+      "role": "literature",
+      "content_date": ""
+    },
+    "notes/forcedelta-vla.md": {
+      "role": "literature",
+      "content_date": ""
+    },
+    "notes/harness-vla.md": {
+      "role": "literature",
+      "content_date": ""
+    },
+    "notes/knowin-glow.md": {
+      "role": "literature",
+      "content_date": ""
+    },
+    "notes/lwd.md": {
+      "role": "literature",
+      "content_date": ""
+    },
+    "notes/motus2.md": {
+      "role": "literature",
+      "content_date": ""
+    },
+    "notes/odyssey3.md": {
+      "role": "literature",
+      "content_date": ""
+    },
+    "notes/pearl.md": {
+      "role": "literature",
+      "content_date": ""
+    },
+    "notes/physicalrsi-mmlab.md": {
+      "role": "literature",
+      "content_date": ""
+    },
+    "notes/physvla.md": {
+      "role": "literature",
+      "content_date": ""
+    },
+    "notes/rise.md": {
+      "role": "literature",
+      "content_date": ""
+    },
+    "notes/rlt.md": {
+      "role": "literature",
+      "content_date": ""
+    },
+    "notes/rma.md": {
+      "role": "literature",
+      "content_date": ""
+    },
+    "notes/rpent.md": {
+      "role": "literature",
+      "content_date": ""
+    },
+    "notes/shaper.md": {
+      "role": "literature",
+      "content_date": ""
+    },
+    "notes/smoothrl.md": {
+      "role": "literature",
+      "content_date": ""
+    },
+    "notes/uniintervene.md": {
+      "role": "literature",
+      "content_date": ""
+    },
+    "notes/unimpa.md": {
+      "role": "literature",
+      "content_date": ""
+    },
+    "notes/xpace.md": {
+      "role": "literature",
+      "content_date": ""
+    },
+    "notes/zetta.md": {
+      "role": "literature",
+      "content_date": ""
+    },
+    "notes/zeva.md": {
+      "role": "literature",
+      "content_date": ""
+    }
+  }
+}

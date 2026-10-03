@@ -1,47 +1,17 @@
 {
   "updated": "2026-10-03",
-  "focus": "先建立可复现的 RLT 仿真 baseline，再检验已完成的交互经验能否帮助下一次决策。",
-  "question": "在相同交互预算下，短期历史与可复用记忆能否加快学习，并避免条件变化后旧经验误导控制？",
+  "focus": "以 RLT 为基线，研究已完成的交互经验能否加快学习并减少纠错需求。当前优先验收 baseline。",
+  "question": "现有证据支持响应历史的预测价值；成功率、收敛速度、干预节省和迁移收益仍待匹配实验。",
   "featured": [
     {
-      "path": "research/progress-2026-10-03.md",
-      "label": "IM-RLT 论文 v2 与实验进度",
-      "why": "16 页 LaTeX 单栏稿，按 eRLT／SmoothRL 结构重写；26 篇文献、中文指南与已测证据。"
+      "path": "research/literature/rlt-followups.md",
+      "label": "外部文献 · RLT 后续工作",
+      "why": "按原文核验状态阅读；作者结果与本地证据分开。"
     },
     {
       "path": "research/literature/rlt-simulation-baselines-2026-10-03.md",
-      "label": "RLT 仿真 baseline 核查",
-      "why": "十个仓库、eRLT 仿真来源边界、LIBERO 权重与入口；成品复评优先，尚未独立复现。"
-    },
-    {
-      "path": "research/zeva-rlt-implementation-2026-09-26.md",
-      "label": "当前主线 · 经验学习与迁移",
-      "why": "10-03 更新：Stage 1b 经验编码、短长期记忆、Stage 2 控制收益；固定公式保留为基线。"
-    },
-    {
-      "path": "notes/erlt.md",
-      "label": "eRLT · 直接近邻",
-      "why": "动作预测监督与 critic 路由；核对实现维度、RLT* 对照和增量实验。"
-    },
-    {
-      "path": "research/literature/rlt-followups.md",
-      "label": "RLT 后续工作图谱",
-      "why": "53 篇引用候选＋补检；区分四篇明确继承工作与平行路线。"
-    },
-    {
-      "path": "notes/rma.md",
-      "label": "RMA · 历史适应",
-      "why": "特权 teacher 到短历史 latent；检验长期经验超越普通适应模块。"
-    },
-    {
-      "path": "notes/pearl.md",
-      "label": "PEARL · Context RL",
-      "why": "概率 context、critic 监督与前置训练成本；经典近邻。"
-    },
-    {
-      "path": "notes/physicalrsi-mmlab.md",
-      "label": "Physical RSI",
-      "why": "保留系统闭环与经验继承视角；论文主张服从实验。"
+      "label": "代码资源 · 仿真 baseline 审计",
+      "why": "十个仓库的公开资产与实现边界；下一步选择依据，不是本地复现报告。"
     }
   ],
   "ideas": [
@@ -50,11 +20,12 @@
       "name": "Zeva–RLT · 学习交互经验并持续读取",
       "stage": "当前主线 · baseline 验收后",
       "tag": "当前主线",
-      "hypothesis": "Stage 1 压缩动作—后果经验，Stage 2 条件化小 actor/critic，能否减少重新试错并迁移？",
-      "design": "保留原 RL token/reference；新增 encoder、短期有序记忆、跨尝试长期库和 reader；先冻结编码坐标，只更新 actor/critic。",
-      "control": "零上下文、原始历史、固定响应统计、动作预测监督、critic-only context、短期/长期库消融；匹配预算。",
-      "gate": "先验收仿真 baseline，再做后续后果预测、固定参数记忆适应、在线 RL 和留出迁移；记录 replay 历史快照与版本，并计入检索和预训练成本。",
-      "path": "research/zeva-rlt-implementation-2026-09-26.md"
+      "hypothesis": "已完成的命令—响应记录能否在无辅助成功率不下降时，减少重复试错和外部纠错？",
+      "design": "先验收 baseline；64 维 Stage 1B 经验条件，首轮 Stage 2 冻结 encoder／reader。新方案尚待实现。",
+      "control": "有/无记忆 × 有/无固定 expert 纠错；再比较近期历史、attention、固定响应、Stage 1B 与 retain／clear。",
+      "gate": "同初始数据、预算、expert 与 gate；同时看无辅助成功率、环境控制步、接管次数和时长。预测更准不代表控制获益。",
+      "path": "research/zeva-rlt-implementation-2026-09-26.md",
+      "active": true
     },
     {
       "id": "visual-evidence",
@@ -65,7 +36,8 @@
       "design": "已实现确定性遮挡接口，分别报告VLA动作、RL token与小actor输出变化；尚未适配真实checkpoint或训练局部读取器。",
       "control": "固定噪声、等面积背景与任务关系区域、不同遮挡填充；有示范目标才报告有符号动作误差增量。",
       "gate": "8项CPU合同测试不等于视觉解释成立；先验收真实帧原始输出一致性，再做无历史、近期历史、打乱历史和闭环对照。",
-      "path": "research/physical-rsi-source-intake-2026-09-30.md"
+      "path": "research/physical-rsi-source-intake-2026-09-30.md",
+      "active": false
     },
     {
       "id": "flare",
@@ -76,7 +48,8 @@
       "design": "冻结 VLA；轻量 encoder + 动作条件预测器，预测未来 latent / proprio 变化；actor / critic 读取状态编码。",
       "control": "原 RLT、动作预测监督（eRLT 启发）、无动作/无历史、后果监督；同容量、同数据与在线预算。",
       "gate": "预测改善只是中间指标；最终比较固定初态成功率、达到目标的交互数和人工控制时长。",
-      "path": "research/flare-rlt-contact-experiments-2026-09-25.md"
+      "path": "research/flare-rlt-contact-experiments-2026-09-25.md",
+      "active": false
     },
     {
       "id": "jev",
@@ -87,7 +60,8 @@
       "design": "本地小选择器在 reference-relative 候选中决策；实际执行动作进入 critic 与 replay。",
       "control": "reference-only 与同半径连续 residual；匹配数据支持、BC 强度、调参和评估预算。",
       "gate": "必须先证明选择器实际采用修正，再判断控制收益；不是调用 Jev API，也没有 oracle 仿真预演。",
-      "path": "research/three-branch-research-plan-2026-09-30.md"
+      "path": "research/three-branch-research-plan-2026-09-30.md",
+      "active": false
     },
     {
       "id": "transfer",
@@ -98,7 +72,8 @@
       "design": "源记忆冻结，目标适应库独立；空库/相关源库/不匹配库对照，先同实例跨尝试再跨任务。",
       "control": "清空、滑动窗口、固定衰减、误差驱动更新；相同容量与动作历史。",
       "gate": "单列离线采集、预训练、在线学习与检索成本；预测更准或单步吞吐更低都不预设最终控制结论。",
-      "path": "research/zeva-rlt-implementation-2026-09-26.md"
+      "path": "research/zeva-rlt-implementation-2026-09-26.md",
+      "active": false
     }
   ]
 }

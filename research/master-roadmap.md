@@ -1,5 +1,7 @@
 # Universal Physical Token：研究总路线
 
+> **历史资料，非现行执行方案。** 以下“当前”保留原记录语境；现在请先读[当前研究方案](zeva-rlt-implementation-2026-09-26.md)与[证据总日志](experiment-log.md)。2026-10-03 添加用途说明，没有改变旧实验结果。
+
 > 版本：2026-09-22<br>
 > 当前状态：**小算力恢复、最小干预闭环与离线表示probe；正式在线比较仍需可信matched B0**<br>
 > 主规范：[`physical-token-leadership-spec.md`](physical-token-leadership-spec.md)<br>

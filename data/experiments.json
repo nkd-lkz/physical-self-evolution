@@ -1,6 +1,12 @@
 [
   {
     "date": "2026-10-03",
+    "title": "资料重整：统一当前方案，标记证据范围与论文版本",
+    "path": "research/zeva-rlt-implementation-2026-09-26.md",
+    "summary": "保留旧链接，归档原 README 和混合 Zeva 稿；统一 64 维方法规格，补充固定 expert 纠错预算协议。首页、索引与 reader 区分当前方案、证据、文献和历史；取消 Git 编辑日期冒充研究日期。未新增 GPU 训练、评估或算法收益。"
+  },
+  {
+    "date": "2026-10-03",
     "title": "源码调研续查：eRLT 仿真实现边界与十个开源 baseline 仓库",
     "path": "research/literature/rlt-simulation-baselines-2026-10-03.md",
     "summary": "只读源码／文献／公开权重审计，未运行新 GPU 实验。确认 eRLT 真机 RLinf、仿真 DSRL 风格但确切作者仓库未核实；补充 dsrl_pi0、verl-vla 和 LIBERO Stage 1 fork。核对 AlphaBrain 发布三种权重与 92% 评估 JSON、训练日志后段无新增采样；新增单 GPU 成品评估模板及 RLinf LIBERO 配置注意项。优先验收现成模型，不承诺两卡重训时长或成功率。"

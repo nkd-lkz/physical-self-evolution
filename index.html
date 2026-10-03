@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="RLT 科研工作台：每日开发进度、物理经验实验、Physical RSI 调研与论文阅读统一入口。">
+<meta name="description" content="RLT 科研工作台：当前方案、实验依据、论文版本和历史记录的统一入口。">
 <title>RLT 科研工作台 · Physical Self-Evolution</title>
 <link rel="stylesheet" href="assets/hub.css">
 <script src="assets/app.js" defer></script>
@@ -15,7 +15,7 @@
  <nav aria-label="主导航">
   <a href="#home" class="active"><span>01</span> 研究总览</a>
   <a href="#logs"><span>02</span> 每日科研进度</a>
-  <a href="#ideas"><span>03</span> 实验与 idea</a>
+  <a href="#ideas"><span>03</span> 当前主线与历史探索</a>
   <a href="#library"><span>04</span> 调研与阅读库</a>
  </nav>
  <div class="side-bottom"><span class="small-label">RESEARCH PRINCIPLE</span><p>执行 → 反馈 → 经验<br>验证后，再复用。</p><a href="reader.html?path=research/knowledge-base-maintenance.md">维护与记录规范 ↗</a><a href="https://github.com/nkd-lkz/physical-self-evolution">GitHub 源文件 ↗</a><a href="https://github.com/nkd-lkz/physical-self-evolution/tree/main/survey-rsi">独立 RSI 综述区 ↗</a></div>
@@ -26,26 +26,34 @@
 <noscript><p class="notice">启用 JavaScript 可查看进度与筛选资料。也可直接打开 <a href="reader.html?path=research/experiment-log.md">实验总日志</a>或 <a href="research/literature/reading-ledger.md">阅读总账</a>。</p></noscript>
 <section id="home">
  <div class="eyebrow">PHYSICAL EXPERIENCE → ONLINE LEARNING <span id="asOf">读取最新记录…</span></div>
- <div class="hero-grid"><div><h1>把每次交互，<br>变成下一次的经验。</h1><p id="focus" class="lead">以 RLT 为基线，探索物理经验与持续学习。</p><p id="question" class="muted"></p><div class="actions"><a class="button primary" href="#logs">查看每日进度 ↗</a><a class="button" href="reader.html?path=research/progress-2026-10-03.md">当前实验方案</a></div></div><aside class="focus-card"><span class="small-label">当前研究路径</span><ol><li><span>01</span><div><b>先建立可靠基线</b><small>RLT 复现 · 固定评估 · 预算对齐</small></div></li><li><span>02</span><div><b>聚焦交互记忆主线</b><small>短期历史 · 经验读取 · 条件变化</small></div></li><li><span>03</span><div><b>再证明持续成长</b><small>学习效率 · 干预成本 · 条件迁移</small></div></li></ol></aside></div>
- <div class="publication-panel" aria-labelledby="manuscriptTitle"><div><span class="small-label">MANUSCRIPT v2 · 2026-10-03</span><h2 id="manuscriptTitle">IM-RLT：英文论文 v2 与实验指南</h2><p>按 eRLT／SmoothRL 的单栏论文结构重写，LaTeX 编译为 16 页，含 2 幅图、7 张表和 26 篇文献。现有诊断与待测控制结果明确分开。</p><p class="muted">当前执行顺序：先验收仿真 baseline，再开发 Stage 1B。</p></div><div class="publication-links"><a class="button primary" href="research/papers/interaction-memory-2026-10-03/paper_en.html">阅读英文论文 v2 ↗</a><a class="button" href="research/papers/interaction-memory-2026-10-03/paper_en.pdf">英文 PDF ↓</a><a class="button" href="research/papers/interaction-memory-2026-10-03/experiment_guide_zh.html">中文实验指南 ↗</a><a class="button" href="research/papers/interaction-memory-2026-10-03/experiment_guide_zh.pdf">中文 PDF ↓</a><a class="text-link" href="research/papers/interaction-memory-2026-10-03/index.html">框架图、LaTeX、文献与完整下载 ↗</a></div></div>
- <div id="status"><div class="section-heading compact"><h2>当前证据快照</h2><span id="statusDate" class="muted"></span></div><div id="statusMetrics" class="metrics"><p class="muted">正在加载…</p></div><details class="more-evidence"><summary>全部指标与最新判断</summary><div id="allEvidence"></div></details><p class="evidence-rule">证据口径：工程跑通、预测更准、闭环更好、跨任务迁移分别记录；以下均为最近已记录快照。</p></div>
+ <div class="hero-grid"><div><h1>把每次交互，<br>变成下一次的经验。</h1><p id="focus" class="lead">以 RLT 为基线，探索物理经验与持续学习。</p><p id="question" class="muted"></p><div class="actions"><a class="button primary" href="reader.html?path=research/zeva-rlt-implementation-2026-09-26.md">从当前方案开始 ↗</a><a class="button" href="reader.html?path=research/zeva-rlt-implementation-2026-09-26.md#next-experiments">下一步实验</a></div></div><aside class="focus-card"><span class="small-label">当前研究路径</span><ol><li><span>01</span><div><b>先建立可靠基线</b><small>RLT 复现 · 固定评估 · 预算对齐</small></div></li><li><span>02</span><div><b>聚焦交互记忆主线</b><small>短期历史 · 经验读取 · 条件变化</small></div></li><li><span>03</span><div><b>检验纠错节省与迁移</b><small>学习效率 · 干预成本 · 条件迁移</small></div></li></ol></aside></div>
+ <div class="section-heading compact"><h2>先读这四项</h2><span class="muted">资料整理：2026-10-03 · 未新增实验</span></div>
+ <div class="reading-route" aria-label="研究阅读顺序">
+  <a href="reader.html?path=research/zeva-rlt-implementation-2026-09-26.md"><span class="small-label">01 / 当前方案</span><h3>现在做什么</h3><p>唯一现行总说明；已有实现、待实现方法和下一步实验。</p></a>
+  <a href="reader.html?path=research/experiment-log.md#evidence-summary"><span class="small-label">02 / 实验证据</span><h3>实际知道什么</h3><p>已测指标、样本范围和数据出处；哪些结论尚不能成立。</p></a>
+  <a href="research/papers/interaction-memory-2026-10-03/index.html"><span class="small-label">03 / 论文版本</span><h3>论文写到哪里</h3><p>v2 固定初稿；最新纠错预算协议尚未完整纳入。</p></a>
+  <a href="reader.html?path=research/literature/rlt-followups.md"><span class="small-label">04 / 外部文献</span><h3>与别人如何区分</h3><p>论文关系与核验状态；作者结果不等于本地复现。</p></a>
+ </div>
+ <details class="paper-details"><summary>展开论文 v2：英文稿、中文指南与完整下载</summary><div class="publication-panel" aria-labelledby="manuscriptTitle"><div><span class="small-label">MANUSCRIPT v2 · 2026-10-03</span><h2 id="manuscriptTitle">IM-RLT：英文论文 v2 与实验指南</h2><p>按 eRLT／SmoothRL 的单栏论文结构重写，LaTeX 编译为 16 页，含 2 幅图、7 张表和 26 篇文献。现有诊断与待测控制结果明确分开。</p><p class="muted">版本差异：最新固定 expert 恢复与四组纠错预算协议见<a href="reader.html?path=research/zeva-rlt-implementation-2026-09-26.md#versions">当前方案</a>；v2 尚未完整纳入。</p></div><div class="publication-links"><a class="button primary" href="research/papers/interaction-memory-2026-10-03/paper_en.html">阅读英文论文 v2 ↗</a><a class="button" href="research/papers/interaction-memory-2026-10-03/paper_en.pdf">英文 PDF ↓</a><a class="button" href="research/papers/interaction-memory-2026-10-03/experiment_guide_zh.html">中文实验指南 ↗</a><a class="button" href="research/papers/interaction-memory-2026-10-03/experiment_guide_zh.pdf">中文 PDF ↓</a><a class="text-link" href="research/papers/interaction-memory-2026-10-03/index.html">框架图、LaTeX、文献与完整下载 ↗</a></div></div>
+ </details>
+ <div id="status"><div class="section-heading compact"><h2>当前证据快照</h2><span id="statusDate" class="muted"></span></div><div id="statusMetrics" class="metrics"><p class="muted">正在加载…</p></div><details class="more-evidence"><summary>全部指标与最新判断</summary><div id="allEvidence"></div></details><p class="evidence-rule">证据口径：工程跑通、预测更准、闭环更好、跨任务迁移分别记录；汇总整理日期不是实验日期，原始日志部分未公开。<a href="reader.html?path=research/experiment-log.md#evidence-summary">逐项查看来源与边界 ↗</a></p></div>
  <div id="plan" class="next-panel"><div><span class="small-label">NEXT EXPERIMENTS</span><h2>接下来，验证什么？</h2><p class="muted">由最新证据决定优先级。</p></div><div id="nextActions"></div></div>
 </section>
 <section id="logs">
- <div class="section-heading"><div><div class="eyebrow">02 / DAILY RESEARCH</div><h2>每日科研进度</h2><p class="muted">保留当时的结果与负结果；当前结论以顶部最新快照为准。</p></div><a class="text-link" href="reader.html?path=research/experiment-log.md">完整实验日志 ↗</a></div>
+ <div class="section-heading"><div><div class="eyebrow">02 / DAILY RESEARCH</div><h2>每日科研进度</h2><p class="muted">保留当时的结果与负结果；实验事实以对应原记录为准，执行顺序以“当前方案”为准。</p></div><a class="text-link" href="reader.html?path=research/experiment-log.md">完整实验日志 ↗</a></div>
  <div class="toolbar"><label class="search-label"><span>搜索进度</span><input id="progressSearch" type="search" placeholder="搜索 FLARE、负结果、VR…"></label><label><span>日期</span><select id="progressDate"><option value="all">全部日期</option></select></label></div>
  <p id="progressCount" class="result-count" aria-live="polite"></p><div id="progressFeed"></div><button id="moreProgress" class="button load-more" hidden>查看更多日期</button>
 </section>
 <section id="ideas">
- <div class="section-heading"><div><div class="eyebrow">03 / HYPOTHESES & EXPERIMENTS</div><h2>实验与 idea</h2><p class="muted">每个想法都有实现入口、必要对照与否证条件。</p></div><a class="text-link" href="reader.html?path=research/three-branch-audit-2026-09-30.md">实验审查与负结果 ↗</a></div>
- <div id="ideaGrid" class="idea-grid"></div><div class="inline-links"><span>研究脉络</span><a href="reader.html?path=research/perspectives-and-theses.md">原始随想</a><a href="reader.html?path=research/decision-log.md">决策与路线变化</a><a href="reader.html?path=research/physical-token-leadership-spec.md">Physical Token 定义</a><a href="reader.html?path=research/master-roadmap.md">完整路线图</a></div>
+ <div class="section-heading"><div><div class="eyebrow">03 / HYPOTHESES & EXPERIMENTS</div><h2>当前主线与历史探索</h2><p class="muted">本轮只推进 Zeva 启发的交互记忆；其他方向保留为对照或历史。</p></div><a class="text-link" href="reader.html?path=research/three-branch-audit-2026-09-30.md">实验审查与负结果 ↗</a></div>
+ <div id="ideaGrid" class="idea-grid active-idea"></div><details class="history-ideas"><summary>展开历史探索与后续假设（非当前并行任务）</summary><div id="historyIdeaGrid" class="idea-grid"></div></details><div class="inline-links"><span>历史脉络</span><a href="reader.html?path=research/perspectives-and-theses.md">原始随想</a><a href="reader.html?path=research/decision-log.md">决策与路线变化</a><a href="reader.html?path=research/physical-token-leadership-spec.md">旧 Physical Token 定义</a><a href="reader.html?path=research/master-roadmap.md">旧路线图</a></div>
 </section>
 <section id="library">
- <div class="section-heading"><div><div class="eyebrow">04 / RESEARCH LIBRARY</div><h2>调研与阅读库</h2><p class="muted">论文、项目、实验方案与随想，从这里统一查找。</p></div><a class="text-link" href="reader.html?path=research/literature/reading-ledger.md">论文阅读总账 ↗</a></div>
+ <div class="section-heading"><div><div class="eyebrow">04 / RESEARCH LIBRARY</div><h2>调研与阅读库</h2><p class="muted">按文档用途查找；默认显示当前方案、证据、文献与维护资料，历史记录可单独展开。</p></div><a class="text-link" href="reader.html?path=research/literature/reading-ledger.md">论文阅读总账 ↗</a></div>
  <div id="featuredGrid" class="featured-grid"></div>
  <div id="libraryStats" class="library-stats"></div>
- <div class="toolbar library-toolbar"><label class="search-label"><span>搜索资料</span><input id="librarySearch" type="search" placeholder="标题、摘要或关键词，例如 physical RSI、记忆、FLARE"></label><label><span>资料类型</span><select id="kindFilter"><option value="all">全部类型</option></select></label><label><span>研究主题</span><select id="topicFilter"><option value="all">全部主题</option></select></label><button id="clearFilters" class="button">清除</button></div>
- <div class="result-row"><p id="libraryCount" class="result-count" aria-live="polite"></p><span class="muted">按笔记记录日期排序 · 未读条目单独标记</span></div>
+ <div class="toolbar library-toolbar"><label class="search-label"><span>搜索资料</span><input id="librarySearch" type="search" placeholder="标题、摘要或关键词，例如 physical RSI、记忆、FLARE"></label><label><span>文档用途</span><select id="roleFilter"><option value="active">当前阅读（不含历史）</option><option value="current">当前方案</option><option value="evidence">证据汇总</option><option value="literature">文献 / 资源调研</option><option value="history">历史记录</option><option value="maintenance">维护说明</option><option value="all">全部资料（含历史）</option></select></label><label><span>资料类型</span><select id="kindFilter"><option value="all">全部类型</option></select></label><label><span>研究主题</span><select id="topicFilter"><option value="all">全部主题</option></select></label><button id="clearFilters" class="button">清除</button></div>
+ <div class="result-row"><p id="libraryCount" class="result-count" aria-live="polite"></p><span class="muted">按内容日期排序 · 编辑不刷新研究日期 · 历史记录仍可检索</span></div>
  <div id="libraryList" class="library-list"></div><button id="moreLibrary" class="button load-more" hidden>加载更多资料</button>
 </section>
 <footer><div><b>Physical Self-Evolution</b><p>统一入口，持续记录。科研结论由可复查的实验支持。</p></div><a href="reader.html?path=research/knowledge-base-maintenance.md">如何更新这里 ↗</a></footer>

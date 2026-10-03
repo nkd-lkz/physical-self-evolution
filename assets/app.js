@@ -21,7 +21,9 @@ function renderStatus(s){
 }
 function renderIdeas(config){
  $('focus').textContent=config.focus;$('question').textContent=config.question;
- $('ideaGrid').innerHTML=config.ideas.map(i=>'<article class="idea-card"><div class="idea-top"><span class="tag '+(i.stage.includes('待')?'warn':'')+'">'+esc(i.stage)+'</span><span>'+esc(i.tag)+'</span></div><h3>'+esc(i.name)+'</h3><p>'+esc(i.hypothesis)+'</p><dl><dt>实现</dt><dd>'+esc(i.design)+'</dd><dt>对照</dt><dd>'+esc(i.control)+'</dd><dt>判定</dt><dd>'+esc(i.gate)+'</dd></dl><a class="text-link" href="'+readLink(i.path)+'">展开方案与证据 ↗</a></article>').join('');
+ const ideaCard=i=>'<article class="idea-card"><div class="idea-top"><span class="tag '+(i.stage.includes('待')?'warn':'')+'">'+esc(i.stage)+'</span><span>'+esc(i.tag)+'</span></div><h3>'+esc(i.name)+'</h3><p>'+esc(i.hypothesis)+'</p><dl><dt>实现</dt><dd>'+esc(i.design)+'</dd><dt>对照</dt><dd>'+esc(i.control)+'</dd><dt>判定</dt><dd>'+esc(i.gate)+'</dd></dl><a class="text-link" href="'+readLink(i.path)+'">展开方案与证据 ↗</a></article>';
+ $('ideaGrid').innerHTML=config.ideas.filter(i=>i.active).map(ideaCard).join('');
+ $('historyIdeaGrid').innerHTML=config.ideas.filter(i=>!i.active).map(ideaCard).join('');
  $('featuredGrid').innerHTML=config.featured.map(f=>'<a class="featured" href="'+readLink(f.path)+'"><strong>'+esc(f.label)+' ↗</strong><p>'+esc(f.why)+'</p></a>').join('');
 }
 function renderProgress(){
@@ -36,15 +38,21 @@ function renderProgress(){
  }).join('')||'<p class="empty">没有匹配的进度记录，请调整关键词或日期。</p>';
  $('moreProgress').hidden=dates.length<=state.days;
 }
-function syncFilters(){const url=new URL(location.href);for(const [id,key] of [['librarySearch','q'],['kindFilter','kind'],['topicFilter','topic']]){const v=$(id).value;if(v&&v!=='all')url.searchParams.set(key,v);else url.searchParams.delete(key);}history.replaceState(null,'',url);}
+function syncFilters(){
+ const url=new URL(location.href);
+ for(const [id,key,defaultValue] of [['librarySearch','q',''],['kindFilter','kind','all'],['topicFilter','topic','all'],['roleFilter','role','active']]){
+  const v=$(id).value;if(v!==defaultValue)url.searchParams.set(key,v);else url.searchParams.delete(key);
+ }
+ history.replaceState(null,'',url);
+}
 function renderLibrary(updateURL=true){
- const q=$('librarySearch').value.trim().toLowerCase(),kind=$('kindFilter').value,topic=$('topicFilter').value;
+ const q=$('librarySearch').value.trim().toLowerCase(),kind=$('kindFilter').value,topic=$('topicFilter').value,role=$('roleFilter').value;
  const terms=q.split(/\s+/).filter(Boolean);
- const results=state.docs.filter(d=>(kind==='all'||d.kind===kind)&&(topic==='all'||d.topics.includes(topic))&&terms.every(t=>(d.search+' '+d.topics.join(' ')+' '+d.status).toLowerCase().includes(t)));
- $('libraryCount').textContent='找到 '+results.length+' 项 · 显示 '+Math.min(state.limit,results.length)+' 项';
+ const results=state.docs.filter(d=>(role==='all'||(role==='active'?d.role!=='history':d.role===role))&&(kind==='all'||d.kind===kind)&&(topic==='all'||d.topics.includes(topic))&&terms.every(t=>(d.search+' '+d.topics.join(' ')+' '+d.status).toLowerCase().includes(t)));
+ $('libraryCount').textContent='找到 '+results.length+' 项 · 显示 '+Math.min(state.limit,results.length)+' 项'+(role==='active'?' · 历史资料已收起，可切换文档用途查看':'');
  $('libraryList').innerHTML=results.slice(0,state.limit).map(d=>{
  const href=d.path?readLink(d.path):safeURL(d.source);
- return '<article class="library-item"><div class="item-meta"><span class="tag '+(!d.path?'warn':'')+'">'+esc(d.kind)+'</span><time>'+esc(d.date||'未建独立笔记')+'</time></div><div><h3><a href="'+href+'">'+esc(d.title)+'</a></h3><p>'+esc(d.summary)+'</p><div class="item-topics">'+tags(d.topics.slice(0,4))+'</div><div class="item-status">'+esc(d.status)+'</div></div><div class="item-action"><a href="'+href+'">'+(d.path?'阅读笔记':'查看原文')+' ↗</a>'+(d.path&&d.source?'<a href="'+safeURL(d.source)+'">原始来源 ↗</a>':'')+'</div></article>';
+ return '<article class="library-item"><div class="item-meta"><span class="tag '+(!d.path?'warn':'')+'">'+esc(d.role_label||d.kind)+'</span><time>'+esc(d.date?'内容 '+d.date:'内容日期未标注')+'</time></div><div><h3><a href="'+href+'">'+esc(d.title)+'</a></h3><p>'+esc(d.summary)+'</p><div class="item-topics">'+tags(d.topics.slice(0,4))+'</div><div class="item-status">'+esc(d.status)+'</div></div><div class="item-action"><a href="'+href+'">'+(d.path?'阅读笔记':'查看原文')+' ↗</a>'+(d.path&&d.source?'<a href="'+safeURL(d.source)+'">原始来源 ↗</a>':'')+'</div></article>';
  }).join('')||'<p class="empty">没有匹配的资料。试试更短的关键词，或清除筛选条件。</p>';
  $('moreLibrary').hidden=results.length<=state.limit;
  if(updateURL)syncFilters();
@@ -56,7 +64,7 @@ async function init(){
  $('libraryStats').innerHTML='<span><b>'+index.stats.project_documents+'</b>项目文档</span><span><b>'+index.stats.reading_ledger+'</b>总账条目（含待读）</span><span><b>'+index.stats.progress_days+'</b>科研记录日</span><span><b>'+index.stats.progress_entries+'</b>进度条目</span>';
  $('progressDate').insertAdjacentHTML('beforeend',[...new Set(state.progress.map(p=>p.date))].sort().reverse().map(d=>'<option>'+esc(d)+'</option>').join(''));
  for(const [id,values] of [['kindFilter',state.docs.map(d=>d.kind)],['topicFilter',state.docs.flatMap(d=>d.topics)]])$(id).insertAdjacentHTML('beforeend',[...new Set(values)].sort().map(v=>'<option>'+esc(v)+'</option>').join(''));
- const params=new URLSearchParams(location.search);for(const[id,key]of[['librarySearch','q'],['kindFilter','kind'],['topicFilter','topic']]){const v=params.get(key);if(v){$(id).value=v;if($(id).tagName==='SELECT'&&!$(id).value)$(id).value='all';}}
+ const params=new URLSearchParams(location.search);for(const[id,key]of[['librarySearch','q'],['kindFilter','kind'],['topicFilter','topic'],['roleFilter','role']]){const v=params.get(key);if(v){$(id).value=v;if($(id).tagName==='SELECT'&&!$(id).value)$(id).value=id==='roleFilter'?'active':'all';}}
  renderProgress();renderLibrary(false);
  }]];
  const results=await Promise.allSettled(jobs.map(async([name,path,render])=>{render(await loadJSON(path));return name;}));
@@ -65,10 +73,10 @@ async function init(){
  legacyHash();
 }
 ['progressSearch','progressDate'].forEach(id=>$(id).addEventListener(id==='progressSearch'?'input':'change',()=>{state.days=4;renderProgress();}));
-['librarySearch','kindFilter','topicFilter'].forEach(id=>$(id).addEventListener(id==='librarySearch'?'input':'change',()=>{state.limit=16;renderLibrary();}));
+['librarySearch','kindFilter','topicFilter','roleFilter'].forEach(id=>$(id).addEventListener(id==='librarySearch'?'input':'change',()=>{state.limit=16;renderLibrary();}));
 $('moreProgress').addEventListener('click',()=>{state.days+=4;renderProgress();});
 $('moreLibrary').addEventListener('click',()=>{state.limit+=16;renderLibrary();});
-$('clearFilters').addEventListener('click',()=>{$('librarySearch').value='';$('kindFilter').value='all';$('topicFilter').value='all';state.limit=16;renderLibrary();});
+$('clearFilters').addEventListener('click',()=>{$('librarySearch').value='';$('kindFilter').value='all';$('topicFilter').value='all';$('roleFilter').value='active';state.limit=16;renderLibrary();});
 window.addEventListener('hashchange',legacyHash);
 document.addEventListener('keydown',e=>{if(e.key==='/'&&!['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)){e.preventDefault();$('library').scrollIntoView();$('librarySearch').focus({preventScroll:true});}});
 const nav=[...document.querySelectorAll('.sidebar nav a')];

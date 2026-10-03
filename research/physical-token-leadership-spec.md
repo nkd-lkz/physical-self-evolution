@@ -1,5 +1,7 @@
 # Universal Physical Token：领导约束后的研究主线
 
+> **历史资料，非现行执行方案。** 以下“当前”保留原记录语境；现在请先读[当前研究方案](zeva-rlt-implementation-2026-09-26.md)与[证据总日志](experiment-log.md)。2026-10-03 添加用途说明，没有改变旧实验结果。
+
 > 版本：2026-09-22（补充干预研究合同与迁移状态）<br>
 > 状态：**当前项目主规范 / Source of Truth**<br>
 > 说明：本页根据领导提供的 Physical Token 方案、后续讨论与最新实验事实持续维护。此前 Research OS 中更宽泛的 Physical Experience / Self-Evolution / Agent/Harness / World Model 路线只保留为历史与知识库背景。

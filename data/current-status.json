@@ -40,6 +40,10 @@
   ],
   "timeline": [
     {
+      "title": "10-03 · 当前方案、证据、论文版本与历史资料分开",
+      "body": "统一 64 维 Stage 1B 规格，补充固定 expert 的纠错预算协议；PDF v2 保持原版本，协议新增部分尚未实现。整理资料，没有新增 GPU 结果。"
+    },
+    {
       "title": "10-03 · eRLT 实现来源与仿真 baseline 续查",
       "body": "真机明确 RLinf，仿真确切作者仓库未核实；增加 DSRL 两套参照与 LIBERO fork。现有 AlphaBrain 成品验收优先级保留，RLinf／π0.5 提供独立 SFT→DSRL 检查路线；无新训练结果。"
     },
@@ -88,9 +92,14 @@
       "evidence": "同仓 full-token RLT＋已验收的 Qwen VLA；显式 Stage 1 demo 配置，Stage 2 先单 seed 排查再至少 3 seed，记录成功率、交互量与时间。"
     },
     {
+      "priority": "P0",
+      "action": "baseline 验收后，验证固定 expert 的恢复与交还",
+      "evidence": "先 20–50 个 learner 偏离状态，不 reset；固定 gate、时长上限、交还与冷却，再做记忆有/无 × 在线纠错有/无四组。无需先接 VR，协议待实现。"
+    },
+    {
       "priority": "P1",
       "action": "baseline 通过后开展单一 Zeva 记忆主线",
-      "evidence": "先 none／recent／attention／response，再 Stage 1B；固定参数做 retain／clear，随后测试条件变化与迁移。"
+      "evidence": "四组主对照与 none／recent／attention／response 共用初始化和预算；无辅助评估，报告 expert 次数/时长和交互数。然后 Stage 1B、冻结参数 retain／clear、条件变化与迁移。"
     },
     {
       "priority": "P1",

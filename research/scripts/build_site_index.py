@@ -8,7 +8,6 @@ from urllib.parse import urlparse, parse_qs
 import argparse
 import json
 import re
-import subprocess
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / 'data/knowledge-index.json'
@@ -49,7 +48,22 @@ def doc_kind(path):
     if any(w in name for w in ['experiment','implementation','ideas','plan','protocol','spec','roadmap','selection','implications']): return '科研方案'
     return '项目资料'
 
+def document_metadata(rel, registry):
+    """Resolve purpose and content date without treating a Git edit as research."""
+    entry = registry['documents'].get(rel, {})
+    fallback = 'literature' if rel.startswith('notes/') or '/literature/' in rel else 'history'
+    role = entry.get('role', fallback)
+    dates = re.findall(r'20\d{2}-\d{2}-\d{2}', Path(rel).stem)
+    return {
+        'role': role,
+        'role_label': registry['roles'][role]['label'],
+        'role_note': registry['roles'][role]['note'],
+        'date': entry.get('content_date', dates[-1] if dates else ''),
+        'reviewed_at': entry.get('reviewed_at', ''),
+    }
+
 def build():
+    registry=read_json('document-registry')
     ledger=read_json('literature-reading-ledger')
     cards={}
     # Later records intentionally take precedence (the existing publication convention).
@@ -70,13 +84,12 @@ def build():
             title_match=re.search(r'^#\s+(.+)',raw,re.M)
             title=clean(title_match.group(1)) if title_match else file.stem
             row=by_path.get(rel,{})
+            metadata=document_metadata(rel,registry)
+            entry=registry['documents'].get(rel,{})
             paragraphs=[clean(p) for p in re.split(r'\n\s*\n',raw) if p.strip() and not p.lstrip().startswith(('#','|','```','![','<!--'))]
-            summary=row.get('one') or row.get('summary') or row.get('method_note') or next((p for p in paragraphs if len(p)>25),'项目记录，打开查看详细内容。')
-            git_date=subprocess.run(['git','log','-1','--format=%cs','--',rel],cwd=ROOT,capture_output=True,text=True,check=True).stdout.strip()
-            dates=re.findall(r'20\d{2}-\d{2}-\d{2}',file.stem)
-            date=max(dates+[git_date]) if dates or git_date else ''
-            search=title+' '+summary+' '+' '.join(re.findall(r'^#{2,4}\s+(.+)',raw,re.M))+' '+row.get('project','')
-            docs.append({'id':'doc:'+rel,'title':title,'path':rel,'kind':doc_kind(path),'date':date,'summary':summary[:280],
+            summary=entry.get('summary') or row.get('one') or row.get('summary') or row.get('method_note') or next((p for p in paragraphs if len(p)>25),'项目记录，打开查看详细内容。')
+            search=title+' '+rel+' '+metadata['role_label']+' '+summary+' '+' '.join(re.findall(r'^#{2,4}\s+(.+)',raw,re.M))+' '+row.get('project','')
+            docs.append({'id':'doc:'+rel,'title':title,'path':rel,'kind':doc_kind(path),**metadata,'summary':summary[:280],
                 'topics':topics(title+' '+summary+' '+row.get('layer','')+' '+str(row.get('tags',[]))),
                 'status':row.get('status') or row.get('read_status') or '已有项目笔记',
                 'source':row.get('url') or row.get('source_url') or '', 'search':search[:3000]})
@@ -90,7 +103,7 @@ def build():
         title=row.get('title') or row.get('short_title')
         status=row.get('read_status') or row.get('status') or '待核验'
         if not source: return
-        docs.append({'id':kind+':'+row['id'],'title':title,'path':None,'kind':kind,'date':'','summary':summary[:280],
+        docs.append({'id':kind+':'+row['id'],'title':title,'path':None,'kind':kind,'date':'','role':'literature','role_label':registry['roles']['literature']['label'],'role_note':registry['roles']['literature']['note'],'reviewed_at':'','summary':summary[:280],
             'topics':topics(title+' '+summary+' '+row.get('category','')+' '+row.get('layer','')),
             'status':status,'source':source,'search':' '.join([title,summary,row.get('project_note',''),row.get('borrow',''),row.get('boundary','')])})
         used_sources.add(source.rstrip('/'))
@@ -106,7 +119,7 @@ def build():
         daily=sorted((ROOT/'research').glob('progress-'+item['date']+'*.md'))
         item['path']=paths[0] if paths else (daily[-1].relative_to(ROOT).as_posix() if daily else 'research/experiment-log.md')
         item['topics']=topics(item['title'])
-    return {'as_of':read_json('current-status')['as_of'],'stats':{'project_documents':len(used_paths),'reading_ledger':len(ledger['papers']),
+    return {'as_of':read_json('current-status')['as_of'],'current_path':registry['current_path'],'roles':registry['roles'],'stats':{'project_documents':len(used_paths),'reading_ledger':len(ledger['papers']),
         'read_status_counts':ledger['status_counts'],'progress_entries':len(progress),'progress_days':len({p['date'] for p in progress})},'documents':docs,'progress':progress}
 
 if __name__=='__main__':
