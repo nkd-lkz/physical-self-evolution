@@ -1,6 +1,6 @@
 # 当前研究方案：用交互记忆减少 RLT 的重复试错与纠错需求
 
-这份文档统一说明本项目现在研究什么、代码做到哪里、已有证据支持什么，以及下一步先做哪些实验。方案与资料整理日期为 **2026-10-03**；实验仍按各自发生日期记录，本次没有新增训练或评估。文件名保留首次建档日期，以保证旧链接继续可用。
+这份文档统一说明本项目现在研究什么、代码做到哪里、已有证据支持什么，以及下一步先做哪些实验。方案与资料更新日期为 **2026-10-03**；同日 16:42 已启动零 context／固定响应的双卡匹配 pilot，短程链路通过，正式结果待核查。实验按各自发生日期记录。文件名保留首次建档日期，以保证旧链接继续可用。
 
 [研究首页](../index.html) · [证据与实验总日志](experiment-log.md) · [论文 v2 与下载](papers/interaction-memory-2026-10-03/index.html) · [RLT 后续工作](literature/rlt-followups.md)
 
@@ -37,7 +37,7 @@ RL 的 reward、replay 和参数更新本来就利用试错。本项目的增量
 | 梯度与训练 | reader 接收 critic 的 TD 梯度；actor 读取 detach 的 context | Stage 1B 用后果监督训练 encoder／reader，首轮 Stage 2 冻结它们，只训小 actor／critic |
 | 部署范围 | 有 smoke、预测诊断与未匹配的在线 run | 新 Stage 1B、稳定匹配闭环、纠错节省与迁移均未完成 |
 
-实现事实来自 [v2 附录与证据清单](papers/interaction-memory-2026-10-03/index.html)记录的本地 revision `f2d1cf64`、诊断 revision `abb43823`，不表示本轮重新检查了服务器运行状态。早期“尚未接入 RLinf”的说法属于 09-26 原型阶段，见[整理前快照](archive/zeva-rlt-before-organization-2026-10-03.md)。
+上表既有实现来自 [v2 附录与证据清单](papers/interaction-memory-2026-10-03/index.html)记录的 revision `f2d1cf64`、诊断 revision `abb43823`。10-03 新训练固定为 `91f7bdfa`：新增同容量零 context 对照，zero／response 均无可训练 reader 参数；“reader 接收 TD 梯度”只适用于 trainable attention。[启动与核查记录](progress-2026-10-03.md#matched-launch)已确认本次 GPU 链路，尚未实现 Stage 1B。早期“尚未接入 RLinf”的说法属于 09-26 原型阶段，见[整理前快照](archive/zeva-rlt-before-organization-2026-10-03.md)。
 
 ### 一个决策怎样使用经验
 
@@ -69,11 +69,11 @@ RL 的 reward、replay 和参数更新本来就利用试错。本项目的增量
 <a id="next-experiments"></a>
 ## 下一步实验：先验收，再检验经验是否减少纠错
 
-当前只推进一条 Zeva 启发主线。FLARE、Jev 与早期 Physical Token 方案保留为历史探索及必要对照，不并行扩展新框架。
+当前只推进一条 Zeva 启发主线。10-03 按最新执行安排，先利用现有 ManiSkill 资产运行零 context／固定响应的匹配 pilot，检查 reader 的控制价值及 baseline 稳定性；它是下表正式实验前的单 seed 排查。AlphaBrain／LIBERO 保留为后续候选，不与本次双卡任务并跑。FLARE、Jev 与早期 Physical Token 方案保留为历史探索。
 
 | 顺序 | 要完成的实验 | 进入下一步的条件 |
 |---|---|---|
-| 0 · baseline | 按[仓库审计](literature/rlt-simulation-baselines-2026-10-03.md)先复评一个有公开权重的候选，再验证同栈 Stage 1／Stage 2；保留 AlphaBrain／LIBERO 成品验收优先项，区分 RLT_a 与 full-token RLT | 固定代码、任务、reset、动作语义与评估；单 seed 排错后至少 3 个 seed。没有稳定 baseline 不扩网络 |
+| 0 · baseline | 按[仓库审计](literature/rlt-simulation-baselines-2026-10-03.md)先复评一个有公开权重的候选，再验证同栈 Stage 1／Stage 2；本轮先完成现有 RLinf／ManiSkill 的匹配 pilot；若基线仍不稳定，再验收 AlphaBrain／LIBERO，区分 RLT_a 与 full-token RLT | 固定代码、任务、reset、动作语义与评估；单 seed 排错后至少 3 个 seed。没有稳定 baseline 不扩网络 |
 | 1 · expert 恢复 | 从 learner 真实偏离状态采样 20–50 个恢复场景，测试固定脚本／IK expert 或已验收 teacher；不中途 reset | 能接管、有限时长恢复并交还 learner，记录恢复率与控制成本；失败则先修复 expert |
 | 2 · 小规模主对照 | 下表四组；相同初始化、demonstrations、预算上限、expert 与 gate。先一个任务、3 个 seed | 在无辅助评估下比较成功率曲线、到达预设阈值的交互量和 expert 成本；无收益则诊断而非扩大网络 |
 | 3 · 机制对照 | none／recent／attention／fixed response，再加入 Stage 1B；参数冻结后对同一实例 retain／clear | 同预算控制收益可复现；预测误差改善不能代替该条件 |

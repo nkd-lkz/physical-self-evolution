@@ -3,7 +3,7 @@
   "metrics": [
     {
       "value": "8/20",
-      "label": "ManiSkill Stage 1：09-30 固定 20 回合 reference；本轮未新增评估",
+      "label": "ManiSkill Stage 1：09-30 固定 20 回合 reference；本次未重复该独立评估",
       "featured": true
     },
     {
@@ -34,11 +34,15 @@
       "label": "10-03 源码与公开资产核查；RLT 与 DSRL 分开，新增候选未运行"
     },
     {
-      "value": "0 次新 GPU 实验",
-      "label": "10-03 完成写作、源码核查与配置预检，没有新增闭环结果"
+      "value": "2 组匹配 pilot",
+      "label": "10-03 16:42 启动；smoke 通过、正式训练在途；非实时状态或收益结论"
     }
   ],
   "timeline": [
+    {
+      "title": "10-03 16:42 · Zeva 双卡匹配训练启动",
+      "body": "固定 91f7bdfa：零 context／固定响应，同容量同初始化、自动关键阶段控制。两轮 smoke、28/28 Q-head 张量变化和保存通过；正式训练 1000 iterations 或 8 小时，expert 关闭。快照见当日日报，非实时监控。"
+    },
     {
       "title": "10-03 · 当前方案、证据、论文版本与历史资料分开",
       "body": "统一 64 维 Stage 1B 规格，补充固定 expert 的纠错预算协议；PDF v2 保持原版本，协议新增部分尚未实现。整理资料，没有新增 GPU 结果。"
@@ -61,7 +65,7 @@
     },
     {
       "title": "先验收 baseline，再实施 Stage 1B",
-      "body": "AlphaBrain 有 LIBERO 两阶段入口与 Qwen RLT_a 成品；92% 是作者报告，尚未本地复现。RLT_a 与 full-token RLT 不混报。"
+      "body": "当前先完成现有 ManiSkill 的同容量匹配 pilot；AlphaBrain／LIBERO 留作后续候选。92% 是作者报告，RLT_a 与 full-token RLT 不混报。"
     },
     {
       "title": "交互历史有预测信息，控制收益仍待证明",
@@ -77,19 +81,24 @@
     },
     {
       "title": "官方 RLinf 已核查",
-      "body": "main c70606f；#1645 已合并，#1623 replay checkpoint 仍开放。本轮没有合并上游或启动新训练。"
+      "body": "10-03 main c70606f；#1645、#1626 已合并，#1623 replay checkpoint 仍开放。新任务未合并上游；淘汰后的完整 replay 恢复另行核验。"
     }
   ],
   "plan": [
     {
       "priority": "P0",
-      "action": "验收 AlphaBrain／LIBERO 配套公开模型",
-      "evidence": "固定 604924b；两卡分别评估 VLA-only 与 RLT_a；先 3×20 排查，再 10×50。尚未启动。"
+      "action": "完成当前同一 Zeva 分支的双卡 pilot",
+      "evidence": "先检查热身后 actor 接管、有限 loss、共同完成预算和无辅助固定评估；保存失败与负结果。不能将 smoke 或单 seed 解释为收敛、干预节省或迁移。"
+    },
+    {
+      "priority": "P1",
+      "action": "必要时验收 AlphaBrain／LIBERO 配套公开模型",
+      "evidence": "待现有 ManiSkill 匹配 pilot 结果再决定；604924b 的 VLA-only／RLT_a 发布资产尚未本地验收，不与当前任务并跑。"
     },
     {
       "priority": "P0",
       "action": "重新训练并确认一个稳定 RLT baseline",
-      "evidence": "同仓 full-token RLT＋已验收的 Qwen VLA；显式 Stage 1 demo 配置，Stage 2 先单 seed 排查再至少 3 seed，记录成功率、交互量与时间。"
+      "evidence": "先审查当前 RLinf／ManiSkill 匹配对照，若不稳定再切换已验收的替代栈；单 seed 排查后至少 3 seed，固定 Stage 1、动作、gate、交互预算与评估。"
     },
     {
       "priority": "P0",

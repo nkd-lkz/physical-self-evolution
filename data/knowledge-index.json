@@ -36,7 +36,7 @@
       "待精读": 95,
       "已阅读/已有专题笔记": 16
     },
-    "progress_entries": 56,
+    "progress_entries": 57,
     "progress_days": 14
   },
   "documents": [
@@ -54,7 +54,7 @@
       "topics": [],
       "status": "已有项目笔记",
       "source": "",
-      "search": "证据与实验总日志 research/experiment-log.md 证据汇总 集中查阅已测指标、原始证据可用性与结论边界；后附原日期实验记录。尚无匹配控制、干预节省或迁移结果。 已有证据支持到哪里 按原日期保留的记录 2026-10-03 · 论文初稿、证据复核与 baseline 调研 2026-09-30 晚间 · Jev GPU pilot 完成，四条探索线边界更新 2026-09-30 下午 · 99 次预定诊断、12 次追加拟合与 HIL pilot 2026-09-30 · Stage 1 eval20、Stage 2 baseline、FLARE 对照与 Jev 分支 2026-09-28 · ManiSkill RLT baseline、FLARE、Zeva 与 PICO VR 进展 2026-09-22 · 迁移核查与干预讨论整理（无新增GPU运行） 2026-09-22 · train450 Stage1 10k评测摘要补充（不新增独立样本） 事实与来源 解释边界 下一步（待执行） 2026-09-18 · train450 Stage1 10k复测 + B0 Stage2退化诊断 事实 解释 下一步 2026-09-17 · RoboDojo D3/D5 真实验证完成 事实 解释 下一步 2026-09-17 · Stage1 固定20-seed能力曲线 + clean500全量审计 + clean490准备 事实 解释 影响哪个研究假设 下一步最便宜的证伪实验 2026-09-15 · 日报快照：Stage1 运行中 + clean500 + RoboDojo D0–D4【历史快照】 事实 解释 2026-09-15 · Hammer RLT baseline recovery：先恢复可信 B0，再进入 Physical Token 事实 解释 2026-09-14 · 领导方案约束后的科研主线修正 事实 解释 2026-09-12 · RLT Phase 0 关键推进 事实 2026-09-11 · 历史探索：进入 Phase 0 记录模板 日期 · 标题 "
+      "search": "证据与实验总日志 research/experiment-log.md 证据汇总 集中查阅已测指标、原始证据可用性与结论边界；后附原日期实验记录。尚无匹配控制、干预节省或迁移结果。 已有证据支持到哪里 按原日期保留的记录 2026-10-03 16:42 · Zeva 同容量对照进入双卡训练 2026-10-03 · 论文初稿、证据复核与 baseline 调研 2026-09-30 晚间 · Jev GPU pilot 完成，四条探索线边界更新 2026-09-30 下午 · 99 次预定诊断、12 次追加拟合与 HIL pilot 2026-09-30 · Stage 1 eval20、Stage 2 baseline、FLARE 对照与 Jev 分支 2026-09-28 · ManiSkill RLT baseline、FLARE、Zeva 与 PICO VR 进展 2026-09-22 · 迁移核查与干预讨论整理（无新增GPU运行） 2026-09-22 · train450 Stage1 10k评测摘要补充（不新增独立样本） 事实与来源 解释边界 下一步（待执行） 2026-09-18 · train450 Stage1 10k复测 + B0 Stage2退化诊断 事实 解释 下一步 2026-09-17 · RoboDojo D3/D5 真实验证完成 事实 解释 下一步 2026-09-17 · Stage1 固定20-seed能力曲线 + clean500全量审计 + clean490准备 事实 解释 影响哪个研究假设 下一步最便宜的证伪实验 2026-09-15 · 日报快照：Stage1 运行中 + clean500 + RoboDojo D0–D4【历史快照】 事实 解释 2026-09-15 · Hammer RLT baseline recovery：先恢复可信 B0，再进入 Physical Token 事实 解释 2026-09-14 · 领导方案约束后的科研主线修正 事实 解释 2026-09-12 · RLT Phase 0 关键推进 事实 2026-09-11 · 历史探索：进入 Phase 0 记录模板 日期 · 标题 "
     },
     {
       "id": "doc:research/decision-log.md",
@@ -194,15 +194,14 @@
       "role_note": "保留当时的方案、结果或讨论。“当前”“下一步”“运行中”仅指原记录时点。",
       "date": "2026-10-03",
       "reviewed_at": "",
-      "summary": "本次整理 Zeva 启发的交互记忆证据、发布英文科研初稿与中文执行指南，并把下一步收敛到可复现的 RLT 仿真 baseline。完成的是已有实验资料复核、论文写作、源码调研与只读预检，没有新增 GPU 训练、独立闭环评测或真机结果。",
+      "summary": "这份日报汇总 10-03 的论文整理与后续双卡训练：早些时候完成写作、源码核查和预检；16:42 启动同一 Zeva 分支的零 context／固定响应对照。两组短程链路已通过，正式训练状态按核查时间记录，尚无方法收益结论。",
       "topics": [
-        "强化学习",
         "记忆 / 适应",
         "基线 / 工程"
       ],
       "status": "已有项目笔记",
       "source": "",
-      "search": "2026-10-03 · 交互记忆论文初稿与仿真 baseline 验收 research/progress-2026-10-03.md 历史记录 本次整理 Zeva 启发的交互记忆证据、发布英文科研初稿与中文执行指南，并把下一步收敛到可复现的 RLT 仿真 baseline。完成的是已有实验资料复核、论文写作、源码调研与只读预检，没有新增 GPU 训练、独立闭环评测或真机结果。 论文与可编辑材料 按 eRLT／SmoothRL 重写 v2 同期文献与方案更新 当前科研主线 已有实验与解释边界 下一步先验收 baseline 官方 RLinf 跟踪 同日续查：eRLT 来源与 LIBERO／RoboTwin 迁移 "
+      "search": "2026-10-03 · 交互记忆论文初稿与仿真 baseline 验收 research/progress-2026-10-03.md 历史记录 这份日报汇总 10-03 的论文整理与后续双卡训练：早些时候完成写作、源码核查和预检；16:42 启动同一 Zeva 分支的零 context／固定响应对照。两组短程链路已通过，正式训练状态按核查时间记录，尚无方法收益结论。 16:42 续记：同一 Zeva 分支的双卡匹配训练已启动 以下为同日较早的写作与调研记录 论文与可编辑材料 按 eRLT／SmoothRL 重写 v2 同期文献与方案更新 当前科研主线 已有实验与解释边界 下一步先验收 baseline 官方 RLinf 跟踪 同日续查：eRLT 来源与 LIBERO／RoboTwin 迁移 "
     },
     {
       "id": "doc:research/literature/visual-evidence-rlt-2026-09-30.md",
@@ -3960,6 +3959,12 @@
     }
   ],
   "progress": [
+    {
+      "date": "2026-10-03",
+      "title": "16:42 · 同一 Zeva 分支启动两卡匹配训练",
+      "path": "research/progress-2026-10-03.md",
+      "summary": "91f7bdfa：GPU 0 零 context，GPU 1 固定响应；相同头部容量、初始化和预算。两组 smoke 完成更新、评估及 step 1/2 保存，Q-head 28/28 张量变化；正式训练在途，最长 8 小时。首次 FSDP 失败保留；无 expert、无 Stage 1B，不声称控制收益。"
+    },
     {
       "date": "2026-10-03",
       "title": "资料重整：统一当前方案，标记证据范围与论文版本",

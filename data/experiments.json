@@ -1,6 +1,12 @@
 [
   {
     "date": "2026-10-03",
+    "title": "16:42 · 同一 Zeva 分支启动两卡匹配训练",
+    "path": "research/progress-2026-10-03.md",
+    "summary": "91f7bdfa：GPU 0 零 context，GPU 1 固定响应；相同头部容量、初始化和预算。两组 smoke 完成更新、评估及 step 1/2 保存，Q-head 28/28 张量变化；正式训练在途，最长 8 小时。首次 FSDP 失败保留；无 expert、无 Stage 1B，不声称控制收益。"
+  },
+  {
+    "date": "2026-10-03",
     "title": "资料重整：统一当前方案，标记证据范围与论文版本",
     "path": "research/zeva-rlt-implementation-2026-09-26.md",
     "summary": "保留旧链接，归档原 README 和混合 Zeva 稿；统一 64 维方法规格，补充固定 expert 纠错预算协议。首页、索引与 reader 区分当前方案、证据、文献和历史；取消 Git 编辑日期冒充研究日期。未新增 GPU 训练、评估或算法收益。"

@@ -1,0 +1,326 @@
+{
+  "schema_version": 1,
+  "captured_at": "2026-10-03T16:57:01.570553+08:00",
+  "monitor_checked_at": "2026-10-03T16:56:41.265057+08:00",
+  "status_scope": "Timestamped startup verification, not a live dashboard or a method-effectiveness result.",
+  "campaign": "zeva_matched_20261003_164216",
+  "code_branch": "research/rlt-zeva-interaction-memory",
+  "code_revision": "91f7bdfad49d967f84b15e040d59c15ff9b78310",
+  "started_at": "2026-10-03T16:42:17.012866+08:00",
+  "protocol": {
+    "task": "PegInsertionSideWideClearance-v1",
+    "stage1_reference": "Existing ManiSkill joint-control step-2000 checkpoint",
+    "actor_seed": 1234,
+    "environment_seed": 2026,
+    "train_envs": 4,
+    "eval_envs": 8,
+    "episode_control_ticks": 500,
+    "gate": "auto critical-phase gate",
+    "expert": "disabled",
+    "context_dim": 64,
+    "reader_parameters": 0,
+    "initial_actor_and_critic_tensors": "Identical between zero and response under the same initialization seed; unit tested.",
+    "history": {
+      "recent": 4,
+      "archive_capacity": 32,
+      "retrieved": 4
+    },
+    "global_batch": 32,
+    "micro_batch": 8,
+    "warmup_min_replay": 64,
+    "warmup_updates": 512,
+    "max_updates_per_outer_iteration": 64,
+    "max_outer_iterations": 1000,
+    "wall_time_hours_including_startup_and_smoke": 8,
+    "save_eval_interval": 25,
+    "fsdp_use_orig_params": false,
+    "main_starts_fresh_after_smoke": true
+  },
+  "verification": {
+    "focused_cpu_tests_passed": 57,
+    "gpu_identity_and_rgb_probes": "passed for both members",
+    "smoke_outer_iterations": 2,
+    "smoke_saved_steps": [
+      1,
+      2
+    ],
+    "smoke_q_head_changed_tensors": {
+      "zero": "28/28",
+      "response": "28/28"
+    },
+    "smoke_actor_backbone_changed_tensors": {
+      "zero": "6/6",
+      "response": "6/6"
+    },
+    "smoke_actor_mean_changed_tensors": {
+      "zero": "2/2",
+      "response": "2/2"
+    },
+    "smoke_model_weights_finite": true,
+    "smoke_final_single_env_eval_success": {
+      "zero": 0.0,
+      "response": 0.0
+    }
+  },
+  "previous_attempt": {
+    "campaign": "zeva_matched_20261003_163012",
+    "revision": "c4d38d5f7150bd22a60d1a5af0df1a6b38a56929",
+    "status": "Both stopped before the first learner update; no checkpoint.",
+    "error": "FSDP original-parameter writeback expected flattened storage but encountered a matrix shape.",
+    "change": "Parameter-free zero/response readers use the existing flat-parameter path. Trainable attention is unchanged."
+  },
+  "upstream": {
+    "checked_date": "2026-10-03",
+    "main_sha": "c70606f08cdca259b8dec03d4430926b5b8fac9d",
+    "pull_requests": {
+      "1645": "merged",
+      "1626": "merged",
+      "1623": "open"
+    },
+    "merged_into_campaign": false
+  },
+  "limits": [
+    "Single paired pilot, not independent multi-seed evidence.",
+    "Eight fixed evaluation lanes are reused; evaluations are not independent replicate experiments.",
+    "Zero context is a capacity-matched control, not the unmodified original RLT architecture.",
+    "No Stage 1B, expert correction, intervention-saving or transfer experiment.",
+    "During warmup, reference actions cannot establish a learned actor benefit.",
+    "After replay eviction, checkpoint index/file consistency must be checked before full replay resume; model checkpoint availability alone is insufficient.",
+    "Timeout returns 124 and preserves earlier completed checkpoints; exact simulator continuation is not promised.",
+    "Raw training logs remain on the research server; published metrics are a timestamped summary."
+  ],
+  "jobs": [
+    {
+      "gpu": 0,
+      "reader": "zero",
+      "phase": "phase=training",
+      "exit_code": null,
+      "pane_dead": false,
+      "runs": [
+        {
+          "kind": "smoke",
+          "checkpoint_steps": [
+            1,
+            2
+          ],
+          "latest_metrics": {
+            "eval/success_once": {
+              "step": 1,
+              "value": 0.0
+            },
+            "env/success_once": {
+              "step": 1,
+              "value": 0.0
+            },
+            "train/actor/bc_loss": {
+              "step": 1,
+              "value": 0.16191819310188293
+            },
+            "train/replay/actor_switch_rate": {
+              "step": 1,
+              "value": 0.8999999761581421
+            },
+            "train/replay/intervention_rate": {
+              "step": 1,
+              "value": 0.0
+            },
+            "train/rlt/actor_updates_run": {
+              "step": 1,
+              "value": 2.0
+            },
+            "train/rlt/critic_updates_run": {
+              "step": 1,
+              "value": 2.0
+            },
+            "train/rlt/global_total_transitions_added": {
+              "step": 1,
+              "value": 33.0
+            },
+            "train/rlt/ready_for_online": {
+              "step": 1,
+              "value": 1.0
+            },
+            "train/rlt/update_step": {
+              "step": 1,
+              "value": 2.0
+            },
+            "train/sac/actor_loss": {
+              "step": 1,
+              "value": 0.1275525987148285
+            },
+            "train/sac/critic_loss": {
+              "step": 1,
+              "value": 0.026797443628311157
+            }
+          }
+        },
+        {
+          "kind": "main",
+          "checkpoint_steps": [],
+          "latest_metrics": {
+            "env/success_once": {
+              "step": 6,
+              "value": 0.0
+            },
+            "train/replay/actor_switch_rate": {
+              "step": 6,
+              "value": 0.0
+            },
+            "train/replay/intervention_rate": {
+              "step": 6,
+              "value": 0.0
+            },
+            "train/rlt/actor_updates_run": {
+              "step": 6,
+              "value": 64.0
+            },
+            "train/rlt/critic_updates_run": {
+              "step": 6,
+              "value": 64.0
+            },
+            "train/rlt/global_total_transitions_added": {
+              "step": 6,
+              "value": 105.0
+            },
+            "train/rlt/ready_for_online": {
+              "step": 6,
+              "value": 0.0
+            },
+            "train/rlt/update_step": {
+              "step": 6,
+              "value": 64.0
+            },
+            "train/actor/bc_loss": {
+              "step": 6,
+              "value": 0.014372335746884346
+            },
+            "train/sac/actor_loss": {
+              "step": 6,
+              "value": 0.10060635209083557
+            },
+            "train/sac/critic_loss": {
+              "step": 6,
+              "value": 0.0013767820782959461
+            }
+          }
+        }
+      ]
+    },
+    {
+      "gpu": 1,
+      "reader": "response",
+      "phase": "phase=training",
+      "exit_code": null,
+      "pane_dead": false,
+      "runs": [
+        {
+          "kind": "smoke",
+          "checkpoint_steps": [
+            1,
+            2
+          ],
+          "latest_metrics": {
+            "eval/success_once": {
+              "step": 1,
+              "value": 0.0
+            },
+            "env/success_once": {
+              "step": 1,
+              "value": 0.0
+            },
+            "train/actor/bc_loss": {
+              "step": 1,
+              "value": 0.16615000367164612
+            },
+            "train/replay/actor_switch_rate": {
+              "step": 1,
+              "value": 0.8999999761581421
+            },
+            "train/replay/intervention_rate": {
+              "step": 1,
+              "value": 0.0
+            },
+            "train/rlt/actor_updates_run": {
+              "step": 1,
+              "value": 2.0
+            },
+            "train/rlt/critic_updates_run": {
+              "step": 1,
+              "value": 2.0
+            },
+            "train/rlt/global_total_transitions_added": {
+              "step": 1,
+              "value": 33.0
+            },
+            "train/rlt/ready_for_online": {
+              "step": 1,
+              "value": 1.0
+            },
+            "train/rlt/update_step": {
+              "step": 1,
+              "value": 2.0
+            },
+            "train/sac/actor_loss": {
+              "step": 1,
+              "value": 0.2853126525878906
+            },
+            "train/sac/critic_loss": {
+              "step": 1,
+              "value": 0.019342610612511635
+            }
+          }
+        },
+        {
+          "kind": "main",
+          "checkpoint_steps": [],
+          "latest_metrics": {
+            "env/success_once": {
+              "step": 5,
+              "value": 0.5
+            },
+            "train/replay/actor_switch_rate": {
+              "step": 5,
+              "value": 0.0
+            },
+            "train/replay/intervention_rate": {
+              "step": 5,
+              "value": 0.0
+            },
+            "train/rlt/actor_updates_run": {
+              "step": 5,
+              "value": 64.0
+            },
+            "train/rlt/critic_updates_run": {
+              "step": 5,
+              "value": 64.0
+            },
+            "train/rlt/global_total_transitions_added": {
+              "step": 5,
+              "value": 76.0
+            },
+            "train/rlt/ready_for_online": {
+              "step": 5,
+              "value": 0.0
+            },
+            "train/rlt/update_step": {
+              "step": 5,
+              "value": 64.0
+            },
+            "train/actor/bc_loss": {
+              "step": 5,
+              "value": 0.017605524510145187
+            },
+            "train/sac/actor_loss": {
+              "step": 5,
+              "value": 0.12323866784572601
+            },
+            "train/sac/critic_loss": {
+              "step": 5,
+              "value": 0.0016356102423742414
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
