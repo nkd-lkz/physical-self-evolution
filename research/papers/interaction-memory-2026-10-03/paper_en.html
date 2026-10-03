@@ -1,1280 +1,1543 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Interaction Memory Research Draft</title><link href="document.css" rel="stylesheet"/></head><body class=""><nav><a href="../../../index.html">科研工作台</a> · <a href="index.html">Bundle home</a> · <a href="paper_en.pdf">English PDF</a> · <a href="experiment_guide_zh.pdf">中文指南 PDF</a></nav><h1 id="interaction-memory-for-reinforcement-learning-with-frozen-vision-language-action-models">Interaction
-Memory for Reinforcement Learning with Frozen Vision-Language-Action
-Models</h1>
-<p><strong>Research manuscript, 3 October 2026.</strong> Proposed method
-and evaluation protocol; the reported pilot measurements concern the
-existing development branch, not a completed evaluation of the proposed
-method. Author information is intentionally omitted. This is an extended
-working draft, not a submission-formatted or experimentally complete
-paper.</p>
-<aside class="publication-note"><p><strong>Publication update.</strong> Baseline validation update, 3 October 2026. Before implementing the proposed Stage 1B, validate a reproducible simulation baseline. AlphaBrain on LIBERO is a candidate under source review, not an independently reproduced result. Its released Qwen RLT_a checkpoint is an evaluation starting point; it differs from the full-token RLT track. Existing ManiSkill pilot measurements below retain their original scope. No new GPU training or control benefit is reported in this publication update.</p><p><a href="../../../reader.html?path=research/literature/rlt-simulation-baselines-2026-10-03.md">Baseline source audit and execution gates (Chinese)</a></p></aside><h2 id="abstract">Abstract</h2>
+
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8"/>
+<meta content="pandoc" name="generator"/>
+<meta content="width=device-width, initial-scale=1.0, user-scalable=yes" name="viewport"/>
+<meta content="Working manuscript" name="author"/>
+<title>IM-RLT: Learning from Completed Interactions for Lightweight VLA Reinforcement Learning</title>
+<style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+      margin-bottom: 0em;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
+<link href="document.css" rel="stylesheet"/>
+</head>
+<body class="manuscript"><nav><a href="../../../index.html">科研工作台</a> · <a href="paper_en.pdf">Typeset PDF · v2</a> · <a href="paper_en.tex">LaTeX source</a> · <a href="experiment_guide_zh.html">中文实验指南</a> · <a href="index.html">All downloads</a></nav>
+<header id="title-block-header">
+<h1 class="title"><strong>IM-RLT: Learning from Completed
+Interactions<br/>
+for Lightweight VLA Reinforcement Learning</strong></h1>
+<p class="author">Working manuscript<a class="footnote-ref" href="#fn1" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<div class="abstract">
+<div class="abstract-title">Abstract</div>
 <p>Lightweight reinforcement learning can adapt a frozen
-vision-language-action model through a compact state representation and
-a small actor–critic. However, a current observation need not reveal how
-the robot responds to commands under its present execution conditions.
-We study whether completed interactions can supply this missing
-information. We propose a bounded interaction memory whose encoder and
-reader are trained to predict the consequences of subsequent actions
-from strictly preceding experience. The resulting context supplements
-the original RL token and conditions a small actor and critic, while the
-visual-language-action backbone remains frozen during online learning.
-Recent ordered records capture immediate execution history; a bounded
-archive supports retrieval across verified retries and, in a separate
-protocol, transfer from source interactions. The design separates
-adaptation through memory updates from learning through parameter
-updates. Existing simulation diagnostics show that command–response
-history contains predictive information, but also expose a weakness: a
-fixed response estimator substantially outperforms the current attention
-reader. These observations motivate consequence-supervised memory
-training without establishing a control benefit. We specify controlled
-experiments for online sample efficiency, frozen-parameter adaptation,
-stale-memory effects, visual relevance, and transfer. Closed-loop
-improvements and reduced human effort remain hypotheses to be
-tested.</p>
-<h2 id="introduction">1. Introduction</h2>
-<p>This work investigates how a robot can use completed physical
-interactions to improve lightweight reinforcement learning around a
-frozen vision-language-action (VLA) model. A pretrained VLA supplies
-useful task and visual information, but two observations with similar
-appearance and joint configuration can precede different responses to
-the same command. A robot may encounter a different controller gain,
-delayed execution, an object that slips, or contact that blocks motion.
-Some of these differences become observable only after acting. The
-relevant question is whether the agent can retain that evidence and use
-it when choosing its next action.</p>
-<p>RLT provides a suitable experimental starting point: a compact token
-connects a VLA to lightweight online actor–critic learning <span class="citation" data-cites="rlt">(Xu et al. 2026)</span>. Its
-computational advantage makes controlled experiments feasible on modest
-hardware. Our local RLT implementation also exposes a reference action
-chunk and proprioception to the small controller. We preserve these
-inputs. We investigate an additional source of information: what
-actually happened when commands were executed. The objective is not to
-replace the visual token or fine-tune a large backbone online.</p>
-<p>There are two distinct ways that experience can affect behavior.
-Replay-based reinforcement learning changes network parameters using
-past transitions. A context memory changes the information available to
-a decision, even when parameters remain fixed. These mechanisms need
-separate evaluation. Ordinary RL already uses unsuccessful transitions
-through reward and value learning; storing a failure is not a new
-algorithmic contribution. A memory mechanism is useful only if its
-contents change predictions or decisions in a beneficial and
-reproducible way.</p>
-<p>Our proposal is inspired by Zeva’s use of completed interactions and
-deployment-time memory <span class="citation" data-cites="zeva">(Chen et
-al. 2026)</span>. We ask a narrower, testable question: <strong>Can a
-representation learned to extract future-useful execution evidence
-improve an RLT controller under a fixed interaction and compute
-budget?</strong> “Future-useful” has an operational definition. The
-memory encoder must help predict the effect of a later action from
-earlier records; reconstructing the effect already stored in the same
-record is insufficient evidence. This training criterion gives the
-memory a role beyond generic attention over a trajectory.</p>
-<p>The proposed contribution is a method and an evaluation of
-consequence-supervised context for frozen-VLA RL. A prediction loss plus
-concatenated memory is not sufficient novelty by itself; this draft does
-not establish that the proposed combination clears that bar. Its
-intended empirical contributions are (i) improved online learning at
-matched data cost, (ii) useful adaptation from retained evidence with
-parameters frozen, and (iii) selective reuse of source experience
-without systematic negative transfer. None is asserted as an established
-result in this draft. Context inference, response prediction, memory
-conditioning, and residual-based reliability have substantial
-precedents. The scientific contribution must therefore be demonstrated
-by the controlled combination, its failure analysis, and its benefits
-over strong history and representation baselines. If the result reduces
-to a standard Zeva-style encoder attached to RLT without an additional
-empirical finding, substantial novelty remains unresolved.</p>
-<h2 id="related-work">2. Related Work</h2>
-<h3 id="lightweight-reinforcement-learning-around-pretrained-action-models">2.1.
-Lightweight reinforcement learning around pretrained action models</h3>
-<p>VLA models such as pi0 and pi0.5 combine pretrained visual-language
-representations with action generation <span class="citation" data-cites="pi0 pi05">(Black et al. 2024; Intelligence et al.
-2025)</span>. RLT studies compact representations for lightweight online
-RL <span class="citation" data-cites="rlt">(Xu et al. 2026)</span>. DSRL
-instead learns to steer a frozen diffusion policy through its sampling
-variables <span class="citation" data-cites="dsrl">(Wagenmaker et al.
-2025)</span>. ConRFT studies offline and online reinforced VLA
-fine-tuning using a consistency policy <span class="citation" data-cites="conrft">(Chen et al. 2025)</span>. These approaches differ
-in which parameters and action interfaces are optimized; published
-success numbers cannot be compared directly across their training data
-and control budgets.</p>
-<p>The recently released eRLT is a particularly close representation
-baseline. It selects action-relevant information across tokens and
-layers of a frozen VLA, initializes routing with expert-action
-prediction, and adapts routing through the critic <span class="citation" data-cites="erlt">(Huang et al. 2026)</span>. Our proposed information
-source is completed execution history. Current-observation routing and
-history-based condition inference are complementary hypotheses, but a
-stronger current-state representation could eliminate an apparent memory
-advantage. Accordingly, an eRLT-style representation comparison is
-required before claiming that memory addresses a limitation specific to
-frozen VLA features.</p>
-<h3 id="memory-and-adaptation-from-interaction">2.2. Memory and
-adaptation from interaction</h3>
-<p>Zeva learns an interaction representation with action-conditioned
-pre-interaction and post-interaction effect prediction, then uses
-short-term and cross-attempt memory to condition action generation; its
-deployment procedure updates memory with neural parameters frozen <span class="citation" data-cites="zeva">(Chen et al. 2026)</span>. We borrow
-that interaction–storage–conditioning pattern. Our implementation
-conditions RLT’s small actor and critic and explicitly separates online
-weight learning from frozen-parameter memory adaptation. Effect
-prediction and dual-timescale memory are inherited ideas, not new
-contributions here. A simplified reader inside RLT must be labeled a
-Zeva-inspired adaptation rather than a reproduction of the complete
-system.</p>
-<p>MemoryVLA retrieves perceptual and cognitive information to condition
-manipulation <span class="citation" data-cites="memoryvla">(Shi et al.
-2025)</span>. RoboMME provides a benchmark for memory in robotic
-generalist policies <span class="citation" data-cites="robomme">(Dai et
-al. 2026)</span>. These works make a generic “adding memory improves
-manipulation” claim inadequate. Our evaluation isolates executed
-commands and responses, distinguishes visual context from joint history,
-and tests transfer and interference under changes in execution
-conditions.</p>
-<p>The broader adaptation literature already formalizes
-history-conditioned control. UP-OSI predicts dynamics parameters from
-recent states and actions <span class="citation" data-cites="uposi">(Yu
-et al. 2017)</span>; RMA learns rapid adaptation from recent experience
-<span class="citation" data-cites="rma">(Kumar et al. 2021)</span>.
-PEARL infers context for off-policy meta-RL, VariBAD conditions behavior
-on inferred task uncertainty, and RL2 learns an adaptation procedure
-through recurrent state <span class="citation" data-cites="pearl varibad rl2">(Rakelly et al. 2019; Zintgraf et al.
-2019; Duan et al. 2016)</span>. We do not claim the first physical
-context representation. Our setting differs through frozen VLA features,
-bounded explicit evidence, action-chunk execution, and the need to
-measure benefits under a small online budget.</p>
-<h3 id="predictive-representations-and-failure-reuse">2.3. Predictive
-representations and failure reuse</h3>
-<p>SPR learns representations using future latent prediction <span class="citation" data-cites="spr">(Schwarzer et al. 2020)</span>. FLARE
-integrates future latent modeling with action generation <span class="citation" data-cites="flare">(Zheng et al. 2025)</span>.
-Imagine-RL augments VLA reinforcement learning with a frozen world model
-and residual-confidence-guided critic fusion <span class="citation" data-cites="imagine">(Hu et al. 2026)</span>. TD-MPC2 uses learned
-latent dynamics for trajectory optimization <span class="citation" data-cites="tdmpc2">(Hansen et al. 2023)</span>. We use prediction to
-train a representation of preceding interactions; the proposed actor
-does not query a predictor for each candidate action or perform
-model-based planning. A prediction-only sidecar is nevertheless a
-necessary control for separating memory from an auxiliary-loss
-benefit.</p>
-<p>Off-policy actor–critic methods already learn from unfavorable
-transitions <span class="citation" data-cites="sac td3">(Haarnoja et al.
-2018; Fujimoto et al. 2018)</span>. Hindsight Experience Replay
-additionally changes the goal interpretation of failed attempts <span class="citation" data-cites="her">(Andrychowicz et al. 2017)</span>.
-HIL-SERL demonstrates a human-in-the-loop learning system where
-demonstrations and corrections matter <span class="citation" data-cites="hilserl">(Luo et al. 2024)</span>. Our failed interactions
-contribute to dynamics supervision and value learning, but are not
-automatically behavior-cloned. Simulation correction counts are proxies;
-human minutes saved must eventually be measured on physical
-hardware.</p>
-<p><strong>Table 1. Closest conceptual comparisons.</strong> Entries
-describe the mechanisms relevant to this proposal, not exhaustive
-capabilities of each work.</p>
-<table>
-<colgroup>
-<col style="width: 25%"/>
-<col style="width: 25%"/>
-<col style="width: 25%"/>
-<col style="width: 25%"/>
-</colgroup>
+vision-language-action (VLA) model through a compact state
+representation and a small actor–critic. However, a representation of
+the current observation need not reveal how commands will be realized
+under the current execution conditions. We study whether completed
+command–response records can supply this missing information. We propose
+Interaction Memory for RL Token (IM-RLT), which preserves the frozen RLT
+representation and augments the controller with a bounded context of
+recent and retrieved interactions. A lightweight encoder and reader are
+trained to predict a later interaction’s consequences from strictly
+earlier records; their context then conditions the actor and critic. The
+initial online configuration freezes these modules to separate
+representation quality from additional optimization. A development study
+using paired simulated executions with different controller stiffnesses
+motivates this design: a fixed command–response estimator achieves a
+joint-response mean squared error of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>7.39</mn><mo>×</mo><msup><mn>10</mn><mrow><mi>−</mi><mn>5</mn></mrow></msup></mrow><annotation encoding="application/x-tex">7.39\times10^{-5}</annotation></semantics></math>,
+compared with
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1.81</mn><mo>×</mo><msup><mn>10</mn><mrow><mi>−</mi><mn>4</mn></mrow></msup></mrow><annotation encoding="application/x-tex">1.81\times10^{-4}</annotation></semantics></math>
+for the existing attention reader. This result identifies a gap in
+extracting useful experience, rather than a demonstrated control
+advantage. We specify matched-budget control comparisons,
+frozen-parameter memory interventions, condition-change tests, and
+source-memory transfer evaluations. These experiments distinguish
+learning through replay from adaptation through retained evidence and
+make improvements in success, convergence, and interaction cost
+independently testable.</p>
+</div>
+</header><p class="publication-note">Version 2 · 3 October 2026. Proposed method with measured development diagnostics; controlled online-RL and transfer results remain pending. The PDF is the reference layout; this HTML uses the same manuscript source and native MathML.</p>
+<h1 data-number="1" id="introduction"><span class="header-section-number">1</span> Introduction</h1>
+<p>Pretrained vision-language-action models provide a useful behavioral
+starting point for robot manipulation, but adapting that behavior to a
+particular execution setting still requires experience. RL Token (RLT)
+compresses VLA features and learns a small controller around a frozen
+backbone, reducing the cost of online reinforcement learning <span class="citation" data-cites="rlt">[1]</span>. This design makes the
+information supplied to the actor and critic especially consequential:
+the lightweight controller must choose corrections and estimate their
+value without adapting the entire VLA.</p>
+<p>Current visual and proprioceptive observations do not necessarily
+determine the response to a command. Similar robot configurations can
+occur with different actuator responses, object friction, or contact
+constraints. A completed action can expose some of these differences:
+the same commanded motion may produce substantial displacement, little
+displacement, or a delayed response. Repeatedly relearning such
+differences through weight updates is potentially expensive. Retaining
+the corresponding interaction evidence could instead help the next
+decision, provided that the evidence is informative, relevant, and
+available at that decision time.</p>
+<p>This possibility raises a narrower question than whether adding
+memory produces a self-improving robot: <em>can a compact representation
+of completed interactions improve the sample efficiency of an otherwise
+unchanged RLT controller?</em> Replay already allows reinforcement
+learning to improve parameters from successful and unsuccessful trials.
+Our additional hypothesis concerns the controller’s input. A
+memory-conditioned policy can change its behavior when its evidence
+changes, even with every network weight frozen. Such context adaptation
+is distinct from continued training, and transferring a memory bank is
+distinct from transferring pretrained weights.</p>
+<p>Existing approaches clarify the gap. eRLT improves the extraction of
+action-relevant features from the current VLA input through token and
+layer routing <span class="citation" data-cites="erlt">[2]</span>. Zeva
+studies learning from embodied interactions through an interaction
+representation and in-context use of experience <span class="citation" data-cites="zeva">[3]</span>. Historical system identification and
+context-based RL establish the broader principle of adaptation from
+state–action evidence <span class="citation" data-cites="uposi rma pearl">[4], [5], [6]</span>. Consequently, the
+contribution sought here is not the generic introduction of a memory
+token or a claim to discover physical laws. It is a specific way to
+train and use an execution context within inexpensive VLA reinforcement
+learning, together with experiments that determine whether its
+additional machinery is justified.</p>
+<p>Our development results make reliable extraction the immediate
+obstacle. On cached simulated command–response trajectories, the
+existing neural memory reader is only marginally different from a
+no-history predictor, whereas a simple response estimator is
+substantially more accurate. A subsequent support-gated residual
+improves overall prediction error but does not establish manipulation
+success. These observations favor a focused design: train history to
+explain a <em>later</em> response, retain the interpretable response
+estimator as a strong baseline, and measure control directly.</p>
+<p>We therefore propose IM-RLT. Completed interactions are encoded into
+a bounded recent store and an archive. A reader combines records with
+the current state to produce a compact context. An auxiliary decoder
+supervises the context using observed future consequences during an
+offline interaction-pretraining stage. The first online experiment
+freezes the representation and trains the same small actor–critic used
+by the matched baseline. This choice tests whether the context contains
+useful information before introducing representation drift, adaptive
+retrieval, or changes to the action generator.</p>
+<p>The manuscript makes three contributions at its present evidence
+level:</p>
+<ul>
+<li><p>A formulation that distinguishes parameter learning, context
+adaptation, and experience transfer in frozen-VLA RL.</p></li>
+<li><p>An interaction-memory design with consequence supervision,
+bounded storage, and explicit timing and replay semantics.</p></li>
+<li><p>Development measurements that motivate the design, and a
+controlled evaluation protocol for testing its effects on success,
+sample efficiency, stale-memory interference, and transfer. Confirmatory
+control results are not yet available.</p></li>
+</ul>
+<h1 data-number="2" id="sec:related"><span class="header-section-number">2</span> Related Work</h1>
+<h2 data-number="2.1" id="lightweight-reinforcement-learning-with-pretrained-action-models"><span class="header-section-number">2.1</span> Lightweight reinforcement
+learning with pretrained action models</h2>
+<p>VLAs such as
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>π</mi><mn>0</mn></msub><annotation encoding="application/x-tex">\pi_0</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>π</mi><mn>0.5</mn></msub><annotation encoding="application/x-tex">\pi_{0.5}</annotation></semantics></math>
+learn broad visuomotor behavior from robot data <span class="citation" data-cites="pi0 pi05">[7], [8]</span>. Downstream RL can refine these
+behaviors through different trainable interfaces. RLT constructs a
+compact representation for a lightweight controller <span class="citation" data-cites="rlt">[1]</span>; DSRL instead steers a
+pretrained diffusion policy through its latent sampling space <span class="citation" data-cites="dsrl">[9]</span>. These interfaces change
+the action optimization problem and must not be treated as
+interchangeable baselines. ConRFT and human-in-the-loop RL also
+illustrate the importance of initialization, demonstration data, and
+corrective feedback <span class="citation" data-cites="conrft hilserl">[10], [11]</span>. Our primary simulation
+protocol does not require live human correction, although shared
+demonstration data may initialize all methods.</p>
+<p>eRLT is the closest representation-level comparison: it initializes
+routing through expert-action prediction and refines the representation
+using critic feedback <span class="citation" data-cites="erlt">[2]</span>. This motivates an action-supervised,
+current-input comparison that tests whether better present-state
+features remove the need for memory. SmoothRL addresses online RL during
+asynchronous execution and accounts for how generated chunks participate
+in execution <span class="citation" data-cites="smoothrl">[12]</span>.
+Our core experiment uses synchronous execution; it borrows the
+discipline of tracking executed commands but does not reproduce an
+asynchronous RL algorithm. Both distinctions are necessary for
+attributing an improvement to interaction context.</p>
+<h2 data-number="2.2" id="interaction-memory-and-adaptation-from-history"><span class="header-section-number">2.2</span> Interaction memory and
+adaptation from history</h2>
+<p>Zeva motivates extracting useful information from visual-action
+interactions and maintaining experience for later use <span class="citation" data-cites="zeva">[3]</span>. MemoryVLA studies memory
+within a VLA architecture, while RoboMME evaluates memory-related
+capabilities of robotic policies <span class="citation" data-cites="memoryvla robomme">[13], [14]</span>. Our context is an
+external input to a small RLT actor–critic, and our primary training
+signal concerns a later execution outcome. A matched interaction-encoder
+baseline is needed before attributing gains specifically to this
+supervision.</p>
+<p>History-based adaptation predates VLA memory. UP-OSI estimates
+execution conditions from online evidence; RMA learns an adaptation
+module from recent state–action history <span class="citation" data-cites="uposi rma">[4], [5]</span>. PEARL, VariBAD, and
+RL<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi></mi><mn>2</mn></msup><annotation encoding="application/x-tex">^2</annotation></semantics></math>
+study adaptation through context or recurrent state <span class="citation" data-cites="pearl varibad rl2">[6], [15], [16]</span>.
+These methods preclude novelty claims for conditioning a policy on
+interaction history alone. They motivate strong recent-history controls
+and a separate test of whether retrieving older records adds value
+beyond a recurrent estimator. A latent that predicts observed response
+also need not identify a unique physical parameter: actuator lag,
+contact, and commanded magnitude can produce similar effects.</p>
+<h2 data-number="2.3" id="consequence-supervised-representations"><span class="header-section-number">2.3</span> Consequence-supervised
+representations</h2>
+<p>Predicting future representations can improve the information
+retained by a learned state <span class="citation" data-cites="spr">[17]</span>. FLARE connects robot policy learning with
+implicit world modeling <span class="citation" data-cites="flare">[18]</span>; we draw on future-feature supervision
+rather than reproduce its complete joint architecture. Imagine-RL uses
+world-model information for VLA value learning <span class="citation" data-cites="imagine">[19]</span>. IM-RLT initially predicts consequences
+only to train a context representation: its actor does not roll out
+candidate futures or invoke a planner. This separates it from predictive
+value augmentation and model-based planning such as TD-MPC2 <span class="citation" data-cites="tdmpc2">[20]</span>. Failure trajectories
+supply informative responses as well as low returns, but their use does
+not make them successful imitation targets. Hindsight goal relabeling is
+a separate mechanism <span class="citation" data-cites="her">[21]</span>
+and is not required here.</p>
+<div>
+<table id="tab:position">
+<caption>Table 1. Positioning of the proposed method. Entries identify the
+information and mechanism relevant to our comparison, not a ranking of
+the cited systems. “Proposed” does not denote a completed
+implementation.</caption>
 <thead>
 <tr>
-<th>Work</th>
-<th>Information central to the comparison</th>
-<th>Learned or updated component relevant here</th>
-<th>Required distinction</th>
+<th style="text-align: left;">Approach</th>
+<th style="text-align: left;">Relevant information or intervention</th>
+<th style="text-align: left;">Comparison required for IM-RLT</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>RLT</td>
-<td>Current VLA representation</td>
-<td>Compact representation, then small RL controller</td>
-<td>Preserve baseline action and routing contract</td>
+<td style="text-align: left;">RLT / eRLT</td>
+<td style="text-align: left;">Compact current features / action-relevant
+routing</td>
+<td style="text-align: left;">Preserve action interface; strengthen
+current features</td>
 </tr>
 <tr>
-<td>eRLT</td>
-<td>Tokens and layers of current VLA input</td>
-<td>Action-initialized, critic-refined routing</td>
-<td>Test whether better current features remove the gain</td>
+<td style="text-align: left;">SmoothRL</td>
+<td style="text-align: left;">Execution-aware asynchronous RL</td>
+<td style="text-align: left;">Keep execution schedule fixed in the core
+study</td>
 </tr>
 <tr>
-<td>Zeva</td>
-<td>Completed visual-action interactions</td>
-<td>Interaction encoder; deployment memory</td>
-<td>Separate context adaptation from RL weight updates</td>
+<td style="text-align: left;">Zeva / MemoryVLA</td>
+<td style="text-align: left;">Interaction or perceptual history</td>
+<td style="text-align: left;">Match evidence, reader capacity, and
+source data</td>
 </tr>
 <tr>
-<td>MemoryVLA</td>
-<td>Retrieved perceptual/cognitive history</td>
-<td>Memory-conditioned action model</td>
-<td>Compare with generic visual history</td>
+<td style="text-align: left;">RMA / PEARL</td>
+<td style="text-align: left;">Recent response or inferred context</td>
+<td style="text-align: left;">Include a strong history-conditioned
+controller</td>
 </tr>
 <tr>
-<td>RMA / UP-OSI</td>
-<td>Recent state-action evidence</td>
-<td>Adaptation or identification module</td>
-<td>Include a strong recurrent history baseline</td>
+<td style="text-align: left;">FLARE / Imagine-RL</td>
+<td style="text-align: left;">Future-feature learning / predictive value
+information</td>
+<td style="text-align: left;">Test consequence supervision without an
+archive</td>
 </tr>
 <tr>
-<td>FLARE / SPR</td>
-<td>Future representations</td>
-<td>Predictive representation learning</td>
-<td>Include prediction without an archive</td>
-</tr>
-<tr>
-<td>Imagine-RL</td>
-<td>Predicted futures and model residuals</td>
-<td>World-model-augmented value estimation</td>
-<td>Do not claim novelty for predictive critic confidence</td>
-</tr>
-<tr>
-<td>Proposed method</td>
-<td>Earlier execution records useful for later consequences</td>
-<td>Stage 1B context encoder; Stage 2 actor–critic</td>
-<td>Establish benefit through memory interventions</td>
+<td style="text-align: left;">IM-RLT (proposed)</td>
+<td style="text-align: left;">Earlier interactions predicting later
+responses</td>
+<td style="text-align: left;">Establish control and frozen-weight memory
+effects</td>
 </tr>
 </tbody>
 </table>
-<h2 id="problem-formulation">3. Problem Formulation</h2>
-<p>We consider partially observed manipulation with visual observations,
-instructions, and proprioception. Let the hidden physical state be
-<code>x_t</code>, and let <code>theta_t</code> summarize execution
-conditions such as controller settings, friction, or delay. The
-transition law depends on both. <code>theta_t</code> is a modeling
-device; its true value is not provided to the proposed controller and
-need not be identifiable. We initially study stationary conditions
-within an attempt and subsequently introduce controlled changes.</p>
-<p>The frozen Stage 1 model produces an RL token <code>z_t</code>,
-transformed proprioception <code>p_t</code>, and a reference action
-chunk <code>A_ref,t</code>. Raw joint positions <code>q_t</code> are
-separately available to the interaction collector. Their units differ
-from the transformed VLA state. We denote the deployable current input
-by <code>s_t = [z_t, p_t, q_t]</code>; the no-memory reference receives
-the same current observations wherever a comparison requires input
-matching. Any baseline that gains a new raw-state input is separately
-named.</p>
-<p>At decision time, the controller proposes a chunk of at most
-<code>H = 10</code> normalized commands. Existing routing selects the
-executed commands, which may originate from the VLA, actor, or an
-explicitly enabled corrective controller. We store the actual executed
-prefix of length <code>ell_t</code>, not an unselected proposal. The
-available history contains only completed records:</p>
-<div class="equation">
-<img alt="\mathcal{H}_t = \{(s_i,A_i^{\mathrm{exec}},s_{i+1},m_i):i&lt;t\}. " src="figures/equation_1.svg"/>
 </div>
-<p>The mask <code>m_i</code> identifies valid commands, terminal
-observations, and stream boundaries. The memory context <code>c_t</code>
-is a deterministic function of a bounded subset of this history and the
-current observation. It is an inferred condition, not a calibrated
-posterior over physical parameters. We optimize expected discounted task
-return while tracking interaction count, online compute, total
-pretraining cost, and memory overhead.</p>
-<p>A <strong>physical interaction representation</strong> is defined
-operationally: it summarizes how commands and observed outcomes relate
-in a way that improves held-out consequence prediction or control. This
-does not imply discovery of a unique friction coefficient, contact
-force, or universal physical law. Small joint motion can result from
-obstruction, controller gain, saturation, or latency. Claims of contact
-recognition require independent contact measurements; claims of causal
-identification require stronger assumptions or interventions than
-sequence prediction alone.</p>
-<h2 id="consequence-supervised-interaction-memory">4.
-Consequence-Supervised Interaction Memory</h2>
-<figure>
-<img alt="Figure 1. Proposed information flow. The observation and action backbone is frozen during Stage 1B and Stage 2. Blue blocks are newly proposed context modules. Memory becomes available only after execution. Stage 1B trains context to predict a subsequent outcome; Stage 2 initially freezes that context interface and trains the small actor and critic." src="figures/framework.png"/>
-<figcaption aria-hidden="true">Figure 1. Proposed information flow. The
-observation and action backbone is frozen during Stage 1B and Stage 2.
-Blue blocks are newly proposed context modules. Memory becomes available
-only after execution. Stage 1B trains context to predict a subsequent
-outcome; Stage 2 initially freezes that context interface and trains the
-small actor and critic.</figcaption>
+<h1 data-number="3" id="sec:problem"><span class="header-section-number">3</span> Preliminaries and Problem
+Formulation</h1>
+<h2 data-number="3.1" id="frozen-vla-reinforcement-learning"><span class="header-section-number">3.1</span> Frozen-VLA reinforcement
+learning</h2>
+<p>At decision index
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>,
+the robot observes images
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mi>t</mi></msub><annotation encoding="application/x-tex">I_t</annotation></semantics></math>,
+transformed proprioception
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>p</mi><mi>t</mi></msub><annotation encoding="application/x-tex">p_t</annotation></semantics></math>,
+and instruction
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>g</mi><annotation encoding="application/x-tex">g</annotation></semantics></math>.
+A frozen VLA and its fixed Stage 1 representation provide an RL token
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>z</mi><mi>t</mi></msub><annotation encoding="application/x-tex">z_t</annotation></semantics></math>
+and a reference action chunk
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msubsup><mi>A</mi><mi>t</mi><mrow><mi mathvariant="normal">r</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">f</mi></mrow></msubsup><annotation encoding="application/x-tex">A_t^{\mathrm{ref}}</annotation></semantics></math>.
+Let
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>s</mi><mi>t</mi></msub><mo>=</mo><mo form="prefix" stretchy="false">(</mo><msub><mi>z</mi><mi>t</mi></msub><mo>,</mo><msub><mi>p</mi><mi>t</mi></msub><mo form="postfix" stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">s_t=(z_t,p_t)</annotation></semantics></math>
+denote the baseline state. A small actor proposes an action, and the
+baseline routing rule combines or selects it with the reference to
+obtain a committed command chunk
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>A</mi><mi>t</mi></msub><annotation encoding="application/x-tex">A_t</annotation></semantics></math>.
+The action representation, routing rule, action limits, reward, and
+update schedule are held fixed across comparisons. A noise-space
+controller and a joint-command controller therefore define separate
+experimental tracks.</p>
+<p>The simulator executes up to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>H</mi><annotation encoding="application/x-tex">H</annotation></semantics></math>
+low-level commands before the next decision. Let
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>ℓ</mi><mi>t</mi></msub><mo>≤</mo><mi>H</mi></mrow><annotation encoding="application/x-tex">\ell_t\leq H</annotation></semantics></math>
+be the actual duration and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>A</mi><mi>t</mi><mrow><mi mathvariant="normal">e</mi><mi mathvariant="normal">x</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">c</mi></mrow></msubsup><mo>=</mo><msub><mi>A</mi><mi>t</mi></msub><mo form="prefix" stretchy="false">[</mo><mn>0</mn><mo>:</mo><msub><mi>ℓ</mi><mi>t</mi></msub><mo form="postfix" stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">A_t^{\mathrm{exec}}=A_t[0:\ell_t]</annotation></semantics></math>
+the valid executed prefix. The real successor
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msubsup><mi>o</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow><mo>−</mo></msubsup><annotation encoding="application/x-tex">o_{t+1}^{-}</annotation></semantics></math>
+is observed before any reset. For normal synchronous execution
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>ℓ</mi><mi>t</mi></msub><mo>=</mo><mi>H</mi></mrow><annotation encoding="application/x-tex">\ell_t=H</annotation></semantics></math>;
+an episode termination can shorten the prefix. Decision index
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">t+1</annotation></semantics></math>
+must not be confused with one low-level control tick. Raw joint
+positions
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>q</mi><mi>t</mi></msub><annotation encoding="application/x-tex">q_t</annotation></semantics></math>,
+when available, are recorded separately from
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>p</mi><mi>t</mi></msub><annotation encoding="application/x-tex">p_t</annotation></semantics></math>:
+VLA input transformations need not preserve physical units.</p>
+<h2 data-number="3.2" id="unobserved-execution-conditions"><span class="header-section-number">3.2</span> Unobserved execution
+conditions</h2>
+<p>We model the environment as partially observed, with a physical state
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mi>t</mi></msub><annotation encoding="application/x-tex">x_t</annotation></semantics></math>
+and execution condition
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>θ</mi><mi>t</mi></msub><annotation encoding="application/x-tex">\theta_t</annotation></semantics></math>.
+Its transition distribution depends on the committed action and
+condition,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo form="prefix" stretchy="false">(</mo><msub><mi>x</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>∣</mo><msub><mi>x</mi><mi>t</mi></msub><mo>,</mo><msub><mi>A</mi><mi>t</mi></msub><mo>,</mo><msub><mi>θ</mi><mi>t</mi></msub><mo form="postfix" stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">P(x_{t+1}\mid x_t,A_t,\theta_t)</annotation></semantics></math>.
+The condition can be stationary within an episode or change at a
+specified evaluation boundary. The deployed controller does not receive
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>θ</mi><mi>t</mi></msub><annotation encoding="application/x-tex">\theta_t</annotation></semantics></math>.
+Current observations may constrain it, and past responses may provide
+additional evidence; neither source is assumed sufficient in
+advance.</p>
+<p>Define the completed-event history
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi mathvariant="script">ℋ</mi><mi>t</mi></msub><mo>=</mo><mo form="prefix" stretchy="false">{</mo><msub><mi>v</mi><mi>i</mi></msub><mo>:</mo><mi>i</mi><mo>&lt;</mo><mi>t</mi><mo form="postfix" stretchy="false">}</mo></mrow><annotation encoding="application/x-tex">\mathcal{H}_t=\{v_i:i&lt;t\}</annotation></semantics></math>.
+A bounded memory operator selects
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi mathvariant="script">ℳ</mi><mi>t</mi></msub><mo>⊆</mo><msub><mi mathvariant="script">ℋ</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">\mathcal{M}_t\subseteq\mathcal{H}_t</annotation></semantics></math>,
+and a reader produces
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mi>t</mi></msub><mo>=</mo><msub><mi>R</mi><mi>ψ</mi></msub><mo form="prefix" stretchy="false">(</mo><msub><mi>s</mi><mi>t</mi></msub><mo>,</mo><msub><mi mathvariant="script">ℳ</mi><mi>t</mi></msub><mo form="postfix" stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">c_t=R_\psi(s_t,\mathcal{M}_t)</annotation></semantics></math>.
+The objective is to improve expected task return at a fixed interaction
+and optimization budget by conditioning the baseline controller on
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>c</mi><mi>t</mi></msub><annotation encoding="application/x-tex">c_t</annotation></semantics></math>.
+We operationalize this objective through success-rate learning curves
+and cost, not representation loss alone. The representation is useful
+only if its information changes decisions or value estimates in a way
+that improves those outcomes.</p>
+<h2 data-number="3.3" id="three-distinct-forms-of-improvement"><span class="header-section-number">3.3</span> Three distinct forms of
+improvement</h2>
+<p><em>Parameter learning</em> updates weights through replay.
+<em>Context adaptation</em> changes
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>c</mi><mi>t</mi></msub><annotation encoding="application/x-tex">c_t</annotation></semantics></math>
+as observations accumulate with weights fixed. <em>Experience
+transfer</em> introduces a source memory into a different, explicitly
+held-out target setting. The first is already part of RLT. The second
+requires a retain-versus-clear memory experiment with identical weights;
+the third additionally requires controls for transferred weights,
+source-data cost, and memory compatibility. Evidence for one does not
+imply either of the others. In this manuscript, “physical interaction
+information” means command-conditioned response evidence, not an
+identified universal law of mechanics.</p>
+<h1 data-number="4" id="sec:method"><span class="header-section-number">4</span> Method</h1>
+<h2 data-number="4.1" id="motivating-observation-and-design-overview"><span class="header-section-number">4.1</span> Motivating observation and
+design overview</h2>
+<p>An existing development probe predicts ten-step joint displacement
+from the current state, command, and optional history. An attention
+reader yields an MSE of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1.8143</mn><mo>×</mo><msup><mn>10</mn><mrow><mi>−</mi><mn>4</mn></mrow></msup></mrow><annotation encoding="application/x-tex">1.8143\times10^{-4}</annotation></semantics></math>,
+while a fixed response estimator yields
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>7.3889</mn><mo>×</mo><msup><mn>10</mn><mrow><mi>−</mi><mn>5</mn></mrow></msup></mrow><annotation encoding="application/x-tex">7.3889\times10^{-5}</annotation></semantics></math>
+on the same held-out development groups (Section <a data-reference="sec:results" data-reference-type="ref" href="#sec:results">5.2</a>). Thus,
+adding storage and attention did not by itself extract the useful
+response information. This motivates training the memory representation
+for a measurable future use, while preserving the fixed estimator as a
+control rather than replacing it by a larger network without
+evidence.</p>
+<p>Figure <a data-reference="fig:framework" data-reference-type="ref" href="#fig:framework">1</a> summarizes the proposed three-stage
+procedure. Stage 1 retains the baseline VLA/token training. Stage 1B
+learns an interaction encoder and reader from completed trajectories.
+Stage 2 supplies their context to the small controller while freezing
+both the VLA representation and, initially, the new context modules. At
+evaluation, the same weights can be tested with retained, cleared, or
+mismatched evidence.</p>
+<figure data-latex-placement="t" id="fig:framework">
+<img src="figures/framework.svg"/>
+<figcaption>Figure 1. Proposed IM-RLT. Earlier completed events supply bounded
+interaction context. In Stage 1B, a decoder predicts a later command’s
+observed consequences and trains the event encoder and reader. In the
+primary Stage 2 configuration, the decoder is unnecessary for action
+selection and the context modules are frozen; only the small
+actor–critic is optimized. The current event enters memory after its
+successor is observed. Dashed paths denote training supervision, not
+information available to the current decision.</figcaption>
 </figure>
-<h3 id="encode-completed-events">4.1. Encode completed events</h3>
-<p>For each completed chunk, the collector constructs a record
-containing the raw start state, executed commands, valid duration, and
-observed effects. The current branch already stores raw joint positions
-and their changes. We propose adding current and successor visual tokens
-to distinguish interactions that have similar joint configurations but
-different object arrangements:</p>
-<div class="equation">
-<img alt="e_i=E_{\psi}(z_i,q_i,A_i^{\mathrm{exec}},\Delta q_i,z_{i+1},m_i). " src="figures/equation_2.svg"/>
-</div>
-<p><code>E_psi</code> is a small event encoder with a 64-dimensional
-output. A two-layer temporal attention block encodes the ordered
-commands and their masks; an MLP projects the remaining inputs. This
-preserves action order, which a sum-of-commands response formula
-discards. Initial widths are 128 hidden units and four attention heads;
-these are starting configurations rather than established optimal
-hyperparameters. Train-only normalization is stored with the encoder
-version. No additional VLA forward pass is required if tokens are
-already computed for current and true successor observations.</p>
-<p>A record may contain its own observed effect because it is written
-after that effect occurs. It may not contain the effect of the action
-currently being selected. Termination flags are needed for transport and
-validity, but the default learned physics input excludes success and
-task reward. Reward remains in replay for value learning. An ablation
-includes end flags to test shortcut learning. Invalid padded values must
-be removed before an MLP, normalization, attention, or nonlinear loss;
-multiplying a NaN-containing scalar by zero is insufficient.</p>
-<h3 id="read-short-term-and-longer-term-evidence">4.2. Read short-term
-and longer-term evidence</h3>
-<p>The short store contains the latest four valid records in
-chronological order. The archive contains up to 32 completed records,
-including records that may also be recent; the reader selects up to four
-older candidates after excluding the short store. We retain individual
-records instead of averaging contradictory outcomes. The first
-implementation uses a bounded FIFO archive to isolate representation
-learning from a sophisticated storage policy. “Long-term” here means
-older than the immediate context window; persistence across attempts is
-an explicit protocol, not the default meaning of the word.</p>
-<p>A query from current visual and proprioceptive inputs attends to the
-recent records and selected older records:</p>
-<div class="equation">
-<img alt="c_t=R_{\rho}(z_t,q_t,\{e_i:i\in\mathcal{S}_t\cup\mathcal{K}_t\}). " src="figures/equation_3.svg"/>
-</div>
-<p>For an implementable first learned retrieval scheme, use normalized
-current/start visual projections and scaled joint distances to select
-archive candidates. Train the visual projection jointly with the context
-loss using soft attention over the full 32-record archive in Stage 1B;
-apply top-four selection and fine-tune with the deployment selection
-rule before freezing. Report the soft-to-hard gap. A simpler fixed
-visual-plus-joint distance reader is the first fallback and a baseline.
-The reader receives temporal age and source-domain tags that are
-observable at deployment, never hidden stiffness or target-test task
-labels. Action and effect content are encoded in values; retrieval is
-based on available current context.</p>
-<p>Empty memory maps to exactly zero. A fixed, validation-selected
-context-dropout rate during training exposes the controller to empty
-memory, reducing a train/test mismatch in clearing interventions. Report
-both natural-retention performance and intervention sensitivity. A
-short-only version retains the same output dimension. Cross-attempt
-retention requires a verified reset instance and unchanged physical
-configuration in the retry experiment. Cross-task transfer uses a
-separate source bank with declared provenance, compatible
-robot/controller units, and an encoder version. The source bank is
-read-only during held-out target evaluation; target evidence lives in a
-separate temporary bank and is discarded between instances.</p>
-<h3 id="train-memory-for-a-later-outcome">4.3. Train memory for a later
-outcome</h3>
-<p>Stage 1B trains the event encoder and reader on a fixed transition
-dataset after the original Stage 1 checkpoint has been selected. It
-reconstructs the history available immediately before each target
-action. The decoder sees the current observation, this past context, and
-the target action sequence. It predicts the target action’s subsequent
-effect:</p>
-<div class="equation">
-<img alt="(\widehat{\Delta q}_t,\hat z_{t+1})=D_{\omega}(z_t,q_t,c_t,A_t^{\mathrm{exec}},m_t). " src="figures/equation_4.svg"/>
-</div>
-<p>The initial predictive dataset uses fixed-horizon windows with valid
-successors and reports any terminal-window exclusions. Outcome-dependent
-termination length and success flags are not prediction inputs. Online
-residual checks commit to a horizon before execution and bind feedback
-to that prediction. All context records in Equation (4) precede the
-target chunk. The target outcome is excluded from context construction,
-key selection, normalization fitting, and memory summaries. Windows from
-one underlying trajectory or paired scene/command seed stay in the same
-dataset split. The action input is available to this training objective
-but the prediction head is not required for action selection.</p>
-<p>We supervise raw joint changes in normalized coordinates and a fixed
-visual target. Direct prediction is the initial visual head: a separate
-development branch found that residual latent prediction was not
-uniformly better at long horizons. We retain both as an ablation rather
-than imposing a residual parameterization:</p>
-<div class="equation">
-<img alt="\mathcal{L}_{\mathrm{ctx}}=\lambda_q\operatorname{Huber}(\widehat{\Delta q}_t,\Delta q_t)+\lambda_z[1-\cos(\hat z_{t+1},\operatorname{sg}(z_{t+1}))]. " src="figures/equation_5.svg"/>
-</div>
-<p>Start with <code>lambda_q = 1</code> after train-split
-standardization and choose <code>lambda_z</code> from
-<code>{0, 0.1, 1}</code> using validation episodes only. The frozen
-token target prevents target drift. The loss does not ensure memory use:
-the decoder might solve the problem from the current input alone. We
-therefore require no-history, shuffled-history, command-shuffled, and
-mismatched-context comparisons on the same held-out groups. Those
-interventions diagnose dependence; they do not establish physical
-identifiability.</p>
-<p>Demonstrations often cover successful execution but few blocked or
-delayed responses. Stage 1B therefore uses a shared, explicitly costed
-pool of demonstrations and bounded exploratory interactions, including
-failures. Every comparison receives the same source trajectories;
-prediction-free baselines may use them for their permitted RL warm
-start. We report both online-only sample efficiency and total-data
-efficiency. A benefit purchased with additional private pretraining data
-is not an equal-data gain.</p>
-<p>An optional contact head can predict a simulator contact label from
-deployable inputs during training. This is privileged supervision and
-must be labeled accordingly, counted in the comparison, and ablated. The
-core proposal uses visual and joint effects alone. Desired task contact
-is not universally penalized; a contact-count reduction is meaningful
-only alongside success and a task-specific definition of undesirable
-impact.</p>
-<h3 id="condition-rlt-without-destabilizing-the-representation">4.4.
-Condition RLT without destabilizing the representation</h3>
-<p>The first proposed Stage 2 freezes the VLA, original token encoder,
-and pretrained event encoder/reader. It trains only the small actor and
-twin critics. This departs deliberately from the current branch, whose
-reader learns through TD loss. Freezing makes the context coordinates
-and transferred bank stable while testing whether the representation
-contains useful information. A later ablation jointly updates the
-context modules with TD and the auxiliary loss; it must re-encode raw
-replay snapshots and version any cached memory keys.</p>
-<p>The actor input is <code>[A_ref,t, z_t, p_t, c_t]</code>; the critic
-input is <code>[z_t, p_t, c_t, A_t]</code>. If raw <code>q_t</code> is
-also exposed directly, the capacity-matched baseline receives it too.
-The original routing, action bounds, reward, demonstration sampling,
-exploration, and update ratio remain fixed within each comparison. The
-memory reader never owns a second optimizer through the actor path.</p>
-<p>With <code>R_t</code> the discounted reward inside a chunk and
-<code>b_t</code> the baseline bootstrap-validity mask, the intended
-semi-Markov target is</p>
-<div class="equation">
-<img alt="y_t=R_t+\gamma^{\ell_t} b_t\min_{j=1,2}\bar Q_j(s_{t+1},c_{t+1},\bar\pi(s_{t+1},c_{t+1})). " src="figures/equation_6.svg"/>
-</div>
-<p>The baseline implementation’s fixed reward horizon and
-termination/truncation handling must be preserved or corrected uniformly
-across all methods before comparison; using one discount factor per
-ten-step chunk changes the algorithm. For transitions that terminate
-early, target construction must respect the actual valid execution and
-the environment’s terminal-successor contract.</p>
-<div class="equation">
-<img alt="\mathcal{L}_Q=\sum_{j=1}^{2}\mathbb{E}_{\mathcal{B}}[(Q_j(s_t,c_t,A_t^{\mathrm{exec}})-\operatorname{sg}(y_t))^2]. " src="figures/equation_7.svg"/>
-</div>
-<p>The actor keeps the baseline value objective plus behavior-cloning
-terms on reference or correction targets. Failed executed actions are
-useful for Equation (7) and the consequence loss, but do not become
-positive imitation targets merely because they are stored. Entropy and
-action-noise settings remain those of the matched baseline; this draft
-does not introduce a new RL optimizer.</p>
-<h3 id="maintain-temporal-integrity-and-handle-stale-experience">4.5.
-Maintain temporal integrity and handle stale experience</h3>
-<p>Replay stores owned copies of the context evidence visible at both
-current and real successor decisions. Recomputing an old transition
-against today’s archive would leak future information. The event from
-the current action enters <code>c_next</code> only after its true
-successor is observed. It never enters <code>c_t</code>. Partial resets
-affect only their simulator lanes. A process restart does not silently
-imply that the environment archive has been restored.</p>
-<p>The core method uses a fixed memory policy. A separate robustness
-variant uses observed prediction errors to downweight or reset older
-evidence after a validated change signal. Its threshold is selected on
-validation streams, with a stationary-condition false-alarm constraint.
-Excitation support is not predictive confidence: abundant old evidence
-can be wrong after a condition change. Delayed feedback is matched to
-the prediction and memory generation that produced it; feedback from
-before a reset cannot repeatedly reset the new generation. This variant
-is evaluated in actual changed-condition simulation, not only synthetic
-scalar response streams. It is not presented as a new principle of
-confidence estimation.</p>
-<p><strong>Algorithm 1. One online interaction cycle.</strong></p>
-<ol type="1">
-<li>Read current visual/proprioceptive inputs and retrieve strictly
-preceding, permitted memory records. Compute <code>c_t</code>.</li>
-<li>Sample a small-actor action and apply the unchanged RLT routing
-rule.</li>
-<li>Execute the valid command prefix and collect rewards and the true
-pre-reset successor.</li>
-<li>Encode the completed event, append it to the permitted stores, and
-construct successor evidence.</li>
-<li>Store executed actions, valid duration, terminal masks, and
-immutable current/next evidence in replay.</li>
-<li>Update actor and critics under the matched RL schedule. Keep
-representation modules frozen in the primary configuration.</li>
-<li>On reset, apply the declared clear/retain protocol. At
-frozen-parameter evaluation, skip all gradient updates.</li>
+<h2 data-number="4.2" id="representing-a-completed-interaction"><span class="header-section-number">4.2</span> Representing a completed
+interaction</h2>
+<p>For a completed decision
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math>,
+define
+<div class="display-equation"><span id="eq:event"></span><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>v</mi><mi>i</mi></msub><mo>=</mo><mo form="prefix" maxsize="120%" minsize="120%" stretchy="true">(</mo><msub><mi>z</mi><mi>i</mi></msub><mo>,</mo><msub><mi>p</mi><mi>i</mi></msub><mo>,</mo><msub><mi>q</mi><mi>i</mi></msub><mo>,</mo><msubsup><mi>A</mi><mi>i</mi><mrow><mi mathvariant="normal">e</mi><mi mathvariant="normal">x</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">c</mi></mrow></msubsup><mo>,</mo><msub><mi>m</mi><mi>i</mi></msub><mo>,</mo><mi mathvariant="normal">Δ</mi><msub><mi>q</mi><mi>i</mi></msub><mo>,</mo><mi mathvariant="normal">Δ</mi><msub><mi>z</mi><mi>i</mi></msub><mo>,</mo><msub><mi>d</mi><mi>i</mi></msub><mo form="postfix" maxsize="120%" minsize="120%" stretchy="true">)</mo><mo>,</mo><mspace width="1.0em"></mspace><mi mathvariant="normal">Δ</mi><msub><mi>q</mi><mi>i</mi></msub><mo>=</mo><msubsup><mi>q</mi><mrow><mi>i</mi><mo>+</mo><mn>1</mn></mrow><mo>−</mo></msubsup><mo>−</mo><msub><mi>q</mi><mi>i</mi></msub><mo>,</mo><mspace width="1.0em"></mspace><mi mathvariant="normal">Δ</mi><msub><mi>z</mi><mi>i</mi></msub><mo>=</mo><msubsup><mi>z</mi><mrow><mi>i</mi><mo>+</mo><mn>1</mn></mrow><mo>−</mo></msubsup><mo>−</mo><msub><mi>z</mi><mi>i</mi></msub><mo>,</mo></mrow><annotation encoding="application/x-tex">\begin{equation}
+ v_i=\big(z_i,p_i,q_i,A_i^{\mathrm{exec}},m_i,\Delta q_i,\Delta z_i,d_i\big),
+ \quad \Delta q_i=q_{i+1}^{-}-q_i,\quad \Delta z_i=z_{i+1}^{-}-z_i,
+ \label{eq:event}
+\end{equation}</annotation></semantics></math><span class="equation-number">(1)</span></div> where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>m</mi><mi>i</mi></msub><annotation encoding="application/x-tex">m_i</annotation></semantics></math>
+identifies valid executed ticks and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>d</mi><mi>i</mi></msub><annotation encoding="application/x-tex">d_i</annotation></semantics></math>
+stores termination metadata. The proposed event encoder
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>E</mi><mi>ϕ</mi></msub><annotation encoding="application/x-tex">E_\phi</annotation></semantics></math>
+maps this record to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>h</mi><mi>i</mi></msub><mo>∈</mo><msup><mi mathvariant="double-struck">ℝ</mi><mn>64</mn></msup></mrow><annotation encoding="application/x-tex">h_i\in\mathbb{R}^{64}</annotation></semantics></math>.
+Visual coordinates come from the same fixed token encoder at both
+endpoints. The raw event remains available for reproducibility and
+future re-encoding. Joint response and visual response use separate
+normalization statistics fitted only on source training
+trajectories.</p>
+<p>No outcome from decision
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+is available to the context used to choose
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>A</mi><mi>t</mi></msub><annotation encoding="application/x-tex">A_t</annotation></semantics></math>.
+Previous terminal events are usable only under an explicitly declared
+cross-attempt retention protocol and with a real terminal observation. A
+reset image is not a terminal consequence. Invalid or padded entries are
+replaced by neutral finite values <em>before</em> normalization, MLPs,
+or attention; multiplying a final loss by zero cannot remove NaNs
+created earlier. An empty memory returns exactly zero context, allowing
+a defined baseline behavior.</p>
+<p>The event does not assert that a collision occurred merely because
+displacement was small. Direct contact supervision, if later enabled,
+must come from a specified sensor or simulator label. Such labels
+constitute privileged training information when unavailable at
+deployment and require a separate comparison. The core method needs no
+contact label.</p>
+<h2 data-number="4.3" id="recent-context-and-a-bounded-archive"><span class="header-section-number">4.3</span> Recent context and a bounded
+archive</h2>
+<p>The initial design keeps the four most recent completed events in
+order and at most 32 older events in an archive. The oldest recent event
+moves into the archive, and FIFO eviction bounds its size. The current
+query retrieves up to four archive records; recent records are excluded
+from this retrieval to prevent duplication. Record age and the
+recent/archive distinction are supplied to the reader. These capacities
+match the scale of the existing implementation and are starting
+hyperparameters, not validated optima.</p>
+<p>For the first implementation, archive retrieval uses a fixed
+similarity over pre-event visual and proprioceptive inputs:
+<div class="display-equation"><span id="eq:reader"></span><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo form="prefix" stretchy="false">(</mo><mi>t</mi><mo>,</mo><mi>i</mi><mo form="postfix" stretchy="false">)</mo><mo>=</mo><mfrac><mrow><msubsup><mi>z</mi><mi>t</mi><mi>⊤</mi></msubsup><msub><mi>z</mi><mi>i</mi></msub></mrow><mrow><mo form="postfix" stretchy="false">∥</mo><msub><mi>z</mi><mi>t</mi></msub><mo form="postfix" stretchy="false">∥</mo><mo form="postfix" stretchy="false">∥</mo><msub><mi>z</mi><mi>i</mi></msub><mo form="postfix" stretchy="false">∥</mo><mo>+</mo><mi>ϵ</mi></mrow></mfrac><mo>−</mo><mi>α</mi><mo form="postfix" stretchy="false">∥</mo><msub><mover><mi>q</mi><mo accent="true">̃</mo></mover><mi>t</mi></msub><mo>−</mo><msub><mover><mi>q</mi><mo accent="true">̃</mo></mover><mi>i</mi></msub><msubsup><mo form="postfix" stretchy="false">∥</mo><mn>2</mn><mn>2</mn></msubsup><mo>,</mo><mspace width="2.0em"></mspace><msub><mi>c</mi><mi>t</mi></msub><mo>=</mo><msub><mi>R</mi><mi>ψ</mi></msub><mrow><mo form="prefix" stretchy="true">(</mo><msub><mi>s</mi><mi>t</mi></msub><mo>,</mo><mo form="prefix" stretchy="false">{</mo><msub><mi>E</mi><mi>ϕ</mi></msub><mo form="prefix" stretchy="false">(</mo><msub><mi>v</mi><mi>i</mi></msub><mo form="postfix" stretchy="false">)</mo><mo>:</mo><mi>i</mi><mo>∈</mo><msub><mi mathvariant="script">𝒮</mi><mi>t</mi></msub><mo form="postfix" stretchy="false">}</mo><mo form="postfix" stretchy="true">)</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">\begin{equation}
+ k(t,i)=\frac{z_t^\top z_i}{\|z_t\|\|z_i\|+\epsilon}
+            -\alpha\|\widetilde q_t-\widetilde q_i\|_2^2,
+ \qquad
+ c_t=R_\psi\left(s_t,\{E_\phi(v_i):i\in\mathcal{S}_t\}\right),
+ \label{eq:reader}
+\end{equation}</annotation></semantics></math><span class="equation-number">(2)</span></div> where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi mathvariant="script">𝒮</mi><mi>t</mi></msub><annotation encoding="application/x-tex">\mathcal{S}_t</annotation></semantics></math>
+contains recent and retrieved indices and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi>q</mi><mo accent="true">̃</mo></mover><annotation encoding="application/x-tex">\widetilde q</annotation></semantics></math>
+uses source-training statistics. Retrieval cannot consult the
+consequence of the current action. Ties are resolved by recency. The
+coefficient
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>
+is chosen on validation data and then fixed. A single attention block
+with a current-state query aggregates the selected events into
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>c</mi><mi>t</mi></msub><annotation encoding="application/x-tex">c_t</annotation></semantics></math>.
+Learned retrieval is an ablation after the fixed selector establishes a
+useful baseline.</p>
+<p>By default, stores are episode-local. A separately configured
+evaluation retains the archive across attempts on the same instance.
+Transfer uses a frozen, provenance-labeled source bank and a distinct
+target bank; it does not silently pool evaluation trajectories from
+unrelated instances. Keys are not proof of physical compatibility:
+visually similar observations can have incompatible responses. That
+failure is evaluated explicitly.</p>
+<h2 data-number="4.4" id="training-history-to-explain-a-later-consequence"><span class="header-section-number">4.4</span> Training history to explain a
+later consequence</h2>
+<p>Stage 1B samples a decision
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+and constructs its context using only indices
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>&lt;</mo><mi>t</mi></mrow><annotation encoding="application/x-tex">i&lt;t</annotation></semantics></math>.
+A decoder receives the current state, the commanded fixed-horizon action
+prefix, and the earlier context:
+<div class="display-equation"><span id="eq:decode"></span><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo form="prefix" stretchy="false">(</mo><msub><mover><mrow><mi mathvariant="normal">Δ</mi><mi>q</mi></mrow><mo accent="true">̂</mo></mover><mi>t</mi></msub><mo>,</mo><msub><mover><mi>z</mi><mo accent="true">̂</mo></mover><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo form="postfix" stretchy="false">)</mo><mo>=</mo><msub><mi>F</mi><mi>ω</mi></msub><mo form="prefix" stretchy="false">(</mo><msub><mi>s</mi><mi>t</mi></msub><mo>,</mo><msub><mi>A</mi><mi>t</mi></msub><mo form="prefix" stretchy="false">[</mo><mn>0</mn><mo>:</mo><mi>h</mi><mo form="postfix" stretchy="false">]</mo><mo>,</mo><msub><mi>c</mi><mi>t</mi></msub><mo>;</mo><mi>h</mi><mo form="postfix" stretchy="false">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">\begin{equation}
+ (\widehat{\Delta q}_t,\widehat z_{t+1})
+       =F_\omega(s_t,A_t[0:h],c_t;h).
+ \label{eq:decode}
+\end{equation}</annotation></semantics></math><span class="equation-number">(3)</span></div> Here
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>h</mi><annotation encoding="application/x-tex">h</annotation></semantics></math>
+is selected before observing the outcome. Training uses targets with a
+valid real successor at that horizon. The first experiment fixes
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mo>=</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">h=10</annotation></semantics></math>
+and excludes windows without that valid horizon; shorter terminal
+windows are analyzed separately. Supplying a termination-dependent
+duration to an otherwise fixed-horizon predictor could reveal the
+outcome, so realized episode length is not a decoder feature. The
+command sequence is taken from actual execution, not an unexecuted
+reference proposal.</p>
+<p>With
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mover><mi>z</mi><mo accent="true">‾</mo></mover><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><annotation encoding="application/x-tex">\bar z_{t+1}</annotation></semantics></math>
+a normalized detached target from the frozen encoder, we use
+<div class="display-equation"><span id="eq:cons"></span><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi mathvariant="script">ℒ</mi><mrow><mi mathvariant="normal">c</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">s</mi></mrow></msub><mo>=</mo><msub><mi mathvariant="double-struck">𝔼</mi><msub><mi mathvariant="script">𝒟</mi><mrow><mi mathvariant="normal">s</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">c</mi></mrow></msub></msub><mrow><mo form="prefix" stretchy="true">[</mo><mo form="postfix" stretchy="false">∥</mo><msub><mover><mrow><mi mathvariant="normal">Δ</mi><mover><mi>q</mi><mo accent="true">̃</mo></mover></mrow><mo accent="true">̂</mo></mover><mi>t</mi></msub><mo>−</mo><mi mathvariant="normal">Δ</mi><msub><mover><mi>q</mi><mo accent="true">̃</mo></mover><mi>t</mi></msub><msubsup><mo form="postfix" stretchy="false">∥</mo><mn>2</mn><mn>2</mn></msubsup><mo>+</mo><msub><mi>λ</mi><mi>z</mi></msub><mo form="postfix" stretchy="false">∥</mo><msub><mover><mover><mi>z</mi><mo accent="true">‾</mo></mover><mo accent="true">̂</mo></mover><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>−</mo><mi mathvariant="normal">sg</mi><mo form="prefix" stretchy="false">(</mo><msub><mover><mi>z</mi><mo accent="true">‾</mo></mover><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo form="postfix" stretchy="false">)</mo><msubsup><mo form="postfix" stretchy="false">∥</mo><mn>2</mn><mn>2</mn></msubsup><mo form="postfix" stretchy="true">]</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">\begin{equation}
+ \mathcal{L}_{\mathrm{cons}}
+  =\mathbb{E}_{\mathcal{D}_{\mathrm{src}}}\left[
+       \|\widehat{\Delta\widetilde q}_t-\Delta\widetilde q_t\|_2^2
+       +\lambda_z\|\widehat{\bar z}_{t+1}-\operatorname{sg}(\bar z_{t+1})\|_2^2
+    \right].
+ \label{eq:cons}
+\end{equation}</annotation></semantics></math><span class="equation-number">(4)</span></div> The original VLA and
+token encoder receive no gradients. We train
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>E</mi><mi>ϕ</mi></msub><annotation encoding="application/x-tex">E_\phi</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>R</mi><mi>ψ</mi></msub><annotation encoding="application/x-tex">R_\psi</annotation></semantics></math>,
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>F</mi><mi>ω</mi></msub><annotation encoding="application/x-tex">F_\omega</annotation></semantics></math>
+on a shared source pool containing demonstrations and bounded
+exploratory executions, including failures. Normalization, checkpoint
+selection, and hyperparameters use training or validation groups, never
+the final held-out test. The decoder is discarded for core deployment;
+it is retained only for optional response diagnostics.</p>
+<p>The loss does not guarantee history use: the decoder may solve the
+task from
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>s</mi><mi>t</mi></msub><annotation encoding="application/x-tex">s_t</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>A</mi><mi>t</mi></msub><annotation encoding="application/x-tex">A_t</annotation></semantics></math>
+alone. We therefore compare no-history and shuffled-history variants,
+and separately remove historical commands and the target command.
+Predicting the next expert action provides an action-supervised
+alternative. A direct future-feature head is the default; a residual
+head is an explicit ablation because the existing FLARE-inspired
+development line did not consistently favor residual prediction. These
+tests address whether consequence supervision adds information, rather
+than assuming that a low auxiliary loss establishes the mechanism.</p>
+<h2 data-number="4.5" id="conditioning-the-actor-and-critic"><span class="header-section-number">4.5</span> Conditioning the actor and
+critic</h2>
+<p>The primary Stage 2 configuration freezes
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>E</mi><mi>ϕ</mi></msub><annotation encoding="application/x-tex">E_\phi</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>R</mi><mi>ψ</mi></msub><annotation encoding="application/x-tex">R_\psi</annotation></semantics></math>
+after Stage 1B. The actor reads
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo form="prefix" stretchy="false">(</mo><msub><mi>s</mi><mi>t</mi></msub><mo>,</mo><msubsup><mi>A</mi><mi>t</mi><mrow><mi mathvariant="normal">r</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">f</mi></mrow></msubsup><mo>,</mo><msub><mi>c</mi><mi>t</mi></msub><mo form="postfix" stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(s_t,A_t^{\mathrm{ref}},c_t)</annotation></semantics></math>,
+and the critic reads
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo form="prefix" stretchy="false">(</mo><msub><mi>s</mi><mi>t</mi></msub><mo>,</mo><msub><mi>c</mi><mi>t</mi></msub><mo>,</mo><msub><mi>A</mi><mi>t</mi></msub><mo form="postfix" stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(s_t,c_t,A_t)</annotation></semantics></math>.
+If raw
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>q</mi><mi>t</mi></msub><annotation encoding="application/x-tex">q_t</annotation></semantics></math>
+is additionally exposed to a module, the capacity-matched baseline
+receives the same current observation. The proposal adds no new online
+optimizer or action planner. For a TD3-style baseline <span class="citation" data-cites="td3">[22]</span>, the schematic critic
+target is
+<div class="display-equation"><span id="eq:critic"></span><span id="eq:target"></span><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><msub><mi>R</mi><mi>t</mi></msub></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><munderover><mo>∑</mo><mrow><mi>k</mi><mo>=</mo><mn>0</mn></mrow><mrow><msub><mi>ℓ</mi><mi>t</mi></msub><mo>−</mo><mn>1</mn></mrow></munderover><msup><mi>γ</mi><mi>k</mi></msup><msub><mi>r</mi><mrow><mi>t</mi><mo>,</mo><mi>k</mi></mrow></msub><mo>,</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><msub><mi>y</mi><mi>t</mi></msub></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><msub><mi>R</mi><mi>t</mi></msub><mo>+</mo><msup><mi>γ</mi><msub><mi>ℓ</mi><mi>t</mi></msub></msup><msub><mi>b</mi><mi>t</mi></msub><munder><mi mathvariant="normal">min</mi><mrow><mi>j</mi><mo>∈</mo><mo form="prefix" stretchy="false">{</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo form="postfix" stretchy="false">}</mo></mrow></munder><msub><mover><mi>Q</mi><mo accent="true">‾</mo></mover><mi>j</mi></msub><mo form="prefix" stretchy="false">(</mo><msubsup><mi>s</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow><mo>−</mo></msubsup><mo>,</mo><msubsup><mi>c</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow><mo>−</mo></msubsup><mo>,</mo><msub><mover><mi>A</mi><mo accent="true">̃</mo></mover><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo form="postfix" stretchy="false">)</mo><mo>,</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><msub><mi mathvariant="script">ℒ</mi><mi>Q</mi></msub></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><munderover><mo>∑</mo><mrow><mi>j</mi><mo>=</mo><mn>1</mn></mrow><mn>2</mn></munderover><msub><mi mathvariant="double-struck">𝔼</mi><mi mathvariant="script">ℬ</mi></msub><mrow><mo form="prefix" stretchy="true">[</mo><mo form="prefix" stretchy="false">(</mo><msub><mi>Q</mi><mi>j</mi></msub><mo form="prefix" stretchy="false">(</mo><msub><mi>s</mi><mi>t</mi></msub><mo>,</mo><msub><mi>c</mi><mi>t</mi></msub><mo>,</mo><msub><mi>A</mi><mi>t</mi></msub><mo form="postfix" stretchy="false">)</mo><mo>−</mo><mi mathvariant="normal">sg</mi><mo form="prefix" stretchy="false">(</mo><msub><mi>y</mi><mi>t</mi></msub><mo form="postfix" stretchy="false">)</mo><msup><mo form="postfix" stretchy="false">)</mo><mn>2</mn></msup><mo form="postfix" stretchy="true">]</mo></mrow><mo>,</mo></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{align}
+ R_t&amp;=\sum_{k=0}^{\ell_t-1}\gamma^k r_{t,k},\nonumber\\
+ y_t&amp;=R_t+\gamma^{\ell_t}b_t\min_{j\in\{1,2\}}
+    \bar Q_j(s_{t+1}^{-},c_{t+1}^{-},\widetilde A_{t+1}),
+ \label{eq:target}\\
+ \mathcal{L}_Q&amp;=\sum_{j=1}^{2}\mathbb{E}_{\mathcal{B}}
+       \left[(Q_j(s_t,c_t,A_t)-\operatorname{sg}(y_t))^2\right],
+ \label{eq:critic}
+\end{align}</annotation></semantics></math><span class="equation-number">(5, 6)</span></div> where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>b</mi><mi>t</mi></msub><annotation encoding="application/x-tex">b_t</annotation></semantics></math>
+is the bootstrap-validity mask and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mover><mi>A</mi><mo accent="true">̃</mo></mover><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><annotation encoding="application/x-tex">\widetilde A_{t+1}</annotation></semantics></math>
+is the target action under the same baseline routing and
+target-smoothing contract. All methods share the discount convention and
+termination/truncation handling. If a chosen baseline uses a different
+chunk-reward convention, it is either preserved in every arm or
+corrected in every arm before comparison; it cannot change only for
+memory methods.</p>
+<p>Equation <a data-reference="eq:critic" data-reference-type="ref" href="#eq:critic">6</a> conditions on the committed
+behavior chunk, which is the decision’s action variable. Equation <a data-reference="eq:event" data-reference-type="ref" href="#eq:event">1</a> records only its executed
+prefix. In synchronous execution with early termination, a post-outcome
+duration must not become an extra critic observation unavailable at
+action selection. Asynchronous replacement or cancellation requires a
+separately specified action-value contract and is outside the primary
+experiment. This distinction avoids conflating execution bookkeeping
+with a change to the RL algorithm.</p>
+<p>The small actor retains the baseline objective, schematically
+<div class="display-equation"><span id="eq:actor"></span><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi mathvariant="script">ℒ</mi><mi>π</mi></msub><mo>=</mo><mi>−</mi><msub><mi mathvariant="double-struck">𝔼</mi><mi mathvariant="script">ℬ</mi></msub><mo form="prefix" stretchy="false">[</mo><msub><mi>Q</mi><mn>1</mn></msub><mo form="prefix" stretchy="false">(</mo><msub><mi>s</mi><mi>t</mi></msub><mo>,</mo><msub><mi>c</mi><mi>t</mi></msub><mo>,</mo><msubsup><mi>A</mi><mi>t</mi><mi>π</mi></msubsup><mo form="postfix" stretchy="false">)</mo><mo form="postfix" stretchy="false">]</mo><mo>+</mo><msub><mi>λ</mi><mrow><mi mathvariant="normal">B</mi><mi mathvariant="normal">C</mi></mrow></msub><msub><mi mathvariant="double-struck">𝔼</mi><msub><mi mathvariant="script">𝒟</mi><mrow><mi mathvariant="normal">B</mi><mi mathvariant="normal">C</mi></mrow></msub></msub><mo form="prefix" stretchy="false">[</mo><mo form="postfix" stretchy="false">∥</mo><msubsup><mi>A</mi><mi>t</mi><mi>π</mi></msubsup><mo>−</mo><msubsup><mi>A</mi><mi>t</mi><mrow><mi mathvariant="normal">B</mi><mi mathvariant="normal">C</mi></mrow></msubsup><msubsup><mo form="postfix" stretchy="false">∥</mo><mn>2</mn><mn>2</mn></msubsup><mo form="postfix" stretchy="false">]</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">\begin{equation}
+ \mathcal{L}_{\pi}=-\mathbb{E}_{\mathcal B}[Q_1(s_t,c_t,A_t^{\pi})]
+     +\lambda_{\mathrm{BC}}\mathbb{E}_{\mathcal{D}_{\mathrm{BC}}}
+            [\|A_t^{\pi}-A_t^{\mathrm{BC}}\|_2^2].
+ \label{eq:actor}
+\end{equation}</annotation></semantics></math><span class="equation-number">(7)</span></div> The baseline defines the
+eligible demonstration, reference, or correction targets and any masks.
+Failed executed actions contribute to TD learning and consequence
+supervision; they are not automatically included as positive BC targets.
+A SAC-based instantiation <span class="citation" data-cites="sac">[23]</span> must preserve its entropy terms in all arms
+rather than being described as the same TD3 experiment.</p>
+<h2 data-number="4.6" id="decision-time-replay-and-condition-changes"><span class="header-section-number">4.6</span> Decision-time replay and
+condition changes</h2>
+<p>Replay owns immutable snapshots of the evidence visible at the
+current and successor decisions. Reading an old transition against
+today’s archive would reveal interactions from its future. The current
+event is appended only after its true successor arrives; it may inform
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msubsup><mi>c</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow><mo>−</mo></msubsup><annotation encoding="application/x-tex">c_{t+1}^{-}</annotation></semantics></math>
+but cannot inform
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>c</mi><mi>t</mi></msub><annotation encoding="application/x-tex">c_t</annotation></semantics></math>.
+Terminal and reset contexts are constructed separately. Partial resets
+clear only the relevant environment lane, and checkpoint restoration
+must restore the declared memory state or explicitly begin with empty
+stores.</p>
+<p>Algorithm <a data-reference="alg:online" data-reference-type="ref" href="#alg:online">1</a> gives the primary
+synchronous loop. Because the representation is frozen, storing context
+vectors is sufficient for exact replay of the primary method; retaining
+raw snapshot references additionally permits audits and later
+re-encoding. An online-updated encoder is a secondary variant that
+requires re-encoding snapshots, versioning keys, and a single declared
+optimizer owner. The current development branch instead trains its
+reader through the critic; these are different configurations.</p>
+<blockquote class="algorithm" id="alg:online">
+<p><strong>Algorithm 1. IM-RLT online learning with a fixed context
+representation (proposed)</strong> <span data-label="alg:online"></span> <strong>Input:</strong> Fixed VLA/token
+encoder; pretrained
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>E</mi><mi>ϕ</mi></msub><mo>,</mo><msub><mi>R</mi><mi>ψ</mi></msub></mrow><annotation encoding="application/x-tex">E_\phi,R_\psi</annotation></semantics></math>;
+actor
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>π</mi><annotation encoding="application/x-tex">\pi</annotation></semantics></math>,
+critics
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>Q</mi><mn>1</mn></msub><mo>,</mo><msub><mi>Q</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">Q_1,Q_2</annotation></semantics></math>;
+replay
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="script">ℬ</mi><annotation encoding="application/x-tex">\mathcal B</annotation></semantics></math></p>
+<ol>
+<li><p>Initialize per-environment stores according to the declared reset
+protocol</p></li>
+<li><p><strong>For each interaction decision
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math></strong></p></li>
+<li><p>Observe
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>s</mi><mi>t</mi></msub><annotation encoding="application/x-tex">s_t</annotation></semantics></math>;
+snapshot permitted earlier evidence
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi mathvariant="script">ℳ</mi><mi>t</mi></msub><annotation encoding="application/x-tex">\mathcal{M}_t</annotation></semantics></math>;
+compute
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>c</mi><mi>t</mi></msub><annotation encoding="application/x-tex">c_t</annotation></semantics></math></p></li>
+<li><p>Produce reference and actor actions; commit
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>A</mi><mi>t</mi></msub><annotation encoding="application/x-tex">A_t</annotation></semantics></math>
+through the baseline routing rule</p></li>
+<li><p>Execute commands; record valid prefix, rewards, and true
+pre-reset successor
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msubsup><mi>o</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow><mo>−</mo></msubsup><annotation encoding="application/x-tex">o_{t+1}^{-}</annotation></semantics></math></p></li>
+<li><p>Form
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>v</mi><mi>t</mi></msub><annotation encoding="application/x-tex">v_t</annotation></semantics></math>
+from observed consequences; update stores; compute successor context
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msubsup><mi>c</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow><mo>−</mo></msubsup><annotation encoding="application/x-tex">c_{t+1}^{-}</annotation></semantics></math></p></li>
+<li><p>Add an owned transition and current/successor evidence snapshots
+to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="script">ℬ</mi><annotation encoding="application/x-tex">\mathcal B</annotation></semantics></math></p></li>
+<li><p>Update
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>Q</mi><mn>1</mn></msub><mo>,</mo><msub><mi>Q</mi><mn>2</mn></msub><mo>,</mo><mi>π</mi></mrow><annotation encoding="application/x-tex">Q_1,Q_2,\pi</annotation></semantics></math>
+using the matched baseline schedule and Equations <a data-reference="eq:target" data-reference-type="ref" href="#eq:target">5</a>–<a data-reference="eq:actor" data-reference-type="ref" href="#eq:actor">7</a></p></li>
+<li><p><strong>If the episode has ended</strong></p></li>
+<li><p>Reset environment; clear or retain permitted records; compute a
+separate reset context</p></li>
+<li><p>At frozen-parameter evaluation, skip all gradient updates and
+vary only the memory protocol</p></li>
 </ol>
-<h3 id="why-action-expert-features-are-an-extension">4.6. Why
-action-expert features are an extension</h3>
-<p>The action expert may expose execution-relevant internal information,
-but it introduces a second representation intervention. During local
-Stage 1 training, its hidden states depend on noisy ground-truth action
-inputs and flow time. Those states are not automatically available under
-the same distribution at deployment. A valid experiment must specify a
-reproducible inference-time extraction rule, such as a fixed denoising
-time and fixed noise convention applied to a reference action proposal,
-and measure its extra latency. We defer this extension until history
-conditioning demonstrates a benefit. Joint Stage 1 training can
-subsequently add the consequence objective while preserving token
-reconstruction and action losses; it must use actual successor-aligned
-trajectories, not independent observation-action examples with invented
-next states.</p>
-<h2 id="evaluation-design">5. Evaluation Design</h2>
-<h3 id="questions-and-preregistered-outcomes">5.1. Questions and
-preregistered outcomes</h3>
-<p>The main hypothesis is that completed interaction evidence improves
-normalized success-rate AUC over online environment transitions under
-matched source data and updates. Final success, successful episodes per
-wall-clock hour, and total collection cost are co-reported. A lower
-prediction error is a diagnostic outcome, not the primary control
-result. Four additional questions test mechanism: does retaining memory
-help with weights frozen; does visual context improve over joint-only
-history; can outdated records harm adaptation; and can a source bank
-help a new condition or task beyond transferred network weights?</p>
-<p>Before confirmation experiments, freeze the task list, seeds, primary
-metric, evaluation states, update budget, checkpoint rule, and source
-data. Use the final-budget checkpoint for the primary result; any
-validation-selected checkpoint is a separate report. No checkpoint is
-selected from test success. An initially proposed non-inferiority margin
-is five percentage points of final success; it is only claimed when the
-lower confidence bound of the paired difference exceeds minus that
-margin.</p>
-<h3 id="benchmarks-and-condition-splits">5.2. Benchmarks and condition
-splits</h3>
-<p>We start with the locally integrated ManiSkill peg-insertion task
-<span class="citation" data-cites="maniskill">(Tao et al. 2024)</span>.
-The existing wide geometry is an engineering starting point; narrower
-geometry is a held-out geometry condition, not an independent task
-family. Add a pushing/alignment task and an articulated manipulation
-task once their demonstrations, action controller, and visual Stage 1
-checkpoint are validated. PushCube and TurnFaucet are candidates, not
-claims of already supported local configurations. A second benchmark
-such as LIBERO can test broader transfer later <span class="citation" data-cites="libero">(Liu et al. 2023)</span>, but switching simulator
-and controller prematurely would confound the first result.</p>
-<p>Training varies supported physical parameters within a declared
-range. Separate tests hold out (a) scene/command seeds, (b) physical
-parameter values, (c) combinations of known parameter values, (d)
-geometry or object instances, and (e) task identity. These are different
-generalization claims. Controller gain, execution delay, friction, and
-object mass are changed one at a time initially. A wrapper that clips
-commands is an execution perturbation, not a simulated friction change.
-Read back the effective controller/physics parameters after reset and
-verify that the intended intervention actually took effect.</p>
-<p>At least one task should require visual disambiguation: comparable
-robot configurations and command histories with different object
-alignment or contact geometry. Joint-only baselines may perform well on
-controller-gain identification; that does not establish a visual
-reasoning contribution. If the visual event features are unnecessary
-throughout, the eventual paper should narrow its claims and reconsider
-its fit to a computer-vision venue.</p>
-<h3 id="baselines-and-controlled-budgets">5.3. Baselines and controlled
-budgets</h3>
-<p><strong>Table 2. Main comparison plan.</strong> Original RLT remains
-a reference even if a wider no-memory controller is used for capacity
-control. All memory methods use the same source trajectories and online
-interaction budget.</p>
-<table>
-<colgroup>
-<col style="width: 25%"/>
-<col style="width: 25%"/>
-<col style="width: 25%"/>
-<col style="width: 25%"/>
-</colgroup>
+</blockquote>
+<p>A robustness extension may reduce or clear older evidence after
+sustained consequence-prediction error. Its threshold must satisfy a
+stationary false-alarm constraint on validation streams. An
+excitation-support statistic is not calibrated confidence: many old
+observations can be consistently wrong after a change. Feedback is
+tagged with the prediction’s memory generation so that delayed pre-reset
+errors cannot repeatedly clear a new bank. We treat this extension as a
+separate comparison against simple clearing and fixed recency weighting,
+not a prerequisite for the core method.</p>
+<h1 data-number="5" id="sec:experiments"><span class="header-section-number">5</span> Experiments</h1>
+<p>We first report completed development diagnostics and their
+limitations, then specify the experiments required to evaluate IM-RLT.
+No entry below presents planned control performance as a measurement.
+This separation is especially important because the development split
+has already influenced method selection.</p>
+<h2 data-number="5.1" id="sec:setup"><span class="header-section-number">5.1</span> Development setup</h2>
+<p>The response probe uses ManiSkill simulation <span class="citation" data-cites="maniskill">[24]</span> with two hidden controller stiffness
+settings, 250 and 1000. There are 112 trajectories arranged as 56
+command-paired groups: each pair executes the same command sequence
+under the two settings. Each trajectory contains 120 control ticks.
+Splitting by paired group gives 32/8/16 training/validation/test groups
+and 768/192/384 ten-step windows. Both stiffness settings occur in every
+split. This tests held-out command trajectories within known conditions;
+it is not an unseen-dynamics test.</p>
+<p>The prediction target is the nine-dimensional change in raw joint
+positions over a window. Arm joint angles and finger positions have
+different physical units, so the aggregate MSE is a code-level
+diagnostic rather than a force or energy error. The initial learned
+probes use three initialization seeds, 1000 updates per fit, and
+validation-based checkpoint selection. All variants are evaluated on the
+same cached test windows. This dataset does not independently manipulate
+friction or contact and cannot establish identification of those
+quantities.</p>
+<h2 data-number="5.2" id="sec:results"><span class="header-section-number">5.2</span> Existing evidence: response
+information is not reliably extracted</h2>
+<p>Table <a data-reference="tab:probe" data-reference-type="ref" href="#tab:probe">2</a> reports the initial diagnostic. Recent,
+archive-only, and combined attention readers have nearly the same error
+as the no-history predictor. Feeding explicit response statistics to a
+learned prediction head gives a modest improvement. The parameter-free
+response formula is more accurate than every initial neural variant,
+reducing mean error by 59.3% relative to full attention on this fixed
+development test. The comparison motivates stronger extraction
+objectives; it does not establish that attention is generally inferior
+or that memory improves control.</p>
+<div>
+<table id="tab:probe">
+<caption>Table 2. Measured development response prediction. Lower is better. MSE
+is reported in units of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>10</mn><mrow><mi>−</mi><mn>4</mn></mrow></msup><annotation encoding="application/x-tex">10^{-4}</annotation></semantics></math>.
+For learned probes,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>±</mi><annotation encoding="application/x-tex">\pm</annotation></semantics></math>
+denotes sample standard deviation across three initialization seeds on
+one fixed data split, not a confidence interval across independent
+datasets. The fixed formula has no fitted seed.</caption>
 <thead>
 <tr>
-<th>ID</th>
-<th>Method</th>
-<th>Context training</th>
-<th>Primary purpose</th>
+<th style="text-align: left;">Existing diagnostic predictor</th>
+<th style="text-align: center;">Joint-response MSE
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>↓</mo><annotation encoding="application/x-tex">\downarrow</annotation></semantics></math></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>B0</td>
-<td>Original local RLT</td>
-<td>None</td>
-<td>Preserve the starting baseline</td>
+<td style="text-align: left;">No history</td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1.8211</mn><mo>±</mo><mn>0.0088</mn></mrow><annotation encoding="application/x-tex">1.8211\pm0.0088</annotation></semantics></math></td>
 </tr>
 <tr>
-<td>B1</td>
-<td>Capacity-matched RLT, zero context</td>
-<td>None</td>
-<td>Separate input width and parameter capacity</td>
+<td style="text-align: left;">Recent history</td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1.8176</mn><mo>±</mo><mn>0.0121</mn></mrow><annotation encoding="application/x-tex">1.8176\pm0.0121</annotation></semantics></math></td>
 </tr>
 <tr>
-<td>B2</td>
-<td>Recent ordered visual/proprioceptive history</td>
-<td>TD-only recurrent reader</td>
-<td>Strong history and partial-observability control</td>
+<td style="text-align: left;">Archive only</td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1.8267</mn><mo>±</mo><mn>0.0124</mn></mrow><annotation encoding="application/x-tex">1.8267\pm0.0124</annotation></semantics></math></td>
 </tr>
 <tr>
-<td>B3</td>
-<td>Current short-plus-archive reader</td>
-<td>TD-only</td>
-<td>Measure the existing Zeva-inspired branch</td>
+<td style="text-align: left;">Recent + archive attention</td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1.8143</mn><mo>±</mo><mn>0.0105</mn></mrow><annotation encoding="application/x-tex">1.8143\pm0.0105</annotation></semantics></math></td>
 </tr>
 <tr>
-<td>B4</td>
-<td>Fixed response features, padded to 64 dimensions</td>
-<td>Parameter-free reader</td>
-<td>Test the strong diagnostic alternative in control</td>
+<td style="text-align: left;">Response statistics + learned head</td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1.7533</mn><mo>±</mo><mn>0.0320</mn></mrow><annotation encoding="application/x-tex">1.7533\pm0.0320</annotation></semantics></math></td>
 </tr>
 <tr>
-<td>M</td>
-<td>Proposed consequence-supervised memory</td>
-<td>Stage 1B, then frozen in primary Stage 2</td>
-<td>Test future-useful history conditioning</td>
-</tr>
-<tr>
-<td>N1</td>
-<td>eRLT-style current representation</td>
-<td>Action initialization and TD adaptation</td>
-<td>Nearest representation comparison</td>
-</tr>
-<tr>
-<td>N2</td>
-<td>Prediction-only sidecar, no archive</td>
-<td>Matched consequence supervision</td>
-<td>Isolate the auxiliary-prediction effect</td>
-</tr>
-<tr>
-<td>N3</td>
-<td>Zeva-style CTE feeding the same RLT controller</td>
-<td>Pre/post effect objectives and matched history</td>
-<td>Test against the closest interaction-encoding design</td>
+<td style="text-align: left;">Fixed command–response formula</td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.7389</mn><annotation encoding="application/x-tex">0.7389</annotation></semantics></math></td>
 </tr>
 </tbody>
 </table>
-<p>N1 must either reproduce a released compatible implementation or be
-labeled an adaptation with architecture and cost differences. DSRL and
-full Zeva are useful external comparisons only if task, source data,
-backbone, and intervention budgets can be aligned. Otherwise, discuss
-them without placing incomparable paper numbers in a ranking table. At
-minimum, N1 or a clearly justified action-supervised current-token
-control is required before a broad representation claim. N3 is a
-targeted mechanism control: compare the same history/data budget and
-downstream controller, disclose omitted Zeva losses or retrieval
-components, and do not present an incomplete adaptation as a full
-reproduction.</p>
-<p>Stage 1B cost is charged explicitly. Report both fixed online
-interaction and fixed end-to-end compute comparisons. Match
-update-to-data ratios, BC pretraining, replay capacities, number of
-environments, action frequency, chunk size, and evaluation overhead.
-Actor initialization shares common weights where tensor shapes permit;
-added inputs are identically initialized across capacity controls. If
-the existing RLT phase gate uses simulator state, disclose it and keep
-it identical. “No corrective expert” does not mean “no privileged
-routing information.” Always-on actor experiments form a separate
-controlled block.</p>
-<h3 id="ablations-that-can-reject-the-explanation">5.4. Ablations that
-can reject the explanation</h3>
-<p><strong>Table 3. Mechanism tests, ordered by scientific
-priority.</strong></p>
-<table>
-<colgroup>
-<col style="width: 33%"/>
-<col style="width: 33%"/>
-<col style="width: 33%"/>
-</colgroup>
-<thead>
-<tr>
-<th>Intervention</th>
-<th>What is kept fixed</th>
-<th>What a negative result means</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Remove history at train and test</td>
-<td>Data, context width, decoder capacity</td>
-<td>Current inputs may suffice</td>
-</tr>
-<tr>
-<td>Remove commands from event; remove target action separately and
-jointly</td>
-<td>All observation windows</td>
-<td>Joint removal tests action dependence; separate removals locate its
-source</td>
-</tr>
-<tr>
-<td>Shuffle history within matched strata</td>
-<td>Marginal records, count, normalization</td>
-<td>Reader may ignore event correspondence</td>
-</tr>
-<tr>
-<td>Recent only versus recent plus archive</td>
-<td>Context width and training</td>
-<td>Archive may be unnecessary</td>
-</tr>
-<tr>
-<td>No Stage 1B versus consequence supervision</td>
-<td>Source data access and Stage 2 budget</td>
-<td>Auxiliary training may not help control</td>
-</tr>
-<tr>
-<td>Visual-plus-joint versus joint-only events</td>
-<td>Current visual input, history budget</td>
-<td>Visual memory contribution may be absent</td>
-</tr>
-<tr>
-<td>Predict only joints versus joints plus visual effects</td>
-<td>Module capacity</td>
-<td>Visual target could be nuisance supervision</td>
-</tr>
-<tr>
-<td>Direct versus residual future latent head</td>
-<td>Data, loss scale, updates</td>
-<td>Residual structure may be harmful</td>
-</tr>
-<tr>
-<td>Actor-only versus critic-only versus both conditioning</td>
-<td>Shared learned context</td>
-<td>Locate where information helps</td>
-</tr>
-<tr>
-<td>Frozen versus online-updated context modules</td>
-<td>Initialization, source data</td>
-<td>Quantify stability/adaptability tradeoff</td>
-</tr>
-<tr>
-<td>Uniform/FIFO versus learned retrieval</td>
-<td>Record budget and reader</td>
-<td>Learned retrieval may not justify complexity</td>
-</tr>
-<tr>
-<td>Retain/clear/shuffle at evaluation</td>
-<td>Identical trained weights and initial states</td>
-<td>Isolate benefit of the evidence itself</td>
-</tr>
-</tbody>
-</table>
-<p>Do not train a separate model on every optional combination before
-the core causal comparisons succeed. The archive, reliability variant,
-and action-expert extension enter sequentially. A negative ablation is
-not hidden by averaging it with easier tasks.</p>
-<h3 id="frozen-parameter-retries-and-transfer">5.5. Frozen-parameter
-retries and transfer</h3>
-<p>For retry adaptation, fix every network parameter and optimizer
-state. Run five attempts for each held-out instance with identical reset
-state and physical conditions. Compare retaining the archive, clearing
-it, and supplying a count-matched shuffled archive. Continue the attempt
-schedule after success, resetting the same instance, to avoid selecting
-only hard survivors. Report unconditional success at each attempt,
-success conditional on previous failure as a distinct quantity, and
-cumulative success. Even an unchanged independent controller achieves
-cumulative success <code>1 - (1 - p)^K</code>; increasing cumulative
-success alone does not establish learning.</p>
-<p>For transfer, hold the target initialization and weights fixed while
-changing only the source bank. Compare empty bank, related source
-interactions, unrelated but count-matched interactions, and a bank from
-a different physical condition. Separately compare pretrained versus
-untrained context weights without a source bank. This separates
-knowledge stored in parameters from knowledge stored in records.
-Target-test trajectories never enter the source bank or hyperparameter
-selection. Cross-task transfer first uses the same robot, action
-convention, and sensors; a new embodiment requires a separate alignment
-method and is outside the first claim.</p>
-<p>Changed-condition tests retain an old bank deliberately, switch a
-verified physical parameter, and compare immediate clearing, no
-clearing, fixed forgetting, and residual-triggered downweighting. Report
-initial damage, recovery interactions, stationary false alarms, and
-recovery success. An oracle change indicator is only an upper bound.
-Successful adaptation should not depend on access to the hidden switch
-time.</p>
-<h3 id="statistical-and-efficiency-reporting">5.6. Statistical and
-efficiency reporting</h3>
-<p>The pilot uses three training seeds and small validation panels to
-find implementation errors. Confirmation should use five independent
-training seeds for the core baseline–method contrast when feasible, and
-at least three for secondary ablations. Report seed-level results, not
-only a pooled mean. Final evaluation uses at least 100 held-out episodes
-per seed and condition, increased if a non-inferiority or small-effect
-claim requires tighter precision. For intuition, a success probability
-near 0.5 has a roughly ten-point binomial 95% half-width with only 100
-independent episodes; training variability adds uncertainty.</p>
-<p>Use paired reset seeds and controlled action-noise streams where
-applicable. Bootstrap hierarchically over training seeds and evaluation
-instances; never treat adjacent trajectory windows or retries as
-independent training runs. Report uncertainty as recommended by the RL
-evaluation literature <span class="citation" data-cites="rliable">(Agarwal et al. 2021)</span>, while acknowledging
-that three seed clusters provide weak interval estimates. Predefine the
-main contrast and apply a stated multiplicity correction to families of
-confirmatory secondary tests.</p>
-<p>Normalize learning-curve AUC by the fixed interaction budget so its
-scale remains success probability. Count valid environment control ticks
-as well as action chunks and optimizer steps. Threshold-hitting time is
-censored when a run never reaches the target; do not average only
-successful runs. Report simulator FPS, inference latency percentiles,
-end-to-end environment steps per second, successful episodes per hour,
-GPU-hours, peak memory, and archive/replay bytes. A faster success curve
-per transition can coexist with worse wall-clock performance.</p>
-<p>Corrections, resets, and collision proxies are secondary simulation
-measurements with a fixed trigger and fixed corrective-controller budget
-across methods. Human correction time, setup time, and recovery time
-require real operator measurements and remain future work.</p>
-<h2 id="existing-development-evidence">6. Existing Development
-Evidence</h2>
-<p>The following measurements were collected before the proposed method
-was implemented. They motivate its design and delimit current claims.
-They are not held-out confirmation results for the new
-representation.</p>
-<h3 id="response-prediction-from-physical-simulation">6.1. Response
-prediction from physical simulation</h3>
-<p>The existing hidden-PD diagnostic contains 56 paired scene/command
-groups, each executed under stiffness 250 and 1000, for 112 trajectories
-of 120 control ticks. The 32/8/16 group
-train/validation/development-test split keeps each pair together. Both
-stiffness values occur in every split. Ten-step windows yield
-768/192/384 examples, but these windows are correlated and are not
-independent environments. The learned probes use three initialization
-seeds and 1,000 updates, with checkpoint selection on validation
-groups.</p>
-<p><strong>Table 4. Observed development-test joint-change MSE. Lower is
-better.</strong> Means for learned methods; no uncertainty interval was
-reconstructed here. The fixed formula has structural knowledge and is
-not parameter matched.</p>
-<table>
-<thead>
-<tr>
-<th>Existing reader/probe</th>
-<th style="text-align: right;">MSE</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>No history</td>
-<td style="text-align: right;">1.8211e-4</td>
-</tr>
-<tr>
-<td>Recent history</td>
-<td style="text-align: right;">1.8176e-4</td>
-</tr>
-<tr>
-<td>Archive only</td>
-<td style="text-align: right;">1.8267e-4</td>
-</tr>
-<tr>
-<td>Full attention history</td>
-<td style="text-align: right;">1.8143e-4</td>
-</tr>
-<tr>
-<td>Response features plus learned prediction head</td>
-<td style="text-align: right;">1.7533e-4</td>
-</tr>
-<tr>
-<td>Fixed command–response formula</td>
-<td style="text-align: right;">7.3889e-5</td>
-</tr>
-</tbody>
-</table>
-<p>The attention result is close to the no-history result, whereas a
-structured response estimator is substantially better. This supports the
-narrower inference that response-relevant information exists in these
-records and is poorly extracted by the current neural reader. It does
-not show improved task success or extrapolation to unseen stiffness. A
-fresh confirmation split is required because the development set has
-already influenced design decisions.</p>
-<p>These legacy errors aggregate raw joint coordinates, including
-revolute arm joints and prismatic fingers; they should not be
-interpreted as a single physical unit such as squared radians. New
-experiments report arm and finger errors separately and provide
-train-normalized aggregate errors. The fixed estimator computes a
-per-joint command-to-change slope and an excitation support statistic.
-It sums normalized arm commands after applying the known controller
-scale; it does not estimate force or identify a unique physical cause.
-It also loses within-chunk action order and can be unreliable when
-opposing commands cancel.</p>
-<figure>
-<img alt="Figure 2. Observed development errors. Left: existing reader comparison. Right: a separate post-hoc follow-up. Means are shown without confidence intervals; the fixed formula is not parameter matched. These are prediction diagnostics, not closed-loop results." src="figures/pilot_diagnostics.png"/>
-<figcaption aria-hidden="true">Figure 2. Observed development errors.
-Left: existing reader comparison. Right: a separate post-hoc follow-up.
-Means are shown without confidence intervals; the fixed formula is not
-parameter matched. These are prediction diagnostics, not closed-loop
-results.</figcaption>
+</div>
+<figure data-latex-placement="t" id="fig:diagnostics">
+<img src="figures/pilot_diagnostics.svg"/>
+<figcaption>Figure 2. Measured prediction diagnostics. Left: the initial learned
+readers do not recover the advantage of the fixed response estimator;
+error bars are initialization standard deviations. Right: a post-hoc
+residual study improves overall error, but an ungated residual worsens
+the late-history result. The support-gated residual approximately
+preserves that late-history performance. These are related development
+studies on reused data, not independent confirmatory tests. Neither axis
+measures task success.</figcaption>
 </figure>
-<h3 id="a-post-hoc-support-gated-follow-up">6.2. A post-hoc
-support-gated follow-up</h3>
-<p>A subsequent six-seed diagnostic adds learned corrections to the
-fixed response estimate. The support-gated version reduces the
-correction when past excitation is strong. This follow-up was selected
-after viewing earlier results on the same development data.</p>
-<p><strong>Table 5. Observed exploratory follow-up.</strong> Late
-history means at least four completed records.</p>
-<table>
+<p>A post-hoc follow-up fits residual predictors using six
+initialization seeds (Table <a data-reference="tab:support" data-reference-type="ref" href="#tab:support">3</a>). The
+ungated residual improves overall error while increasing late-history
+error. Suppressing residual corrections when the fixed estimator has
+high excitation support lowers overall error and keeps late-history
+error close to the formula. This supports a narrower interpretation: the
+fallback is useful when history is limited, while unconstrained learning
+can damage an already informative estimate. It does not validate support
+as uncertainty, nor distinguish all possible causes of error. The same
+development data informed this follow-up, so a new locked condition
+split is required for confirmatory claims.</p>
+<div>
+<table id="tab:support">
+<caption>Table 3. Measured post-hoc development follow-up, MSE in units of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>10</mn><mrow><mi>−</mi><mn>4</mn></mrow></msup><annotation encoding="application/x-tex">10^{-4}</annotation></semantics></math>.
+Learned rows are means over six initializations. Per-seed dispersion is
+unavailable in the public summary and is not reconstructed. “Late”
+denotes windows with at least four preceding completed windows, matching
+the probe’s age threshold.</caption>
 <thead>
 <tr>
-<th>Diagnostic predictor</th>
-<th style="text-align: right;">Overall MSE</th>
-<th style="text-align: right;">Late-history MSE</th>
+<th style="text-align: left;">Predictor</th>
+<th style="text-align: right;">Overall MSE
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>↓</mo><annotation encoding="application/x-tex">\downarrow</annotation></semantics></math></th>
+<th style="text-align: right;">Late-history MSE
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>↓</mo><annotation encoding="application/x-tex">\downarrow</annotation></semantics></math></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Fixed formula</td>
-<td style="text-align: right;">7.3889e-5</td>
-<td style="text-align: right;">1.6571e-5</td>
+<td style="text-align: left;">Fixed formula</td>
+<td style="text-align: right;">0.7389</td>
+<td style="text-align: right;">0.1657</td>
 </tr>
 <tr>
-<td>Formula plus learned residual</td>
-<td style="text-align: right;">5.6706e-5</td>
-<td style="text-align: right;">2.3687e-5</td>
+<td style="text-align: left;">Formula + learned residual</td>
+<td style="text-align: right;">0.5671</td>
+<td style="text-align: right;">0.2369</td>
 </tr>
 <tr>
-<td>Formula plus support-gated residual</td>
-<td style="text-align: right;">2.4417e-5</td>
-<td style="text-align: right;">1.6588e-5</td>
+<td style="text-align: left;">Formula + support-gated residual</td>
+<td style="text-align: right;">0.2442</td>
+<td style="text-align: right;">0.1659</td>
 </tr>
 </tbody>
 </table>
-<p>The gate mainly prevents a learned correction from damaging an
-already useful mature-history estimate and improves cold-start behavior.
-Late-history performance is effectively at the fixed-formula level. This
-is not evidence that excitation support is calibrated uncertainty or
-that the online controller should trust all high-support records.</p>
-<h3 id="what-online-pilots-do-and-do-not-show">6.3. What online pilots
-do and do not show</h3>
-<p>An existing overnight memory run reached 516 outer iterations before
-its 12-hour budget expired. Evaluation used four fixed trajectories: one
-checkpoint achieved two successes, while later checkpoints at iterations
-400, 450, and 500 achieved one success each. The run used always-on
-actor control, whereas the formal baseline used a critical-phase routing
-configuration. There is no matched no-memory overnight run establishing
-attribution. These observations demonstrate that the training path
-executes; they do not demonstrate faster convergence or a reliable 25%
-final success estimate.</p>
-<p>Synthetic condition-shift probes further show that stale high-support
-response estimates can be misleading and that delayed feedback requires
-generation bookkeeping. These are software and mechanism diagnostics,
-not manipulation experiments. None of the current evidence measures
-saved human time, source-to-target transfer, or sustained autonomous
-improvement.</p>
-<h3 id="confirmatory-results-to-populate">6.4. Confirmatory results to
-populate</h3>
-<p><strong>Table 6. Formal results template. Every em dash denotes an
-unmeasured quantity.</strong> Populate separately for each task and
-condition; aggregate only after reporting per-task results.</p>
-<table>
-<colgroup>
-<col style="width: 13%"/>
-<col style="width: 17%"/>
-<col style="width: 17%"/>
-<col style="width: 17%"/>
-<col style="width: 17%"/>
-<col style="width: 17%"/>
-</colgroup>
+</div>
+<p>Existing online runs do not close the control question. A memory run
+reached 516 outer iterations under a 12-hour limit and used four fixed
+evaluation trajectories. Its best observed checkpoint succeeded on two,
+while later checkpoints succeeded on one. The run used always-on
+control, lacked a matched no-memory long run, and did not implement the
+proposed Stage 1B representation. These repeated four-trajectory
+evaluations cannot be interpreted as independent evidence for a stable
+success rate or improvement. A historical Stage 1 reference result of
+8/20 episodes is likewise a baseline development observation. No
+controlled success or transfer result for IM-RLT is presently
+available.</p>
+<h2 data-number="5.3" id="sec:confirm"><span class="header-section-number">5.3</span> Confirmatory simulation
+protocol</h2>
+<p>The first campaign should establish one reliable no-memory
+implementation before testing representation changes. ManiSkill offers
+continuity with the existing response diagnostics; LIBERO offers a
+complementary manipulation setting <span class="citation" data-cites="libero">[25]</span>. The chosen code revision, pretrained
+VLA, action parameterization, and task must be fixed after baseline
+acceptance. Moving to a repository with a different backbone or action
+interface creates a new track, not a replication of the same baseline. A
+successful released checkpoint is useful for checking evaluation, but is
+not evidence that local Stage 1 and Stage 2 training are reproduced.</p>
+<p>The small experiment begins with one task, three seeds, and four
+configurations: capacity-matched no memory, a recent-history reader, the
+existing archive reader, and the fixed response context. This
+establishes whether execution evidence can help the selected controller
+at all. The consequence-trained method is then introduced with the same
+initialization and source pool. Only a positive, reproducible control
+signal justifies expansion to multiple tasks and five training seeds per
+method. Live VR correction is not required: all arms use the same fixed
+demonstrations and autonomous online reward. Any scripted expert or
+later human assistance is an explicitly budgeted extra source, not an
+unreported rescue mechanism.</p>
+<p>The main test varies response conditions without revealing their
+labels to the deployed policy. Controller stiffness or gain provides a
+first intervention; separately validated friction, payload, or latency
+changes can follow. Training, validation, and test groups separate full
+trajectories and initial-state groups. A second split holds out
+condition values, and a third combines held-out conditions with objects
+or tasks. Merely sampling new windows from the original two stiffness
+settings is not this test. Conditions are selected for measurably
+different responses and feasible task execution; impossible settings
+would confound adaptation with solvability.</p>
+<div>
+<table id="tab:baselines">
+<caption>Table 4. Planned controlled comparisons. Every row uses the same
+backbone, action interface, online budget, evaluation states, and
+source-trajectory access within a track. “Adapted” comparisons isolate a
+mechanism in this controller; they are not claimed reproductions of the
+entire cited system.</caption>
 <thead>
 <tr>
-<th>Method</th>
-<th style="text-align: right;">Success AUC</th>
-<th style="text-align: right;">Final success, 95% CI</th>
-<th style="text-align: right;">Valid ticks to target</th>
-<th style="text-align: right;">Successes/hour</th>
-<th style="text-align: right;">Extra source GPU-hours</th>
+<th style="text-align: left;">Configuration</th>
+<th style="text-align: left;">Context or supervision</th>
+<th style="text-align: left;">Question</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Original RLT</td>
-<td style="text-align: right;">—</td>
-<td style="text-align: right;">—</td>
-<td style="text-align: right;">—</td>
-<td style="text-align: right;">—</td>
-<td style="text-align: right;">—</td>
+<td style="text-align: left;">Original RLT</td>
+<td style="text-align: left;">Original inputs and capacity</td>
+<td style="text-align: left;">Is the baseline reproduced?</td>
 </tr>
 <tr>
-<td>Capacity-matched RLT</td>
-<td style="text-align: right;">—</td>
-<td style="text-align: right;">—</td>
-<td style="text-align: right;">—</td>
-<td style="text-align: right;">—</td>
-<td style="text-align: right;">—</td>
+<td style="text-align: left;">Capacity-matched RLT</td>
+<td style="text-align: left;">Zero context; matched input width</td>
+<td style="text-align: left;">Does extra capacity explain a gain?</td>
 </tr>
 <tr>
-<td>Recurrent recent history</td>
-<td style="text-align: right;">—</td>
-<td style="text-align: right;">—</td>
-<td style="text-align: right;">—</td>
-<td style="text-align: right;">—</td>
-<td style="text-align: right;">—</td>
+<td style="text-align: left;">Recent-history encoder</td>
+<td style="text-align: left;">Ordered visual/proprioceptive/action
+history</td>
+<td style="text-align: left;">Is a short history sufficient?</td>
 </tr>
 <tr>
-<td>Current archive attention</td>
-<td style="text-align: right;">—</td>
-<td style="text-align: right;">—</td>
-<td style="text-align: right;">—</td>
-<td style="text-align: right;">—</td>
-<td style="text-align: right;">—</td>
+<td style="text-align: left;">Existing archive reader</td>
+<td style="text-align: left;">Current TD-trained memory module</td>
+<td style="text-align: left;">Does the new representation improve
+existing memory?</td>
 </tr>
 <tr>
-<td>Fixed response context</td>
-<td style="text-align: right;">—</td>
-<td style="text-align: right;">—</td>
-<td style="text-align: right;">—</td>
-<td style="text-align: right;">—</td>
-<td style="text-align: right;">—</td>
+<td style="text-align: left;">Fixed response context</td>
+<td style="text-align: left;">Command–response slopes and support</td>
+<td style="text-align: left;">Is learned extraction necessary?</td>
 </tr>
 <tr>
-<td>Proposed memory</td>
-<td style="text-align: right;">—</td>
-<td style="text-align: right;">—</td>
-<td style="text-align: right;">—</td>
-<td style="text-align: right;">—</td>
-<td style="text-align: right;">—</td>
+<td style="text-align: left;">IM-RLT</td>
+<td style="text-align: left;">Stage 1B consequences; fixed online
+encoder</td>
+<td style="text-align: left;">Does later-outcome supervision help
+control?</td>
 </tr>
 <tr>
-<td>eRLT-style representation</td>
-<td style="text-align: right;">—</td>
-<td style="text-align: right;">—</td>
-<td style="text-align: right;">—</td>
-<td style="text-align: right;">—</td>
-<td style="text-align: right;">—</td>
+<td style="text-align: left;">Action-supervised readout</td>
+<td style="text-align: left;">eRLT-style current-input
+initialization</td>
+<td style="text-align: left;">Would stronger current features
+suffice?</td>
+</tr>
+<tr>
+<td style="text-align: left;">Prediction without memory</td>
+<td style="text-align: left;">Same target; no historical context</td>
+<td style="text-align: left;">Is the gain due only to auxiliary
+supervision?</td>
+</tr>
+<tr>
+<td style="text-align: left;">Interaction encoder (adapted)</td>
+<td style="text-align: left;">Zeva-style event representation; same
+controller</td>
+<td style="text-align: left;">Does the future-use objective add
+value?</td>
 </tr>
 </tbody>
 </table>
-<p>A second table must report attempt-one through attempt-five success
-with frozen weights and retain/clear/shuffle interventions. A third must
-report related-bank, unrelated-bank, and empty-bank target performance.
-These tables cannot be inferred from prediction MSE.</p>
-<h2 id="analysis-plan-limitations-and-research-decisions">7. Analysis
-Plan, Limitations, and Research Decisions</h2>
-<p>Three patterns would support the central explanation: the
-representation predicts subsequent effects better with appropriate past
-interactions; controlled memory interventions change closed-loop
-performance; and the online learning advantage persists after charging
-pretraining and inference cost. Improvement on only one axis warrants a
-narrower conclusion. A better predictor with unchanged control value is
-a useful negative result, not evidence of sample-efficient RL.</p>
-<p>If a strong recurrent reader matches the archive, retain the simpler
-method and drop claims about long-term retrieval. If fixed response
-features dominate, investigate neural estimation and observability
-before expanding the architecture. If source memory harms new tasks,
-report the negative transfer and restrict the bank’s scope. If eRLT
-removes the gap, the initial bottleneck may have been current-state
-representation quality rather than missing execution history. If gains
-occur only with privileged contact supervision, label the method
-accordingly and test robustness to noisy deployable sensors.</p>
-<p>The principal limitations are partial observability, insufficient
-excitation, contact ambiguity, finite-memory interference, and mismatch
-between source and target controllers. Offline sequence prediction can
-exploit time or task correlations without identifying dynamics. Frozen
-visual targets may discard subtle contact effects, while changes in
-viewpoint may dominate their distance. A small number of simulation
-tasks does not establish universal physical knowledge. Persistent
-runtime memory and exact resumed environment state require additional
-systems work. Main results must specify which form of persistence was
-actually implemented.</p>
-<p>For a computer-vision submission, visual evidence must contribute to
-the method and its evaluation. Merely appending a joint-response
-statistic to a VLA does not establish a new visual representation
-result. An honest paper can focus on interaction-conditioned visual
-control, but it needs task diversity, relevant visual ablations, strong
-nearest-neighbor baselines, and reproducible evidence. A simulation-only
-study is possible in principle; publication readiness depends on the
-strength of these results, not on the completeness of this
-narrative.</p>
-<h2 id="conclusion-and-future-work">8. Conclusion and Future Work</h2>
-<p>We propose to condition lightweight frozen-VLA reinforcement learning
-on representations of completed physical interactions, trained for their
-utility in predicting later action consequences. The design preserves a
-stable visual-language coordinate system, separates bounded context
-updates from parameter learning, and defines interventions that can test
-whether retained experience improves control. Existing diagnostics
-justify investigating the reader, but do not yet validate the proposed
-method. The next decisive experiment is a matched closed-loop comparison
-followed by frozen-parameter retain-versus-clear evaluation. If these
-succeed, the study can expand to source-bank transfer, changed contact
-conditions, joint Stage 1 training, and eventually measured operator
-effort on physical robots.</p>
-<h2 id="appendix-a.-implementation-status-at-draft-time">Appendix A.
-Implementation Status at Draft Time</h2>
-<table>
-<colgroup>
-<col style="width: 33%"/>
-<col style="width: 33%"/>
-<col style="width: 33%"/>
-</colgroup>
+</div>
+<h2 data-number="5.4" id="mechanism-retention-and-transfer"><span class="header-section-number">5.4</span> Mechanism, retention, and
+transfer</h2>
+<p>Table <a data-reference="tab:ablations" data-reference-type="ref" href="#tab:ablations">5</a> defines interventions that can
+reject the proposed explanation. Removing commands from historical
+records and removing the target command are separate tests: the latter
+can dominate a prediction loss even if the history reader ignores
+commands. Shuffling is performed within matched task, time, and
+record-count strata; both train-and-test ablations and test-time
+interventions are reported because the latter may introduce distribution
+shift. Archive size, context width, and decoder capacity are matched
+where the comparison permits it.</p>
+<div>
+<table id="tab:ablations">
+<caption>Table 5. Planned mechanism tests and interpretations of a null result.
+Control metrics accompany prediction metrics; an auxiliary-loss
+improvement alone does not satisfy any control claim.</caption>
 <thead>
 <tr>
-<th>Capability</th>
-<th>Existing branch</th>
-<th>Proposed work</th>
+<th style="text-align: left;">Intervention</th>
+<th style="text-align: left;">Interpretation if control is
+unchanged</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Frozen Stage 2 VLA and original RL token</td>
-<td>Implemented</td>
-<td>Preserve</td>
+<td style="text-align: left;">Remove historical commands; separately
+remove target commands</td>
+<td style="text-align: left;">Action-related response information may
+not explain the effect</td>
 </tr>
 <tr>
-<td>Raw executed command/joint-response record</td>
-<td>Implemented, 110 dimensions</td>
-<td>Preserve units and masks</td>
+<td style="text-align: left;">Shuffle matched history or replace it with
+empty history</td>
+<td style="text-align: left;">The controller may ignore relevant event
+correspondence</td>
 </tr>
 <tr>
-<td>Short store / archive</td>
-<td>4 recent, 32 stored, 4 retrieved</td>
-<td>Add visual event content and learned retrieval study</td>
+<td style="text-align: left;">Recent only versus recent + archive</td>
+<td style="text-align: left;">The longer-lived archive may be
+unnecessary</td>
 </tr>
 <tr>
-<td>Current memory reader</td>
-<td>64-dimensional attention or fixed response</td>
-<td>Add consequence-supervised event encoder/reader</td>
+<td style="text-align: left;">Joint-only versus visual + joint
+events</td>
+<td style="text-align: left;">Visual interaction context may add no
+benefit</td>
 </tr>
 <tr>
-<td>Reader update</td>
-<td>Critic TD owns trainable reader</td>
-<td>Freeze pretrained reader first; online update ablation later</td>
+<td style="text-align: left;">No pretraining / expert-action /
+consequence pretraining</td>
+<td style="text-align: left;">The supervisory target may not be the
+useful factor</td>
 </tr>
 <tr>
-<td>Stage 1B interaction pretraining</td>
-<td>Not implemented in Zeva branch</td>
-<td>Add chronological transition dataset and auxiliary decoder</td>
+<td style="text-align: left;">Actor-only / critic-only / both context
+inputs</td>
+<td style="text-align: left;">Locates whether action selection or value
+learning uses context</td>
 </tr>
 <tr>
-<td>Same-instance retention</td>
-<td>Optional, reset checks required</td>
-<td>Complete frozen-weight evaluation tooling</td>
+<td style="text-align: left;">Frozen versus TD-updated context
+encoder</td>
+<td style="text-align: left;">Tests the stability–adaptability
+tradeoff</td>
 </tr>
 <tr>
-<td>Cross-task source bank</td>
-<td>Not implemented</td>
-<td>Separate provenance-controlled bank</td>
-</tr>
-<tr>
-<td>Actual contact labels</td>
-<td>Not in default event</td>
-<td>Optional privileged auxiliary supervision</td>
-</tr>
-<tr>
-<td>Context in action expert</td>
-<td>Not implemented</td>
-<td>Later extension with deployable feature contract</td>
-</tr>
-<tr>
-<td>Production change detector</td>
-<td>Not enabled</td>
-<td>Optional robustness variant after core result</td>
+<td style="text-align: left;">Fixed versus learned retrieval</td>
+<td style="text-align: left;">Retrieval complexity may not be
+justified</td>
 </tr>
 </tbody>
 </table>
-<p>The local inspected revision is
-<code>f2d1cf6486d309eb61785151bc33783bc64a967f</code>. A newer remote
-research revision,
-<code>abb4382362ae0c89f711009227cc236b6d6f8b4d</code>, contains
-delayed-feedback generation protection in diagnostics and has not been
-merged into this working tree. Existing reports and raw result files are
-indexed in the accompanying execution guide and evidence manifest.</p>
-<h2 id="appendix-b.-reproducibility-record">Appendix B. Reproducibility
-Record</h2>
-<p>For every experiment, save the git revision and dirty patch, resolved
-Hydra configuration, Stage 1 and context checkpoint hashes,
-normalization statistics, simulator/controller versions,
-train/validation/test identifiers, memory clear/retain policy, seeds,
-source-bank provenance, actual executed ticks, intervention settings,
-and hardware placement. Store evaluation per episode and per attempt. A
-resume check must exceed replay cache capacity and verify retained
-transition files, counts, optimizer/RNG state, and the declared
-environment-memory reset behavior.</p>
-<p>Official RLinf was checked on 3 October 2026: main
-<code>c70606f08cdca259b8dec03d4430926b5b8fac9d</code>; replay PR #1623
-remained open. Upstream fixes are evaluated in a separate revision
-before a campaign. A running campaign retains its fixed code version.
-The document bundle contains source metadata and a snapshot of recently
-updated official PRs.</p>
-<h2 class="unnumbered" id="references">References</h2>
-<div class="references csl-bib-body hanging-indent" id="refs" role="list">
-<div class="csl-entry" id="ref-rliable" role="listitem">
-Agarwal, Rishabh, Max Schwarzer, Pablo Samuel Castro, Aaron Courville,
-and Marc G. Bellemare. 2021. <em>Deep Reinforcement Learning at the Edge
-of the Statistical Precipice</em>. <a href="https://arxiv.org/abs/2108.13264">https://arxiv.org/abs/2108.13264</a>.
 </div>
-<div class="csl-entry" id="ref-her" role="listitem">
-Andrychowicz, Marcin, Filip Wolski, Alex Ray, et al. 2017. <em>Hindsight
-Experience Replay</em>. <a href="https://arxiv.org/abs/1707.01495">https://arxiv.org/abs/1707.01495</a>.
+<p>For frozen-parameter adaptation, each trained checkpoint is evaluated
+on matched sequences of repeated attempts. One arm retains the permitted
+memory, one clears it, and one receives mismatched evidence with the
+same size. No optimizer update or normalization refit occurs.
+Attempt-indexed success
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>S</mi><mn>1</mn></msub><mo>,</mo><msub><mi>S</mi><mn>2</mn></msub><mo>,</mo><mi>…</mi></mrow><annotation encoding="application/x-tex">S_1,S_2,\ldots</annotation></semantics></math>
+is the primary outcome. Cumulative success after several attempts is
+secondary because it increases even for a non-adapting policy. Arms
+share initial states and disturbances where feasible; their subsequent
+actions may diverge, which is part of the memory intervention. A
+complementary offline test feeds identical recorded histories to each
+reader to isolate extraction quality without policy-induced data
+differences.</p>
+<p>For changed conditions, evaluate an announced reset protocol and an
+unannounced physical change as separate settings. Compare persistent
+memory, clearing, recent-only context, fixed age decay, and the
+validated error-triggered extension. Record the temporary loss in
+success, attempts to recover, and false resets in stationary episodes. A
+rich archive may create negative transfer precisely when its response
+statistics are well supported but obsolete.</p>
+<p>For transfer, freeze source weights and source memory before target
+evaluation. Compare empty target memory, a compatible source bank, a
+mismatched bank, and transferred weights without the bank. Record source
+collection and pretraining costs. Source and target must share a defined
+observation/action schema; cross-robot transfer is not implied by
+transferring within one robot’s coordinates. Begin with held-out
+conditions on one task, then evaluate related tasks. If only pretrained
+weights help, the result is representation transfer rather than memory
+transfer.</p>
+<h2 data-number="5.5" id="metrics-budgets-and-statistical-analysis"><span class="header-section-number">5.5</span> Metrics, budgets, and
+statistical analysis</h2>
+<p>The primary control measure is normalized area under the success-rate
+curve against valid executed control ticks. We also report final
+unassisted success, successful episodes per wall-clock hour, and ticks
+to a prespecified success threshold. A run that never reaches the
+threshold remains censored; it is not assigned an artificial favorable
+time. Action inference, memory retrieval, environment stepping, learner
+updates, and source pretraining are timed separately. Offline
+interactions and GPU-hours are included alongside online-only efficiency
+so that additional source data cannot masquerade as a free
+sample-efficiency gain.</p>
+<p>All methods share initial pretrained checkpoints, demonstration
+counts, replay warmup, update-to-data ratios, evaluation frequency, and
+tuning budgets. The learned context and fixed-response baseline both
+receive the same current raw joint state when required. Five training
+seeds and at least 50 matched evaluation initial states per
+task–condition cell are the initial confirmatory target; the precise
+budget is fixed after the small pilot and before opening the locked
+test. Training seeds and task/condition groups, not overlapping windows,
+define statistical units. We report paired differences with
+cluster-aware bootstrap intervals and distributions rather than only
+best checkpoints, following established RL evaluation concerns <span class="citation" data-cites="rliable">[26]</span>. Task-level results
+accompany aggregate summaries.</p>
+<div>
+<table id="tab:pending">
+<caption>Table 6. Confirmatory control reporting template (not measured). All
+cells are pending. Costs include the declared source-data budget; no
+development prediction metric is substituted for these outcomes. Final
+results must additionally report per-task values and
+uncertainty.</caption>
+<thead>
+<tr>
+<th style="text-align: left;">Method</th>
+<th style="text-align: left;">Success AUC</th>
+<th style="text-align: left;">Final success</th>
+<th style="text-align: left;">Ticks to target</th>
+<th style="text-align: left;">Successes/hour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Capacity-matched RLT</td>
+<td style="text-align: left;">Pending</td>
+<td style="text-align: left;">Pending</td>
+<td style="text-align: left;">Pending</td>
+<td style="text-align: left;">Pending</td>
+</tr>
+<tr>
+<td style="text-align: left;">Recent-history encoder</td>
+<td style="text-align: left;">Pending</td>
+<td style="text-align: left;">Pending</td>
+<td style="text-align: left;">Pending</td>
+<td style="text-align: left;">Pending</td>
+</tr>
+<tr>
+<td style="text-align: left;">Existing archive reader</td>
+<td style="text-align: left;">Pending</td>
+<td style="text-align: left;">Pending</td>
+<td style="text-align: left;">Pending</td>
+<td style="text-align: left;">Pending</td>
+</tr>
+<tr>
+<td style="text-align: left;">Fixed response context</td>
+<td style="text-align: left;">Pending</td>
+<td style="text-align: left;">Pending</td>
+<td style="text-align: left;">Pending</td>
+<td style="text-align: left;">Pending</td>
+</tr>
+<tr>
+<td style="text-align: left;">IM-RLT</td>
+<td style="text-align: left;">Pending</td>
+<td style="text-align: left;">Pending</td>
+<td style="text-align: left;">Pending</td>
+<td style="text-align: left;">Pending</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div class="csl-entry" id="ref-pi0" role="listitem">
-Black, Kevin, Noah Brown, Danny Driess, et al. 2024. <em><span class="math inline"><em>π</em><sub>0</sub></span>: A
-Vision-Language-Action Flow Model for General Robot Control</em>. <a href="https://arxiv.org/abs/2410.24164">https://arxiv.org/abs/2410.24164</a>.
-</div>
-<div class="csl-entry" id="ref-zeva" role="listitem">
-Chen, Fu, Xin Ding, Bingjia Huang, et al. 2026. <em>Zeva: In-Context
-Causal Learning for Generalizable Embodied Manipulation</em>. <a href="https://arxiv.org/abs/2608.30880">https://arxiv.org/abs/2608.30880</a>.
-</div>
-<div class="csl-entry" id="ref-conrft" role="listitem">
-Chen, Yuhui, Shuai Tian, Shugao Liu, Yingting Zhou, Haoran Li, and
-Dongbin Zhao. 2025. <em>ConRFT: A Reinforced Fine-Tuning Method for VLA
-Models via Consistency Policy</em>. <a href="https://arxiv.org/abs/2502.05450">https://arxiv.org/abs/2502.05450</a>.
-</div>
-<div class="csl-entry" id="ref-robomme" role="listitem">
-Dai, Yinpei, Hongze Fu, Jayjun Lee, et al. 2026. <em>RoboMME:
-Benchmarking and Understanding Memory for Robotic Generalist
-Policies</em>. <a href="https://arxiv.org/abs/2603.04639">https://arxiv.org/abs/2603.04639</a>.
-</div>
-<div class="csl-entry" id="ref-rl2" role="listitem">
-Duan, Yan, John Schulman, Xi Chen, Peter L. Bartlett, Ilya Sutskever,
-and Pieter Abbeel. 2016. <em>RL<span class="math inline"><sup>2</sup></span>: Fast Reinforcement Learning via
-Slow Reinforcement Learning</em>. <a href="https://arxiv.org/abs/1611.02779">https://arxiv.org/abs/1611.02779</a>.
-</div>
-<div class="csl-entry" id="ref-td3" role="listitem">
-Fujimoto, Scott, Herke van Hoof, and David Meger. 2018. <em>Addressing
-Function Approximation Error in Actor-Critic Methods</em>. <a href="https://arxiv.org/abs/1802.09477">https://arxiv.org/abs/1802.09477</a>.
-</div>
-<div class="csl-entry" id="ref-sac" role="listitem">
-Haarnoja, Tuomas, Aurick Zhou, Pieter Abbeel, and Sergey Levine. 2018.
-<em>Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement
-Learning with a Stochastic Actor</em>. <a href="https://arxiv.org/abs/1801.01290">https://arxiv.org/abs/1801.01290</a>.
-</div>
-<div class="csl-entry" id="ref-tdmpc2" role="listitem">
-Hansen, Nicklas, Hao Su, and Xiaolong Wang. 2023. <em>TD-MPC2: Scalable,
-Robust World Models for Continuous Control</em>. <a href="https://arxiv.org/abs/2310.16828">https://arxiv.org/abs/2310.16828</a>.
-</div>
-<div class="csl-entry" id="ref-imagine" role="listitem">
-Hu, Kejia, Wentong Zhai, Bo Zhao, and Shuai Liang. 2026. <em>Imagine-RL:
-Residual-Confidence-Guided Cross-Attention for World-Model-Augmented VLA
-Reinforcement Learning</em>. <a href="https://arxiv.org/abs/2609.24033">https://arxiv.org/abs/2609.24033</a>.
+<h2 data-number="5.6" id="what-the-current-results-support"><span class="header-section-number">5.6</span> What the current results
+support</h2>
+<p>The measured evidence supports the existence of useful
+command–response information in a particular simulator cache and shows
+that the current learned reader does not extract it as effectively as a
+simple estimator. It does not support faster RL convergence, higher
+success, lower intervention time, or transferable physical knowledge.
+The support-gated follow-up suggests that a learned correction should be
+tested against an informative fixed component, but its post-hoc
+selection weakens any confirmatory interpretation.</p>
+<p>The decisive outcome is a control advantage at matched total cost,
+followed by a frozen-weight retain-versus-clear effect. If consequence
+prediction improves without control improvement, the representation
+objective is misaligned with the intended task benefit. If recent
+history matches the archive, the method should be simplified. If a
+stronger current-input baseline removes the gain, the evidence favors
+feature extraction over persistent interaction memory. These
+alternatives determine the scope of the eventual paper rather than being
+omitted as unsuccessful ablations.</p>
+<h1 data-number="6" id="conclusion-and-limitations"><span class="header-section-number">6</span> Conclusion and Limitations</h1>
+<p>We proposed an interaction-memory extension to frozen-VLA
+reinforcement learning that learns from completed commands and their
+observed consequences. Its central design is to train earlier evidence
+for a later predictive use, then test that evidence as a condition for
+an otherwise matched RLT actor–critic. Existing response probes motivate
+this design by exposing a gap between informative history and effective
+neural extraction. They do not yet establish the proposed method’s
+control value.</p>
+<p>The current evidence is limited to small development diagnostics, two
+known controller settings, and unmatched online pilots. Learned
+interaction latents are not uniquely identified physical parameters;
+archival evidence can be irrelevant or stale; pretraining and retrieval
+can erase an apparent efficiency gain. Real-robot success and reduced
+human intervention remain future evaluations. The next step is a stable
+simulation baseline and a small matched control study, followed by
+frozen-parameter adaptation and locked transfer tests. Only those
+results can justify stronger claims about persistent improvement from
+accumulated experience.</p>
+<h1 id="references">References</h1><div class="references csl-bib-body" data-entry-spacing="0" id="refs" role="list">
+<div class="csl-entry" id="ref-rlt" role="listitem">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">C.
+Xu <em>et al.</em>, <span>“RL token: Bootstrapping online RL with
+vision-language-action models.”</span> 2026. Available: <a href="https://arxiv.org/abs/2604.23073">https://arxiv.org/abs/2604.23073</a></div>
 </div>
 <div class="csl-entry" id="ref-erlt" role="listitem">
-Huang, Dehao, Jianbang Liu, Jianpan Gao, et al. 2026. <em>eRLT:
-Efficient VLA Reinforcement Learning via Action-Relevant Token
-Routing</em>. <a href="https://arxiv.org/abs/2610.00913">https://arxiv.org/abs/2610.00913</a>.
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">D.
+Huang <em>et al.</em>, <span>“eRLT: Efficient VLA reinforcement learning
+via action-relevant token routing.”</span> 2026. Available: <a href="https://arxiv.org/abs/2610.00913">https://arxiv.org/abs/2610.00913</a></div>
 </div>
-<div class="csl-entry" id="ref-pi05" role="listitem">
-Intelligence, Physical, Kevin Black, Noah Brown, et al. 2025. <em><span class="math inline"><em>π</em><sub>0.5</sub></span>: A
-Vision-Language-Action Model with Open-World Generalization</em>. <a href="https://arxiv.org/abs/2504.16054">https://arxiv.org/abs/2504.16054</a>.
-</div>
-<div class="csl-entry" id="ref-rma" role="listitem">
-Kumar, Ashish, Zipeng Fu, Deepak Pathak, and Jitendra Malik. 2021.
-<em>RMA: Rapid Motor Adaptation for Legged Robots</em>. <a href="https://arxiv.org/abs/2107.04034">https://arxiv.org/abs/2107.04034</a>.
-</div>
-<div class="csl-entry" id="ref-libero" role="listitem">
-Liu, Bo, Yifeng Zhu, Chongkai Gao, et al. 2023. <em>LIBERO: Benchmarking
-Knowledge Transfer for Lifelong Robot Learning</em>. <a href="https://arxiv.org/abs/2306.03310">https://arxiv.org/abs/2306.03310</a>.
-</div>
-<div class="csl-entry" id="ref-hilserl" role="listitem">
-Luo, Jianlan, Charles Xu, Jeffrey Wu, and Sergey Levine. 2024.
-<em>Precise and Dexterous Robotic Manipulation via Human-in-the-Loop
-Reinforcement Learning</em>. <a href="https://arxiv.org/abs/2410.21845">https://arxiv.org/abs/2410.21845</a>.
-</div>
-<div class="csl-entry" id="ref-pearl" role="listitem">
-Rakelly, Kate, Aurick Zhou, Deirdre Quillen, Chelsea Finn, and Sergey
-Levine. 2019. <em>Efficient Off-Policy Meta-Reinforcement Learning via
-Probabilistic Context Variables</em>. <a href="https://arxiv.org/abs/1903.08254">https://arxiv.org/abs/1903.08254</a>.
-</div>
-<div class="csl-entry" id="ref-spr" role="listitem">
-Schwarzer, Max, Ankesh Anand, Rishab Goel, R Devon Hjelm, Aaron
-Courville, and Philip Bachman. 2020. <em>Data-Efficient Reinforcement
-Learning with Self-Predictive Representations</em>. <a href="https://arxiv.org/abs/2007.05929">https://arxiv.org/abs/2007.05929</a>.
-</div>
-<div class="csl-entry" id="ref-memoryvla" role="listitem">
-Shi, Hao, Bin Xie, Yingfei Liu, et al. 2025. <em>MemoryVLA:
-Perceptual-Cognitive Memory in Vision-Language-Action Models for Robotic
-Manipulation</em>. <a href="https://arxiv.org/abs/2508.19236">https://arxiv.org/abs/2508.19236</a>.
-</div>
-<div class="csl-entry" id="ref-maniskill" role="listitem">
-Tao, Stone, Fanbo Xiang, Arth Shukla, et al. 2024. <em>ManiSkill3: GPU
-Parallelized Robotics Simulation and Rendering for Generalizable
-Embodied AI</em>. <a href="https://arxiv.org/abs/2410.00425">https://arxiv.org/abs/2410.00425</a>.
-</div>
-<div class="csl-entry" id="ref-dsrl" role="listitem">
-Wagenmaker, Andrew, Mitsuhiko Nakamoto, Yunchu Zhang, et al. 2025.
-<em>Steering Your Diffusion Policy with Latent Space Reinforcement
-Learning</em>. <a href="https://arxiv.org/abs/2506.15799">https://arxiv.org/abs/2506.15799</a>.
-</div>
-<div class="csl-entry" id="ref-rlt" role="listitem">
-Xu, Charles, Jost Tobias Springenberg, Michael Equi, et al. 2026. <em>RL
-Token: Bootstrapping Online RL with Vision-Language-Action Models</em>.
-<a href="https://arxiv.org/abs/2604.23073">https://arxiv.org/abs/2604.23073</a>.
+<div class="csl-entry" id="ref-zeva" role="listitem">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">F.
+Chen <em>et al.</em>, <span>“Zeva: In-context causal learning for
+generalizable embodied manipulation.”</span> 2026. Available: <a href="https://arxiv.org/abs/2608.30880">https://arxiv.org/abs/2608.30880</a></div>
 </div>
 <div class="csl-entry" id="ref-uposi" role="listitem">
-Yu, Wenhao, Jie Tan, C. Karen Liu, and Greg Turk. 2017. <em>Preparing
-for the Unknown: Learning a Universal Policy with Online System
-Identification</em>. <a href="https://arxiv.org/abs/1702.02453">https://arxiv.org/abs/1702.02453</a>.
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">W.
+Yu, J. Tan, C. K. Liu, and G. Turk, <span>“Preparing for the unknown:
+Learning a universal policy with online system identification.”</span>
+2017. Available: <a href="https://arxiv.org/abs/1702.02453">https://arxiv.org/abs/1702.02453</a></div>
 </div>
-<div class="csl-entry" id="ref-flare" role="listitem">
-Zheng, Ruijie, Jing Wang, Scott Reed, et al. 2025. <em>FLARE: Robot
-Learning with Implicit World Modeling</em>. <a href="https://arxiv.org/abs/2505.15659">https://arxiv.org/abs/2505.15659</a>.
+<div class="csl-entry" id="ref-rma" role="listitem">
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">A.
+Kumar, Z. Fu, D. Pathak, and J. Malik, <span>“RMA: Rapid motor
+adaptation for legged robots.”</span> 2021. Available: <a href="https://arxiv.org/abs/2107.04034">https://arxiv.org/abs/2107.04034</a></div>
+</div>
+<div class="csl-entry" id="ref-pearl" role="listitem">
+<div class="csl-left-margin">[6] </div><div class="csl-right-inline">K.
+Rakelly, A. Zhou, D. Quillen, C. Finn, and S. Levine, <span>“Efficient
+off-policy meta-reinforcement learning via probabilistic context
+variables.”</span> 2019. Available: <a href="https://arxiv.org/abs/1903.08254">https://arxiv.org/abs/1903.08254</a></div>
+</div>
+<div class="csl-entry" id="ref-pi0" role="listitem">
+<div class="csl-left-margin">[7] </div><div class="csl-right-inline">K.
+Black <em>et al.</em>,
+<span>“<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>π</mi><mn>0</mn></msub><annotation encoding="application/x-tex">\pi_0</annotation></semantics></math>:
+A vision-language-action flow model for general robot control.”</span>
+2024. Available: <a href="https://arxiv.org/abs/2410.24164">https://arxiv.org/abs/2410.24164</a></div>
+</div>
+<div class="csl-entry" id="ref-pi05" role="listitem">
+<div class="csl-left-margin">[8] </div><div class="csl-right-inline">P.
+Intelligence <em>et al.</em>,
+<span>“<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>π</mi><mn>0.5</mn></msub><annotation encoding="application/x-tex">\pi_{0.5}</annotation></semantics></math>:
+A vision-language-action model with open-world generalization.”</span>
+2025. Available: <a href="https://arxiv.org/abs/2504.16054">https://arxiv.org/abs/2504.16054</a></div>
+</div>
+<div class="csl-entry" id="ref-dsrl" role="listitem">
+<div class="csl-left-margin">[9] </div><div class="csl-right-inline">A.
+Wagenmaker <em>et al.</em>, <span>“Steering your diffusion policy with
+latent space reinforcement learning.”</span> 2025. Available: <a href="https://arxiv.org/abs/2506.15799">https://arxiv.org/abs/2506.15799</a></div>
+</div>
+<div class="csl-entry" id="ref-conrft" role="listitem">
+<div class="csl-left-margin">[10] </div><div class="csl-right-inline">Y.
+Chen, S. Tian, S. Liu, Y. Zhou, H. Li, and D. Zhao, <span>“ConRFT: A
+reinforced fine-tuning method for VLA models via consistency
+policy.”</span> 2025. Available: <a href="https://arxiv.org/abs/2502.05450">https://arxiv.org/abs/2502.05450</a></div>
+</div>
+<div class="csl-entry" id="ref-hilserl" role="listitem">
+<div class="csl-left-margin">[11] </div><div class="csl-right-inline">J.
+Luo, C. Xu, J. Wu, and S. Levine, <span>“Precise and dexterous robotic
+manipulation via human-in-the-loop reinforcement learning.”</span> 2024.
+Available: <a href="https://arxiv.org/abs/2410.21845">https://arxiv.org/abs/2410.21845</a></div>
+</div>
+<div class="csl-entry" id="ref-smoothrl" role="listitem">
+<div class="csl-left-margin">[12] </div><div class="csl-right-inline">G.
+Gao, Y. Nong, B. Huang, and J. Wang, <span>“SmoothRL: Online
+reinforcement learning during asynchronous execution.”</span> 2026.
+Available: <a href="https://arxiv.org/abs/2608.29768">https://arxiv.org/abs/2608.29768</a></div>
+</div>
+<div class="csl-entry" id="ref-memoryvla" role="listitem">
+<div class="csl-left-margin">[13] </div><div class="csl-right-inline">H.
+Shi <em>et al.</em>, <span>“MemoryVLA: Perceptual-cognitive memory in
+vision-language-action models for robotic manipulation.”</span> 2025.
+Available: <a href="https://arxiv.org/abs/2508.19236">https://arxiv.org/abs/2508.19236</a></div>
+</div>
+<div class="csl-entry" id="ref-robomme" role="listitem">
+<div class="csl-left-margin">[14] </div><div class="csl-right-inline">Y.
+Dai <em>et al.</em>, <span>“RoboMME: Benchmarking and understanding
+memory for robotic generalist policies.”</span> 2026. Available: <a href="https://arxiv.org/abs/2603.04639">https://arxiv.org/abs/2603.04639</a></div>
 </div>
 <div class="csl-entry" id="ref-varibad" role="listitem">
-Zintgraf, Luisa, Kyriacos Shiarlis, Maximilian Igl, et al. 2019.
-<em>VariBAD: A Very Good Method for Bayes-Adaptive Deep RL via
-Meta-Learning</em>. <a href="https://arxiv.org/abs/1910.08348">https://arxiv.org/abs/1910.08348</a>.
+<div class="csl-left-margin">[15] </div><div class="csl-right-inline">L.
+Zintgraf <em>et al.</em>, <span>“VariBAD: A very good method for
+bayes-adaptive deep RL via meta-learning.”</span> 2019. Available: <a href="https://arxiv.org/abs/1910.08348">https://arxiv.org/abs/1910.08348</a></div>
 </div>
+<div class="csl-entry" id="ref-rl2" role="listitem">
+<div class="csl-left-margin">[16] </div><div class="csl-right-inline">Y.
+Duan, J. Schulman, X. Chen, P. L. Bartlett, I. Sutskever, and P. Abbeel,
+<span>“RL<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi></mi><mn>2</mn></msup><annotation encoding="application/x-tex">^2</annotation></semantics></math>:
+Fast reinforcement learning via slow reinforcement learning.”</span>
+2016. Available: <a href="https://arxiv.org/abs/1611.02779">https://arxiv.org/abs/1611.02779</a></div>
 </div>
-</body></html>
+<div class="csl-entry" id="ref-spr" role="listitem">
+<div class="csl-left-margin">[17] </div><div class="csl-right-inline">M.
+Schwarzer, A. Anand, R. Goel, R. D. Hjelm, A. Courville, and P. Bachman,
+<span>“Data-efficient reinforcement learning with self-predictive
+representations.”</span> 2020. Available: <a href="https://arxiv.org/abs/2007.05929">https://arxiv.org/abs/2007.05929</a></div>
+</div>
+<div class="csl-entry" id="ref-flare" role="listitem">
+<div class="csl-left-margin">[18] </div><div class="csl-right-inline">R.
+Zheng <em>et al.</em>, <span>“FLARE: Robot learning with implicit world
+modeling.”</span> 2025. Available: <a href="https://arxiv.org/abs/2505.15659">https://arxiv.org/abs/2505.15659</a></div>
+</div>
+<div class="csl-entry" id="ref-imagine" role="listitem">
+<div class="csl-left-margin">[19] </div><div class="csl-right-inline">K.
+Hu, W. Zhai, B. Zhao, and S. Liang, <span>“Imagine-RL:
+Residual-confidence-guided cross-attention for world-model-augmented VLA
+reinforcement learning.”</span> 2026. Available: <a href="https://arxiv.org/abs/2609.24033">https://arxiv.org/abs/2609.24033</a></div>
+</div>
+<div class="csl-entry" id="ref-tdmpc2" role="listitem">
+<div class="csl-left-margin">[20] </div><div class="csl-right-inline">N.
+Hansen, H. Su, and X. Wang, <span>“TD-MPC2: Scalable, robust world
+models for continuous control.”</span> 2023. Available: <a href="https://arxiv.org/abs/2310.16828">https://arxiv.org/abs/2310.16828</a></div>
+</div>
+<div class="csl-entry" id="ref-her" role="listitem">
+<div class="csl-left-margin">[21] </div><div class="csl-right-inline">M.
+Andrychowicz <em>et al.</em>, <span>“Hindsight experience
+replay.”</span> 2017. Available: <a href="https://arxiv.org/abs/1707.01495">https://arxiv.org/abs/1707.01495</a></div>
+</div>
+<div class="csl-entry" id="ref-td3" role="listitem">
+<div class="csl-left-margin">[22] </div><div class="csl-right-inline">S.
+Fujimoto, H. van Hoof, and D. Meger, <span>“Addressing function
+approximation error in actor-critic methods.”</span> 2018. Available: <a href="https://arxiv.org/abs/1802.09477">https://arxiv.org/abs/1802.09477</a></div>
+</div>
+<div class="csl-entry" id="ref-sac" role="listitem">
+<div class="csl-left-margin">[23] </div><div class="csl-right-inline">T.
+Haarnoja, A. Zhou, P. Abbeel, and S. Levine, <span>“Soft actor-critic:
+Off-policy maximum entropy deep reinforcement learning with a stochastic
+actor.”</span> 2018. Available: <a href="https://arxiv.org/abs/1801.01290">https://arxiv.org/abs/1801.01290</a></div>
+</div>
+<div class="csl-entry" id="ref-maniskill" role="listitem">
+<div class="csl-left-margin">[24] </div><div class="csl-right-inline">S.
+Tao <em>et al.</em>, <span>“ManiSkill3: GPU parallelized robotics
+simulation and rendering for generalizable embodied AI.”</span> 2024.
+Available: <a href="https://arxiv.org/abs/2410.00425">https://arxiv.org/abs/2410.00425</a></div>
+</div>
+<div class="csl-entry" id="ref-libero" role="listitem">
+<div class="csl-left-margin">[25] </div><div class="csl-right-inline">B.
+Liu <em>et al.</em>, <span>“LIBERO: Benchmarking knowledge transfer for
+lifelong robot learning.”</span> 2023. Available: <a href="https://arxiv.org/abs/2306.03310">https://arxiv.org/abs/2306.03310</a></div>
+</div>
+<div class="csl-entry" id="ref-rliable" role="listitem">
+<div class="csl-left-margin">[26] </div><div class="csl-right-inline">R.
+Agarwal, M. Schwarzer, P. S. Castro, A. Courville, and M. G. Bellemare,
+<span>“Deep reinforcement learning at the edge of the statistical
+precipice.”</span> 2021. Available: <a href="https://arxiv.org/abs/2108.13264">https://arxiv.org/abs/2108.13264</a></div>
+</div>
+</div><h1 data-number="7" id="app:implementation"><span class="header-section-number">A</span> Implementation Contract and
+Current Status</h1>
+<p>This appendix separates the existing development implementation from
+the proposed method so that the manuscript can be translated into code
+without assuming unimplemented components. The public evidence manifest
+records the checked revisions and hashes of underlying private
+artifacts. These hashes establish provenance, not public access to raw
+trajectories.</p>
+<div>
+<table id="tab:status">
+<caption>Table 7. Implementation status as of October 3, 2026. Proposed entries
+are not measured IM-RLT results.</caption>
+<thead>
+<tr>
+<th style="text-align: left;">Component</th>
+<th style="text-align: left;">Existing development branch</th>
+<th style="text-align: left;">Proposed primary experiment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Stage 2 VLA/token</td>
+<td style="text-align: left;">Frozen</td>
+<td style="text-align: left;">Preserve the baseline</td>
+</tr>
+<tr>
+<td style="text-align: left;">Event record</td>
+<td style="text-align: left;">Raw joint state, commands, response,
+masks</td>
+<td style="text-align: left;">Add frozen visual endpoints and
+transformed proprioception</td>
+</tr>
+<tr>
+<td style="text-align: left;">Memory capacities</td>
+<td style="text-align: left;">4 recent; 32 archive; 4 retrieved</td>
+<td style="text-align: left;">Same initial capacities; exclude duplicate
+records</td>
+</tr>
+<tr>
+<td style="text-align: left;">Reader</td>
+<td style="text-align: left;">Attention or response-statistic
+variants</td>
+<td style="text-align: left;">Consequence-trained 64-dimensional
+context</td>
+</tr>
+<tr>
+<td style="text-align: left;">Reader optimization</td>
+<td style="text-align: left;">Critic-owned update; actor reads detached
+context</td>
+<td style="text-align: left;">Stage 1B pretraining, then freeze for the
+first control test</td>
+</tr>
+<tr>
+<td style="text-align: left;">Replay context</td>
+<td style="text-align: left;">Existing history plumbing</td>
+<td style="text-align: left;">Audit immutable current/successor
+snapshots end to end</td>
+</tr>
+<tr>
+<td style="text-align: left;">Cross-attempt reuse</td>
+<td style="text-align: left;">Optional retention logic</td>
+<td style="text-align: left;">Matched frozen-weight retain/clear
+evaluation</td>
+</tr>
+<tr>
+<td style="text-align: left;">Cross-task source bank</td>
+<td style="text-align: left;">Not implemented</td>
+<td style="text-align: left;">Separate source and target stores</td>
+</tr>
+<tr>
+<td style="text-align: left;">Contact supervision</td>
+<td style="text-align: left;">Not in the default event</td>
+<td style="text-align: left;">Optional privileged-label ablation</td>
+</tr>
+<tr>
+<td style="text-align: left;">Action-expert context</td>
+<td style="text-align: left;">Not implemented</td>
+<td style="text-align: left;">Deferred extension with a deployable
+feature rule</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The existing record has 110 scalars: nine initial joint positions,
+ten eight-dimensional commands, nine joint displacements, ten
+tick-validity entries, and two end flags. Its attention encoder maps
+records through a 64-dimensional MLP with LayerNorm and SiLU, reads them
+with a query derived from the current nine joint positions, and returns
+a 64-dimensional context. It does not already implement the visual
+interaction encoding of Equation <a data-reference="eq:event" data-reference-type="ref" href="#eq:event">1</a>. A
+reader receiving critic gradients is also not equivalent to the frozen
+consequence-trained reader in the proposed primary configuration.</p>
+<p>The initial proposed encoder projects visual endpoints and normalized
+numerical fields separately before a small fusion MLP. Action sequences
+use a tick-masked temporal encoder; padded values are sanitized first.
+One 64-dimensional attention block reads the selected events, with age
+and store-type embeddings. This is an implementable starting
+specification; head count, normalization weights, and retrieval
+coefficient are selected on validation data within the same tuning
+budget as learned-history controls. No performance claim depends on an
+unselected hyperparameter.</p>
+<h1 data-number="8" id="app:formula"><span class="header-section-number">B</span> Fixed Response Estimator and
+Support-Gated Residual</h1>
+<p>The development formula estimates each arm joint’s observed response
+per aggregate command. For historical event
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math>
+and arm joint
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>j</mi><mo>∈</mo><mo form="prefix" stretchy="false">{</mo><mn>1</mn><mo>,</mo><mi>…</mi><mo>,</mo><mn>7</mn><mo form="postfix" stretchy="false">}</mo></mrow><annotation encoding="application/x-tex">j\in\{1,\ldots,7\}</annotation></semantics></math>,
+the code constructs
+<div class="display-equation"><span id="eq:support"></span><span id="eq:formula"></span><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><msub><mi>u</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>0.1</mn><munderover><mo>∑</mo><mrow><mi>k</mi><mo>=</mo><mn>0</mn></mrow><mn>9</mn></munderover><msub><mi>m</mi><mrow><mi>i</mi><mi>k</mi></mrow></msub><msub><mi>a</mi><mrow><mi>i</mi><mi>k</mi><mi>j</mi></mrow></msub><mo>,</mo></mtd><mtd columnalign="right" style="text-align: right; padding-right: 0"><msub><mi>e</mi><mi>j</mi></msub></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><munder><mo>∑</mo><mi>i</mi></munder><msubsup><mi>u</mi><mrow><mi>i</mi><mi>j</mi></mrow><mn>2</mn></msubsup><mo>,</mo></mtd><mtd columnalign="right" style="text-align: right; padding-right: 0"><msub><mi>b</mi><mi>j</mi></msub></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mrow><mi mathvariant="normal">clip</mi><mo>⁡</mo></mrow><mrow><mo form="prefix" stretchy="true">(</mo><mfrac><mrow><munder><mo>∑</mo><mi>i</mi></munder><msub><mi>u</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mi mathvariant="normal">Δ</mi><msub><mi>q</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub></mrow><mrow><msub><mi>e</mi><mi>j</mi></msub><mo>+</mo><msup><mn>10</mn><mrow><mi>−</mi><mn>4</mn></mrow></msup></mrow></mfrac><mo>,</mo><mi>−</mi><mn>2</mn><mo>,</mo><mn>2</mn><mo form="postfix" stretchy="true">)</mo></mrow><mo>,</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><msub><mi>ρ</mi><mi>j</mi></msub></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mfrac><msub><mi>e</mi><mi>j</mi></msub><mrow><msub><mi>e</mi><mi>j</mi></msub><mo>+</mo><msup><mn>10</mn><mrow><mi>−</mi><mn>4</mn></mrow></msup></mrow></mfrac><mo>,</mo></mtd><mtd columnalign="right" style="text-align: right; padding-right: 0"><msubsup><mover><mrow><mi mathvariant="normal">Δ</mi><mi>q</mi></mrow><mo accent="true">̂</mo></mover><mrow><mi>t</mi><mi>j</mi></mrow><mrow><mi mathvariant="normal">f</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">x</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">d</mi></mrow></msubsup></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><msub><mi>b</mi><mi>j</mi></msub><msub><mi>u</mi><mrow><mi>t</mi><mi>j</mi></mrow></msub><mi>.</mi></mtd><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{align}
+ u_{ij}&amp;=0.1\sum_{k=0}^{9}m_{ik}a_{ikj}, &amp;
+ e_j&amp;=\sum_i u_{ij}^{2}, &amp;
+ b_j&amp;=\operatorname{clip}\left(\frac{\sum_i u_{ij}\Delta q_{ij}}{e_j+10^{-4}},-2,2\right),
+ \label{eq:formula}\\
+ \rho_j&amp;=\frac{e_j}{e_j+10^{-4}}, &amp;
+ \widehat{\Delta q}_{tj}^{\mathrm{fixed}}&amp;=b_j u_{tj}. &amp;&amp;
+ \label{eq:support}
+\end{align}</annotation></semantics></math><span class="equation-number">(8, 9)</span></div> The factor 0.1 is part of
+this diagnostic’s command scaling, not a universal physical constant.
+The two finger displacement outputs are set to zero in the fixed
+predictor. Slopes and support form 14 features, padded to the required
+context width when used as a memory reader. A learned response head
+predicts all nine target coordinates; this capacity difference should
+remain visible when interpreting the diagnostic comparison.</p>
+<p>The post-hoc predictor adds a zero-initialized learned residual. Its
+support-gated version uses
+<div class="display-equation"><span id="eq:residual"></span><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mover><mrow><mi mathvariant="normal">Δ</mi><mi>q</mi></mrow><mo accent="true">̂</mo></mover><mrow><mi>t</mi><mi>j</mi></mrow></msub><mo>=</mo><msubsup><mover><mrow><mi mathvariant="normal">Δ</mi><mi>q</mi></mrow><mo accent="true">̂</mo></mover><mrow><mi>t</mi><mi>j</mi></mrow><mrow><mi mathvariant="normal">f</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">x</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">d</mi></mrow></msubsup><mo>+</mo><mo form="prefix" stretchy="false">(</mo><mn>1</mn><mo>−</mo><msub><mi>ρ</mi><mi>j</mi></msub><mo form="postfix" stretchy="false">)</mo><msub><mi>δ</mi><mrow><mi>ω</mi><mo>,</mo><mi>j</mi></mrow></msub><mspace width="1.0em"></mspace><mo form="prefix" stretchy="false">(</mo><mi>j</mi><mo>≤</mo><mn>7</mn><mo form="postfix" stretchy="false">)</mo><mo>,</mo></mrow><annotation encoding="application/x-tex">\begin{equation}
+ \widehat{\Delta q}_{tj}=\widehat{\Delta q}_{tj}^{\mathrm{fixed}}
+     +(1-\rho_j)\delta_{\omega,j}\quad (j\leq7),
+ \label{eq:residual}
+\end{equation}</annotation></semantics></math><span class="equation-number">(10)</span></div> with an unrestricted
+residual gate for the two finger outputs. High command energy therefore
+reduces learned corrections on the arm. This is an excitation heuristic:
+repeated evidence about the wrong condition can have high
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>ρ</mi><mi>j</mi></msub><annotation encoding="application/x-tex">\rho_j</annotation></semantics></math>.
+Neither
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>b</mi><mi>j</mi></msub><annotation encoding="application/x-tex">b_j</annotation></semantics></math>
+nor
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>ρ</mi><mi>j</mi></msub><annotation encoding="application/x-tex">\rho_j</annotation></semantics></math>
+identifies stiffness, friction, or contact force in general. Coupled
+dynamics, direction dependence, saturation, and changing contacts
+violate the scalar response approximation. The estimator’s predictive
+advantage in Table <a data-reference="tab:probe" data-reference-type="ref" href="#tab:probe">2</a> is a reason to preserve it as a
+baseline, not to adopt its assumptions as a theory of robot physics.</p>
+<h1 data-number="9" id="app:checks"><span class="header-section-number">C</span> Training, Evaluation, and Failure
+Checks</h1>
+<h2 data-number="9.1" id="stage-1-and-interaction-pretraining"><span class="header-section-number">C.1</span> Stage 1 and interaction
+pretraining</h2>
+<p>Stage 1 follows the accepted baseline’s own representation and action
+training. Stage 1B additionally requires trajectory order and valid
+successors. Independent observation–action examples cannot be converted
+into consequence targets by pairing unrelated rows. Where source
+demonstrations lack reliable successor or execution metadata, either
+recover the original aligned trajectories or exclude them from the
+corresponding auxiliary objective. Failures collected for context
+pretraining are counted in source interaction cost for every
+comparison.</p>
+<p>The baseline action expert is an optional source of richer features,
+but its training-time hidden states may depend on noisy ground-truth
+actions and flow time. An extension must define an inference-time
+extraction rule, such as a fixed noise convention and denoising point
+applied to the reference proposal, then measure its latency and
+distribution mismatch. We defer this second intervention until the
+history context has shown a control effect. Joint Stage 1 training could
+later combine token reconstruction, expert-action loss, and consequence
+loss, with identical valid successor requirements.</p>
+<h2 data-number="9.2" id="acceptance-criteria-before-a-large-campaign"><span class="header-section-number">C.2</span> Acceptance criteria before a
+large campaign</h2>
+<p>The no-memory baseline must pass action normalization and routing
+checks, use a reproducible evaluation initialization set, restore model
+and optimizer state, and show actual actor/critic updates.
+Reference-only and actor-enabled evaluation are both required: an
+apparently successful RL run can still be following the reference
+throughout. Check reward accumulation, discount units, replay sampling,
+target-network updates, and the distinction between termination and
+truncation before varying the representation.</p>
+<p>An integration smoke test verifies the loop, not learning quality. A
+one-seed pilot then checks that the chosen task supplies non-degenerate
+rewards and that the actor can improve or at least reproduce the
+accepted reference under a declared budget. Three independent runs
+establish baseline variability before a larger campaign. If this gate
+fails, memory comparisons cannot resolve whether an apparent effect
+comes from representation, optimizer behavior, or an unstable execution
+pipeline.</p>
+<h2 data-number="9.3" id="replay-and-masking-assertions"><span class="header-section-number">C.3</span> Replay and masking
+assertions</h2>
+<p>Useful regression tests exercise the following observable contracts:
+a record appears only after completion; the current action’s successor
+is absent from its current context; replaying an old transition after
+new collection returns identical primary-method contexts; partial resets
+do not affect other lanes; terminal observations are distinct from reset
+observations; and invalid NaN-padded records cannot alter a valid
+result. Empty memory must produce the same zero context after checkpoint
+restoration as at initialization. These tests protect causal timing and
+numerical behavior rather than a particular private tensor layout.</p>
+<p>For the optional online encoder variant, raw snapshot records are
+re-encoded under the declared current or target encoder, and cached
+embeddings carry a version. Optimizer ownership is explicit: the same
+parameter cannot be updated independently by both actor and critic
+optimizers. The baseline target-network convention must extend
+consistently to any trainable context pathway used in value targets.</p>
+<h2 data-number="9.4" id="frozen-weight-and-transfer-reporting"><span class="header-section-number">C.4</span> Frozen-weight and transfer
+reporting</h2>
+<p>For each fixed-parameter run, log a checksum of model weights before
+and after evaluation, the reset/retention policy, attempt identifier,
+condition identifier used only for analysis, selected record provenance,
+and retrieval latency. Report attempt-wise success and elapsed
+interaction cost for every arm. A target bank grows only from its own
+completed interactions. A source bank is frozen before target
+evaluation, and its provenance cannot include held-out target outcomes.
+Related-object, new-condition, and new-task transfer are separate
+claims.</p>
+<p>Two available GPUs can support paired runs of baseline and one
+candidate without changing the experiment definition. Hardware
+assignment is rotated or recorded to expose throughput asymmetries. A
+stopped or failed run is retained in the accounting, and additional
+tuning consumes the same declared budget across methods. Human
+corrections, if introduced in a later real-robot study, are reported as
+control seconds and intervention events alongside success, not merely as
+an unspecified number of demonstrations.</p>
+<h1 data-number="10" id="app:provenance"><span class="header-section-number">D</span> Reproducibility and Document
+Provenance</h1>
+<p>This manuscript was checked against the development state on October
+3, 2026. The local code revision was <code>f2d1cf64</code>; the separate
+diagnostic revision was <code>abb43823</code>. The recorded upstream
+RLinf main revision was <code>c70606f08cdc</code>. Upstream status does
+not certify the local experiment, and upstream changes are evaluated
+separately rather than merged into an ongoing comparison. The public
+companion bundle contains the evidence manifest, bibliography,
+experiment matrix, vector figures, and editable manuscript source at</p>
+<div class="center">
+<p><a class="uri" href="https://nkd-lkz.github.io/physical-self-evolution/">https://nkd-lkz.github.io/physical-self-evolution/</a></p>
+</div>
+<p>The source hashes refer to private experiment artifacts whose
+infrastructure paths have been removed. Public aggregate measurements
+allow the tables and diagnostic figure to be reconstructed, but do not
+provide full raw-data reproducibility. The 594 recorded synthetic
+method–condition–seed evaluations across older and newer diagnostics
+reuse paired random streams; the latest guarded subset has 324 records.
+They are neither independent robot trials nor measurements of
+manipulation success and are not pooled with the physical-simulation
+response table.</p>
+<p>Version 2 follows the single-column research-paper organization
+exemplified by the arXiv versions of eRLT and SmoothRL: a compact
+abstract and introduction, related work, formulation, method,
+experiments, conclusion, references, and implementation appendices. This
+is an independently typeset working manuscript, not an arXiv posting or
+a conference-formatted submission. The earlier research-plan bundle
+remains archived. The substantive changes include formal execution
+semantics, explicit algorithm and loss definitions, separation of
+measured diagnostics from pending control results, and a reproducible
+LaTeX build.</p>
+
+<section class="footnotes footnotes-end-of-document" id="footnotes" role="doc-endnotes">
+<hr/>
+<ol>
+<li id="fn1"><p>Version 2, October 3, 2026. The interaction-memory
+method is a proposal. Reported measurements are development diagnostics
+of existing components; controlled online-RL and transfer evaluations
+are pending. Author information will be added before submission.<a class="footnote-back" href="#fnref1" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+</body>
+</html>

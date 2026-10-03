@@ -1,0 +1,210 @@
+\begin{thebibliography}{26}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Xu et~al.(2026)Xu, Springenberg, Equi, Amin, Esmail, Levine, and
+  Ke]{rlt}
+Charles Xu, Jost~Tobias Springenberg, Michael Equi, Ali Amin, Adnan Esmail,
+  Sergey Levine, and Liyiming Ke.
+\newblock Rl token: Bootstrapping online rl with vision-language-action models,
+  2026.
+\newblock URL \url{https://arxiv.org/abs/2604.23073}.
+
+\bibitem[Huang et~al.(2026)Huang, Liu, Gao, Tang, Cen, Dan, Wang, Li, Wang, and
+  Zhang]{erlt}
+Dehao Huang, Jianbang Liu, Jianpan Gao, Chao Tang, Zilang Cen, Zedong Dan,
+  Jiaheng Wang, Tingguang Li, Yue Wang, and Hong Zhang.
+\newblock erlt: Efficient vla reinforcement learning via action-relevant token
+  routing, 2026.
+\newblock URL \url{https://arxiv.org/abs/2610.00913}.
+
+\bibitem[Chen et~al.(2026)Chen, Ding, Huang, Li, Wang, He, Li, Sun, Liu, Wu,
+  and Cao]{zeva}
+Fu~Chen, Xin Ding, Bingjia Huang, Xiangyu Li, Mingju Wang, Jiawei He, Kun Li,
+  Wei Sun, Yunxin Liu, Hao Wu, and Ting Cao.
+\newblock Zeva: In-context causal learning for generalizable embodied
+  manipulation, 2026.
+\newblock URL \url{https://arxiv.org/abs/2608.30880}.
+
+\bibitem[Yu et~al.(2017)Yu, Tan, Liu, and Turk]{uposi}
+Wenhao Yu, Jie Tan, C.~Karen Liu, and Greg Turk.
+\newblock Preparing for the unknown: Learning a universal policy with online
+  system identification, 2017.
+\newblock URL \url{https://arxiv.org/abs/1702.02453}.
+
+\bibitem[Kumar et~al.(2021)Kumar, Fu, Pathak, and Malik]{rma}
+Ashish Kumar, Zipeng Fu, Deepak Pathak, and Jitendra Malik.
+\newblock Rma: Rapid motor adaptation for legged robots, 2021.
+\newblock URL \url{https://arxiv.org/abs/2107.04034}.
+
+\bibitem[Rakelly et~al.(2019)Rakelly, Zhou, Quillen, Finn, and Levine]{pearl}
+Kate Rakelly, Aurick Zhou, Deirdre Quillen, Chelsea Finn, and Sergey Levine.
+\newblock Efficient off-policy meta-reinforcement learning via probabilistic
+  context variables, 2019.
+\newblock URL \url{https://arxiv.org/abs/1903.08254}.
+
+\bibitem[Black et~al.(2024)Black, Brown, Driess, Esmail, Equi, Finn, Fusai,
+  Groom, Hausman, Ichter, Jakubczak, Jones, Ke, Levine, Li-Bell, Mothukuri,
+  Nair, Pertsch, Shi, Tanner, Vuong, Walling, Wang, and Zhilinsky]{pi0}
+Kevin Black, Noah Brown, Danny Driess, Adnan Esmail, Michael Equi, Chelsea
+  Finn, Niccolo Fusai, Lachy Groom, Karol Hausman, Brian Ichter, Szymon
+  Jakubczak, Tim Jones, Liyiming Ke, Sergey Levine, Adrian Li-Bell, Mohith
+  Mothukuri, Suraj Nair, Karl Pertsch, Lucy~Xiaoyang Shi, James Tanner, Quan
+  Vuong, Anna Walling, Haohuan Wang, and Ury Zhilinsky.
+\newblock $\pi_0$: A vision-language-action flow model for general robot
+  control, 2024.
+\newblock URL \url{https://arxiv.org/abs/2410.24164}.
+
+\bibitem[Intelligence et~al.(2025)Intelligence, Black, Brown, Darpinian,
+  Dhabalia, Driess, Esmail, Equi, Finn, Fusai, Galliker, Ghosh, Groom, Hausman,
+  Ichter, Jakubczak, Jones, Ke, LeBlanc, Levine, Li-Bell, Mothukuri, Nair,
+  Pertsch, Ren, Shi, Smith, Springenberg, Stachowicz, Tanner, Vuong, Walke,
+  Walling, Wang, Yu, and Zhilinsky]{pi05}
+Physical Intelligence, Kevin Black, Noah Brown, James Darpinian, Karan
+  Dhabalia, Danny Driess, Adnan Esmail, Michael Equi, Chelsea Finn, Niccolo
+  Fusai, Manuel~Y. Galliker, Dibya Ghosh, Lachy Groom, Karol Hausman, Brian
+  Ichter, Szymon Jakubczak, Tim Jones, Liyiming Ke, Devin LeBlanc, Sergey
+  Levine, Adrian Li-Bell, Mohith Mothukuri, Suraj Nair, Karl Pertsch, Allen~Z.
+  Ren, Lucy~Xiaoyang Shi, Laura Smith, Jost~Tobias Springenberg, Kyle
+  Stachowicz, James Tanner, Quan Vuong, Homer Walke, Anna Walling, Haohuan
+  Wang, Lili Yu, and Ury Zhilinsky.
+\newblock $\pi_{0.5}$: a vision-language-action model with open-world
+  generalization, 2025.
+\newblock URL \url{https://arxiv.org/abs/2504.16054}.
+
+\bibitem[Wagenmaker et~al.(2025)Wagenmaker, Nakamoto, Zhang, Park, Yagoub,
+  Nagabandi, Gupta, and Levine]{dsrl}
+Andrew Wagenmaker, Mitsuhiko Nakamoto, Yunchu Zhang, Seohong Park, Waleed
+  Yagoub, Anusha Nagabandi, Abhishek Gupta, and Sergey Levine.
+\newblock Steering your diffusion policy with latent space reinforcement
+  learning, 2025.
+\newblock URL \url{https://arxiv.org/abs/2506.15799}.
+
+\bibitem[Chen et~al.(2025)Chen, Tian, Liu, Zhou, Li, and Zhao]{conrft}
+Yuhui Chen, Shuai Tian, Shugao Liu, Yingting Zhou, Haoran Li, and Dongbin Zhao.
+\newblock Conrft: A reinforced fine-tuning method for vla models via
+  consistency policy, 2025.
+\newblock URL \url{https://arxiv.org/abs/2502.05450}.
+
+\bibitem[Luo et~al.(2024)Luo, Xu, Wu, and Levine]{hilserl}
+Jianlan Luo, Charles Xu, Jeffrey Wu, and Sergey Levine.
+\newblock Precise and dexterous robotic manipulation via human-in-the-loop
+  reinforcement learning, 2024.
+\newblock URL \url{https://arxiv.org/abs/2410.21845}.
+
+\bibitem[Gao et~al.(2026)Gao, Nong, Huang, and Wang]{smoothrl}
+Guang Gao, Yuxuan Nong, Baifu Huang, and Jianan Wang.
+\newblock Smoothrl: Online reinforcement learning during asynchronous
+  execution, 2026.
+\newblock URL \url{https://arxiv.org/abs/2608.29768}.
+
+\bibitem[Shi et~al.(2025)Shi, Xie, Liu, Sun, Liu, Wang, Zhou, Fan, Zhang, and
+  Huang]{memoryvla}
+Hao Shi, Bin Xie, Yingfei Liu, Lin Sun, Fengrong Liu, Tiancai Wang, Erjin Zhou,
+  Haoqiang Fan, Xiangyu Zhang, and Gao Huang.
+\newblock Memoryvla: Perceptual-cognitive memory in vision-language-action
+  models for robotic manipulation, 2025.
+\newblock URL \url{https://arxiv.org/abs/2508.19236}.
+
+\bibitem[Dai et~al.(2026)Dai, Fu, Lee, Liu, Zhang, Yang, Finn, Fazeli, and
+  Chai]{robomme}
+Yinpei Dai, Hongze Fu, Jayjun Lee, Yuejiang Liu, Haoran Zhang, Jianing Yang,
+  Chelsea Finn, Nima Fazeli, and Joyce Chai.
+\newblock Robomme: Benchmarking and understanding memory for robotic generalist
+  policies, 2026.
+\newblock URL \url{https://arxiv.org/abs/2603.04639}.
+
+\bibitem[Zintgraf et~al.(2019)Zintgraf, Shiarlis, Igl, Schulze, Gal, Hofmann,
+  and Whiteson]{varibad}
+Luisa Zintgraf, Kyriacos Shiarlis, Maximilian Igl, Sebastian Schulze, Yarin
+  Gal, Katja Hofmann, and Shimon Whiteson.
+\newblock Varibad: A very good method for bayes-adaptive deep rl via
+  meta-learning, 2019.
+\newblock URL \url{https://arxiv.org/abs/1910.08348}.
+
+\bibitem[Duan et~al.(2016)Duan, Schulman, Chen, Bartlett, Sutskever, and
+  Abbeel]{rl2}
+Yan Duan, John Schulman, Xi~Chen, Peter~L. Bartlett, Ilya Sutskever, and Pieter
+  Abbeel.
+\newblock Rl$^2$: Fast reinforcement learning via slow reinforcement learning,
+  2016.
+\newblock URL \url{https://arxiv.org/abs/1611.02779}.
+
+\bibitem[Schwarzer et~al.(2020)Schwarzer, Anand, Goel, Hjelm, Courville, and
+  Bachman]{spr}
+Max Schwarzer, Ankesh Anand, Rishab Goel, R~Devon Hjelm, Aaron Courville, and
+  Philip Bachman.
+\newblock Data-efficient reinforcement learning with self-predictive
+  representations, 2020.
+\newblock URL \url{https://arxiv.org/abs/2007.05929}.
+
+\bibitem[Zheng et~al.(2025)Zheng, Wang, Reed, Bjorck, Fang, Hu, Jang, Kundalia,
+  Lin, Magne, Narayan, Tan, Wang, Wang, Xiang, Xu, Ye, Kautz, Huang, Zhu, and
+  Fan]{flare}
+Ruijie Zheng, Jing Wang, Scott Reed, Johan Bjorck, Yu~Fang, Fengyuan Hu, Joel
+  Jang, Kaushil Kundalia, Zongyu Lin, Loic Magne, Avnish Narayan, You~Liang
+  Tan, Guanzhi Wang, Qi~Wang, Jiannan Xiang, Yinzhen Xu, Seonghyeon Ye, Jan
+  Kautz, Furong Huang, Yuke Zhu, and Linxi Fan.
+\newblock Flare: Robot learning with implicit world modeling, 2025.
+\newblock URL \url{https://arxiv.org/abs/2505.15659}.
+
+\bibitem[Hu et~al.(2026)Hu, Zhai, Zhao, and Liang]{imagine}
+Kejia Hu, Wentong Zhai, Bo~Zhao, and Shuai Liang.
+\newblock Imagine-rl: Residual-confidence-guided cross-attention for
+  world-model-augmented vla reinforcement learning, 2026.
+\newblock URL \url{https://arxiv.org/abs/2609.24033}.
+
+\bibitem[Hansen et~al.(2023)Hansen, Su, and Wang]{tdmpc2}
+Nicklas Hansen, Hao Su, and Xiaolong Wang.
+\newblock Td-mpc2: Scalable, robust world models for continuous control, 2023.
+\newblock URL \url{https://arxiv.org/abs/2310.16828}.
+
+\bibitem[Andrychowicz et~al.(2017)Andrychowicz, Wolski, Ray, Schneider, Fong,
+  Welinder, McGrew, Tobin, Abbeel, and Zaremba]{her}
+Marcin Andrychowicz, Filip Wolski, Alex Ray, Jonas Schneider, Rachel Fong,
+  Peter Welinder, Bob McGrew, Josh Tobin, Pieter Abbeel, and Wojciech Zaremba.
+\newblock Hindsight experience replay, 2017.
+\newblock URL \url{https://arxiv.org/abs/1707.01495}.
+
+\bibitem[Fujimoto et~al.(2018)Fujimoto, van Hoof, and Meger]{td3}
+Scott Fujimoto, Herke van Hoof, and David Meger.
+\newblock Addressing function approximation error in actor-critic methods,
+  2018.
+\newblock URL \url{https://arxiv.org/abs/1802.09477}.
+
+\bibitem[Haarnoja et~al.(2018)Haarnoja, Zhou, Abbeel, and Levine]{sac}
+Tuomas Haarnoja, Aurick Zhou, Pieter Abbeel, and Sergey Levine.
+\newblock Soft actor-critic: Off-policy maximum entropy deep reinforcement
+  learning with a stochastic actor, 2018.
+\newblock URL \url{https://arxiv.org/abs/1801.01290}.
+
+\bibitem[Tao et~al.(2024)Tao, Xiang, Shukla, Qin, Hinrichsen, Yuan, Bao, Lin,
+  Liu, Chan, Gao, Li, Mu, Xiao, Gurha, Rajesh, Choi, Chen, Huang, Calandra,
+  Chen, Luo, and Su]{maniskill}
+Stone Tao, Fanbo Xiang, Arth Shukla, Yuzhe Qin, Xander Hinrichsen, Xiaodi Yuan,
+  Chen Bao, Xinsong Lin, Yulin Liu, Tse-kai Chan, Yuan Gao, Xuanlin Li,
+  Tongzhou Mu, Nan Xiao, Arnav Gurha, Viswesh~Nagaswamy Rajesh, Yong~Woo Choi,
+  Yen-Ru Chen, Zhiao Huang, Roberto Calandra, Rui Chen, Shan Luo, and Hao Su.
+\newblock Maniskill3: Gpu parallelized robotics simulation and rendering for
+  generalizable embodied ai, 2024.
+\newblock URL \url{https://arxiv.org/abs/2410.00425}.
+
+\bibitem[Liu et~al.(2023)Liu, Zhu, Gao, Feng, Liu, Zhu, and Stone]{libero}
+Bo~Liu, Yifeng Zhu, Chongkai Gao, Yihao Feng, Qiang Liu, Yuke Zhu, and Peter
+  Stone.
+\newblock Libero: Benchmarking knowledge transfer for lifelong robot learning,
+  2023.
+\newblock URL \url{https://arxiv.org/abs/2306.03310}.
+
+\bibitem[Agarwal et~al.(2021)Agarwal, Schwarzer, Castro, Courville, and
+  Bellemare]{rliable}
+Rishabh Agarwal, Max Schwarzer, Pablo~Samuel Castro, Aaron Courville, and
+  Marc~G. Bellemare.
+\newblock Deep reinforcement learning at the edge of the statistical precipice,
+  2021.
+\newblock URL \url{https://arxiv.org/abs/2108.13264}.
+
+\end{thebibliography}

@@ -9,7 +9,7 @@
       "待精读": 95,
       "已阅读/已有专题笔记": 16
     },
-    "progress_entries": 53,
+    "progress_entries": 54,
     "progress_days": 14
   },
   "documents": [
@@ -218,7 +218,7 @@
       ],
       "status": "已有项目笔记",
       "source": "",
-      "search": "2026-10-03 · 交互记忆论文初稿与仿真 baseline 验收 本次整理 Zeva 启发的交互记忆证据、发布英文科研初稿与中文执行指南，并把下一步收敛到可复现的 RLT 仿真 baseline。完成的是已有实验资料复核、论文写作、源码调研与只读预检，没有新增 GPU 训练、独立闭环评测或真机结果。 论文与可编辑材料 同期文献与方案更新 当前科研主线 已有实验与解释边界 下一步先验收 baseline 官方 RLinf 跟踪 "
+      "search": "2026-10-03 · 交互记忆论文初稿与仿真 baseline 验收 本次整理 Zeva 启发的交互记忆证据、发布英文科研初稿与中文执行指南，并把下一步收敛到可复现的 RLT 仿真 baseline。完成的是已有实验资料复核、论文写作、源码调研与只读预检，没有新增 GPU 训练、独立闭环评测或真机结果。 论文与可编辑材料 按 eRLT／SmoothRL 重写 v2 同期文献与方案更新 当前科研主线 已有实验与解释边界 下一步先验收 baseline 官方 RLinf 跟踪 "
     },
     {
       "id": "doc:research/physical-rsi-source-intake-2026-09-30.md",
@@ -3092,6 +3092,12 @@
     }
   ],
   "progress": [
+    {
+      "date": "2026-10-03",
+      "title": "IM-RLT 论文 v2 完成结构与技术重写",
+      "path": "research/progress-2026-10-03.md",
+      "summary": "对照 eRLT、SmoothRL 原文的单栏论文组织方式，重写为 16 页 LaTeX 科研稿：Introduction、Related Work、Preliminaries、Method、Experiments、Conclusion 与附录；2 幅图、7 张表、26 篇文献。校对已测 MSE、执行前缀与 critic action 的区别、历史快照和冻结参数评估。旧版归档；不是新训练或新控制结果。"
+    },
     {
       "date": "2026-10-03",
       "title": "交互记忆英文论文初稿与中文实验指南完成",

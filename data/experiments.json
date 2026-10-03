@@ -1,6 +1,12 @@
 [
   {
     "date": "2026-10-03",
+    "title": "IM-RLT 论文 v2 完成结构与技术重写",
+    "path": "research/progress-2026-10-03.md",
+    "summary": "对照 eRLT、SmoothRL 原文的单栏论文组织方式，重写为 16 页 LaTeX 科研稿：Introduction、Related Work、Preliminaries、Method、Experiments、Conclusion 与附录；2 幅图、7 张表、26 篇文献。校对已测 MSE、执行前缀与 critic action 的区别、历史快照和冻结参数评估。旧版归档；不是新训练或新控制结果。"
+  },
+  {
+    "date": "2026-10-03",
     "title": "交互记忆英文论文初稿与中文实验指南完成",
     "path": "research/progress-2026-10-03.md",
     "summary": "整理问题定义、25 篇文献、拟议算法、框架图、正式实验矩阵与现有开发证据。出版副本同步“先验收 baseline”优先级；不是已完成实验的投稿稿，无新增 GPU 训练或控制收益。"

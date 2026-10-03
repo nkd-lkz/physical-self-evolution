@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="zh"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>RLT 交互记忆实验指南</title><link href="document.css" rel="stylesheet"/></head><body class="zh"><nav><a href="../../../index.html">科研工作台</a> · <a href="index.html">Bundle home</a> · <a href="paper_en.pdf">English PDF</a> · <a href="experiment_guide_zh.pdf">中文指南 PDF</a></nav><h1 id="rlt-交互记忆研究的实验执行指南">RLT
 交互记忆研究的实验执行指南</h1>
 <p>这份指南把英文论文中的假设转换成当前 Zeva
@@ -7,7 +8,7 @@
 这是研究执行计划；下文明确区分当前可执行命令、需要开发的能力与已观察结果。本次只编写和验证材料，没有启动新训练。两组
 baseline／attention 只读预检均通过；它们检查路径和配置，不代表本次运行过
 GPU rollout。</p>
-<aside class="publication-note"><p><strong>10 月 3 日发布修订：</strong>先验收仿真 baseline，再开发 Stage 1B 与新记忆模块。AlphaBrain／LIBERO 目前仅完成源码和公开结果核查，尚未在本项目运行。下面第 4、11、13 节已按这一先后关系调整，方法和现有开发数据的证据边界不变。</p><p><a href="../../../reader.html?path=research/literature/rlt-simulation-baselines-2026-10-03.md">查看仓库对比与验收条件</a></p></aside><h2 id="先把研究主张定准确">1. 先把研究主张定准确</h2>
+<aside class="publication-note"><p><strong>10 月 3 日发布修订：</strong>先验收仿真 baseline，再开发 Stage 1B 与新记忆模块。AlphaBrain／LIBERO 目前仅完成源码和公开结果核查，尚未在本项目运行。下面第 4、11、13 节已按这一先后关系调整，方法和现有开发数据的证据边界不变。</p><p><a href="../../../reader.html?path=research/literature/rlt-simulation-baselines-2026-10-03.md">查看仓库对比与验收条件</a></p></aside><aside class="publication-note" id="manuscript-v2-note"><p><strong>英文论文 v2：</strong><a href="paper_en.pdf">16 页 LaTeX 论文</a>已按 eRLT／SmoothRL 的单栏研究论文结构重写。已测诊断放在正文第 5.1–5.2 节，待测控制及迁移协议放在第 5.3–5.6 节，代码现状与公式放在附录。指南中的执行顺序保持：baseline 验收 → 小规模对照 → Stage 1B → 冻结参数适应 → 留出迁移。</p><p>v2 进一步区分：critic 沿用 baseline 的 committed action 定义；交互记忆记录真实执行前缀。不要把执行后才知道的时长直接增加为当前 critic 的输入。初版检索采用固定相似度，learned retrieval 留作消融；没有新增实验结果。</p></aside><h2 id="先把研究主张定准确">1. 先把研究主张定准确</h2>
 <p>建议论文主线为：</p>
 <blockquote>
 <p>冻结 VLA

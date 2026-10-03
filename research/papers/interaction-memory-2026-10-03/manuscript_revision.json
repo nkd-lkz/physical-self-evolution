@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "date": "2026-10-03",
+  "title": "IM-RLT: Learning from Completed Interactions for Lightweight VLA Reinforcement Learning",
+  "status": "working manuscript; confirmatory control and transfer results pending",
+  "pages": 16,
+  "figures": 2,
+  "tables": 7,
+  "references": 26,
+  "pdf_build": "Tectonic 0.17.0; LaTeX article; independent single-column style",
+  "html_build": "same LaTeX source via Pandoc, MathML, and compiled label mapping",
+  "format_references": [
+    "https://arxiv.org/html/2610.00913v1",
+    "https://arxiv.org/html/2608.29768v1"
+  ],
+  "new_gpu_experiments": 0,
+  "raw_evidence_modified": false,
+  "previous_version": "archive/research_bundle_v1.zip",
+  "primary_configuration": "Stage 1B consequence pretraining; frozen context modules during initial Stage 2",
+  "validation": [
+    "LaTeX compile",
+    "citation and cross-reference resolution",
+    "aggregate MSE arithmetic",
+    "figure and PDF visual inspection"
+  ]
+}

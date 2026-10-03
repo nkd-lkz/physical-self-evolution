@@ -1,1335 +1,453 @@
-% Options for packages loaded elsewhere
-\PassOptionsToPackage{unicode}{hyperref}
-\PassOptionsToPackage{hyphens}{url}
-\documentclass[
-  10pt,
-]{article}
-\usepackage{xcolor}
-\usepackage[margin=0.8in]{geometry}
-\usepackage{amsmath,amssymb}
-\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
-\usepackage{iftex}
-\ifPDFTeX
-  \usepackage[T1]{fontenc}
-  \usepackage[utf8]{inputenc}
-  \usepackage{textcomp} % provide euro and other symbols
-\else % if luatex or xetex
-  \usepackage{unicode-math} % this also loads fontspec
-  \defaultfontfeatures{Scale=MatchLowercase}
-  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
-\fi
-\usepackage{lmodern}
-\ifPDFTeX\else
-  % xetex/luatex font selection
-\fi
-% Use upquote if available, for straight quotes in verbatim environments
-\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-\IfFileExists{microtype.sty}{% use microtype if available
-  \usepackage[]{microtype}
-  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
-}{}
-\makeatletter
-\@ifundefined{KOMAClassName}{% if non-KOMA class
-  \IfFileExists{parskip.sty}{%
-    \usepackage{parskip}
-  }{% else
-    \setlength{\parindent}{0pt}
-    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
-}{% if KOMA class
-  \KOMAoptions{parskip=half}}
-\makeatother
-\usepackage{longtable,booktabs,array}
-\newcounter{none} % for unnumbered tables
-\usepackage{calc} % for calculating minipage widths
-% Correct order of tables after \paragraph or \subparagraph
-\usepackage{etoolbox}
-\makeatletter
-\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
-\makeatother
-% Allow footnotes in longtable head/foot
-\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
-\makesavenoteenv{longtable}
-\usepackage{graphicx}
-\makeatletter
-\newsavebox\pandoc@box
-\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
-  \sbox\pandoc@box{#1}%
-  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
-  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
-  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
-  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
-  \else\usebox{\pandoc@box}%
-  \fi%
-}
-% Set default figure placement to htbp
-\def\fps@figure{htbp}
-\makeatother
-% definitions for citeproc citations
-\NewDocumentCommand\citeproctext{}{}
-\NewDocumentCommand\citeproc{mm}{%
-  \begingroup\def\citeproctext{#2}\cite{#1}\endgroup}
-\makeatletter
- % allow citations to break across lines
- \let\@cite@ofmt\@firstofone
- % avoid brackets around text for \cite:
- \def\@biblabel#1{}
- \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
-\makeatother
-\newlength{\cslhangindent}
-\setlength{\cslhangindent}{1.5em}
-\newlength{\csllabelwidth}
-\setlength{\csllabelwidth}{3em}
-\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
- {\begin{list}{}{%
-  \setlength{\itemindent}{0pt}
-  \setlength{\leftmargin}{0pt}
-  \setlength{\parsep}{0pt}
-  % turn on hanging indent if param 1 is 1
-  \ifodd #1
-   \setlength{\leftmargin}{\cslhangindent}
-   \setlength{\itemindent}{-1\cslhangindent}
-  \fi
-  % set entry spacing
-  \setlength{\itemsep}{#2\baselineskip}}}
- {\end{list}}
-\usepackage{calc}
-\newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
-\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
-\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
-\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
-\setlength{\emergencystretch}{3em} % prevent overfull lines
-\providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-\usepackage{bookmark}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\urlstyle{same}
-\hypersetup{
-  hidelinks,
-  pdfcreator={LaTeX via pandoc}}
-
-\author{}
+\documentclass[10pt,letterpaper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{newtxtext,newtxmath}
+\usepackage{amsmath,graphicx,booktabs,tabularx,array}
+\usepackage{algorithm,algpseudocode}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{enumitem,microtype,xcolor}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={IM-RLT: Learning from Completed Interactions for Lightweight VLA Reinforcement Learning},pdfauthor={Working manuscript}}
+\setlength{\parindent}{1em}
+\setlength{\parskip}{2pt}
+\setlength{\textfloatsep}{13pt plus 2pt minus 2pt}
+\setlength{\floatsep}{10pt plus 2pt minus 2pt}
+\setlist[itemize]{leftmargin=1.5em,itemsep=2pt,topsep=3pt}
+\renewcommand{\arraystretch}{1.17}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcommand{\sg}{\operatorname{sg}}
+\newcommand{\clip}{\operatorname{clip}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\E}{\mathbb{E}}
+\title{\textbf{IM-RLT: Learning from Completed Interactions\protect\\ for Lightweight VLA Reinforcement Learning}}
+\author{Working manuscript\thanks{Version 2, October 3, 2026. The interaction-memory method is a proposal. Reported measurements are development diagnostics of existing components; controlled online-RL and transfer evaluations are pending. Author information will be added before submission.}}
 \date{}
-
 \begin{document}
+\maketitle
+\begin{abstract}
+Lightweight reinforcement learning can adapt a frozen vision-language-action (VLA) model through a compact state representation and a small actor--critic. However, a representation of the current observation need not reveal how commands will be realized under the current execution conditions. We study whether completed command--response records can supply this missing information. We propose Interaction Memory for RL Token (IM-RLT), which preserves the frozen RLT representation and augments the controller with a bounded context of recent and retrieved interactions. A lightweight encoder and reader are trained to predict a later interaction's consequences from strictly earlier records; their context then conditions the actor and critic. The initial online configuration freezes these modules to separate representation quality from additional optimization. A development study using paired simulated executions with different controller stiffnesses motivates this design: a fixed command--response estimator achieves a joint-response mean squared error of $7.39\times10^{-5}$, compared with $1.81\times10^{-4}$ for the existing attention reader. This result identifies a gap in extracting useful experience, rather than a demonstrated control advantage. We specify matched-budget control comparisons, frozen-parameter memory interventions, condition-change tests, and source-memory transfer evaluations. These experiments distinguish learning through replay from adaptation through retained evidence and make improvements in success, convergence, and interaction cost independently testable.
+\end{abstract}
 
-\section{Interaction Memory for Reinforcement Learning with Frozen
-Vision-Language-Action
-Models}\label{interaction-memory-for-reinforcement-learning-with-frozen-vision-language-action-models}
+\section{Introduction}
+Pretrained vision-language-action models provide a useful behavioral starting point for robot manipulation, but adapting that behavior to a particular execution setting still requires experience. RL Token (RLT) compresses VLA features and learns a small controller around a frozen backbone, reducing the cost of online reinforcement learning~\citep{rlt}. This design makes the information supplied to the actor and critic especially consequential: the lightweight controller must choose corrections and estimate their value without adapting the entire VLA.
 
-\textbf{Research manuscript, 3 October 2026.} Proposed method and
-evaluation protocol; the reported pilot measurements concern the
-existing development branch, not a completed evaluation of the proposed
-method. Author information is intentionally omitted. This is an extended
-working draft, not a submission-formatted or experimentally complete
-paper.
+Current visual and proprioceptive observations do not necessarily determine the response to a command. Similar robot configurations can occur with different actuator responses, object friction, or contact constraints. A completed action can expose some of these differences: the same commanded motion may produce substantial displacement, little displacement, or a delayed response. Repeatedly relearning such differences through weight updates is potentially expensive. Retaining the corresponding interaction evidence could instead help the next decision, provided that the evidence is informative, relevant, and available at that decision time.
 
-\begin{quote}
-\textbf{Publication update.} Baseline validation update, 3 October 2026. Before implementing the proposed Stage 1B, validate a reproducible simulation baseline. AlphaBrain on LIBERO is a candidate under source review, not an independently reproduced result. Its released Qwen RLT\_a checkpoint is an evaluation starting point; it differs from the full-token RLT track. Existing ManiSkill pilot measurements below retain their original scope. No new GPU training or control benefit is reported in this publication update.
-\end{quote}
+This possibility raises a narrower question than whether adding memory produces a self-improving robot: \emph{can a compact representation of completed interactions improve the sample efficiency of an otherwise unchanged RLT controller?} Replay already allows reinforcement learning to improve parameters from successful and unsuccessful trials. Our additional hypothesis concerns the controller's input. A memory-conditioned policy can change its behavior when its evidence changes, even with every network weight frozen. Such context adaptation is distinct from continued training, and transferring a memory bank is distinct from transferring pretrained weights.
 
-\subsection{Abstract}\label{abstract}
+Existing approaches clarify the gap. eRLT improves the extraction of action-relevant features from the current VLA input through token and layer routing~\citep{erlt}. Zeva studies learning from embodied interactions through an interaction representation and in-context use of experience~\citep{zeva}. Historical system identification and context-based RL establish the broader principle of adaptation from state--action evidence~\citep{uposi,rma,pearl}. Consequently, the contribution sought here is not the generic introduction of a memory token or a claim to discover physical laws. It is a specific way to train and use an execution context within inexpensive VLA reinforcement learning, together with experiments that determine whether its additional machinery is justified.
 
-Lightweight reinforcement learning can adapt a frozen
-vision-language-action model through a compact state representation and
-a small actor--critic. However, a current observation need not reveal
-how the robot responds to commands under its present execution
-conditions. We study whether completed interactions can supply this
-missing information. We propose a bounded interaction memory whose
-encoder and reader are trained to predict the consequences of subsequent
-actions from strictly preceding experience. The resulting context
-supplements the original RL token and conditions a small actor and
-critic, while the visual-language-action backbone remains frozen during
-online learning. Recent ordered records capture immediate execution
-history; a bounded archive supports retrieval across verified retries
-and, in a separate protocol, transfer from source interactions. The
-design separates adaptation through memory updates from learning through
-parameter updates. Existing simulation diagnostics show that
-command--response history contains predictive information, but also
-expose a weakness: a fixed response estimator substantially outperforms
-the current attention reader. These observations motivate
-consequence-supervised memory training without establishing a control
-benefit. We specify controlled experiments for online sample efficiency,
-frozen-parameter adaptation, stale-memory effects, visual relevance, and
-transfer. Closed-loop improvements and reduced human effort remain
-hypotheses to be tested.
+Our development results make reliable extraction the immediate obstacle. On cached simulated command--response trajectories, the existing neural memory reader is only marginally different from a no-history predictor, whereas a simple response estimator is substantially more accurate. A subsequent support-gated residual improves overall prediction error but does not establish manipulation success. These observations favor a focused design: train history to explain a \emph{later} response, retain the interpretable response estimator as a strong baseline, and measure control directly.
 
-\subsection{1. Introduction}\label{introduction}
+We therefore propose IM-RLT. Completed interactions are encoded into a bounded recent store and an archive. A reader combines records with the current state to produce a compact context. An auxiliary decoder supervises the context using observed future consequences during an offline interaction-pretraining stage. The first online experiment freezes the representation and trains the same small actor--critic used by the matched baseline. This choice tests whether the context contains useful information before introducing representation drift, adaptive retrieval, or changes to the action generator.
 
-This work investigates how a robot can use completed physical
-interactions to improve lightweight reinforcement learning around a
-frozen vision-language-action (VLA) model. A pretrained VLA supplies
-useful task and visual information, but two observations with similar
-appearance and joint configuration can precede different responses to
-the same command. A robot may encounter a different controller gain,
-delayed execution, an object that slips, or contact that blocks motion.
-Some of these differences become observable only after acting. The
-relevant question is whether the agent can retain that evidence and use
-it when choosing its next action.
+The manuscript makes three contributions at its present evidence level:
+\begin{itemize}
+\item A formulation that distinguishes parameter learning, context adaptation, and experience transfer in frozen-VLA RL.
+\item An interaction-memory design with consequence supervision, bounded storage, and explicit timing and replay semantics.
+\item Development measurements that motivate the design, and a controlled evaluation protocol for testing its effects on success, sample efficiency, stale-memory interference, and transfer. Confirmatory control results are not yet available.
+\end{itemize}
 
-RLT provides a suitable experimental starting point: a compact token
-connects a VLA to lightweight online actor--critic learning (Xu et al.
-2026). Its computational advantage makes controlled experiments feasible
-on modest hardware. Our local RLT implementation also exposes a
-reference action chunk and proprioception to the small controller. We
-preserve these inputs. We investigate an additional source of
-information: what actually happened when commands were executed. The
-objective is not to replace the visual token or fine-tune a large
-backbone online.
+\section{Related Work}
+\label{sec:related}
+\subsection{Lightweight reinforcement learning with pretrained action models}
+VLAs such as $\pi_0$ and $\pi_{0.5}$ learn broad visuomotor behavior from robot data~\citep{pi0,pi05}. Downstream RL can refine these behaviors through different trainable interfaces. RLT constructs a compact representation for a lightweight controller~\citep{rlt}; DSRL instead steers a pretrained diffusion policy through its latent sampling space~\citep{dsrl}. These interfaces change the action optimization problem and must not be treated as interchangeable baselines. ConRFT and human-in-the-loop RL also illustrate the importance of initialization, demonstration data, and corrective feedback~\citep{conrft,hilserl}. Our primary simulation protocol does not require live human correction, although shared demonstration data may initialize all methods.
 
-There are two distinct ways that experience can affect behavior.
-Replay-based reinforcement learning changes network parameters using
-past transitions. A context memory changes the information available to
-a decision, even when parameters remain fixed. These mechanisms need
-separate evaluation. Ordinary RL already uses unsuccessful transitions
-through reward and value learning; storing a failure is not a new
-algorithmic contribution. A memory mechanism is useful only if its
-contents change predictions or decisions in a beneficial and
-reproducible way.
+eRLT is the closest representation-level comparison: it initializes routing through expert-action prediction and refines the representation using critic feedback~\citep{erlt}. This motivates an action-supervised, current-input comparison that tests whether better present-state features remove the need for memory. SmoothRL addresses online RL during asynchronous execution and accounts for how generated chunks participate in execution~\citep{smoothrl}. Our core experiment uses synchronous execution; it borrows the discipline of tracking executed commands but does not reproduce an asynchronous RL algorithm. Both distinctions are necessary for attributing an improvement to interaction context.
 
-Our proposal is inspired by Zeva's use of completed interactions and
-deployment-time memory (Chen et al. 2026). We ask a narrower, testable
-question: \textbf{Can a representation learned to extract future-useful
-execution evidence improve an RLT controller under a fixed interaction
-and compute budget?} ``Future-useful'' has an operational definition.
-The memory encoder must help predict the effect of a later action from
-earlier records; reconstructing the effect already stored in the same
-record is insufficient evidence. This training criterion gives the
-memory a role beyond generic attention over a trajectory.
+\subsection{Interaction memory and adaptation from history}
+Zeva motivates extracting useful information from visual-action interactions and maintaining experience for later use~\citep{zeva}. MemoryVLA studies memory within a VLA architecture, while RoboMME evaluates memory-related capabilities of robotic policies~\citep{memoryvla,robomme}. Our context is an external input to a small RLT actor--critic, and our primary training signal concerns a later execution outcome. A matched interaction-encoder baseline is needed before attributing gains specifically to this supervision.
 
-The proposed contribution is a method and an evaluation of
-consequence-supervised context for frozen-VLA RL. A prediction loss plus
-concatenated memory is not sufficient novelty by itself; this draft does
-not establish that the proposed combination clears that bar. Its
-intended empirical contributions are (i) improved online learning at
-matched data cost, (ii) useful adaptation from retained evidence with
-parameters frozen, and (iii) selective reuse of source experience
-without systematic negative transfer. None is asserted as an established
-result in this draft. Context inference, response prediction, memory
-conditioning, and residual-based reliability have substantial
-precedents. The scientific contribution must therefore be demonstrated
-by the controlled combination, its failure analysis, and its benefits
-over strong history and representation baselines. If the result reduces
-to a standard Zeva-style encoder attached to RLT without an additional
-empirical finding, substantial novelty remains unresolved.
+History-based adaptation predates VLA memory. UP-OSI estimates execution conditions from online evidence; RMA learns an adaptation module from recent state--action history~\citep{uposi,rma}. PEARL, VariBAD, and RL$^2$ study adaptation through context or recurrent state~\citep{pearl,varibad,rl2}. These methods preclude novelty claims for conditioning a policy on interaction history alone. They motivate strong recent-history controls and a separate test of whether retrieving older records adds value beyond a recurrent estimator. A latent that predicts observed response also need not identify a unique physical parameter: actuator lag, contact, and commanded magnitude can produce similar effects.
 
-\subsection{2. Related Work}\label{related-work}
+\subsection{Consequence-supervised representations}
+Predicting future representations can improve the information retained by a learned state~\citep{spr}. FLARE connects robot policy learning with implicit world modeling~\citep{flare}; we draw on future-feature supervision rather than reproduce its complete joint architecture. Imagine-RL uses world-model information for VLA value learning~\citep{imagine}. IM-RLT initially predicts consequences only to train a context representation: its actor does not roll out candidate futures or invoke a planner. This separates it from predictive value augmentation and model-based planning such as TD-MPC2~\citep{tdmpc2}. Failure trajectories supply informative responses as well as low returns, but their use does not make them successful imitation targets. Hindsight goal relabeling is a separate mechanism~\citep{her} and is not required here.
 
-\subsubsection{2.1. Lightweight reinforcement learning around pretrained
-action
-models}\label{lightweight-reinforcement-learning-around-pretrained-action-models}
+\begin{table}[t]
+\centering\small
+\caption{Positioning of the proposed method. Entries identify the information and mechanism relevant to our comparison, not a ranking of the cited systems. ``Proposed'' does not denote a completed implementation.}
+\label{tab:position}
+\begin{tabularx}{\linewidth}{@{}p{0.15\linewidth}YY@{}}
+\toprule
+Approach & Relevant information or intervention & Comparison required for IM-RLT \\
+\midrule
+RLT / eRLT & Compact current features / action-relevant routing & Preserve action interface; strengthen current features \\
+SmoothRL & Execution-aware asynchronous RL & Keep execution schedule fixed in the core study \\
+Zeva / MemoryVLA & Interaction or perceptual history & Match evidence, reader capacity, and source data \\
+RMA / PEARL & Recent response or inferred context & Include a strong history-conditioned controller \\
+FLARE / Imagine-RL & Future-feature learning / predictive value information & Test consequence supervision without an archive \\
+IM-RLT (proposed) & Earlier interactions predicting later responses & Establish control and frozen-weight memory effects \\
+\bottomrule
+\end{tabularx}
+\end{table}
 
-VLA models such as pi0 and pi0.5 combine pretrained visual-language
-representations with action generation (Black et al. 2024; Intelligence
-et al. 2025). RLT studies compact representations for lightweight online
-RL (Xu et al. 2026). DSRL instead learns to steer a frozen diffusion
-policy through its sampling variables (Wagenmaker et al. 2025). ConRFT
-studies offline and online reinforced VLA fine-tuning using a
-consistency policy (Chen et al. 2025). These approaches differ in which
-parameters and action interfaces are optimized; published success
-numbers cannot be compared directly across their training data and
-control budgets.
+\section{Preliminaries and Problem Formulation}
+\label{sec:problem}
+\subsection{Frozen-VLA reinforcement learning}
+At decision index $t$, the robot observes images $I_t$, transformed proprioception $p_t$, and instruction $g$. A frozen VLA and its fixed Stage 1 representation provide an RL token $z_t$ and a reference action chunk $A_t^{\mathrm{ref}}$. Let $s_t=(z_t,p_t)$ denote the baseline state. A small actor proposes an action, and the baseline routing rule combines or selects it with the reference to obtain a committed command chunk $A_t$. The action representation, routing rule, action limits, reward, and update schedule are held fixed across comparisons. A noise-space controller and a joint-command controller therefore define separate experimental tracks.
 
-The recently released eRLT is a particularly close representation
-baseline. It selects action-relevant information across tokens and
-layers of a frozen VLA, initializes routing with expert-action
-prediction, and adapts routing through the critic (Huang et al. 2026).
-Our proposed information source is completed execution history.
-Current-observation routing and history-based condition inference are
-complementary hypotheses, but a stronger current-state representation
-could eliminate an apparent memory advantage. Accordingly, an eRLT-style
-representation comparison is required before claiming that memory
-addresses a limitation specific to frozen VLA features.
+The simulator executes up to $H$ low-level commands before the next decision. Let $\ell_t\leq H$ be the actual duration and $A_t^{\mathrm{exec}}=A_t[0:\ell_t]$ the valid executed prefix. The real successor $o_{t+1}^{-}$ is observed before any reset. For normal synchronous execution $\ell_t=H$; an episode termination can shorten the prefix. Decision index $t+1$ must not be confused with one low-level control tick. Raw joint positions $q_t$, when available, are recorded separately from $p_t$: VLA input transformations need not preserve physical units.
 
-\subsubsection{2.2. Memory and adaptation from
-interaction}\label{memory-and-adaptation-from-interaction}
+\subsection{Unobserved execution conditions}
+We model the environment as partially observed, with a physical state $x_t$ and execution condition $\theta_t$. Its transition distribution depends on the committed action and condition, $P(x_{t+1}\mid x_t,A_t,\theta_t)$. The condition can be stationary within an episode or change at a specified evaluation boundary. The deployed controller does not receive $\theta_t$. Current observations may constrain it, and past responses may provide additional evidence; neither source is assumed sufficient in advance.
 
-Zeva learns an interaction representation with action-conditioned
-pre-interaction and post-interaction effect prediction, then uses
-short-term and cross-attempt memory to condition action generation; its
-deployment procedure updates memory with neural parameters frozen (Chen
-et al. 2026). We borrow that interaction--storage--conditioning pattern.
-Our implementation conditions RLT's small actor and critic and
-explicitly separates online weight learning from frozen-parameter memory
-adaptation. Effect prediction and dual-timescale memory are inherited
-ideas, not new contributions here. A simplified reader inside RLT must
-be labeled a Zeva-inspired adaptation rather than a reproduction of the
-complete system.
+Define the completed-event history $\mathcal{H}_t=\{v_i:i<t\}$. A bounded memory operator selects $\M_t\subseteq\mathcal{H}_t$, and a reader produces $c_t=R_\psi(s_t,\M_t)$. The objective is to improve expected task return at a fixed interaction and optimization budget by conditioning the baseline controller on $c_t$. We operationalize this objective through success-rate learning curves and cost, not representation loss alone. The representation is useful only if its information changes decisions or value estimates in a way that improves those outcomes.
 
-MemoryVLA retrieves perceptual and cognitive information to condition
-manipulation (Shi et al. 2025). RoboMME provides a benchmark for memory
-in robotic generalist policies (Dai et al. 2026). These works make a
-generic ``adding memory improves manipulation'' claim inadequate. Our
-evaluation isolates executed commands and responses, distinguishes
-visual context from joint history, and tests transfer and interference
-under changes in execution conditions.
+\subsection{Three distinct forms of improvement}
+\emph{Parameter learning} updates weights through replay. \emph{Context adaptation} changes $c_t$ as observations accumulate with weights fixed. \emph{Experience transfer} introduces a source memory into a different, explicitly held-out target setting. The first is already part of RLT. The second requires a retain-versus-clear memory experiment with identical weights; the third additionally requires controls for transferred weights, source-data cost, and memory compatibility. Evidence for one does not imply either of the others. In this manuscript, ``physical interaction information'' means command-conditioned response evidence, not an identified universal law of mechanics.
 
-The broader adaptation literature already formalizes history-conditioned
-control. UP-OSI predicts dynamics parameters from recent states and
-actions (Yu et al. 2017); RMA learns rapid adaptation from recent
-experience (Kumar et al. 2021). PEARL infers context for off-policy
-meta-RL, VariBAD conditions behavior on inferred task uncertainty, and
-RL2 learns an adaptation procedure through recurrent state (Rakelly et
-al. 2019; Zintgraf et al. 2019; Duan et al. 2016). We do not claim the
-first physical context representation. Our setting differs through
-frozen VLA features, bounded explicit evidence, action-chunk execution,
-and the need to measure benefits under a small online budget.
+\section{Method}
+\label{sec:method}
+\subsection{Motivating observation and design overview}
+An existing development probe predicts ten-step joint displacement from the current state, command, and optional history. An attention reader yields an MSE of $1.8143\times10^{-4}$, while a fixed response estimator yields $7.3889\times10^{-5}$ on the same held-out development groups (Section~\ref{sec:results}). Thus, adding storage and attention did not by itself extract the useful response information. This motivates training the memory representation for a measurable future use, while preserving the fixed estimator as a control rather than replacing it by a larger network without evidence.
 
-\subsubsection{2.3. Predictive representations and failure
-reuse}\label{predictive-representations-and-failure-reuse}
+Figure~\ref{fig:framework} summarizes the proposed three-stage procedure. Stage 1 retains the baseline VLA/token training. Stage 1B learns an interaction encoder and reader from completed trajectories. Stage 2 supplies their context to the small controller while freezing both the VLA representation and, initially, the new context modules. At evaluation, the same weights can be tested with retained, cleared, or mismatched evidence.
 
-SPR learns representations using future latent prediction (Schwarzer et
-al. 2020). FLARE integrates future latent modeling with action
-generation (Zheng et al. 2025). Imagine-RL augments VLA reinforcement
-learning with a frozen world model and residual-confidence-guided critic
-fusion (Hu et al. 2026). TD-MPC2 uses learned latent dynamics for
-trajectory optimization (Hansen et al. 2023). We use prediction to train
-a representation of preceding interactions; the proposed actor does not
-query a predictor for each candidate action or perform model-based
-planning. A prediction-only sidecar is nevertheless a necessary control
-for separating memory from an auxiliary-loss benefit.
-
-Off-policy actor--critic methods already learn from unfavorable
-transitions (Haarnoja et al. 2018; Fujimoto et al. 2018). Hindsight
-Experience Replay additionally changes the goal interpretation of failed
-attempts (Andrychowicz et al. 2017). HIL-SERL demonstrates a
-human-in-the-loop learning system where demonstrations and corrections
-matter (Luo et al. 2024). Our failed interactions contribute to dynamics
-supervision and value learning, but are not automatically
-behavior-cloned. Simulation correction counts are proxies; human minutes
-saved must eventually be measured on physical hardware.
-
-\textbf{Table 1. Closest conceptual comparisons.} Entries describe the
-mechanisms relevant to this proposal, not exhaustive capabilities of
-each work.
-
-{\def\LTcaptype{none} % do not increment counter
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
-\toprule\noalign{}
-\begin{minipage}[b]{\linewidth}\raggedright
-Work
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Information central to the comparison
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Learned or updated component relevant here
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Required distinction
-\end{minipage} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-RLT & Current VLA representation & Compact representation, then small RL
-controller & Preserve baseline action and routing contract \\
-eRLT & Tokens and layers of current VLA input & Action-initialized,
-critic-refined routing & Test whether better current features remove the
-gain \\
-Zeva & Completed visual-action interactions & Interaction encoder;
-deployment memory & Separate context adaptation from RL weight
-updates \\
-MemoryVLA & Retrieved perceptual/cognitive history & Memory-conditioned
-action model & Compare with generic visual history \\
-RMA / UP-OSI & Recent state-action evidence & Adaptation or
-identification module & Include a strong recurrent history baseline \\
-FLARE / SPR & Future representations & Predictive representation
-learning & Include prediction without an archive \\
-Imagine-RL & Predicted futures and model residuals &
-World-model-augmented value estimation & Do not claim novelty for
-predictive critic confidence \\
-Proposed method & Earlier execution records useful for later
-consequences & Stage 1B context encoder; Stage 2 actor--critic &
-Establish benefit through memory interventions \\
-\end{longtable}
-}
-
-\subsection{3. Problem Formulation}\label{problem-formulation}
-
-We consider partially observed manipulation with visual observations,
-instructions, and proprioception. Let the hidden physical state be
-\texttt{x\_t}, and let \texttt{theta\_t} summarize execution conditions
-such as controller settings, friction, or delay. The transition law
-depends on both. \texttt{theta\_t} is a modeling device; its true value
-is not provided to the proposed controller and need not be identifiable.
-We initially study stationary conditions within an attempt and
-subsequently introduce controlled changes.
-
-The frozen Stage 1 model produces an RL token \texttt{z\_t}, transformed
-proprioception \texttt{p\_t}, and a reference action chunk
-\texttt{A\_ref,t}. Raw joint positions \texttt{q\_t} are separately
-available to the interaction collector. Their units differ from the
-transformed VLA state. We denote the deployable current input by
-\texttt{s\_t\ =\ {[}z\_t,\ p\_t,\ q\_t{]}}; the no-memory reference
-receives the same current observations wherever a comparison requires
-input matching. Any baseline that gains a new raw-state input is
-separately named.
-
-At decision time, the controller proposes a chunk of at most
-\texttt{H\ =\ 10} normalized commands. Existing routing selects the
-executed commands, which may originate from the VLA, actor, or an
-explicitly enabled corrective controller. We store the actual executed
-prefix of length \texttt{ell\_t}, not an unselected proposal. The
-available history contains only completed records:
-
-\[\mathcal{H}_t = \{(s_i,A_i^{\mathrm{exec}},s_{i+1},m_i):i<t\}. \tag{1}\]
-
-The mask \texttt{m\_i} identifies valid commands, terminal observations,
-and stream boundaries. The memory context \texttt{c\_t} is a
-deterministic function of a bounded subset of this history and the
-current observation. It is an inferred condition, not a calibrated
-posterior over physical parameters. We optimize expected discounted task
-return while tracking interaction count, online compute, total
-pretraining cost, and memory overhead.
-
-A \textbf{physical interaction representation} is defined operationally:
-it summarizes how commands and observed outcomes relate in a way that
-improves held-out consequence prediction or control. This does not imply
-discovery of a unique friction coefficient, contact force, or universal
-physical law. Small joint motion can result from obstruction, controller
-gain, saturation, or latency. Claims of contact recognition require
-independent contact measurements; claims of causal identification
-require stronger assumptions or interventions than sequence prediction
-alone.
-
-\subsection{4. Consequence-Supervised Interaction
-Memory}\label{consequence-supervised-interaction-memory}
-
-\begin{figure}
+\begin{figure}[t]
 \centering
-\pandocbounded{\includegraphics[keepaspectratio,alt={Figure 1. Proposed information flow. The observation and action backbone is frozen during Stage 1B and Stage 2. Blue blocks are newly proposed context modules. Memory becomes available only after execution. Stage 1B trains context to predict a subsequent outcome; Stage 2 initially freezes that context interface and trains the small actor and critic.}]{figures/framework.png}}
-\caption{Figure 1. Proposed information flow. The observation and action
-backbone is frozen during Stage 1B and Stage 2. Blue blocks are newly
-proposed context modules. Memory becomes available only after execution.
-Stage 1B trains context to predict a subsequent outcome; Stage 2
-initially freezes that context interface and trains the small actor and
-critic.}
+\includegraphics[width=\linewidth]{figures/framework.pdf}
+\caption{Proposed IM-RLT. Earlier completed events supply bounded interaction context. In Stage 1B, a decoder predicts a later command's observed consequences and trains the event encoder and reader. In the primary Stage 2 configuration, the decoder is unnecessary for action selection and the context modules are frozen; only the small actor--critic is optimized. The current event enters memory after its successor is observed. Dashed paths denote training supervision, not information available to the current decision.}
+\label{fig:framework}
 \end{figure}
 
-\subsubsection{4.1. Encode completed
-events}\label{encode-completed-events}
+\subsection{Representing a completed interaction}
+For a completed decision $i$, define
+\begin{equation}
+ v_i=\big(z_i,p_i,q_i,A_i^{\mathrm{exec}},m_i,\Delta q_i,\Delta z_i,d_i\big),
+ \quad \Delta q_i=q_{i+1}^{-}-q_i,\quad \Delta z_i=z_{i+1}^{-}-z_i,
+ \label{eq:event}
+\end{equation}
+where $m_i$ identifies valid executed ticks and $d_i$ stores termination metadata. The proposed event encoder $E_\phi$ maps this record to $h_i\in\mathbb{R}^{64}$. Visual coordinates come from the same fixed token encoder at both endpoints. The raw event remains available for reproducibility and future re-encoding. Joint response and visual response use separate normalization statistics fitted only on source training trajectories.
+
+No outcome from decision $t$ is available to the context used to choose $A_t$. Previous terminal events are usable only under an explicitly declared cross-attempt retention protocol and with a real terminal observation. A reset image is not a terminal consequence. Invalid or padded entries are replaced by neutral finite values \emph{before} normalization, MLPs, or attention; multiplying a final loss by zero cannot remove NaNs created earlier. An empty memory returns exactly zero context, allowing a defined baseline behavior.
+
+The event does not assert that a collision occurred merely because displacement was small. Direct contact supervision, if later enabled, must come from a specified sensor or simulator label. Such labels constitute privileged training information when unavailable at deployment and require a separate comparison. The core method needs no contact label.
+
+\subsection{Recent context and a bounded archive}
+The initial design keeps the four most recent completed events in order and at most 32 older events in an archive. The oldest recent event moves into the archive, and FIFO eviction bounds its size. The current query retrieves up to four archive records; recent records are excluded from this retrieval to prevent duplication. Record age and the recent/archive distinction are supplied to the reader. These capacities match the scale of the existing implementation and are starting hyperparameters, not validated optima.
+
+For the first implementation, archive retrieval uses a fixed similarity over pre-event visual and proprioceptive inputs:
+\begin{equation}
+ k(t,i)=\frac{z_t^\top z_i}{\|z_t\|\|z_i\|+\epsilon}
+            -\alpha\|\widetilde q_t-\widetilde q_i\|_2^2,
+ \qquad
+ c_t=R_\psi\left(s_t,\{E_\phi(v_i):i\in\mathcal{S}_t\}\right),
+ \label{eq:reader}
+\end{equation}
+where $\mathcal{S}_t$ contains recent and retrieved indices and $\widetilde q$ uses source-training statistics. Retrieval cannot consult the consequence of the current action. Ties are resolved by recency. The coefficient $\alpha$ is chosen on validation data and then fixed. A single attention block with a current-state query aggregates the selected events into $c_t$. Learned retrieval is an ablation after the fixed selector establishes a useful baseline.
+
+By default, stores are episode-local. A separately configured evaluation retains the archive across attempts on the same instance. Transfer uses a frozen, provenance-labeled source bank and a distinct target bank; it does not silently pool evaluation trajectories from unrelated instances. Keys are not proof of physical compatibility: visually similar observations can have incompatible responses. That failure is evaluated explicitly.
+
+\subsection{Training history to explain a later consequence}
+Stage 1B samples a decision $t$ and constructs its context using only indices $i<t$. A decoder receives the current state, the commanded fixed-horizon action prefix, and the earlier context:
+\begin{equation}
+ (\widehat{\Delta q}_t,\widehat z_{t+1})
+       =F_\omega(s_t,A_t[0:h],c_t;h).
+ \label{eq:decode}
+\end{equation}
+Here $h$ is selected before observing the outcome. Training uses targets with a valid real successor at that horizon. The first experiment fixes $h=10$ and excludes windows without that valid horizon; shorter terminal windows are analyzed separately. Supplying a termination-dependent duration to an otherwise fixed-horizon predictor could reveal the outcome, so realized episode length is not a decoder feature. The command sequence is taken from actual execution, not an unexecuted reference proposal.
+
+With $\bar z_{t+1}$ a normalized detached target from the frozen encoder, we use
+\begin{equation}
+ \mathcal{L}_{\mathrm{cons}}
+  =\E_{\D_{\mathrm{src}}}\left[
+       \|\widehat{\Delta\widetilde q}_t-\Delta\widetilde q_t\|_2^2
+       +\lambda_z\|\widehat{\bar z}_{t+1}-\sg(\bar z_{t+1})\|_2^2
+    \right].
+ \label{eq:cons}
+\end{equation}
+The original VLA and token encoder receive no gradients. We train $E_\phi$, $R_\psi$, and $F_\omega$ on a shared source pool containing demonstrations and bounded exploratory executions, including failures. Normalization, checkpoint selection, and hyperparameters use training or validation groups, never the final held-out test. The decoder is discarded for core deployment; it is retained only for optional response diagnostics.
+
+The loss does not guarantee history use: the decoder may solve the task from $s_t$ and $A_t$ alone. We therefore compare no-history and shuffled-history variants, and separately remove historical commands and the target command. Predicting the next expert action provides an action-supervised alternative. A direct future-feature head is the default; a residual head is an explicit ablation because the existing FLARE-inspired development line did not consistently favor residual prediction. These tests address whether consequence supervision adds information, rather than assuming that a low auxiliary loss establishes the mechanism.
+
+\subsection{Conditioning the actor and critic}
+The primary Stage 2 configuration freezes $E_\phi$ and $R_\psi$ after Stage 1B. The actor reads $(s_t,A_t^{\mathrm{ref}},c_t)$, and the critic reads $(s_t,c_t,A_t)$. If raw $q_t$ is additionally exposed to a module, the capacity-matched baseline receives the same current observation. The proposal adds no new online optimizer or action planner. For a TD3-style baseline~\citep{td3}, the schematic critic target is
+\begin{align}
+ R_t&=\sum_{k=0}^{\ell_t-1}\gamma^k r_{t,k},\nonumber\\
+ y_t&=R_t+\gamma^{\ell_t}b_t\min_{j\in\{1,2\}}
+    \bar Q_j(s_{t+1}^{-},c_{t+1}^{-},\widetilde A_{t+1}),
+ \label{eq:target}\\
+ \mathcal{L}_Q&=\sum_{j=1}^{2}\E_{\mathcal{B}}
+       \left[(Q_j(s_t,c_t,A_t)-\sg(y_t))^2\right],
+ \label{eq:critic}
+\end{align}
+where $b_t$ is the bootstrap-validity mask and $\widetilde A_{t+1}$ is the target action under the same baseline routing and target-smoothing contract. All methods share the discount convention and termination/truncation handling. If a chosen baseline uses a different chunk-reward convention, it is either preserved in every arm or corrected in every arm before comparison; it cannot change only for memory methods.
+
+Equation~\ref{eq:critic} conditions on the committed behavior chunk, which is the decision's action variable. Equation~\ref{eq:event} records only its executed prefix. In synchronous execution with early termination, a post-outcome duration must not become an extra critic observation unavailable at action selection. Asynchronous replacement or cancellation requires a separately specified action-value contract and is outside the primary experiment. This distinction avoids conflating execution bookkeeping with a change to the RL algorithm.
+
+The small actor retains the baseline objective, schematically
+\begin{equation}
+ \mathcal{L}_{\pi}=-\E_{\mathcal B}[Q_1(s_t,c_t,A_t^{\pi})]
+     +\lambda_{\mathrm{BC}}\E_{\D_{\mathrm{BC}}}
+            [\|A_t^{\pi}-A_t^{\mathrm{BC}}\|_2^2].
+ \label{eq:actor}
+\end{equation}
+The baseline defines the eligible demonstration, reference, or correction targets and any masks. Failed executed actions contribute to TD learning and consequence supervision; they are not automatically included as positive BC targets. A SAC-based instantiation~\citep{sac} must preserve its entropy terms in all arms rather than being described as the same TD3 experiment.
+
+\subsection{Decision-time replay and condition changes}
+Replay owns immutable snapshots of the evidence visible at the current and successor decisions. Reading an old transition against today's archive would reveal interactions from its future. The current event is appended only after its true successor arrives; it may inform $c_{t+1}^{-}$ but cannot inform $c_t$. Terminal and reset contexts are constructed separately. Partial resets clear only the relevant environment lane, and checkpoint restoration must restore the declared memory state or explicitly begin with empty stores.
+
+Algorithm~\ref{alg:online} gives the primary synchronous loop. Because the representation is frozen, storing context vectors is sufficient for exact replay of the primary method; retaining raw snapshot references additionally permits audits and later re-encoding. An online-updated encoder is a secondary variant that requires re-encoding snapshots, versioning keys, and a single declared optimizer owner. The current development branch instead trains its reader through the critic; these are different configurations.
+
+\begin{algorithm}[t]
+\caption{IM-RLT online learning with a fixed context representation (proposed)}
+\label{alg:online}
+\begin{algorithmic}[1]
+\Require Fixed VLA/token encoder; pretrained $E_\phi,R_\psi$; actor $\pi$, critics $Q_1,Q_2$; replay $\mathcal B$
+\State Initialize per-environment stores according to the declared reset protocol
+\For{each interaction decision $t$}
+  \State Observe $s_t$; snapshot permitted earlier evidence $\M_t$; compute $c_t$
+  \State Produce reference and actor actions; commit $A_t$ through the baseline routing rule
+  \State Execute commands; record valid prefix, rewards, and true pre-reset successor $o_{t+1}^{-}$
+  \State Form $v_t$ from observed consequences; update stores; compute successor context $c_{t+1}^{-}$
+  \State Add an owned transition and current/successor evidence snapshots to $\mathcal B$
+  \State Update $Q_1,Q_2,\pi$ using the matched baseline schedule and Equations~\ref{eq:target}--\ref{eq:actor}
+  \If{the episode has ended}
+    \State Reset environment; clear or retain permitted records; compute a separate reset context
+  \EndIf
+\EndFor
+\State At frozen-parameter evaluation, skip all gradient updates and vary only the memory protocol
+\end{algorithmic}
+\end{algorithm}
+
+A robustness extension may reduce or clear older evidence after sustained consequence-prediction error. Its threshold must satisfy a stationary false-alarm constraint on validation streams. An excitation-support statistic is not calibrated confidence: many old observations can be consistently wrong after a change. Feedback is tagged with the prediction's memory generation so that delayed pre-reset errors cannot repeatedly clear a new bank. We treat this extension as a separate comparison against simple clearing and fixed recency weighting, not a prerequisite for the core method.
 
-For each completed chunk, the collector constructs a record containing
-the raw start state, executed commands, valid duration, and observed
-effects. The current branch already stores raw joint positions and their
-changes. We propose adding current and successor visual tokens to
-distinguish interactions that have similar joint configurations but
-different object arrangements:
+\section{Experiments}
+\label{sec:experiments}
+We first report completed development diagnostics and their limitations, then specify the experiments required to evaluate IM-RLT. No entry below presents planned control performance as a measurement. This separation is especially important because the development split has already influenced method selection.
 
-\[e_i=E_{\psi}(z_i,q_i,A_i^{\mathrm{exec}},\Delta q_i,z_{i+1},m_i). \tag{2}\]
+\subsection{Development setup}
+\label{sec:setup}
+The response probe uses ManiSkill simulation~\citep{maniskill} with two hidden controller stiffness settings, 250 and 1000. There are 112 trajectories arranged as 56 command-paired groups: each pair executes the same command sequence under the two settings. Each trajectory contains 120 control ticks. Splitting by paired group gives 32/8/16 training/validation/test groups and 768/192/384 ten-step windows. Both stiffness settings occur in every split. This tests held-out command trajectories within known conditions; it is not an unseen-dynamics test.
 
-\texttt{E\_psi} is a small event encoder with a 64-dimensional output. A
-two-layer temporal attention block encodes the ordered commands and
-their masks; an MLP projects the remaining inputs. This preserves action
-order, which a sum-of-commands response formula discards. Initial widths
-are 128 hidden units and four attention heads; these are starting
-configurations rather than established optimal hyperparameters.
-Train-only normalization is stored with the encoder version. No
-additional VLA forward pass is required if tokens are already computed
-for current and true successor observations.
+The prediction target is the nine-dimensional change in raw joint positions over a window. Arm joint angles and finger positions have different physical units, so the aggregate MSE is a code-level diagnostic rather than a force or energy error. The initial learned probes use three initialization seeds, 1000 updates per fit, and validation-based checkpoint selection. All variants are evaluated on the same cached test windows. This dataset does not independently manipulate friction or contact and cannot establish identification of those quantities.
 
-A record may contain its own observed effect because it is written after
-that effect occurs. It may not contain the effect of the action
-currently being selected. Termination flags are needed for transport and
-validity, but the default learned physics input excludes success and
-task reward. Reward remains in replay for value learning. An ablation
-includes end flags to test shortcut learning. Invalid padded values must
-be removed before an MLP, normalization, attention, or nonlinear loss;
-multiplying a NaN-containing scalar by zero is insufficient.
+\subsection{Existing evidence: response information is not reliably extracted}
+\label{sec:results}
+Table~\ref{tab:probe} reports the initial diagnostic. Recent, archive-only, and combined attention readers have nearly the same error as the no-history predictor. Feeding explicit response statistics to a learned prediction head gives a modest improvement. The parameter-free response formula is more accurate than every initial neural variant, reducing mean error by 59.3\% relative to full attention on this fixed development test. The comparison motivates stronger extraction objectives; it does not establish that attention is generally inferior or that memory improves control.
 
-\subsubsection{4.2. Read short-term and longer-term
-evidence}\label{read-short-term-and-longer-term-evidence}
-
-The short store contains the latest four valid records in chronological
-order. The archive contains up to 32 completed records, including
-records that may also be recent; the reader selects up to four older
-candidates after excluding the short store. We retain individual records
-instead of averaging contradictory outcomes. The first implementation
-uses a bounded FIFO archive to isolate representation learning from a
-sophisticated storage policy. ``Long-term'' here means older than the
-immediate context window; persistence across attempts is an explicit
-protocol, not the default meaning of the word.
-
-A query from current visual and proprioceptive inputs attends to the
-recent records and selected older records:
-
-\[c_t=R_{\rho}(z_t,q_t,\{e_i:i\in\mathcal{S}_t\cup\mathcal{K}_t\}). \tag{3}\]
-
-For an implementable first learned retrieval scheme, use normalized
-current/start visual projections and scaled joint distances to select
-archive candidates. Train the visual projection jointly with the context
-loss using soft attention over the full 32-record archive in Stage 1B;
-apply top-four selection and fine-tune with the deployment selection
-rule before freezing. Report the soft-to-hard gap. A simpler fixed
-visual-plus-joint distance reader is the first fallback and a baseline.
-The reader receives temporal age and source-domain tags that are
-observable at deployment, never hidden stiffness or target-test task
-labels. Action and effect content are encoded in values; retrieval is
-based on available current context.
-
-Empty memory maps to exactly zero. A fixed, validation-selected
-context-dropout rate during training exposes the controller to empty
-memory, reducing a train/test mismatch in clearing interventions. Report
-both natural-retention performance and intervention sensitivity. A
-short-only version retains the same output dimension. Cross-attempt
-retention requires a verified reset instance and unchanged physical
-configuration in the retry experiment. Cross-task transfer uses a
-separate source bank with declared provenance, compatible
-robot/controller units, and an encoder version. The source bank is
-read-only during held-out target evaluation; target evidence lives in a
-separate temporary bank and is discarded between instances.
-
-\subsubsection{4.3. Train memory for a later
-outcome}\label{train-memory-for-a-later-outcome}
-
-Stage 1B trains the event encoder and reader on a fixed transition
-dataset after the original Stage 1 checkpoint has been selected. It
-reconstructs the history available immediately before each target
-action. The decoder sees the current observation, this past context, and
-the target action sequence. It predicts the target action's subsequent
-effect:
-
-\[ (\widehat{\Delta q}_t,\hat z_{t+1})=D_{\omega}(z_t,q_t,c_t,A_t^{\mathrm{exec}},m_t). \tag{4}\]
-
-The initial predictive dataset uses fixed-horizon windows with valid
-successors and reports any terminal-window exclusions. Outcome-dependent
-termination length and success flags are not prediction inputs. Online
-residual checks commit to a horizon before execution and bind feedback
-to that prediction. All context records in Equation (4) precede the
-target chunk. The target outcome is excluded from context construction,
-key selection, normalization fitting, and memory summaries. Windows from
-one underlying trajectory or paired scene/command seed stay in the same
-dataset split. The action input is available to this training objective
-but the prediction head is not required for action selection.
-
-We supervise raw joint changes in normalized coordinates and a fixed
-visual target. Direct prediction is the initial visual head: a separate
-development branch found that residual latent prediction was not
-uniformly better at long horizons. We retain both as an ablation rather
-than imposing a residual parameterization:
-
-\[\mathcal{L}_{\mathrm{ctx}}=\lambda_q\operatorname{Huber}(\widehat{\Delta q}_t,\Delta q_t)+\lambda_z[1-\cos(\hat z_{t+1},\operatorname{sg}(z_{t+1}))]. \tag{5}\]
-
-Start with \texttt{lambda\_q\ =\ 1} after train-split standardization
-and choose \texttt{lambda\_z} from \texttt{\{0,\ 0.1,\ 1\}} using
-validation episodes only. The frozen token target prevents target drift.
-The loss does not ensure memory use: the decoder might solve the problem
-from the current input alone. We therefore require no-history,
-shuffled-history, command-shuffled, and mismatched-context comparisons
-on the same held-out groups. Those interventions diagnose dependence;
-they do not establish physical identifiability.
-
-Demonstrations often cover successful execution but few blocked or
-delayed responses. Stage 1B therefore uses a shared, explicitly costed
-pool of demonstrations and bounded exploratory interactions, including
-failures. Every comparison receives the same source trajectories;
-prediction-free baselines may use them for their permitted RL warm
-start. We report both online-only sample efficiency and total-data
-efficiency. A benefit purchased with additional private pretraining data
-is not an equal-data gain.
-
-An optional contact head can predict a simulator contact label from
-deployable inputs during training. This is privileged supervision and
-must be labeled accordingly, counted in the comparison, and ablated. The
-core proposal uses visual and joint effects alone. Desired task contact
-is not universally penalized; a contact-count reduction is meaningful
-only alongside success and a task-specific definition of undesirable
-impact.
-
-\subsubsection{4.4. Condition RLT without destabilizing the
-representation}\label{condition-rlt-without-destabilizing-the-representation}
-
-The first proposed Stage 2 freezes the VLA, original token encoder, and
-pretrained event encoder/reader. It trains only the small actor and twin
-critics. This departs deliberately from the current branch, whose reader
-learns through TD loss. Freezing makes the context coordinates and
-transferred bank stable while testing whether the representation
-contains useful information. A later ablation jointly updates the
-context modules with TD and the auxiliary loss; it must re-encode raw
-replay snapshots and version any cached memory keys.
-
-The actor input is \texttt{{[}A\_ref,t,\ z\_t,\ p\_t,\ c\_t{]}}; the
-critic input is \texttt{{[}z\_t,\ p\_t,\ c\_t,\ A\_t{]}}. If raw
-\texttt{q\_t} is also exposed directly, the capacity-matched baseline
-receives it too. The original routing, action bounds, reward,
-demonstration sampling, exploration, and update ratio remain fixed
-within each comparison. The memory reader never owns a second optimizer
-through the actor path.
-
-With \texttt{R\_t} the discounted reward inside a chunk and
-\texttt{b\_t} the baseline bootstrap-validity mask, the intended
-semi-Markov target is
-
-\[y_t=R_t+\gamma^{\ell_t} b_t\min_{j=1,2}\bar Q_j(s_{t+1},c_{t+1},\bar\pi(s_{t+1},c_{t+1})). \tag{6}\]
-
-The baseline implementation's fixed reward horizon and
-termination/truncation handling must be preserved or corrected uniformly
-across all methods before comparison; using one discount factor per
-ten-step chunk changes the algorithm. For transitions that terminate
-early, target construction must respect the actual valid execution and
-the environment's terminal-successor contract.
-
-\[\mathcal{L}_Q=\sum_{j=1}^{2}\mathbb{E}_{\mathcal{B}}[(Q_j(s_t,c_t,A_t^{\mathrm{exec}})-\operatorname{sg}(y_t))^2]. \tag{7}\]
-
-The actor keeps the baseline value objective plus behavior-cloning terms
-on reference or correction targets. Failed executed actions are useful
-for Equation (7) and the consequence loss, but do not become positive
-imitation targets merely because they are stored. Entropy and
-action-noise settings remain those of the matched baseline; this draft
-does not introduce a new RL optimizer.
-
-\subsubsection{4.5. Maintain temporal integrity and handle stale
-experience}\label{maintain-temporal-integrity-and-handle-stale-experience}
-
-Replay stores owned copies of the context evidence visible at both
-current and real successor decisions. Recomputing an old transition
-against today's archive would leak future information. The event from
-the current action enters \texttt{c\_next} only after its true successor
-is observed. It never enters \texttt{c\_t}. Partial resets affect only
-their simulator lanes. A process restart does not silently imply that
-the environment archive has been restored.
-
-The core method uses a fixed memory policy. A separate robustness
-variant uses observed prediction errors to downweight or reset older
-evidence after a validated change signal. Its threshold is selected on
-validation streams, with a stationary-condition false-alarm constraint.
-Excitation support is not predictive confidence: abundant old evidence
-can be wrong after a condition change. Delayed feedback is matched to
-the prediction and memory generation that produced it; feedback from
-before a reset cannot repeatedly reset the new generation. This variant
-is evaluated in actual changed-condition simulation, not only synthetic
-scalar response streams. It is not presented as a new principle of
-confidence estimation.
-
-\textbf{Algorithm 1. One online interaction cycle.}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  Read current visual/proprioceptive inputs and retrieve strictly
-  preceding, permitted memory records. Compute \texttt{c\_t}.
-\item
-  Sample a small-actor action and apply the unchanged RLT routing rule.
-\item
-  Execute the valid command prefix and collect rewards and the true
-  pre-reset successor.
-\item
-  Encode the completed event, append it to the permitted stores, and
-  construct successor evidence.
-\item
-  Store executed actions, valid duration, terminal masks, and immutable
-  current/next evidence in replay.
-\item
-  Update actor and critics under the matched RL schedule. Keep
-  representation modules frozen in the primary configuration.
-\item
-  On reset, apply the declared clear/retain protocol. At
-  frozen-parameter evaluation, skip all gradient updates.
-\end{enumerate}
-
-\subsubsection{4.6. Why action-expert features are an
-extension}\label{why-action-expert-features-are-an-extension}
-
-The action expert may expose execution-relevant internal information,
-but it introduces a second representation intervention. During local
-Stage 1 training, its hidden states depend on noisy ground-truth action
-inputs and flow time. Those states are not automatically available under
-the same distribution at deployment. A valid experiment must specify a
-reproducible inference-time extraction rule, such as a fixed denoising
-time and fixed noise convention applied to a reference action proposal,
-and measure its extra latency. We defer this extension until history
-conditioning demonstrates a benefit. Joint Stage 1 training can
-subsequently add the consequence objective while preserving token
-reconstruction and action losses; it must use actual successor-aligned
-trajectories, not independent observation-action examples with invented
-next states.
-
-\subsection{5. Evaluation Design}\label{evaluation-design}
-
-\subsubsection{5.1. Questions and preregistered
-outcomes}\label{questions-and-preregistered-outcomes}
-
-The main hypothesis is that completed interaction evidence improves
-normalized success-rate AUC over online environment transitions under
-matched source data and updates. Final success, successful episodes per
-wall-clock hour, and total collection cost are co-reported. A lower
-prediction error is a diagnostic outcome, not the primary control
-result. Four additional questions test mechanism: does retaining memory
-help with weights frozen; does visual context improve over joint-only
-history; can outdated records harm adaptation; and can a source bank
-help a new condition or task beyond transferred network weights?
-
-Before confirmation experiments, freeze the task list, seeds, primary
-metric, evaluation states, update budget, checkpoint rule, and source
-data. Use the final-budget checkpoint for the primary result; any
-validation-selected checkpoint is a separate report. No checkpoint is
-selected from test success. An initially proposed non-inferiority margin
-is five percentage points of final success; it is only claimed when the
-lower confidence bound of the paired difference exceeds minus that
-margin.
-
-\subsubsection{5.2. Benchmarks and condition
-splits}\label{benchmarks-and-condition-splits}
-
-We start with the locally integrated ManiSkill peg-insertion task (Tao
-et al. 2024). The existing wide geometry is an engineering starting
-point; narrower geometry is a held-out geometry condition, not an
-independent task family. Add a pushing/alignment task and an articulated
-manipulation task once their demonstrations, action controller, and
-visual Stage 1 checkpoint are validated. PushCube and TurnFaucet are
-candidates, not claims of already supported local configurations. A
-second benchmark such as LIBERO can test broader transfer later (Liu et
-al. 2023), but switching simulator and controller prematurely would
-confound the first result.
-
-Training varies supported physical parameters within a declared range.
-Separate tests hold out (a) scene/command seeds, (b) physical parameter
-values, (c) combinations of known parameter values, (d) geometry or
-object instances, and (e) task identity. These are different
-generalization claims. Controller gain, execution delay, friction, and
-object mass are changed one at a time initially. A wrapper that clips
-commands is an execution perturbation, not a simulated friction change.
-Read back the effective controller/physics parameters after reset and
-verify that the intended intervention actually took effect.
-
-At least one task should require visual disambiguation: comparable robot
-configurations and command histories with different object alignment or
-contact geometry. Joint-only baselines may perform well on
-controller-gain identification; that does not establish a visual
-reasoning contribution. If the visual event features are unnecessary
-throughout, the eventual paper should narrow its claims and reconsider
-its fit to a computer-vision venue.
-
-\subsubsection{5.3. Baselines and controlled
-budgets}\label{baselines-and-controlled-budgets}
-
-\textbf{Table 2. Main comparison plan.} Original RLT remains a reference
-even if a wider no-memory controller is used for capacity control. All
-memory methods use the same source trajectories and online interaction
-budget.
-
-{\def\LTcaptype{none} % do not increment counter
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
-\toprule\noalign{}
-\begin{minipage}[b]{\linewidth}\raggedright
-ID
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Method
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Context training
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Primary purpose
-\end{minipage} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-B0 & Original local RLT & None & Preserve the starting baseline \\
-B1 & Capacity-matched RLT, zero context & None & Separate input width
-and parameter capacity \\
-B2 & Recent ordered visual/proprioceptive history & TD-only recurrent
-reader & Strong history and partial-observability control \\
-B3 & Current short-plus-archive reader & TD-only & Measure the existing
-Zeva-inspired branch \\
-B4 & Fixed response features, padded to 64 dimensions & Parameter-free
-reader & Test the strong diagnostic alternative in control \\
-M & Proposed consequence-supervised memory & Stage 1B, then frozen in
-primary Stage 2 & Test future-useful history conditioning \\
-N1 & eRLT-style current representation & Action initialization and TD
-adaptation & Nearest representation comparison \\
-N2 & Prediction-only sidecar, no archive & Matched consequence
-supervision & Isolate the auxiliary-prediction effect \\
-N3 & Zeva-style CTE feeding the same RLT controller & Pre/post effect
-objectives and matched history & Test against the closest
-interaction-encoding design \\
-\end{longtable}
-}
-
-N1 must either reproduce a released compatible implementation or be
-labeled an adaptation with architecture and cost differences. DSRL and
-full Zeva are useful external comparisons only if task, source data,
-backbone, and intervention budgets can be aligned. Otherwise, discuss
-them without placing incomparable paper numbers in a ranking table. At
-minimum, N1 or a clearly justified action-supervised current-token
-control is required before a broad representation claim. N3 is a
-targeted mechanism control: compare the same history/data budget and
-downstream controller, disclose omitted Zeva losses or retrieval
-components, and do not present an incomplete adaptation as a full
-reproduction.
-
-Stage 1B cost is charged explicitly. Report both fixed online
-interaction and fixed end-to-end compute comparisons. Match
-update-to-data ratios, BC pretraining, replay capacities, number of
-environments, action frequency, chunk size, and evaluation overhead.
-Actor initialization shares common weights where tensor shapes permit;
-added inputs are identically initialized across capacity controls. If
-the existing RLT phase gate uses simulator state, disclose it and keep
-it identical. ``No corrective expert'' does not mean ``no privileged
-routing information.'' Always-on actor experiments form a separate
-controlled block.
-
-\subsubsection{5.4. Ablations that can reject the
-explanation}\label{ablations-that-can-reject-the-explanation}
-
-\textbf{Table 3. Mechanism tests, ordered by scientific priority.}
-
-{\def\LTcaptype{none} % do not increment counter
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
-\toprule\noalign{}
-\begin{minipage}[b]{\linewidth}\raggedright
-Intervention
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-What is kept fixed
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-What a negative result means
-\end{minipage} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Remove history at train and test & Data, context width, decoder capacity
-& Current inputs may suffice \\
-Remove commands from event; remove target action separately and jointly
-& All observation windows & Joint removal tests action dependence;
-separate removals locate its source \\
-Shuffle history within matched strata & Marginal records, count,
-normalization & Reader may ignore event correspondence \\
-Recent only versus recent plus archive & Context width and training &
-Archive may be unnecessary \\
-No Stage 1B versus consequence supervision & Source data access and
-Stage 2 budget & Auxiliary training may not help control \\
-Visual-plus-joint versus joint-only events & Current visual input,
-history budget & Visual memory contribution may be absent \\
-Predict only joints versus joints plus visual effects & Module capacity
-& Visual target could be nuisance supervision \\
-Direct versus residual future latent head & Data, loss scale, updates &
-Residual structure may be harmful \\
-Actor-only versus critic-only versus both conditioning & Shared learned
-context & Locate where information helps \\
-Frozen versus online-updated context modules & Initialization, source
-data & Quantify stability/adaptability tradeoff \\
-Uniform/FIFO versus learned retrieval & Record budget and reader &
-Learned retrieval may not justify complexity \\
-Retain/clear/shuffle at evaluation & Identical trained weights and
-initial states & Isolate benefit of the evidence itself \\
-\end{longtable}
-}
-
-Do not train a separate model on every optional combination before the
-core causal comparisons succeed. The archive, reliability variant, and
-action-expert extension enter sequentially. A negative ablation is not
-hidden by averaging it with easier tasks.
-
-\subsubsection{5.5. Frozen-parameter retries and
-transfer}\label{frozen-parameter-retries-and-transfer}
-
-For retry adaptation, fix every network parameter and optimizer state.
-Run five attempts for each held-out instance with identical reset state
-and physical conditions. Compare retaining the archive, clearing it, and
-supplying a count-matched shuffled archive. Continue the attempt
-schedule after success, resetting the same instance, to avoid selecting
-only hard survivors. Report unconditional success at each attempt,
-success conditional on previous failure as a distinct quantity, and
-cumulative success. Even an unchanged independent controller achieves
-cumulative success \texttt{1\ -\ (1\ -\ p)\^{}K}; increasing cumulative
-success alone does not establish learning.
-
-For transfer, hold the target initialization and weights fixed while
-changing only the source bank. Compare empty bank, related source
-interactions, unrelated but count-matched interactions, and a bank from
-a different physical condition. Separately compare pretrained versus
-untrained context weights without a source bank. This separates
-knowledge stored in parameters from knowledge stored in records.
-Target-test trajectories never enter the source bank or hyperparameter
-selection. Cross-task transfer first uses the same robot, action
-convention, and sensors; a new embodiment requires a separate alignment
-method and is outside the first claim.
-
-Changed-condition tests retain an old bank deliberately, switch a
-verified physical parameter, and compare immediate clearing, no
-clearing, fixed forgetting, and residual-triggered downweighting. Report
-initial damage, recovery interactions, stationary false alarms, and
-recovery success. An oracle change indicator is only an upper bound.
-Successful adaptation should not depend on access to the hidden switch
-time.
-
-\subsubsection{5.6. Statistical and efficiency
-reporting}\label{statistical-and-efficiency-reporting}
-
-The pilot uses three training seeds and small validation panels to find
-implementation errors. Confirmation should use five independent training
-seeds for the core baseline--method contrast when feasible, and at least
-three for secondary ablations. Report seed-level results, not only a
-pooled mean. Final evaluation uses at least 100 held-out episodes per
-seed and condition, increased if a non-inferiority or small-effect claim
-requires tighter precision. For intuition, a success probability near
-0.5 has a roughly ten-point binomial 95\% half-width with only 100
-independent episodes; training variability adds uncertainty.
-
-Use paired reset seeds and controlled action-noise streams where
-applicable. Bootstrap hierarchically over training seeds and evaluation
-instances; never treat adjacent trajectory windows or retries as
-independent training runs. Report uncertainty as recommended by the RL
-evaluation literature (Agarwal et al. 2021), while acknowledging that
-three seed clusters provide weak interval estimates. Predefine the main
-contrast and apply a stated multiplicity correction to families of
-confirmatory secondary tests.
-
-Normalize learning-curve AUC by the fixed interaction budget so its
-scale remains success probability. Count valid environment control ticks
-as well as action chunks and optimizer steps. Threshold-hitting time is
-censored when a run never reaches the target; do not average only
-successful runs. Report simulator FPS, inference latency percentiles,
-end-to-end environment steps per second, successful episodes per hour,
-GPU-hours, peak memory, and archive/replay bytes. A faster success curve
-per transition can coexist with worse wall-clock performance.
-
-Corrections, resets, and collision proxies are secondary simulation
-measurements with a fixed trigger and fixed corrective-controller budget
-across methods. Human correction time, setup time, and recovery time
-require real operator measurements and remain future work.
-
-\subsection{6. Existing Development
-Evidence}\label{existing-development-evidence}
-
-The following measurements were collected before the proposed method was
-implemented. They motivate its design and delimit current claims. They
-are not held-out confirmation results for the new representation.
-
-\subsubsection{6.1. Response prediction from physical
-simulation}\label{response-prediction-from-physical-simulation}
-
-The existing hidden-PD diagnostic contains 56 paired scene/command
-groups, each executed under stiffness 250 and 1000, for 112 trajectories
-of 120 control ticks. The 32/8/16 group
-train/validation/development-test split keeps each pair together. Both
-stiffness values occur in every split. Ten-step windows yield
-768/192/384 examples, but these windows are correlated and are not
-independent environments. The learned probes use three initialization
-seeds and 1,000 updates, with checkpoint selection on validation groups.
-
-\textbf{Table 4. Observed development-test joint-change MSE. Lower is
-better.} Means for learned methods; no uncertainty interval was
-reconstructed here. The fixed formula has structural knowledge and is
-not parameter matched.
-
-{\def\LTcaptype{none} % do not increment counter
-\begin{longtable}[]{@{}lr@{}}
-\toprule\noalign{}
-Existing reader/probe & MSE \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-No history & 1.8211e-4 \\
-Recent history & 1.8176e-4 \\
-Archive only & 1.8267e-4 \\
-Full attention history & 1.8143e-4 \\
-Response features plus learned prediction head & 1.7533e-4 \\
-Fixed command--response formula & 7.3889e-5 \\
-\end{longtable}
-}
-
-The attention result is close to the no-history result, whereas a
-structured response estimator is substantially better. This supports the
-narrower inference that response-relevant information exists in these
-records and is poorly extracted by the current neural reader. It does
-not show improved task success or extrapolation to unseen stiffness. A
-fresh confirmation split is required because the development set has
-already influenced design decisions.
-
-These legacy errors aggregate raw joint coordinates, including revolute
-arm joints and prismatic fingers; they should not be interpreted as a
-single physical unit such as squared radians. New experiments report arm
-and finger errors separately and provide train-normalized aggregate
-errors. The fixed estimator computes a per-joint command-to-change slope
-and an excitation support statistic. It sums normalized arm commands
-after applying the known controller scale; it does not estimate force or
-identify a unique physical cause. It also loses within-chunk action
-order and can be unreliable when opposing commands cancel.
-
-\begin{figure}
+\begin{table}[t]
 \centering
-\pandocbounded{\includegraphics[keepaspectratio,alt={Figure 2. Observed development errors. Left: existing reader comparison. Right: a separate post-hoc follow-up. Means are shown without confidence intervals; the fixed formula is not parameter matched. These are prediction diagnostics, not closed-loop results.}]{figures/pilot_diagnostics.png}}
-\caption{Figure 2. Observed development errors. Left: existing reader
-comparison. Right: a separate post-hoc follow-up. Means are shown
-without confidence intervals; the fixed formula is not parameter
-matched. These are prediction diagnostics, not closed-loop results.}
+\caption{Measured development response prediction. Lower is better. MSE is reported in units of $10^{-4}$. For learned probes, $\pm$ denotes sample standard deviation across three initialization seeds on one fixed data split, not a confidence interval across independent datasets. The fixed formula has no fitted seed.}
+\label{tab:probe}
+\begin{tabular}{@{}lc@{}}
+\toprule
+Existing diagnostic predictor & Joint-response MSE $\downarrow$ \\
+\midrule
+No history & $1.8211\pm0.0088$ \\
+Recent history & $1.8176\pm0.0121$ \\
+Archive only & $1.8267\pm0.0124$ \\
+Recent + archive attention & $1.8143\pm0.0105$ \\
+Response statistics + learned head & $1.7533\pm0.0320$ \\
+Fixed command--response formula & $0.7389$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/pilot_diagnostics.pdf}
+\caption{Measured prediction diagnostics. Left: the initial learned readers do not recover the advantage of the fixed response estimator; error bars are initialization standard deviations. Right: a post-hoc residual study improves overall error, but an ungated residual worsens the late-history result. The support-gated residual approximately preserves that late-history performance. These are related development studies on reused data, not independent confirmatory tests. Neither axis measures task success.}
+\label{fig:diagnostics}
 \end{figure}
 
-\subsubsection{6.2. A post-hoc support-gated
-follow-up}\label{a-post-hoc-support-gated-follow-up}
+A post-hoc follow-up fits residual predictors using six initialization seeds (Table~\ref{tab:support}). The ungated residual improves overall error while increasing late-history error. Suppressing residual corrections when the fixed estimator has high excitation support lowers overall error and keeps late-history error close to the formula. This supports a narrower interpretation: the fallback is useful when history is limited, while unconstrained learning can damage an already informative estimate. It does not validate support as uncertainty, nor distinguish all possible causes of error. The same development data informed this follow-up, so a new locked condition split is required for confirmatory claims.
 
-A subsequent six-seed diagnostic adds learned corrections to the fixed
-response estimate. The support-gated version reduces the correction when
-past excitation is strong. This follow-up was selected after viewing
-earlier results on the same development data.
+\begin{table}[t]
+\centering
+\caption{Measured post-hoc development follow-up, MSE in units of $10^{-4}$. Learned rows are means over six initializations. Per-seed dispersion is unavailable in the public summary and is not reconstructed. ``Late'' denotes windows with at least four preceding completed windows, matching the probe's age threshold.}
+\label{tab:support}
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Predictor & Overall MSE $\downarrow$ & Late-history MSE $\downarrow$ \\
+\midrule
+Fixed formula & 0.7389 & 0.1657 \\
+Formula + learned residual & 0.5671 & 0.2369 \\
+Formula + support-gated residual & 0.2442 & 0.1659 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-\textbf{Table 5. Observed exploratory follow-up.} Late history means at
-least four completed records.
+Existing online runs do not close the control question. A memory run reached 516 outer iterations under a 12-hour limit and used four fixed evaluation trajectories. Its best observed checkpoint succeeded on two, while later checkpoints succeeded on one. The run used always-on control, lacked a matched no-memory long run, and did not implement the proposed Stage 1B representation. These repeated four-trajectory evaluations cannot be interpreted as independent evidence for a stable success rate or improvement. A historical Stage 1 reference result of 8/20 episodes is likewise a baseline development observation. No controlled success or transfer result for IM-RLT is presently available.
 
-{\def\LTcaptype{none} % do not increment counter
-\begin{longtable}[]{@{}lrr@{}}
-\toprule\noalign{}
-Diagnostic predictor & Overall MSE & Late-history MSE \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Fixed formula & 7.3889e-5 & 1.6571e-5 \\
-Formula plus learned residual & 5.6706e-5 & 2.3687e-5 \\
-Formula plus support-gated residual & 2.4417e-5 & 1.6588e-5 \\
-\end{longtable}
-}
+\subsection{Confirmatory simulation protocol}
+\label{sec:confirm}
+The first campaign should establish one reliable no-memory implementation before testing representation changes. ManiSkill offers continuity with the existing response diagnostics; LIBERO offers a complementary manipulation setting~\citep{libero}. The chosen code revision, pretrained VLA, action parameterization, and task must be fixed after baseline acceptance. Moving to a repository with a different backbone or action interface creates a new track, not a replication of the same baseline. A successful released checkpoint is useful for checking evaluation, but is not evidence that local Stage 1 and Stage 2 training are reproduced.
 
-The gate mainly prevents a learned correction from damaging an already
-useful mature-history estimate and improves cold-start behavior.
-Late-history performance is effectively at the fixed-formula level. This
-is not evidence that excitation support is calibrated uncertainty or
-that the online controller should trust all high-support records.
+The small experiment begins with one task, three seeds, and four configurations: capacity-matched no memory, a recent-history reader, the existing archive reader, and the fixed response context. This establishes whether execution evidence can help the selected controller at all. The consequence-trained method is then introduced with the same initialization and source pool. Only a positive, reproducible control signal justifies expansion to multiple tasks and five training seeds per method. Live VR correction is not required: all arms use the same fixed demonstrations and autonomous online reward. Any scripted expert or later human assistance is an explicitly budgeted extra source, not an unreported rescue mechanism.
 
-\subsubsection{6.3. What online pilots do and do not
-show}\label{what-online-pilots-do-and-do-not-show}
+The main test varies response conditions without revealing their labels to the deployed policy. Controller stiffness or gain provides a first intervention; separately validated friction, payload, or latency changes can follow. Training, validation, and test groups separate full trajectories and initial-state groups. A second split holds out condition values, and a third combines held-out conditions with objects or tasks. Merely sampling new windows from the original two stiffness settings is not this test. Conditions are selected for measurably different responses and feasible task execution; impossible settings would confound adaptation with solvability.
 
-An existing overnight memory run reached 516 outer iterations before its
-12-hour budget expired. Evaluation used four fixed trajectories: one
-checkpoint achieved two successes, while later checkpoints at iterations
-400, 450, and 500 achieved one success each. The run used always-on
-actor control, whereas the formal baseline used a critical-phase routing
-configuration. There is no matched no-memory overnight run establishing
-attribution. These observations demonstrate that the training path
-executes; they do not demonstrate faster convergence or a reliable 25\%
-final success estimate.
+\begin{table}[t]
+\centering\small
+\caption{Planned controlled comparisons. Every row uses the same backbone, action interface, online budget, evaluation states, and source-trajectory access within a track. ``Adapted'' comparisons isolate a mechanism in this controller; they are not claimed reproductions of the entire cited system.}
+\label{tab:baselines}
+\begin{tabularx}{\linewidth}{@{}p{0.26\linewidth}YY@{}}
+\toprule
+Configuration & Context or supervision & Question \\
+\midrule
+Original RLT & Original inputs and capacity & Is the baseline reproduced? \\
+Capacity-matched RLT & Zero context; matched input width & Does extra capacity explain a gain? \\
+Recent-history encoder & Ordered visual/proprioceptive/action history & Is a short history sufficient? \\
+Existing archive reader & Current TD-trained memory module & Does the new representation improve existing memory? \\
+Fixed response context & Command--response slopes and support & Is learned extraction necessary? \\
+IM-RLT & Stage 1B consequences; fixed online encoder & Does later-outcome supervision help control? \\
+Action-supervised readout & eRLT-style current-input initialization & Would stronger current features suffice? \\
+Prediction without memory & Same target; no historical context & Is the gain due only to auxiliary supervision? \\
+Interaction encoder (adapted) & Zeva-style event representation; same controller & Does the future-use objective add value? \\
+\bottomrule
+\end{tabularx}
+\end{table}
 
-Synthetic condition-shift probes further show that stale high-support
-response estimates can be misleading and that delayed feedback requires
-generation bookkeeping. These are software and mechanism diagnostics,
-not manipulation experiments. None of the current evidence measures
-saved human time, source-to-target transfer, or sustained autonomous
-improvement.
+\subsection{Mechanism, retention, and transfer}
+Table~\ref{tab:ablations} defines interventions that can reject the proposed explanation. Removing commands from historical records and removing the target command are separate tests: the latter can dominate a prediction loss even if the history reader ignores commands. Shuffling is performed within matched task, time, and record-count strata; both train-and-test ablations and test-time interventions are reported because the latter may introduce distribution shift. Archive size, context width, and decoder capacity are matched where the comparison permits it.
 
-\subsubsection{6.4. Confirmatory results to
-populate}\label{confirmatory-results-to-populate}
+\begin{table}[t]
+\centering\small
+\caption{Planned mechanism tests and interpretations of a null result. Control metrics accompany prediction metrics; an auxiliary-loss improvement alone does not satisfy any control claim.}
+\label{tab:ablations}
+\begin{tabularx}{\linewidth}{@{}p{0.40\linewidth}Y@{}}
+\toprule
+Intervention & Interpretation if control is unchanged \\
+\midrule
+Remove historical commands; separately remove target commands & Action-related response information may not explain the effect \\
+Shuffle matched history or replace it with empty history & The controller may ignore relevant event correspondence \\
+Recent only versus recent + archive & The longer-lived archive may be unnecessary \\
+Joint-only versus visual + joint events & Visual interaction context may add no benefit \\
+No pretraining / expert-action / consequence pretraining & The supervisory target may not be the useful factor \\
+Actor-only / critic-only / both context inputs & Locates whether action selection or value learning uses context \\
+Frozen versus TD-updated context encoder & Tests the stability--adaptability tradeoff \\
+Fixed versus learned retrieval & Retrieval complexity may not be justified \\
+\bottomrule
+\end{tabularx}
+\end{table}
 
-\textbf{Table 6. Formal results template. Every em dash denotes an
-unmeasured quantity.} Populate separately for each task and condition;
-aggregate only after reporting per-task results.
+For frozen-parameter adaptation, each trained checkpoint is evaluated on matched sequences of repeated attempts. One arm retains the permitted memory, one clears it, and one receives mismatched evidence with the same size. No optimizer update or normalization refit occurs. Attempt-indexed success $S_1,S_2,\ldots$ is the primary outcome. Cumulative success after several attempts is secondary because it increases even for a non-adapting policy. Arms share initial states and disturbances where feasible; their subsequent actions may diverge, which is part of the memory intervention. A complementary offline test feeds identical recorded histories to each reader to isolate extraction quality without policy-induced data differences.
 
-{\def\LTcaptype{none} % do not increment counter
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1304}}
-  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1739}}
-  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1739}}
-  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1739}}
-  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1739}}
-  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1739}}@{}}
-\toprule\noalign{}
-\begin{minipage}[b]{\linewidth}\raggedright
-Method
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-Success AUC
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-Final success, 95\% CI
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-Valid ticks to target
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-Successes/hour
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-Extra source GPU-hours
-\end{minipage} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Original RLT & --- & --- & --- & --- & --- \\
-Capacity-matched RLT & --- & --- & --- & --- & --- \\
-Recurrent recent history & --- & --- & --- & --- & --- \\
-Current archive attention & --- & --- & --- & --- & --- \\
-Fixed response context & --- & --- & --- & --- & --- \\
-Proposed memory & --- & --- & --- & --- & --- \\
-eRLT-style representation & --- & --- & --- & --- & --- \\
-\end{longtable}
-}
+For changed conditions, evaluate an announced reset protocol and an unannounced physical change as separate settings. Compare persistent memory, clearing, recent-only context, fixed age decay, and the validated error-triggered extension. Record the temporary loss in success, attempts to recover, and false resets in stationary episodes. A rich archive may create negative transfer precisely when its response statistics are well supported but obsolete.
 
-A second table must report attempt-one through attempt-five success with
-frozen weights and retain/clear/shuffle interventions. A third must
-report related-bank, unrelated-bank, and empty-bank target performance.
-These tables cannot be inferred from prediction MSE.
+For transfer, freeze source weights and source memory before target evaluation. Compare empty target memory, a compatible source bank, a mismatched bank, and transferred weights without the bank. Record source collection and pretraining costs. Source and target must share a defined observation/action schema; cross-robot transfer is not implied by transferring within one robot's coordinates. Begin with held-out conditions on one task, then evaluate related tasks. If only pretrained weights help, the result is representation transfer rather than memory transfer.
 
-\subsection{7. Analysis Plan, Limitations, and Research
-Decisions}\label{analysis-plan-limitations-and-research-decisions}
+\subsection{Metrics, budgets, and statistical analysis}
+The primary control measure is normalized area under the success-rate curve against valid executed control ticks. We also report final unassisted success, successful episodes per wall-clock hour, and ticks to a prespecified success threshold. A run that never reaches the threshold remains censored; it is not assigned an artificial favorable time. Action inference, memory retrieval, environment stepping, learner updates, and source pretraining are timed separately. Offline interactions and GPU-hours are included alongside online-only efficiency so that additional source data cannot masquerade as a free sample-efficiency gain.
 
-Three patterns would support the central explanation: the representation
-predicts subsequent effects better with appropriate past interactions;
-controlled memory interventions change closed-loop performance; and the
-online learning advantage persists after charging pretraining and
-inference cost. Improvement on only one axis warrants a narrower
-conclusion. A better predictor with unchanged control value is a useful
-negative result, not evidence of sample-efficient RL.
+All methods share initial pretrained checkpoints, demonstration counts, replay warmup, update-to-data ratios, evaluation frequency, and tuning budgets. The learned context and fixed-response baseline both receive the same current raw joint state when required. Five training seeds and at least 50 matched evaluation initial states per task--condition cell are the initial confirmatory target; the precise budget is fixed after the small pilot and before opening the locked test. Training seeds and task/condition groups, not overlapping windows, define statistical units. We report paired differences with cluster-aware bootstrap intervals and distributions rather than only best checkpoints, following established RL evaluation concerns~\citep{rliable}. Task-level results accompany aggregate summaries.
 
-If a strong recurrent reader matches the archive, retain the simpler
-method and drop claims about long-term retrieval. If fixed response
-features dominate, investigate neural estimation and observability
-before expanding the architecture. If source memory harms new tasks,
-report the negative transfer and restrict the bank's scope. If eRLT
-removes the gap, the initial bottleneck may have been current-state
-representation quality rather than missing execution history. If gains
-occur only with privileged contact supervision, label the method
-accordingly and test robustness to noisy deployable sensors.
+\begin{table}[t]
+\centering\small
+\caption{Confirmatory control reporting template (not measured). All cells are pending. Costs include the declared source-data budget; no development prediction metric is substituted for these outcomes. Final results must additionally report per-task values and uncertainty.}
+\label{tab:pending}
+\begin{tabularx}{\linewidth}{@{}Ycccc@{}}
+\toprule
+Method & Success AUC & Final success & Ticks to target & Successes/hour \\
+\midrule
+Capacity-matched RLT & Pending & Pending & Pending & Pending \\
+Recent-history encoder & Pending & Pending & Pending & Pending \\
+Existing archive reader & Pending & Pending & Pending & Pending \\
+Fixed response context & Pending & Pending & Pending & Pending \\
+IM-RLT & Pending & Pending & Pending & Pending \\
+\bottomrule
+\end{tabularx}
+\end{table}
 
-The principal limitations are partial observability, insufficient
-excitation, contact ambiguity, finite-memory interference, and mismatch
-between source and target controllers. Offline sequence prediction can
-exploit time or task correlations without identifying dynamics. Frozen
-visual targets may discard subtle contact effects, while changes in
-viewpoint may dominate their distance. A small number of simulation
-tasks does not establish universal physical knowledge. Persistent
-runtime memory and exact resumed environment state require additional
-systems work. Main results must specify which form of persistence was
-actually implemented.
+\subsection{What the current results support}
+The measured evidence supports the existence of useful command--response information in a particular simulator cache and shows that the current learned reader does not extract it as effectively as a simple estimator. It does not support faster RL convergence, higher success, lower intervention time, or transferable physical knowledge. The support-gated follow-up suggests that a learned correction should be tested against an informative fixed component, but its post-hoc selection weakens any confirmatory interpretation.
 
-For a computer-vision submission, visual evidence must contribute to the
-method and its evaluation. Merely appending a joint-response statistic
-to a VLA does not establish a new visual representation result. An
-honest paper can focus on interaction-conditioned visual control, but it
-needs task diversity, relevant visual ablations, strong nearest-neighbor
-baselines, and reproducible evidence. A simulation-only study is
-possible in principle; publication readiness depends on the strength of
-these results, not on the completeness of this narrative.
+The decisive outcome is a control advantage at matched total cost, followed by a frozen-weight retain-versus-clear effect. If consequence prediction improves without control improvement, the representation objective is misaligned with the intended task benefit. If recent history matches the archive, the method should be simplified. If a stronger current-input baseline removes the gain, the evidence favors feature extraction over persistent interaction memory. These alternatives determine the scope of the eventual paper rather than being omitted as unsuccessful ablations.
 
-\subsection{8. Conclusion and Future
-Work}\label{conclusion-and-future-work}
+\section{Conclusion and Limitations}
+We proposed an interaction-memory extension to frozen-VLA reinforcement learning that learns from completed commands and their observed consequences. Its central design is to train earlier evidence for a later predictive use, then test that evidence as a condition for an otherwise matched RLT actor--critic. Existing response probes motivate this design by exposing a gap between informative history and effective neural extraction. They do not yet establish the proposed method's control value.
 
-We propose to condition lightweight frozen-VLA reinforcement learning on
-representations of completed physical interactions, trained for their
-utility in predicting later action consequences. The design preserves a
-stable visual-language coordinate system, separates bounded context
-updates from parameter learning, and defines interventions that can test
-whether retained experience improves control. Existing diagnostics
-justify investigating the reader, but do not yet validate the proposed
-method. The next decisive experiment is a matched closed-loop comparison
-followed by frozen-parameter retain-versus-clear evaluation. If these
-succeed, the study can expand to source-bank transfer, changed contact
-conditions, joint Stage 1 training, and eventually measured operator
-effort on physical robots.
+The current evidence is limited to small development diagnostics, two known controller settings, and unmatched online pilots. Learned interaction latents are not uniquely identified physical parameters; archival evidence can be irrelevant or stale; pretraining and retrieval can erase an apparent efficiency gain. Real-robot success and reduced human intervention remain future evaluations. The next step is a stable simulation baseline and a small matched control study, followed by frozen-parameter adaptation and locked transfer tests. Only those results can justify stronger claims about persistent improvement from accumulated experience.
 
-\subsection{Appendix A. Implementation Status at Draft
-Time}\label{appendix-a.-implementation-status-at-draft-time}
+\bibliographystyle{unsrtnat}
+\bibliography{references}
 
-{\def\LTcaptype{none} % do not increment counter
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
-\toprule\noalign{}
-\begin{minipage}[b]{\linewidth}\raggedright
-Capability
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Existing branch
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Proposed work
-\end{minipage} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Frozen Stage 2 VLA and original RL token & Implemented & Preserve \\
-Raw executed command/joint-response record & Implemented, 110 dimensions
-& Preserve units and masks \\
-Short store / archive & 4 recent, 32 stored, 4 retrieved & Add visual
-event content and learned retrieval study \\
-Current memory reader & 64-dimensional attention or fixed response & Add
-consequence-supervised event encoder/reader \\
-Reader update & Critic TD owns trainable reader & Freeze pretrained
-reader first; online update ablation later \\
-Stage 1B interaction pretraining & Not implemented in Zeva branch & Add
-chronological transition dataset and auxiliary decoder \\
-Same-instance retention & Optional, reset checks required & Complete
-frozen-weight evaluation tooling \\
-Cross-task source bank & Not implemented & Separate
-provenance-controlled bank \\
-Actual contact labels & Not in default event & Optional privileged
-auxiliary supervision \\
-Context in action expert & Not implemented & Later extension with
-deployable feature contract \\
-Production change detector & Not enabled & Optional robustness variant
-after core result \\
-\end{longtable}
-}
+\clearpage
+\appendix
+\section{Implementation Contract and Current Status}
+\label{app:implementation}
+This appendix separates the existing development implementation from the proposed method so that the manuscript can be translated into code without assuming unimplemented components. The public evidence manifest records the checked revisions and hashes of underlying private artifacts. These hashes establish provenance, not public access to raw trajectories.
 
-The local inspected revision is
-\texttt{f2d1cf6486d309eb61785151bc33783bc64a967f}. A newer remote
-research revision, \texttt{abb4382362ae0c89f711009227cc236b6d6f8b4d},
-contains delayed-feedback generation protection in diagnostics and has
-not been merged into this working tree. Existing reports and raw result
-files are indexed in the accompanying execution guide and evidence
-manifest.
+\begin{table}[h]
+\centering\small
+\caption{Implementation status as of October 3, 2026. Proposed entries are not measured IM-RLT results.}
+\label{tab:status}
+\begin{tabularx}{\linewidth}{@{}p{0.25\linewidth}YY@{}}
+\toprule
+Component & Existing development branch & Proposed primary experiment \\
+\midrule
+Stage 2 VLA/token & Frozen & Preserve the baseline \\
+Event record & Raw joint state, commands, response, masks & Add frozen visual endpoints and transformed proprioception \\
+Memory capacities & 4 recent; 32 archive; 4 retrieved & Same initial capacities; exclude duplicate records \\
+Reader & Attention or response-statistic variants & Consequence-trained 64-dimensional context \\
+Reader optimization & Critic-owned update; actor reads detached context & Stage 1B pretraining, then freeze for the first control test \\
+Replay context & Existing history plumbing & Audit immutable current/successor snapshots end to end \\
+Cross-attempt reuse & Optional retention logic & Matched frozen-weight retain/clear evaluation \\
+Cross-task source bank & Not implemented & Separate source and target stores \\
+Contact supervision & Not in the default event & Optional privileged-label ablation \\
+Action-expert context & Not implemented & Deferred extension with a deployable feature rule \\
+\bottomrule
+\end{tabularx}
+\end{table}
 
-\subsection{Appendix B. Reproducibility
-Record}\label{appendix-b.-reproducibility-record}
+The existing record has 110 scalars: nine initial joint positions, ten eight-dimensional commands, nine joint displacements, ten tick-validity entries, and two end flags. Its attention encoder maps records through a 64-dimensional MLP with LayerNorm and SiLU, reads them with a query derived from the current nine joint positions, and returns a 64-dimensional context. It does not already implement the visual interaction encoding of Equation~\ref{eq:event}. A reader receiving critic gradients is also not equivalent to the frozen consequence-trained reader in the proposed primary configuration.
 
-For every experiment, save the git revision and dirty patch, resolved
-Hydra configuration, Stage 1 and context checkpoint hashes,
-normalization statistics, simulator/controller versions,
-train/validation/test identifiers, memory clear/retain policy, seeds,
-source-bank provenance, actual executed ticks, intervention settings,
-and hardware placement. Store evaluation per episode and per attempt. A
-resume check must exceed replay cache capacity and verify retained
-transition files, counts, optimizer/RNG state, and the declared
-environment-memory reset behavior.
+The initial proposed encoder projects visual endpoints and normalized numerical fields separately before a small fusion MLP. Action sequences use a tick-masked temporal encoder; padded values are sanitized first. One 64-dimensional attention block reads the selected events, with age and store-type embeddings. This is an implementable starting specification; head count, normalization weights, and retrieval coefficient are selected on validation data within the same tuning budget as learned-history controls. No performance claim depends on an unselected hyperparameter.
 
-Official RLinf was checked on 3 October 2026: main
-\texttt{c70606f08cdca259b8dec03d4430926b5b8fac9d}; replay PR \#1623
-remained open. Upstream fixes are evaluated in a separate revision
-before a campaign. A running campaign retains its fixed code version.
-The document bundle contains source metadata and a snapshot of recently
-updated official PRs.
+\section{Fixed Response Estimator and Support-Gated Residual}
+\label{app:formula}
+The development formula estimates each arm joint's observed response per aggregate command. For historical event $i$ and arm joint $j\in\{1,\ldots,7\}$, the code constructs
+\begin{align}
+ u_{ij}&=0.1\sum_{k=0}^{9}m_{ik}a_{ikj}, &
+ e_j&=\sum_i u_{ij}^{2}, &
+ b_j&=\clip\left(\frac{\sum_i u_{ij}\Delta q_{ij}}{e_j+10^{-4}},-2,2\right),
+ \label{eq:formula}\\
+ \rho_j&=\frac{e_j}{e_j+10^{-4}}, &
+ \widehat{\Delta q}_{tj}^{\mathrm{fixed}}&=b_j u_{tj}. &&
+ \label{eq:support}
+\end{align}
+The factor 0.1 is part of this diagnostic's command scaling, not a universal physical constant. The two finger displacement outputs are set to zero in the fixed predictor. Slopes and support form 14 features, padded to the required context width when used as a memory reader. A learned response head predicts all nine target coordinates; this capacity difference should remain visible when interpreting the diagnostic comparison.
 
-\subsection*{References}\label{references}
-\addcontentsline{toc}{subsection}{References}
+The post-hoc predictor adds a zero-initialized learned residual. Its support-gated version uses
+\begin{equation}
+ \widehat{\Delta q}_{tj}=\widehat{\Delta q}_{tj}^{\mathrm{fixed}}
+     +(1-\rho_j)\delta_{\omega,j}\quad (j\leq7),
+ \label{eq:residual}
+\end{equation}
+with an unrestricted residual gate for the two finger outputs. High command energy therefore reduces learned corrections on the arm. This is an excitation heuristic: repeated evidence about the wrong condition can have high $\rho_j$. Neither $b_j$ nor $\rho_j$ identifies stiffness, friction, or contact force in general. Coupled dynamics, direction dependence, saturation, and changing contacts violate the scalar response approximation. The estimator's predictive advantage in Table~\ref{tab:probe} is a reason to preserve it as a baseline, not to adopt its assumptions as a theory of robot physics.
 
-\protect\phantomsection\label{refs}
-\begin{CSLReferences}{1}{1}
-\bibitem[\citeproctext]{ref-rliable}
-Agarwal, Rishabh, Max Schwarzer, Pablo Samuel Castro, Aaron Courville,
-and Marc G. Bellemare. 2021. \emph{Deep Reinforcement Learning at the
-Edge of the Statistical Precipice}.
-\url{https://arxiv.org/abs/2108.13264}.
+\section{Training, Evaluation, and Failure Checks}
+\label{app:checks}
+\subsection{Stage 1 and interaction pretraining}
+Stage 1 follows the accepted baseline's own representation and action training. Stage 1B additionally requires trajectory order and valid successors. Independent observation--action examples cannot be converted into consequence targets by pairing unrelated rows. Where source demonstrations lack reliable successor or execution metadata, either recover the original aligned trajectories or exclude them from the corresponding auxiliary objective. Failures collected for context pretraining are counted in source interaction cost for every comparison.
 
-\bibitem[\citeproctext]{ref-her}
-Andrychowicz, Marcin, Filip Wolski, Alex Ray, et al. 2017.
-\emph{Hindsight Experience Replay}.
-\url{https://arxiv.org/abs/1707.01495}.
+The baseline action expert is an optional source of richer features, but its training-time hidden states may depend on noisy ground-truth actions and flow time. An extension must define an inference-time extraction rule, such as a fixed noise convention and denoising point applied to the reference proposal, then measure its latency and distribution mismatch. We defer this second intervention until the history context has shown a control effect. Joint Stage 1 training could later combine token reconstruction, expert-action loss, and consequence loss, with identical valid successor requirements.
 
-\bibitem[\citeproctext]{ref-pi0}
-Black, Kevin, Noah Brown, Danny Driess, et al. 2024. \emph{\(\pi_0\): A
-Vision-Language-Action Flow Model for General Robot Control}.
-\url{https://arxiv.org/abs/2410.24164}.
+\subsection{Acceptance criteria before a large campaign}
+The no-memory baseline must pass action normalization and routing checks, use a reproducible evaluation initialization set, restore model and optimizer state, and show actual actor/critic updates. Reference-only and actor-enabled evaluation are both required: an apparently successful RL run can still be following the reference throughout. Check reward accumulation, discount units, replay sampling, target-network updates, and the distinction between termination and truncation before varying the representation.
 
-\bibitem[\citeproctext]{ref-zeva}
-Chen, Fu, Xin Ding, Bingjia Huang, et al. 2026. \emph{Zeva: In-Context
-Causal Learning for Generalizable Embodied Manipulation}.
-\url{https://arxiv.org/abs/2608.30880}.
+An integration smoke test verifies the loop, not learning quality. A one-seed pilot then checks that the chosen task supplies non-degenerate rewards and that the actor can improve or at least reproduce the accepted reference under a declared budget. Three independent runs establish baseline variability before a larger campaign. If this gate fails, memory comparisons cannot resolve whether an apparent effect comes from representation, optimizer behavior, or an unstable execution pipeline.
 
-\bibitem[\citeproctext]{ref-conrft}
-Chen, Yuhui, Shuai Tian, Shugao Liu, Yingting Zhou, Haoran Li, and
-Dongbin Zhao. 2025. \emph{ConRFT: A Reinforced Fine-Tuning Method for
-VLA Models via Consistency Policy}.
-\url{https://arxiv.org/abs/2502.05450}.
+\subsection{Replay and masking assertions}
+Useful regression tests exercise the following observable contracts: a record appears only after completion; the current action's successor is absent from its current context; replaying an old transition after new collection returns identical primary-method contexts; partial resets do not affect other lanes; terminal observations are distinct from reset observations; and invalid NaN-padded records cannot alter a valid result. Empty memory must produce the same zero context after checkpoint restoration as at initialization. These tests protect causal timing and numerical behavior rather than a particular private tensor layout.
 
-\bibitem[\citeproctext]{ref-robomme}
-Dai, Yinpei, Hongze Fu, Jayjun Lee, et al. 2026. \emph{RoboMME:
-Benchmarking and Understanding Memory for Robotic Generalist Policies}.
-\url{https://arxiv.org/abs/2603.04639}.
+For the optional online encoder variant, raw snapshot records are re-encoded under the declared current or target encoder, and cached embeddings carry a version. Optimizer ownership is explicit: the same parameter cannot be updated independently by both actor and critic optimizers. The baseline target-network convention must extend consistently to any trainable context pathway used in value targets.
 
-\bibitem[\citeproctext]{ref-rl2}
-Duan, Yan, John Schulman, Xi Chen, Peter L. Bartlett, Ilya Sutskever,
-and Pieter Abbeel. 2016. \emph{RL\(^2\): Fast Reinforcement Learning via
-Slow Reinforcement Learning}. \url{https://arxiv.org/abs/1611.02779}.
+\subsection{Frozen-weight and transfer reporting}
+For each fixed-parameter run, log a checksum of model weights before and after evaluation, the reset/retention policy, attempt identifier, condition identifier used only for analysis, selected record provenance, and retrieval latency. Report attempt-wise success and elapsed interaction cost for every arm. A target bank grows only from its own completed interactions. A source bank is frozen before target evaluation, and its provenance cannot include held-out target outcomes. Related-object, new-condition, and new-task transfer are separate claims.
 
-\bibitem[\citeproctext]{ref-td3}
-Fujimoto, Scott, Herke van Hoof, and David Meger. 2018. \emph{Addressing
-Function Approximation Error in Actor-Critic Methods}.
-\url{https://arxiv.org/abs/1802.09477}.
+Two available GPUs can support paired runs of baseline and one candidate without changing the experiment definition. Hardware assignment is rotated or recorded to expose throughput asymmetries. A stopped or failed run is retained in the accounting, and additional tuning consumes the same declared budget across methods. Human corrections, if introduced in a later real-robot study, are reported as control seconds and intervention events alongside success, not merely as an unspecified number of demonstrations.
 
-\bibitem[\citeproctext]{ref-sac}
-Haarnoja, Tuomas, Aurick Zhou, Pieter Abbeel, and Sergey Levine. 2018.
-\emph{Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement
-Learning with a Stochastic Actor}.
-\url{https://arxiv.org/abs/1801.01290}.
+\section{Reproducibility and Document Provenance}
+\label{app:provenance}
+This manuscript was checked against the development state on October 3, 2026. The local code revision was \texttt{f2d1cf64}; the separate diagnostic revision was \texttt{abb43823}. The recorded upstream RLinf main revision was \texttt{c70606f08cdc}. Upstream status does not certify the local experiment, and upstream changes are evaluated separately rather than merged into an ongoing comparison. The public companion bundle contains the evidence manifest, bibliography, experiment matrix, vector figures, and editable manuscript source at
+\begin{center}\small
+\url{https://nkd-lkz.github.io/physical-self-evolution/}
+\end{center}
+The source hashes refer to private experiment artifacts whose infrastructure paths have been removed. Public aggregate measurements allow the tables and diagnostic figure to be reconstructed, but do not provide full raw-data reproducibility. The 594 recorded synthetic method--condition--seed evaluations across older and newer diagnostics reuse paired random streams; the latest guarded subset has 324 records. They are neither independent robot trials nor measurements of manipulation success and are not pooled with the physical-simulation response table.
 
-\bibitem[\citeproctext]{ref-tdmpc2}
-Hansen, Nicklas, Hao Su, and Xiaolong Wang. 2023. \emph{TD-MPC2:
-Scalable, Robust World Models for Continuous Control}.
-\url{https://arxiv.org/abs/2310.16828}.
-
-\bibitem[\citeproctext]{ref-imagine}
-Hu, Kejia, Wentong Zhai, Bo Zhao, and Shuai Liang. 2026.
-\emph{Imagine-RL: Residual-Confidence-Guided Cross-Attention for
-World-Model-Augmented VLA Reinforcement Learning}.
-\url{https://arxiv.org/abs/2609.24033}.
-
-\bibitem[\citeproctext]{ref-erlt}
-Huang, Dehao, Jianbang Liu, Jianpan Gao, et al. 2026. \emph{eRLT:
-Efficient VLA Reinforcement Learning via Action-Relevant Token Routing}.
-\url{https://arxiv.org/abs/2610.00913}.
-
-\bibitem[\citeproctext]{ref-pi05}
-Intelligence, Physical, Kevin Black, Noah Brown, et al. 2025.
-\emph{\(\pi_{0.5}\): A Vision-Language-Action Model with Open-World
-Generalization}. \url{https://arxiv.org/abs/2504.16054}.
-
-\bibitem[\citeproctext]{ref-rma}
-Kumar, Ashish, Zipeng Fu, Deepak Pathak, and Jitendra Malik. 2021.
-\emph{RMA: Rapid Motor Adaptation for Legged Robots}.
-\url{https://arxiv.org/abs/2107.04034}.
-
-\bibitem[\citeproctext]{ref-libero}
-Liu, Bo, Yifeng Zhu, Chongkai Gao, et al. 2023. \emph{LIBERO:
-Benchmarking Knowledge Transfer for Lifelong Robot Learning}.
-\url{https://arxiv.org/abs/2306.03310}.
-
-\bibitem[\citeproctext]{ref-hilserl}
-Luo, Jianlan, Charles Xu, Jeffrey Wu, and Sergey Levine. 2024.
-\emph{Precise and Dexterous Robotic Manipulation via Human-in-the-Loop
-Reinforcement Learning}. \url{https://arxiv.org/abs/2410.21845}.
-
-\bibitem[\citeproctext]{ref-pearl}
-Rakelly, Kate, Aurick Zhou, Deirdre Quillen, Chelsea Finn, and Sergey
-Levine. 2019. \emph{Efficient Off-Policy Meta-Reinforcement Learning via
-Probabilistic Context Variables}.
-\url{https://arxiv.org/abs/1903.08254}.
-
-\bibitem[\citeproctext]{ref-spr}
-Schwarzer, Max, Ankesh Anand, Rishab Goel, R Devon Hjelm, Aaron
-Courville, and Philip Bachman. 2020. \emph{Data-Efficient Reinforcement
-Learning with Self-Predictive Representations}.
-\url{https://arxiv.org/abs/2007.05929}.
-
-\bibitem[\citeproctext]{ref-memoryvla}
-Shi, Hao, Bin Xie, Yingfei Liu, et al. 2025. \emph{MemoryVLA:
-Perceptual-Cognitive Memory in Vision-Language-Action Models for Robotic
-Manipulation}. \url{https://arxiv.org/abs/2508.19236}.
-
-\bibitem[\citeproctext]{ref-maniskill}
-Tao, Stone, Fanbo Xiang, Arth Shukla, et al. 2024. \emph{ManiSkill3: GPU
-Parallelized Robotics Simulation and Rendering for Generalizable
-Embodied AI}. \url{https://arxiv.org/abs/2410.00425}.
-
-\bibitem[\citeproctext]{ref-dsrl}
-Wagenmaker, Andrew, Mitsuhiko Nakamoto, Yunchu Zhang, et al. 2025.
-\emph{Steering Your Diffusion Policy with Latent Space Reinforcement
-Learning}. \url{https://arxiv.org/abs/2506.15799}.
-
-\bibitem[\citeproctext]{ref-rlt}
-Xu, Charles, Jost Tobias Springenberg, Michael Equi, et al. 2026.
-\emph{RL Token: Bootstrapping Online RL with Vision-Language-Action
-Models}. \url{https://arxiv.org/abs/2604.23073}.
-
-\bibitem[\citeproctext]{ref-uposi}
-Yu, Wenhao, Jie Tan, C. Karen Liu, and Greg Turk. 2017. \emph{Preparing
-for the Unknown: Learning a Universal Policy with Online System
-Identification}. \url{https://arxiv.org/abs/1702.02453}.
-
-\bibitem[\citeproctext]{ref-flare}
-Zheng, Ruijie, Jing Wang, Scott Reed, et al. 2025. \emph{FLARE: Robot
-Learning with Implicit World Modeling}.
-\url{https://arxiv.org/abs/2505.15659}.
-
-\bibitem[\citeproctext]{ref-varibad}
-Zintgraf, Luisa, Kyriacos Shiarlis, Maximilian Igl, et al. 2019.
-\emph{VariBAD: A Very Good Method for Bayes-Adaptive Deep RL via
-Meta-Learning}. \url{https://arxiv.org/abs/1910.08348}.
-
-\end{CSLReferences}
-
+Version 2 follows the single-column research-paper organization exemplified by the arXiv versions of eRLT and SmoothRL: a compact abstract and introduction, related work, formulation, method, experiments, conclusion, references, and implementation appendices. This is an independently typeset working manuscript, not an arXiv posting or a conference-formatted submission. The earlier research-plan bundle remains archived. The substantive changes include formal execution semantics, explicit algorithm and loss definitions, separation of measured diagnostics from pending control results, and a reproducible LaTeX build.
 \end{document}

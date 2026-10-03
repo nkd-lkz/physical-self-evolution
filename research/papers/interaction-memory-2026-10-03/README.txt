@@ -1,34 +1,33 @@
-RLT interaction-memory research bundle — 2026-10-03
+IM-RLT manuscript bundle — version 2, 2026-10-03
 
-Start with index.html, paper_en.pdf, or experiment_guide_zh.pdf.
-English: extended research manuscript; Chinese: experiment execution guide.
-This is a proposed method with separately labeled development observations.
-No new algorithm training or controlled success/transfer claim is supplied.
+Start with paper_en.pdf (16 pages), paper_en.html, or experiment_guide_zh.pdf.
+English: a single-column research manuscript rewritten around the scientific
+organization of eRLT and SmoothRL. Chinese: a separate experiment execution guide.
+The PDF is compiled from LaTeX. This is not an arXiv posting or a conference template.
+The method is proposed; measured tables report existing development diagnostics.
+Online control and transfer results remain pending. No new GPU run was performed.
 
-Editable sources: paper_en.tex and both HTML files.
-PDFs were rendered from HTML; the LaTeX source has NOT been compiled locally.
-The LaTeX source is a standalone article, not the CVPR 2027 review template.
-Use the current official CVPR template after results and scope are frozen.
-All figures are supplied as SVG, PDF, and PNG, with equation SVGs for HTML.
-references.bib contains 25 verified primary-paper entries.
-references.json records arXiv metadata checked on 2026-10-03.
-evidence_manifest.json records original measured files, hashes, and recomputed means.
-experiment_matrix.csv is a planned matrix, not a runnable launcher.
-upstream_commits.json and upstream_prs.json are read-only check snapshots.
+Rebuild in an isolated document environment (not the RL training environment):
+  pip install matplotlib numpy pypandoc_binary beautifulsoup4 weasyprint
+  python build_figures.py
+  python build_pdf.py --tectonic /path/to/tectonic
+Validated with Tectonic 0.17.0, Pandoc, and WeasyPrint 70.0.
+The first Tectonic run needs network access to obtain its TeX bundle.
+Chinese rendering requires a CJK font such as Droid Sans Fallback.
+build_pdf.py compiles English TeX, generates HTML, and renders the Chinese guide.
+paper_en.bbl is included; references.bib remains the editable bibliography source.
+bibliography_style.csl is the upstream IEEE CSL style (license in its header),
+used only for HTML citations. This is not an IEEE manuscript template.
 
-PDF regeneration requires WeasyPrint 70.0 and suitable fonts (Droid Sans Fallback
-for Chinese). Use a separate document environment; do not change the RL venv:
-    python build_pdf.py
+Public contents: 2 vector figures (PDF/SVG/PNG), 7 tables in the manuscript,
+26 primary-paper references, a planned experiment matrix, evidence hashes,
+upstream check snapshots, and build scripts. The HTML uses native MathML.
+Some older equation SVG assets remain for historical compatibility; v2 uses
+native LaTeX/MathML and does not use those images for equations.
 
-Checks: primary bibliography metadata; measured MSE means; relative asset links;
-PDF text/page bounds; visual inspection of framework and selected PDF pages;
-read-only baseline GPU-0 and attention GPU-1 launcher preflights passed.
-No new GPU training was launched. The preflight does not test GPU execution.
-No remote research/upstream merge was performed.
-
-Public release revision, 2026-10-03:
-Baseline acceptance now precedes Stage 1B development. The Chinese guide
-sections 4, 11 and 13 were updated; the manuscript includes a publication note.
-Internal filesystem locations were removed from the evidence manifest and guide.
-The raw-evidence hashes remain unchanged; raw artifacts are not included.
-HTML and PDFs contain the same public update. No new GPU experiment is claimed.
+evidence_manifest.json contains aggregate measurements and hashes of private raw
+artifacts, not the raw trajectories. It does not establish full reproducibility.
+experiment_matrix.csv is a plan, not an executable launcher or measured result.
+bundle_checksums.json covers current bundle files except itself and the ZIP.
+The v2 ZIP excludes the separate archive and temporary TeX build files.
+archive/research_bundle_v1.zip preserves the earlier publication on the website.

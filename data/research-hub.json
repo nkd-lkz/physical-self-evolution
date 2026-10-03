@@ -5,8 +5,8 @@
   "featured": [
     {
       "path": "research/progress-2026-10-03.md",
-      "label": "论文初稿与实验进度",
-      "why": "英文全文、中文指南、框架图与可编辑材料；正式方法结果待测。"
+      "label": "IM-RLT 论文 v2 与实验进度",
+      "why": "16 页 LaTeX 单栏稿，按 eRLT／SmoothRL 结构重写；26 篇文献、中文指南与已测证据。"
     },
     {
       "path": "research/literature/rlt-simulation-baselines-2026-10-03.md",
