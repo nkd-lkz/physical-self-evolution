@@ -1,47 +1,63 @@
 {
-  "as_of": "2026-10-03",
+  "as_of": "2026-10-04",
   "metrics": [
     {
-      "value": "8/20",
-      "label": "ManiSkill Stage 1：09-30 固定 20 回合 reference；本次未重复该独立评估",
+      "value": "16/64 vs 15/64",
+      "label": "第 275 轮冻结复评：零 context / 响应记忆；未见记忆优势",
       "featured": true
     },
     {
-      "value": "待验收",
-      "label": "Stage 2 baseline：尚无可用于方法归因的稳定收敛结果",
+      "value": "19/64",
+      "label": "同初态 reference-only；响应模型关闭历史为 18/64",
       "featured": true
     },
     {
-      "value": "2.44e-5",
-      "label": "Zeva 支持度门控开发集预测 MSE；不是控制或迁移收益",
+      "value": "26/64",
+      "label": "到达 actor 接管阶段的回合；38 回合在 reference 阶段失败",
       "featured": true
+    },
+    {
+      "value": "256 回合完成",
+      "label": "四组各 64；同一训练 seed；无 expert、无 Stage 1B",
+      "featured": true
+    },
+    {
+      "value": "299 / 309 轮",
+      "label": "昨晚两组完整记录轮数；均在 8 小时预算退出"
+    },
+    {
+      "value": "3/8 vs 3/8",
+      "label": "昨晚最后共同 checkpoint 275 的原周期评估"
     },
     {
       "value": "论文 v2 · 16 页",
-      "label": "LaTeX 单栏论文＋中文指南＋26 篇文献；控制结果待测",
-      "featured": true
+      "label": "10-03 固定英文稿；尚未纳入 10-04 的控制负结果"
     },
     {
-      "value": "516 outer steps",
-      "label": "既有 12 小时 memory run；4 条固定评估轨迹，无匹配无记忆长跑"
-    },
-    {
-      "value": "324 配对记录",
-      "label": "10-01 合成延迟反馈诊断；不是独立机器人成功次数"
-    },
-    {
-      "value": "10 个仓库",
-      "label": "10-03 源码与公开资产核查；RLT 与 DSRL 分开，新增候选未运行"
-    },
-    {
-      "value": "2 组匹配 pilot",
-      "label": "10-03 16:42 启动；smoke 通过、正式训练在途；非实时状态或收益结论"
+      "value": "2.44e-5",
+      "label": "既有开发集预测 MSE；不是控制或迁移收益"
     }
   ],
   "timeline": [
     {
-      "title": "10-03 16:42 · Zeva 双卡匹配训练启动",
-      "body": "固定 91f7bdfa：零 context／固定响应，同容量同初始化、自动关键阶段控制。两轮 smoke、28/28 Q-head 张量变化和保存通过；正式训练 1000 iterations 或 8 小时，expert 关闭。快照见当日日报，非实时监控。"
+      "title": "10-04 · 四组冻结复评完成",
+      "body": "每组四个 seed × 16 回合。零 context 16/64、响应 15/64、关闭响应历史 18/64、reference 19/64。初始观测指纹一致，权重不变，reference 无 actor 路由。"
+    },
+    {
+      "title": "10-04 · 找到当前控制瓶颈",
+      "body": "只有 26/64 回合到达 actor 接管阶段。响应相对 reference 丢失 4 次成功，没有新增成功。动作依赖历史，但未显示控制收益；单训练 seed 不足以判断普遍优劣。"
+    },
+    {
+      "title": "10-04 · 昨晚训练达到预算，旧 tmux 已归档清理",
+      "body": "两组均在 00:42 达到 8 小时上限；exit 124。完整记录 299 / 309 轮。12 个旧会话确认已结束或空闲后关闭；日志与 checkpoint 保留。"
+    },
+    {
+      "title": "10-04 · 评估工具与表达方式更新",
+      "body": "同一 Zeva 分支新增冻结评估、逐回合配对和汇总校验。首页加入可点击信息流、真实数据滑块和结果表；当前方案采用 STE 启发的短句与固定术语。"
+    },
+    {
+      "title": "10-04 · RLinf 上游及 replay 风险核查",
+      "body": "main c70606f；#1623 仍开放，#1626 / #1645 已合并。已确认旧 replay 索引多于实际保存文件。本次只加载模型，不声称完整恢复可用。"
     },
     {
       "title": "10-03 · 当前方案、证据、论文版本与历史资料分开",
@@ -87,43 +103,28 @@
   "plan": [
     {
       "priority": "P0",
-      "action": "完成当前同一 Zeva 分支的双卡 pilot",
-      "evidence": "先检查热身后 actor 接管、有限 loss、共同完成预算和无辅助固定评估；保存失败与负结果。不能将 smoke 或单 seed 解释为收敛、干预节省或迁移。"
-    },
-    {
-      "priority": "P1",
-      "action": "必要时验收 AlphaBrain／LIBERO 配套公开模型",
-      "evidence": "待现有 ManiSkill 匹配 pilot 结果再决定；604924b 的 VLA-only／RLT_a 发布资产尚未本地验收，不与当前任务并跑。"
+      "action": "先定位 baseline 的误差来源",
+      "evidence": "在相同 gate 状态测 actor/reference 动作误差与 Q 排序；区分到达关键阶段失败、模仿误差和 Q 引导偏移。"
     },
     {
       "priority": "P0",
-      "action": "重新训练并确认一个稳定 RLT baseline",
-      "evidence": "先审查当前 RLinf／ManiSkill 匹配对照，若不稳定再切换已验收的替代栈；单 seed 排查后至少 3 seed，固定 Stage 1、动作、gate、交互预算与评估。"
-    },
-    {
-      "priority": "P0",
-      "action": "baseline 验收后，验证固定 expert 的恢复与交还",
-      "evidence": "先 20–50 个 learner 偏离状态，不 reset；固定 gate、时长上限、交还与冷却，再做记忆有/无 × 在线纠错有/无四组。无需先接 VR，协议待实现。"
+      "action": "做同数据、同更新数的 BC-only / Q+BC 诊断",
+      "evidence": "同一零 context 初始化，共享冻结 transition 集，固定评估预算。这是离线诊断；之后仍需在线匹配验收。新测试集预先封存，不用本次 64 回合反复选 checkpoint。"
     },
     {
       "priority": "P1",
-      "action": "baseline 通过后开展单一 Zeva 记忆主线",
-      "evidence": "四组主对照与 none／recent／attention／response 共用初始化和预算；无辅助评估，报告 expert 次数/时长和交互数。然后 Stage 1B、冻结参数 retain／clear、条件变化与迁移。"
+      "action": "baseline 验收后再接固定 expert",
+      "evidence": "先验证从 learner 偏离状态恢复及交还；再比较记忆有/无 × 纠错有/无，报告无辅助成功率与 expert 时长。无需先接 VR。"
     },
     {
       "priority": "P1",
-      "action": "baseline 通过后落实经验预训练与迁移合同",
-      "evidence": "保留长短期记忆、动作预测监督、critic-only context、RMA／PEARL 对照；固定响应只是强基线。详见同期 RLT 后续文献与 Zeva 方案。"
+      "action": "保留 Stage 1B、跨重试记忆和迁移主线",
+      "evidence": "这些设计尚未实现。本轮先不扩网络；预测更准不替代控制证据。"
     },
     {
       "priority": "P1",
-      "action": "持续核查上游并固定每轮实验 revision",
-      "evidence": "关注 replay、resume、OpenPI/RLT、optimizer、terminal 与 reward；上游改动单独验收，不在同一曲线中混用版本。"
-    },
-    {
-      "priority": "P1",
-      "action": "保留 RLinf／π0.5 的独立 LIBERO 检查路线",
-      "evidence": "先纯 SFT 评估，再决定是否跑 DSRL 工程参照；RLT 移植另验。检查固定 reset id、周期评估与动作处理；不同时启动多框架长期训练。"
+      "action": "保持代码版本与上游核查记录",
+      "evidence": "每轮开发和新 campaign 前核查官方 main / PR。完整 replay 恢复先修复并验收；现有评估仅恢复模型。"
     }
   ]
 }

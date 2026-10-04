@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "as_of": "2026-10-03",
+  "as_of": "2026-10-04",
   "current_path": "research/zeva-rlt-implementation-2026-09-26.md",
   "roles": {
     "current": {
@@ -47,8 +47,8 @@
     },
     "research/decision-log.md": {
       "role": "history",
-      "content_date": "2026-10-03",
-      "reviewed_at": "2026-10-03"
+      "content_date": "2026-10-04",
+      "reviewed_at": "2026-10-04"
     },
     "research/discussions/optional-components.md": {
       "role": "history",
@@ -64,9 +64,9 @@
     },
     "research/experiment-log.md": {
       "role": "evidence",
-      "content_date": "2026-10-03",
-      "reviewed_at": "2026-10-03",
-      "summary": "集中查阅已测指标、原始证据可用性与结论边界；后附原日期实验记录。尚无匹配控制、干预节省或迁移结果。"
+      "content_date": "2026-10-04",
+      "reviewed_at": "2026-10-04",
+      "summary": "已测指标与原始证据范围；新增单训练 seed 的匹配训练和 256 回合冻结复评，尚无控制、纠错节省或迁移收益。"
     },
     "research/experiments/rlt-contact-memory/README.md": {
       "role": "history",
@@ -90,8 +90,8 @@
     },
     "research/knowledge-base-maintenance.md": {
       "role": "maintenance",
-      "content_date": "2026-10-03",
-      "reviewed_at": "2026-10-03"
+      "content_date": "2026-10-04",
+      "reviewed_at": "2026-10-04"
     },
     "research/literature/frontier-rlt-2026-09-30.md": {
       "role": "literature",
@@ -244,8 +244,8 @@
     },
     "research/zeva-rlt-implementation-2026-09-26.md": {
       "role": "current",
-      "content_date": "2026-10-03",
-      "reviewed_at": "2026-10-03",
+      "content_date": "2026-10-04",
+      "reviewed_at": "2026-10-04",
       "summary": "唯一现行方案：已实现与拟议方法分开，64 维 Stage 1B、固定 expert 纠错对照、验收顺序与论文版本差异。"
     },
     "notes/README.md": {
@@ -363,6 +363,11 @@
     "notes/zeva.md": {
       "role": "literature",
       "content_date": ""
+    },
+    "research/progress-2026-10-04.md": {
+      "role": "history",
+      "content_date": "2026-10-04",
+      "summary": "昨晚训练结束、tmux 清理、四组各 64 回合的冻结复评与下一步诊断。"
     }
   }
 }

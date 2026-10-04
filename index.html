@@ -6,6 +6,7 @@
 <title>RLT 科研工作台 · Physical Self-Evolution</title>
 <link rel="stylesheet" href="assets/hub.css">
 <script src="assets/app.js" defer></script>
+<link rel="stylesheet" href="assets/research-explainer.css"><script src="assets/research-explainer.js" defer></script>
 </head>
 <body>
 <a class="skip" href="#home">跳至主要内容</a>
@@ -26,19 +27,48 @@
 <noscript><p class="notice">启用 JavaScript 可查看进度与筛选资料。也可直接打开 <a href="reader.html?path=research/experiment-log.md">实验总日志</a>或 <a href="research/literature/reading-ledger.md">阅读总账</a>。</p></noscript>
 <section id="home">
  <div class="eyebrow">PHYSICAL EXPERIENCE → ONLINE LEARNING <span id="asOf">读取最新记录…</span></div>
- <div class="hero-grid"><div><h1>把每次交互，<br>变成下一次的经验。</h1><p id="focus" class="lead">以 RLT 为基线，探索物理经验与持续学习。</p><p id="question" class="muted"></p><div class="actions"><a class="button primary" href="reader.html?path=research/zeva-rlt-implementation-2026-09-26.md">从当前方案开始 ↗</a><a class="button" href="reader.html?path=research/zeva-rlt-implementation-2026-09-26.md#next-experiments">下一步实验</a></div></div><aside class="focus-card"><span class="small-label">当前研究路径</span><ol><li><span>01</span><div><b>先建立可靠基线</b><small>RLT 复现 · 固定评估 · 预算对齐</small></div></li><li><span>02</span><div><b>聚焦交互记忆主线</b><small>短期历史 · 经验读取 · 条件变化</small></div></li><li><span>03</span><div><b>检验纠错节省与迁移</b><small>学习效率 · 干预成本 · 条件迁移</small></div></li></ol></aside></div>
- <div class="section-heading compact"><h2>先读这四项</h2><span class="muted">更新：2026-10-03 · 双卡训练已启动，收益待验证</span></div>
+ <div class="hero-grid"><div><h1>把每次交互，<br>变成下一次的经验。</h1><p id="focus" class="lead">以 RLT 为基线，探索物理经验与持续学习。</p><p id="question" class="muted"></p><div class="actions"><a class="button primary" href="#understand">先看方法与实测对照 ↓</a><a class="button" href="reader.html?path=research/zeva-rlt-implementation-2026-09-26.md#next-experiments">下一步实验</a></div></div><aside class="focus-card"><span class="small-label">当前研究路径</span><ol><li><span>01</span><div><b>先建立可靠基线</b><small>RLT 复现 · 固定评估 · 预算对齐</small></div></li><li><span>02</span><div><b>聚焦交互记忆主线</b><small>短期历史 · 经验读取 · 条件变化</small></div></li><li><span>03</span><div><b>检验纠错节省与迁移</b><small>学习效率 · 干预成本 · 条件迁移</small></div></li></ol></aside></div>
+ <div class="section-heading compact"><h2>先读这四项</h2><span class="muted">更新：2026-10-04 · 昨晚训练已结束，控制收益未证明</span></div>
  <div class="reading-route" aria-label="研究阅读顺序">
   <a href="reader.html?path=research/zeva-rlt-implementation-2026-09-26.md"><span class="small-label">01 / 当前方案</span><h3>现在做什么</h3><p>唯一现行总说明；已有实现、待实现方法和下一步实验。</p></a>
   <a href="reader.html?path=research/experiment-log.md#evidence-summary"><span class="small-label">02 / 实验证据</span><h3>实际知道什么</h3><p>已测指标、样本范围和数据出处；哪些结论尚不能成立。</p></a>
-  <a href="research/papers/interaction-memory-2026-10-03/index.html"><span class="small-label">03 / 论文版本</span><h3>论文写到哪里</h3><p>v2 固定初稿；最新纠错预算协议尚未完整纳入。</p></a>
+  <a href="research/papers/interaction-memory-2026-10-03/index.html"><span class="small-label">03 / 论文版本</span><h3>论文写到哪里</h3><p>v2 固定初稿；尚未纳入 10-04 控制结果与新增协议。</p></a>
   <a href="reader.html?path=research/literature/rlt-followups.md"><span class="small-label">04 / 外部文献</span><h3>与别人如何区分</h3><p>论文关系与核验状态；作者结果不等于本地复现。</p></a>
  </div>
- <details class="paper-details"><summary>展开论文 v2：英文稿、中文指南与完整下载</summary><div class="publication-panel" aria-labelledby="manuscriptTitle"><div><span class="small-label">MANUSCRIPT v2 · 2026-10-03</span><h2 id="manuscriptTitle">IM-RLT：英文论文 v2 与实验指南</h2><p>按 eRLT／SmoothRL 的单栏论文结构重写，LaTeX 编译为 16 页，含 2 幅图、7 张表和 26 篇文献。现有诊断与待测控制结果明确分开。</p><p class="muted">版本差异：最新固定 expert 恢复与四组纠错预算协议见<a href="reader.html?path=research/zeva-rlt-implementation-2026-09-26.md#versions">当前方案</a>；v2 尚未完整纳入。</p></div><div class="publication-links"><a class="button primary" href="research/papers/interaction-memory-2026-10-03/paper_en.html">阅读英文论文 v2 ↗</a><a class="button" href="research/papers/interaction-memory-2026-10-03/paper_en.pdf">英文 PDF ↓</a><a class="button" href="research/papers/interaction-memory-2026-10-03/experiment_guide_zh.html">中文实验指南 ↗</a><a class="button" href="research/papers/interaction-memory-2026-10-03/experiment_guide_zh.pdf">中文 PDF ↓</a><a class="text-link" href="research/papers/interaction-memory-2026-10-03/index.html">框架图、LaTeX、文献与完整下载 ↗</a></div></div>
+ <details class="paper-details"><summary>展开论文 v2：英文稿、中文指南与完整下载</summary><div class="publication-panel" aria-labelledby="manuscriptTitle"><div><span class="small-label">MANUSCRIPT v2 · 2026-10-03</span><h2 id="manuscriptTitle">IM-RLT：英文论文 v2 与实验指南</h2><p>按 eRLT／SmoothRL 的单栏论文结构重写，LaTeX 编译为 16 页，含 2 幅图、7 张表和 26 篇文献。现有诊断与待测控制结果明确分开。</p><p class="muted">版本差异：10-04 控制结果及最新纠错预算协议见<a href="reader.html?path=research/zeva-rlt-implementation-2026-09-26.md#versions">当前方案</a>；v2 尚未完整纳入。</p></div><div class="publication-links"><a class="button primary" href="research/papers/interaction-memory-2026-10-03/paper_en.html">阅读英文论文 v2 ↗</a><a class="button" href="research/papers/interaction-memory-2026-10-03/paper_en.pdf">英文 PDF ↓</a><a class="button" href="research/papers/interaction-memory-2026-10-03/experiment_guide_zh.html">中文实验指南 ↗</a><a class="button" href="research/papers/interaction-memory-2026-10-03/experiment_guide_zh.pdf">中文 PDF ↓</a><a class="text-link" href="research/papers/interaction-memory-2026-10-03/index.html">框架图、LaTeX、文献与完整下载 ↗</a></div></div>
  </details>
  <div id="status"><div class="section-heading compact"><h2>当前证据快照</h2><span id="statusDate" class="muted"></span></div><div id="statusMetrics" class="metrics"><p class="muted">正在加载…</p></div><details class="more-evidence"><summary>全部指标与最新判断</summary><div id="allEvidence"></div></details><p class="evidence-rule">证据口径：工程跑通、预测更准、闭环更好、跨任务迁移分别记录；汇总整理日期不是实验日期，原始日志部分未公开。<a href="reader.html?path=research/experiment-log.md#evidence-summary">逐项查看来源与边界 ↗</a></p></div>
  <div id="plan" class="next-panel"><div><span class="small-label">NEXT EXPERIMENTS</span><h2>接下来，验证什么？</h2><p class="muted">由最新证据决定优先级。</p></div><div id="nextActions"></div></div>
 </section>
+<section id="understand" class="explainer">
+ <div class="section-heading"><div><div class="eyebrow">先讲清楚，再看证据</div><h2>我们到底给 RLT 加了什么？</h2><p class="muted">方法按钮解释信息流。结果滑块显示实测数据，两者不混用。</p></div><a class="text-link" href="reader.html?path=research/zeva-rlt-implementation-2026-09-26.md">完整方案 ↗</a></div>
+ <p class="ex-pitch">冻结 VLA 描述当前场景。过去的命令与响应补充执行经验。我们检验这些信息能否帮助小 actor／critic 学得更快，并减少纠错。<strong>这些收益仍待证明。</strong></p>
+ <div class="ex-panel ex-latest"><h3>最新实测：四组各 64 回合，尚无记忆收益</h3><div class="ex-table-wrap"><table><thead><tr><th>零 context</th><th>固定响应</th><th>响应关闭历史</th><th>reference-only</th></tr></thead><tbody><tr><td data-label="零 context"><strong>16/64</strong></td><td data-label="固定响应"><strong>15/64</strong></td><td data-label="响应关闭历史"><strong>18/64</strong></td><td data-label="reference-only"><strong>19/64</strong></td></tr></tbody></table></div><p class="ex-foot">第 275 轮模型；四个评估 seed；一个训练 seed；同初态指纹；权重冻结。关闭历史改变了输入分布，不能替代重新训练的对照。<a href="reader.html?path=research/progress-2026-10-04.md">结果与局限 ↗</a> · <a href="data/zeva-frozen-eval-2026-10-04.json">逐回合 JSON ↗</a> · <a href="research/figures/zeva-results-2026-10-04.svg">下载图表 ↗</a></p></div>
+ <div class="explainer-grid">
+  <article class="ex-panel"><h3>一条经验怎样进入下一次决策</h3>
+   <div class="ex-choice" role="group" aria-label="选择方法"><button type="button" data-method="zero" aria-pressed="false">零条件</button><button type="button" data-method="response" aria-pressed="true">固定响应</button><button type="button" data-method="learned" aria-pressed="false">学习经验 · 待实现</button></div>
+   <p id="methodStatus" class="ex-status" aria-live="polite"></p>
+   <div class="ex-flow" aria-label="先读取过去，再执行动作，最后记录后果">
+    <div class="ex-node" data-flow-step="0"><span>① 当前观测</span><b>冻结 VLA 特征</b></div>
+    <div class="ex-node" data-flow-step="1"><span>② 此前完成的历史</span><b id="conditionName">固定响应统计</b></div>
+    <div class="ex-node" data-flow-step="2"><span>③ 选择并执行动作</span><b>reference / 小 actor</b></div>
+    <div class="ex-node" data-flow-step="3"><span>④ 得到真实后继</span><b>写入下一次可用的经验</b></div>
+   </div>
+   <p id="methodDetail" class="ex-detail"></p><p id="flowDetail" aria-live="polite"></p><button id="advanceFlow" type="button" class="button ex-step">下一步 →</button>
+   <p class="ex-foot">replay 用于更新参数；记忆用于改变当前输入。两者不是同一种机制。这里是流程说明，不是物理仿真。</p>
+  </article>
+  <article class="ex-panel"><h3>昨晚的匹配训练得到什么？</h3><p class="ex-evidence">最后共同保存点：两组均为 3/8。尚无明确记忆优势。</p>
+   <label for="checkpointSlider"><b id="checkpointLabel">共同第 275 轮</b></label><input id="checkpointSlider" class="ex-range" type="range" min="0" max="10" step="1" value="10" aria-label="选择共同 checkpoint">
+   <div class="ex-result" aria-live="polite"><article class="zero"><span>零 context</span><strong id="zeroResult">3/8</strong><small id="zeroBudget"></small></article><article class="response"><span>固定响应</span><strong id="responseResult">3/8</strong><small id="responseBudget"></small></article></div>
+   <div id="trainingCurve"></div><p id="checkpointInterpretation" class="ex-caption" aria-live="polite"></p>
+   <p class="ex-foot">同一训练 seed；每次 8 个评估 lane。相同轮数不等于相同更新数。没有 expert，也没有 Stage 1B。</p>
+   <details><summary>展开全部共同保存点</summary><div class="ex-table-wrap"><table><thead><tr><th>轮数</th><th>零条件</th><th>固定响应</th><th>更新数：零 / 响应</th></tr></thead><tbody id="checkpointTable"></tbody></table></div></details>
+   <div class="ex-choice"><button id="downloadResults" type="button">下载这张表 CSV</button><a class="text-link" href="data/zeva-matched-results-2026-10-04.json">完整结果 JSON ↗</a></div>
+  </article>
+ </div>
+ <p class="ex-caption"><b>下一步：</b>四组冻结复评已完成。只有 26/64 回合到达 actor 接管阶段。先检查 reference 到达能力，再用同数据比较 BC-only 与 Q+BC。<a href="reader.html?path=research/progress-2026-10-04.md">查看本次执行记录 ↗</a></p>
+</section>
+
 <section id="logs">
  <div class="section-heading"><div><div class="eyebrow">02 / DAILY RESEARCH</div><h2>每日科研进度</h2><p class="muted">保留当时的结果与负结果；实验事实以对应原记录为准，执行顺序以“当前方案”为准。</p></div><a class="text-link" href="reader.html?path=research/experiment-log.md">完整实验日志 ↗</a></div>
  <div class="toolbar"><label class="search-label"><span>搜索进度</span><input id="progressSearch" type="search" placeholder="搜索 FLARE、负结果、VR…"></label><label><span>日期</span><select id="progressDate"><option value="all">全部日期</option></select></label></div>

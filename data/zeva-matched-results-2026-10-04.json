@@ -1,0 +1,485 @@
+{
+  "as_of": "2026-10-04T12:37:56.780966+08:00",
+  "campaign": "zeva_matched_20261003_164216",
+  "code_revision": "91f7bdfad49d967f84b15e040d59c15ff9b78310",
+  "task": "PegInsertionSideWideClearance-v1",
+  "training_seed": 1234,
+  "env_seed": 2026,
+  "train_envs": 4,
+  "eval_envs": 8,
+  "episode_ticks": 500,
+  "limit_hours": 8,
+  "last_common_checkpoint": 275,
+  "runs": {
+    "zero": {
+      "completed_logged_iterations": 299,
+      "actor_updates": 6954,
+      "critic_updates": 6954,
+      "recorded_transitions": 6547,
+      "exit_code": 124,
+      "stopped_at": "2026-10-04T00:42:17+08:00",
+      "last_checkpoint": 275,
+      "last_successes": 3,
+      "last_eval_episodes": 8,
+      "all_logged_scalars_finite": true,
+      "common_checkpoint": {
+        "iteration": 275,
+        "successes": 3,
+        "episodes": 8,
+        "recorded_transitions": 5914,
+        "actor_updates": 6321
+      },
+      "evaluations": [
+        {
+          "iteration": 25,
+          "successes": 3,
+          "episodes": 8,
+          "success_rate": 0.375,
+          "recorded_transitions": 675,
+          "actor_updates": 1082
+        },
+        {
+          "iteration": 50,
+          "successes": 3,
+          "episodes": 8,
+          "success_rate": 0.375,
+          "recorded_transitions": 1127,
+          "actor_updates": 1534
+        },
+        {
+          "iteration": 75,
+          "successes": 3,
+          "episodes": 8,
+          "success_rate": 0.375,
+          "recorded_transitions": 1910,
+          "actor_updates": 2317
+        },
+        {
+          "iteration": 100,
+          "successes": 1,
+          "episodes": 8,
+          "success_rate": 0.125,
+          "recorded_transitions": 2255,
+          "actor_updates": 2662
+        },
+        {
+          "iteration": 125,
+          "successes": 3,
+          "episodes": 8,
+          "success_rate": 0.375,
+          "recorded_transitions": 2499,
+          "actor_updates": 2906
+        },
+        {
+          "iteration": 150,
+          "successes": 3,
+          "episodes": 8,
+          "success_rate": 0.375,
+          "recorded_transitions": 3341,
+          "actor_updates": 3748
+        },
+        {
+          "iteration": 175,
+          "successes": 2,
+          "episodes": 8,
+          "success_rate": 0.25,
+          "recorded_transitions": 3727,
+          "actor_updates": 4134
+        },
+        {
+          "iteration": 200,
+          "successes": 2,
+          "episodes": 8,
+          "success_rate": 0.25,
+          "recorded_transitions": 4303,
+          "actor_updates": 4710
+        },
+        {
+          "iteration": 225,
+          "successes": 3,
+          "episodes": 8,
+          "success_rate": 0.375,
+          "recorded_transitions": 4714,
+          "actor_updates": 5121
+        },
+        {
+          "iteration": 250,
+          "successes": 4,
+          "episodes": 8,
+          "success_rate": 0.5,
+          "recorded_transitions": 5127,
+          "actor_updates": 5534
+        },
+        {
+          "iteration": 275,
+          "successes": 3,
+          "episodes": 8,
+          "success_rate": 0.375,
+          "recorded_transitions": 5914,
+          "actor_updates": 6321
+        }
+      ],
+      "sources": [
+        {
+          "name": "events.out.tfevents.1791017177.inspur.2598517.0",
+          "sha256": "66e7cd3e8187d0131d8230a43fc6fbc17a23cfaf34702b34444ce3f146ee595e"
+        }
+      ]
+    },
+    "response": {
+      "completed_logged_iterations": 309,
+      "actor_updates": 5851,
+      "critic_updates": 5851,
+      "recorded_transitions": 5407,
+      "exit_code": 124,
+      "stopped_at": "2026-10-04T00:42:17+08:00",
+      "last_checkpoint": 300,
+      "last_successes": 4,
+      "last_eval_episodes": 8,
+      "all_logged_scalars_finite": true,
+      "common_checkpoint": {
+        "iteration": 275,
+        "successes": 3,
+        "episodes": 8,
+        "recorded_transitions": 4863,
+        "actor_updates": 5307
+      },
+      "evaluations": [
+        {
+          "iteration": 25,
+          "successes": 2,
+          "episodes": 8,
+          "success_rate": 0.25,
+          "recorded_transitions": 411,
+          "actor_updates": 855
+        },
+        {
+          "iteration": 50,
+          "successes": 4,
+          "episodes": 8,
+          "success_rate": 0.5,
+          "recorded_transitions": 868,
+          "actor_updates": 1312
+        },
+        {
+          "iteration": 75,
+          "successes": 3,
+          "episodes": 8,
+          "success_rate": 0.375,
+          "recorded_transitions": 1353,
+          "actor_updates": 1797
+        },
+        {
+          "iteration": 100,
+          "successes": 2,
+          "episodes": 8,
+          "success_rate": 0.25,
+          "recorded_transitions": 1892,
+          "actor_updates": 2303
+        },
+        {
+          "iteration": 125,
+          "successes": 2,
+          "episodes": 8,
+          "success_rate": 0.25,
+          "recorded_transitions": 2228,
+          "actor_updates": 2672
+        },
+        {
+          "iteration": 150,
+          "successes": 2,
+          "episodes": 8,
+          "success_rate": 0.25,
+          "recorded_transitions": 2722,
+          "actor_updates": 3166
+        },
+        {
+          "iteration": 175,
+          "successes": 3,
+          "episodes": 8,
+          "success_rate": 0.375,
+          "recorded_transitions": 3244,
+          "actor_updates": 3688
+        },
+        {
+          "iteration": 200,
+          "successes": 4,
+          "episodes": 8,
+          "success_rate": 0.5,
+          "recorded_transitions": 3566,
+          "actor_updates": 4010
+        },
+        {
+          "iteration": 225,
+          "successes": 2,
+          "episodes": 8,
+          "success_rate": 0.25,
+          "recorded_transitions": 4040,
+          "actor_updates": 4484
+        },
+        {
+          "iteration": 250,
+          "successes": 4,
+          "episodes": 8,
+          "success_rate": 0.5,
+          "recorded_transitions": 4328,
+          "actor_updates": 4772
+        },
+        {
+          "iteration": 275,
+          "successes": 3,
+          "episodes": 8,
+          "success_rate": 0.375,
+          "recorded_transitions": 4863,
+          "actor_updates": 5307
+        },
+        {
+          "iteration": 300,
+          "successes": 4,
+          "episodes": 8,
+          "success_rate": 0.5,
+          "recorded_transitions": 5185,
+          "actor_updates": 5629
+        }
+      ],
+      "sources": [
+        {
+          "name": "events.out.tfevents.1791017176.inspur.2598441.0",
+          "sha256": "9f49461a0f44583197d4666aa9dd30dc20a02bb3351ace60b626b20ebebd6ec8"
+        }
+      ]
+    }
+  },
+  "common_evaluations": [
+    {
+      "iteration": 25,
+      "zero": {
+        "iteration": 25,
+        "successes": 3,
+        "episodes": 8,
+        "success_rate": 0.375,
+        "recorded_transitions": 675,
+        "actor_updates": 1082
+      },
+      "response": {
+        "iteration": 25,
+        "successes": 2,
+        "episodes": 8,
+        "success_rate": 0.25,
+        "recorded_transitions": 411,
+        "actor_updates": 855
+      }
+    },
+    {
+      "iteration": 50,
+      "zero": {
+        "iteration": 50,
+        "successes": 3,
+        "episodes": 8,
+        "success_rate": 0.375,
+        "recorded_transitions": 1127,
+        "actor_updates": 1534
+      },
+      "response": {
+        "iteration": 50,
+        "successes": 4,
+        "episodes": 8,
+        "success_rate": 0.5,
+        "recorded_transitions": 868,
+        "actor_updates": 1312
+      }
+    },
+    {
+      "iteration": 75,
+      "zero": {
+        "iteration": 75,
+        "successes": 3,
+        "episodes": 8,
+        "success_rate": 0.375,
+        "recorded_transitions": 1910,
+        "actor_updates": 2317
+      },
+      "response": {
+        "iteration": 75,
+        "successes": 3,
+        "episodes": 8,
+        "success_rate": 0.375,
+        "recorded_transitions": 1353,
+        "actor_updates": 1797
+      }
+    },
+    {
+      "iteration": 100,
+      "zero": {
+        "iteration": 100,
+        "successes": 1,
+        "episodes": 8,
+        "success_rate": 0.125,
+        "recorded_transitions": 2255,
+        "actor_updates": 2662
+      },
+      "response": {
+        "iteration": 100,
+        "successes": 2,
+        "episodes": 8,
+        "success_rate": 0.25,
+        "recorded_transitions": 1892,
+        "actor_updates": 2303
+      }
+    },
+    {
+      "iteration": 125,
+      "zero": {
+        "iteration": 125,
+        "successes": 3,
+        "episodes": 8,
+        "success_rate": 0.375,
+        "recorded_transitions": 2499,
+        "actor_updates": 2906
+      },
+      "response": {
+        "iteration": 125,
+        "successes": 2,
+        "episodes": 8,
+        "success_rate": 0.25,
+        "recorded_transitions": 2228,
+        "actor_updates": 2672
+      }
+    },
+    {
+      "iteration": 150,
+      "zero": {
+        "iteration": 150,
+        "successes": 3,
+        "episodes": 8,
+        "success_rate": 0.375,
+        "recorded_transitions": 3341,
+        "actor_updates": 3748
+      },
+      "response": {
+        "iteration": 150,
+        "successes": 2,
+        "episodes": 8,
+        "success_rate": 0.25,
+        "recorded_transitions": 2722,
+        "actor_updates": 3166
+      }
+    },
+    {
+      "iteration": 175,
+      "zero": {
+        "iteration": 175,
+        "successes": 2,
+        "episodes": 8,
+        "success_rate": 0.25,
+        "recorded_transitions": 3727,
+        "actor_updates": 4134
+      },
+      "response": {
+        "iteration": 175,
+        "successes": 3,
+        "episodes": 8,
+        "success_rate": 0.375,
+        "recorded_transitions": 3244,
+        "actor_updates": 3688
+      }
+    },
+    {
+      "iteration": 200,
+      "zero": {
+        "iteration": 200,
+        "successes": 2,
+        "episodes": 8,
+        "success_rate": 0.25,
+        "recorded_transitions": 4303,
+        "actor_updates": 4710
+      },
+      "response": {
+        "iteration": 200,
+        "successes": 4,
+        "episodes": 8,
+        "success_rate": 0.5,
+        "recorded_transitions": 3566,
+        "actor_updates": 4010
+      }
+    },
+    {
+      "iteration": 225,
+      "zero": {
+        "iteration": 225,
+        "successes": 3,
+        "episodes": 8,
+        "success_rate": 0.375,
+        "recorded_transitions": 4714,
+        "actor_updates": 5121
+      },
+      "response": {
+        "iteration": 225,
+        "successes": 2,
+        "episodes": 8,
+        "success_rate": 0.25,
+        "recorded_transitions": 4040,
+        "actor_updates": 4484
+      }
+    },
+    {
+      "iteration": 250,
+      "zero": {
+        "iteration": 250,
+        "successes": 4,
+        "episodes": 8,
+        "success_rate": 0.5,
+        "recorded_transitions": 5127,
+        "actor_updates": 5534
+      },
+      "response": {
+        "iteration": 250,
+        "successes": 4,
+        "episodes": 8,
+        "success_rate": 0.5,
+        "recorded_transitions": 4328,
+        "actor_updates": 4772
+      }
+    },
+    {
+      "iteration": 275,
+      "zero": {
+        "iteration": 275,
+        "successes": 3,
+        "episodes": 8,
+        "success_rate": 0.375,
+        "recorded_transitions": 5914,
+        "actor_updates": 6321
+      },
+      "response": {
+        "iteration": 275,
+        "successes": 3,
+        "episodes": 8,
+        "success_rate": 0.375,
+        "recorded_transitions": 4863,
+        "actor_updates": 5307
+      }
+    }
+  ],
+  "conclusion": "No demonstrated control advantage for fixed response memory in this single training-seed pilot.",
+  "limitations": [
+    "Eight evaluation lanes per checkpoint; repeated evaluation does not establish independent training-seed replication.",
+    "Same outer iteration is not the same number of recorded transitions or learner updates.",
+    "The routing rate denominator includes all scheduled chunk slots, not only executed control ticks.",
+    "No online expert, Stage 1B, retry-memory or transfer evaluation.",
+    "The timeout can interrupt evaluation; zero has no completed iteration-300 result.",
+    "Model-only evaluation does not validate replay resume."
+  ],
+  "replay_checkpoint_audit": {
+    "iteration": 275,
+    "zero": {
+      "indexed_trajectories": 5914,
+      "saved_trajectory_files": 2048
+    },
+    "response": {
+      "indexed_trajectories": 4863,
+      "saved_trajectory_files": 2048
+    },
+    "full_resume_validated": false
+  }
+}

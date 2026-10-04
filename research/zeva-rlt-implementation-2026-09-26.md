@@ -1,104 +1,148 @@
-# 当前研究方案：用交互记忆减少 RLT 的重复试错与纠错需求
+# 当前方案：让 RLT 读取已完成的交互经验
 
-这份文档统一说明本项目现在研究什么、代码做到哪里、已有证据支持什么，以及下一步先做哪些实验。方案与资料更新日期为 **2026-10-03**；同日 16:42 已启动零 context／固定响应的双卡匹配 pilot，短程链路通过，正式结果待核查。实验按各自发生日期记录。文件名保留首次建档日期，以保证旧链接继续可用。
+这份说明回答三个问题：我们改什么，已经测到什么，下一步测什么。**更新于 2026-10-04。当前还没有证据证明记忆提高了控制成功率。** 文件名保留原日期，旧链接继续可用。
 
-[研究首页](../index.html) · [证据与实验总日志](experiment-log.md) · [论文 v2 与下载](papers/interaction-memory-2026-10-03/index.html) · [RLT 后续工作](literature/rlt-followups.md)
+[交互式讲解与结果](../index.html#understand) · [实验总日志](experiment-log.md) · [今日核查](progress-2026-10-04.md) · [固定论文 v2](papers/interaction-memory-2026-10-03/index.html)
 
 <a id="reading-order"></a>
-## 从这几份资料开始
+## 先用三句话讲清楚
 
-| 你要回答的问题 | 应该读哪里 | 如何使用 |
-|---|---|---|
-| 现在研究什么、先实现什么？ | **本页** | 当前方法与执行顺序的唯一总说明；拟议设计不等于已实现 |
-| 实际测到了什么？ | [证据总日志](experiment-log.md)与其中的结构化数据 | 以数据、实验日期、配置和局限为准，不能从方案推导结果 |
-| 论文现在写成什么样？ | [英文论文 v2](papers/interaction-memory-2026-10-03/paper_en.html) | 2026-10-03 固定版本初稿，非投稿完成稿；尚未纳入本页的完整纠错预算实验 |
-| 别人做过什么、代码是否公开？ | [后续论文图谱](literature/rlt-followups.md)、[仿真 baseline 审计](literature/rlt-simulation-baselines-2026-10-03.md) | 作者结果、源码核查与本地复现分开；审计通过不等于训练已复现 |
-| 为什么以前选择了别的路线？ | [决策日志](decision-log.md)与首页“历史资料”筛选 | 查阅过程；旧文件里的“当前主线”不能覆盖本页 |
+冻结的 VLA 根据当前观测生成 reference 动作。我们让小 actor／critic 同时读取过去命令及其真实响应。我们要检验：这些额外信息能否减少重复试错，并减少达到相同成功率所需的纠错。
 
-若资料不一致，先判断它是在描述**实验事实、当前提案还是历史版本**。实验事实以对应原始记录及其公开摘要为准；当前提案以本页为准；论文保留版本内原文，差异在下文明确列出。公开仓库保留部分原始数据的哈希，但哈希本身不能替代原始日志或独立复现。
+这是研究目标。昨晚只测试了现有的固定响应统计，没有测试经验预训练或纠错节省。
+
+| 问题 | 唯一维护入口 |
+|---|---|
+| 现在研究什么？ | 本页：当前方法和执行顺序。 |
+| 实际测到了什么？ | [实验总日志](experiment-log.md)：结果、数据和局限。 |
+| 论文写成什么样？ | [论文 v2](papers/interaction-memory-2026-10-03/index.html)：10-03 的固定版本。 |
+| 别人做过什么？ | [后续工作](literature/rlt-followups.md)、[开源 baseline 核查](literature/rlt-simulation-baselines-2026-10-03.md)：作者结果不算本地复现。 |
 
 <a id="problem"></a>
-## 问题与可检验的主张
+## 为什么需要交互经验
 
-冻结的 VLA／RL token 未必充分描述当前执行条件。相同视觉状态和动作命令，在摩擦、刚度、延迟或接触状态不同的情况下可能产生不同响应。我们研究：机器人能否读取**已经完成的命令—响应记录**，形成一个局部经验条件，帮助小 actor／critic 更快学习，并在维持无辅助成功率的同时减少外部纠错需求？
+图像不能保证说明当前执行条件。同一个命令可能产生不同的关节位移。过去的命令和响应，可能补充这个信息。
 
-RL 的 reward、replay 和参数更新本来就利用试错。本项目的增量必须来自**决策时可读取的交互上下文**，而非把普通 replay 改名为“记忆”。短期历史提供近期执行状态；较长期的有界经验库提供更早的响应样本。两者都需要无记忆、近期历史与固定响应统计对照。
+但 RL 本来就在利用旧数据。新增方法必须与原有机制分开。
 
-“物理交互经验”指已观察到的命令及其真实后果。“物理规律”在当前阶段最多指特定条件下可复用的响应关系；没有跨条件、跨任务留出实验时，不能称为通用规律。“自进化”仍是研究动机，尚无持续自主能力增长的证据。
+| 机制 | 怎样使用旧数据 | 怎样验证 |
+|---|---|---|
+| replay | 采样旧 transition，更新网络参数 | 这是 baseline 已有的能力。 |
+| 决策记忆 | 把历史作为当前 actor／critic 的输入 | 匹配训练；冻结参数后比较有／无历史。 |
+| 经验迁移 | 把源条件的经验带到目标条件 | 比较空库、相关源库、不匹配源库。 |
+
+“物理交互经验”指实际命令和真实后果。“物理规律”在当前阶段最多指局部响应关系。我们尚未证明通用摩擦、刚度、接触定律或持续自主能力增长。
 
 <a id="implementation"></a>
-## 已有实现与拟议方法必须分开
+## 一次动作怎样变成下一次可用的经验
 
-| 模块 | 既有 Zeva 启发分支的记录 | 当前拟议 IM-RLT |
+先读取过去，再执行动作。当前动作的后果只能在执行完成后写入。
+
+| 顺序 | 系统做什么 | 信息来自哪里 |
 |---|---|---|
-| 状态坐标 | 冻结 VLA／RLT；保留 reference | 保留验收后的 baseline Stage 1 |
-| 一条经验 | 110 维数值记录：9 维初始关节、10×8 维已执行命令、9 维关节变化、10 位有效性与 2 个结束标志 | 加入固定 encoder 的视觉起点／后继特征、来源与时间信息；原始记录保留 |
-| 存储与读取 | 4 条近期记录、容量 32 的 archive、检索 4 条；已有 64 维 reader 与响应统计对照 | 首轮沿用这些小容量，学习 64 维经验条件；容量调整作为消融 |
-| 梯度与训练 | reader 接收 critic 的 TD 梯度；actor 读取 detach 的 context | Stage 1B 用后果监督训练 encoder／reader，首轮 Stage 2 冻结它们，只训小 actor／critic |
-| 部署范围 | 有 smoke、预测诊断与未匹配的在线 run | 新 Stage 1B、稳定匹配闭环、纠错节省与迁移均未完成 |
+| 1 | 冻结 VLA 生成当前特征和 reference | 当前图像、任务、本体观测 |
+| 2 | reader 生成 64 维经验条件 `c_t` | 此前已完成的命令—响应记录 |
+| 3 | 小 actor 生成动作，critic 评估动作 | 当前特征、reference、经验条件 |
+| 4 | 环境 gate 选择 reference 或 actor | 当前操作阶段；本轮无 expert |
+| 5 | 环境执行实际命令，collector 写入后果 | 实际执行前缀和真实后继 |
+| 6 | 下一次决策读取历史；训练器采样 replay | 前者改变输入，后者更新参数 |
 
-上表既有实现来自 [v2 附录与证据清单](papers/interaction-memory-2026-10-03/index.html)记录的 revision `f2d1cf64`、诊断 revision `abb43823`。10-03 新训练固定为 `91f7bdfa`：新增同容量零 context 对照，zero／response 均无可训练 reader 参数；“reader 接收 TD 梯度”只适用于 trainable attention。[启动与核查记录](progress-2026-10-03.md#matched-launch)已确认本次 GPU 链路，尚未实现 Stage 1B。早期“尚未接入 RLinf”的说法属于 09-26 原型阶段，见[整理前快照](archive/zeva-rlt-before-organization-2026-10-03.md)。
+可点击的流程图见[首页讲解](../index.html#understand)。失败记录可以用于 TD 和后果预测；失败动作不能自动成为正确的 BC 标签。padding 和无效 terminal 数据必须在非线性计算前屏蔽。reset 后首帧不能冒充上个回合的后继。
 
-### 一个决策怎样使用经验
+### 哪些模块已经存在
 
-1. 当前观测经冻结 encoder 得到 `z_t`；用当前本体观测与 reference 形成 baseline 输入。reader 只能访问 `t` 之前已完成的记录，得到 `c_t`。
-2. actor 读取当前状态、reference 与 `c_t` 输出动作；critic 读取同样的状态条件及其动作。首轮不对每个候选调用预测器做 planning。
-3. 环境执行实际动作。若 expert 接管，记录接管后的实际命令及来源；实际执行前缀用于后果学习，critic 的动作语义沿用验收后的 RLT contract。
-4. 收到真实后继观测后才写入本条经验。失败记录也可用于后果监督与 TD 学习；失败动作不自动成为 BC 的正确标签。
-5. replay 保存采样时的历史快照或可重建的因果索引及编码版本。不能在离线更新时访问该 transition 之后才产生的经验。
+下面区分已有代码和待验证设计。两者不能混写为实验结果。
 
-无效 terminal／padding 在 normalization、MLP 和 attention 之前替换为有限中性值；reset 后首帧不能代替前一回合的 terminal 后果。空记忆返回零 context。
+| 模块 | 已实现 | 尚未完成 |
+|---|---|---|
+| Stage 1 | 冻结 VLA／RL token checkpoint | 不能据此声称 token 已学到物理规律。 |
+| 交互记录 | 9 维起始关节、10×8 维命令、9 维变化、10 位有效性、2 个结束标志，共 110 维 | 视觉后果、接触语义与来源版本等扩展。 |
+| 历史存储 | 4 条近期记录、容量 32 的 archive、检索 4 条 | 跨条件长期记忆收益。 |
+| 固定响应 reader | 七个响应斜率和七个支持度，补齐为 64 维；无可训练参数 | 明确的控制收益。 |
+| attention reader | 64 维条件；critic TD 更新 reader；actor 读取 detach 的条件 | 更可靠的经验监督。本轮未训练此 reader。 |
+| Stage 2 | 在线更新小 actor／critic、评估、保存 | 稳定收敛、纠错节省与迁移。 |
 
-### Stage 1B 的第一版规格
+历史关节值来自环境原始记录。actor 的本体输入经过 VLA 数据变换。两者不能直接混用尺度。响应统计描述局部控制响应，不直接测量接触力或刚度。
 
-原 Stage 1 保持 baseline 的动作与 token 训练。Stage 1B 额外使用带时序和真实后继的源轨迹，训练经验 encoder、reader 与小预测头；监督目标为**归一化关节变化与冻结后继视觉 latent 的加权平方误差**。经验条件维度先设为 **64**，预测窗口预先固定为 **10 个控制 tick**，无有效完整后继的窗口不进入这一主损失。未来终止才确定的实际时长不能作为该预测器的输入。
+### 下一版想学习什么
 
-训练、验证和最终测试按完整轨迹／实例分组；归一化与选参只使用 train／validation。decoder 默认直接预测未来视觉特征，增量预测作为消融。Stage 2 首轮冻结新 encoder／reader，保留 critic-only context、无历史、打乱历史、去历史动作、去目标动作以及动作预测监督对照。
+拟议 Stage 1B 使用真实时序轨迹，学习一个 64 维经验条件。小预测头根据当前状态、已执行动作和经验条件，预测 10 个控制 tick 后的变化。
 
-这与论文 v2 的起始规格一致。旧网页中的 **128 维＋Huber＋未限定的时长输入**属于此前候选，不再并列作为当前默认；其原文保存在历史快照中。固定响应统计仍是必须击败的强基线，不是最终方法已被证实的结论。
+首版用平方误差监督归一化关节变化和冻结后继视觉 latent。Stage 2 首轮冻结经验 encoder／reader，只训练小 actor／critic。之后再单独测试在线更新经验编码器。
 
-默认每个 episode 清空两个存储。跨尝试保留必须单独开启并限制为同一实例；迁移实验使用冻结源库与独立目标库。短期／长期是保留范围的区别，不意味着当前代码已经支持可靠跨任务经验迁移。
+| 约束 | 原因 |
+|---|---|
+| 按轨迹或实例划分数据 | 避免相邻帧泄漏。 |
+| 只用实际执行前缀和真实后继 | 候选动作和 reset 画面不是真实后果。 |
+| replay 保存当时的历史快照或因果索引 | 训练不能读取未来经验。 |
+| 比较无动作、无历史和固定响应模型 | 排除场景或时间相关性。 |
+| 最后比较相同预算下的实际成功率 | 预测更准不等于控制更好。 |
 
-<a id="evidence"></a>
-## 当前最可信的判断及其边界
+Stage 1B、action-expert 约束、跨任务记忆尚未完成。FLARE 是后果表征监督的参考；RMA、PEARL 是执行条件推断的近邻。新颖性需逐项比较，见[文献图谱](literature/rlt-followups.md)。
 
-现有开发诊断支持“交互响应包含预测信息，读取方法很关键”。它们尚未支持“记忆提高无辅助成功率、加速 Stage 2 收敛或减少人工干预”。[证据总日志](experiment-log.md#evidence-summary)集中列出数据来源、日期与能支持的结论，避免在多份总览里维护不同版本的结果表。
+## 昨晚实验回答了什么
 
-论文中的正式控制、条件变化、迁移表仍是待测设计。`8/20` 是 09-30 的 ManiSkill Stage 1 reference；开发预测 MSE 不是成功率；12 小时 memory run 没有匹配无记忆长跑。它们不可拼接成一条新方法优于 baseline 的结果。
+两组使用同容量头部、相同初始化规则和相同预算上限。区别是决策输入中的历史条件。代码固定为 `91f7bdfa`，两组均在 8 小时上限退出。
+
+| 项目 | 零 context | 固定响应 |
+|---|---:|---:|
+| 完整记录的训练轮数 | 299 | 309 |
+| actor 实际更新次数 | 6954 | 5851 |
+| 最后 checkpoint | 275 | 300 |
+| 共同第 250 轮评估 | 4/8 | 4/8 |
+| 共同第 275 轮评估 | 3/8 | 3/8 |
+
+**当前结论：尚未观察到固定响应的明确控制优势。** 更新和保存链路已跑通。共同保存点的成功数相同。这不能证明记忆有效，也不能证明记忆无效。
+
+每次只有八个评估 lane，且只有一个训练 seed。相同轮数不等于相同 replay 数量或梯度更新次数。两组最后评估的轮次不同，不能直接比较 37.5% 与 50%。[完整数据](../data/zeva-matched-results-2026-10-04.json)保留全部周期结果。
 
 <a id="next-experiments"></a>
-## 下一步实验：先验收，再检验经验是否减少纠错
+## 保存模型的复评结果与下一步
 
-当前只推进一条 Zeva 启发主线。10-03 按最新执行安排，先利用现有 ManiSkill 资产运行零 context／固定响应的匹配 pilot，检查 reader 的控制价值及 baseline 稳定性；它是下表正式实验前的单 seed 排查。AlphaBrain／LIBERO 保留为后续候选，不与本次双卡任务并跑。FLARE、Jev 与早期 Physical Token 方案保留为历史探索。
+共同第 275 轮的四组冻结评估已经完成。模型权重不变，同 seed 的初始观测指纹一致。
 
-| 顺序 | 要完成的实验 | 进入下一步的条件 |
+| 评估组 | 权重与输入 | 要回答的问题 |
 |---|---|---|
-| 0 · baseline | 按[仓库审计](literature/rlt-simulation-baselines-2026-10-03.md)先复评一个有公开权重的候选，再验证同栈 Stage 1／Stage 2；本轮先完成现有 RLinf／ManiSkill 的匹配 pilot；若基线仍不稳定，再验收 AlphaBrain／LIBERO，区分 RLT_a 与 full-token RLT | 固定代码、任务、reset、动作语义与评估；单 seed 排错后至少 3 个 seed。没有稳定 baseline 不扩网络 |
-| 1 · expert 恢复 | 从 learner 真实偏离状态采样 20–50 个恢复场景，测试固定脚本／IK expert 或已验收 teacher；不中途 reset | 能接管、有限时长恢复并交还 learner，记录恢复率与控制成本；失败则先修复 expert |
-| 2 · 小规模主对照 | 下表四组；相同初始化、demonstrations、预算上限、expert 与 gate。先一个任务、3 个 seed | 在无辅助评估下比较成功率曲线、到达预设阈值的交互量和 expert 成本；无收益则诊断而非扩大网络 |
-| 3 · 机制对照 | none／recent／attention／fixed response，再加入 Stage 1B；参数冻结后对同一实例 retain／clear | 同预算控制收益可复现；预测误差改善不能代替该条件 |
-| 4 · 条件变化与迁移 | 空库／匹配库／不匹配库；报告负迁移、恢复尝试数与完整源数据成本 | 未见物理条件、任务或实例上有独立证据，再扩展主张；真机之后另验 |
+| 零 context | 零 context 训练所得；条件为零 | 无历史训练后怎样？ |
+| 固定响应 | 响应训练所得；读取历史 | 历史组怎样？ |
+| 响应模型关闭历史 | 同一响应权重；条件为零 | 同一模型是否依赖历史？ |
+| reference-only | 全程执行冻结 VLA reference | 小 actor 改善还是退化？ |
 
-| 学习方法 | 无在线纠错 | 有限预算的固定 expert 纠错 |
+每组完成四个评估 seed，每个 16 个 lane，共 64 回合。零 context 为 16/64，固定响应为 15/64，响应模型关闭历史为 18/64，reference-only 为 19/64。[逐回合数据](../data/zeva-frozen-eval-2026-10-04.json)保留了全部结果。新 seed 不代表未见物理条件。关闭历史改变了输入分布；它不是重新训练的无记忆组，也不是跨重试的 retain／clear。
+
+只有 26/64 回合到达 actor 接管阶段。其余 38 回合在 reference 阶段失败。响应模型的动作依赖历史，但没有带来额外成功。该结果来自一个训练 seed，不能证明记忆普遍有害。
+
+**现在先诊断 baseline。** 在相同 gate 状态测 actor／reference 动作误差和 Q 排序，再用同数据、同初始化、同更新数比较 BC-only 与 Q+BC。之后回到在线匹配训练。今天的 64 回合作为开发数据；最终验收使用预先封存的新初态。
+
+| 观察 | 后续动作 |
+|---|---|
+| 动作几乎不随历史变化 | 检查输入尺度、梯度和训练信号。 |
+| 动作变化，但控制无收益 | 检查历史是否包含有用的执行条件。 |
+| 小 actor 均弱于 reference | 先修复 baseline 学习流程。 |
+| 控制收益可复现 | 再加入近期历史、attention、Stage 1B 和更多训练 seed。 |
+
+### 怎样检验减少纠错
+
+当前评估没有在线 expert，不能回答纠错节省。之后先验证固定 expert 能从 learner 的偏离状态恢复，并交还控制权。仿真不必先接 VR。
+
+| 方法 | 无在线纠错 | 有限预算 expert 纠错 |
 |---|---|---|
-| RLT，无交互记忆 | 自主 RL 基线 | 匹配的纠错基线 |
-| RLT＋交互记忆 | 检验自主学习收益 | 检验相同质量要求下能否减少纠错成本 |
+| 无记忆 RLT | 自主学习基线 | 纠错基线 |
+| 记忆 RLT | 自主学习对照 | 检验纠错成本 |
 
-四组中的“无在线纠错”仍共享约定的初始 demonstrations。实验保持同一 expert、触发 gate、接管时长上限、交还条件、冷却时间和总纠错预算上限；不强行匹配最终实际干预次数，因为它正是待测指标。先固定 gate，之后才单独研究自适应 gate。
+四组共享初始 demonstrations、expert、gate、接管时长上限和预算上限。不强行匹配实际干预次数，因为它是待测结果。报告无辅助成功率、环境控制步、训练时间、接管次数和 expert 控制时长。
 
-### 仿真不必先接 VR，但纠错链路必须真实存在
-
-[RLT 原论文](https://arxiv.org/html/2604.23073v1)中的人工作用涉及 reward／成功判定、关键阶段控制切换和动作纠正；它们应分别计数。仿真可用固定 expert 替代动作纠错，用环境信号给 reward，但不能把“无任何纠错的自主 RL”称为已经验证了纠错节省。
-
-脚本、IK 或更强 teacher 都是待验收选项。现成成功示范生成器不一定能从 learner 的失败状态恢复；例如依赖 reset 的 solver 不能直接充当在线 expert。现有 expert 配置占位、已锁存的接管逻辑，也不等于已经实现“短暂接管后交还”的协议。应先实现并验证上述第 1 步，再跑四组比较。需要真人补充时可使用鼠标／键盘等非 VR 输入，但同样要接入动作转换与接管记录。
-
-同时报告无辅助成功率、达到预设成功率所需的环境控制步与 wall-clock、实际接管次数、expert 控制 tick／时长、请求次数和示范／预训练成本。每次尝试的成功率独立报告，累计重试成功率作为补充。仿真结果最多支持“减少 expert intervention／corrective supervision”；减少人的时间需要之后的真机或真人实验。
+随后冻结参数，比较同一实例重试时保留／清空记忆。再测试条件变化和源库迁移，单列源数据成本。逐次尝试成功率是主指标；累计成功率是补充。真机与真人时间成本另行验证。
 
 <a id="versions"></a>
-## 论文版本、文献与后续维护
+## 版本与阅读规则
 
-**论文 v2（2026-10-03）**保留 16 页英文稿、2 幅图、7 张表、26 篇文献与中文指南，是固定写作快照。它已有 64 维 Stage 1B 和预算对齐的实验设计，但尚未完整纳入本页的 expert 恢复验收、四组纠错对照和干预成本口径。下一版在实际协议验收后统一改正文、表格、指南和证据清单；本次不悄悄替换 PDF。
+论文 v2 保留 10-03 的 16 页英文稿，尚未纳入昨晚结果和新评估。本说明采用 STE 的短句、统一术语和明确操作原则；中文不是 STE 标准认证文本。[写作规则与官方来源](knowledge-base-maintenance.md#clear-writing)说明具体做法。
 
-[后续工作图谱](literature/rlt-followups.md)负责说明 eRLT、SmoothRL、RouteRLT、BEE 等工作的关系；[Zeva](../notes/zeva.md)、[RMA](../notes/rma.md)、[PEARL](../notes/pearl.md)笔记用于机制比较。文献条目的已核对、初筛和待核验状态保留，作者报告不能写入本地实验结果列。
+每轮实验固定代码。开发和新 campaign 前检查官方 RLinf。10-04 main 仍为 `c70606f`，replay PR [#1623](https://github.com/RLinf/RLinf/pull/1623) 仍开放。昨晚已确认 replay 索引与保存文件不一致；新评估只加载模型权重。
 
-每次研究开发与新实验 campaign 前检查官方 RLinf main 和相关 PR，固定每轮实验 revision；replay、resume、optimizer、动作／terminal／reward 变更单独验收。此规则是执行要求，不表示后台已建立自动监控。资料更新遵循[维护规范](knowledge-base-maintenance.md)：本页更新当前方案，实验写入原日期记录，论文按版本发布，旧方案保持可追溯。
+AlphaBrain／LIBERO 保留为备用 baseline。本轮不并行切换框架。FLARE、Jev 保留历史记录。[决策日志](decision-log.md)说明路线变化。本页维护现行方案，日报记录事实，论文按版本发布。
+
+### English explanation
+
+The frozen VLA describes the current scene and generates reference actions. Past commands and measured responses can provide additional information about execution conditions. We give this information to a small actor and critic. We test whether it improves control with the same training budget. Later, we will test correction costs and transfer. The current pilot does not establish these benefits. A frozen evaluation gave 16 successes in 64 episodes without context and 15 with response memory. The reference succeeded in 19 episodes. We will first diagnose imitation error and Q-guided action changes.

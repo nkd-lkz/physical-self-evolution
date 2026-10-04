@@ -25,7 +25,7 @@ class SiteIndexTests(unittest.TestCase):
                     self.assertRegex(entry['content_date'], r'^20\d{2}-\d{2}-\d{2}$')
         # First-created filename must not override a reviewed current specification.
         meta = document_metadata(self.registry['current_path'], self.registry)
-        self.assertEqual(meta['date'], '2026-10-03')
+        self.assertEqual(meta['date'], self.registry['documents'][self.registry['current_path']]['content_date'])
 
     def test_unregistered_notes_cannot_promote_themselves_to_current(self):
         meta = document_metadata('research/new-plan-2026-09-12.md', self.registry)
