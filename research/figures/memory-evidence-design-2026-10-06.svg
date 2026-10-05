@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">Proposed interaction evidence for frozen RLT</title>
+  <desc id="desc">Past completed interactions provide short context and retrieved events. A proposed validity check and encoder supply context to the actor and critic. A control gate selects the executed action. Evidence is written only after execution. Replay updates parameters through a separate path. This diagram includes modules that are not implemented.</desc>
+  <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#546781"/></marker></defs>
+  <rect width="1200" height="650" rx="18" fill="#f7fafc"/>
+  <g font-family="Arial, sans-serif" fill="#162c42">
+    <text x="32" y="40" font-size="24" font-weight="700">Use past evidence to condition the next decision</text>
+    <text x="32" y="68" font-size="16" fill="#9a5424">PROPOSAL · Evidence archive, validity check and Stage 1B are not implemented.</text>
+    <g fill="#e5eefb" stroke="#a6bbd5" stroke-width="2">
+      <rect x="32" y="105" width="230" height="92" rx="12"/>
+      <rect x="352" y="105" width="230" height="92" rx="12"/>
+      <rect x="670" y="105" width="230" height="92" rx="12"/>
+      <rect x="982" y="105" width="186" height="92" rx="12"/>
+    </g>
+    <g font-size="18" font-weight="700">
+      <text x="50" y="137">Current observation</text><text x="370" y="137">Frozen VLA / RL token</text>
+      <text x="688" y="137">Small actor / critic</text><text x="1000" y="137">Control gate</text>
+    </g>
+    <g font-size="15"><text x="50" y="169">Image, state, task</text><text x="370" y="169">Features + reference action</text><text x="688" y="169">Read 64-D context</text><text x="1000" y="169">Reference / actor</text></g>
+    <g fill="#e9f3e9" stroke="#92b59b" stroke-width="2">
+      <rect x="32" y="279" width="242" height="102" rx="12"/>
+      <rect x="352" y="279" width="230" height="102" rx="12"/>
+      <rect x="670" y="279" width="230" height="102" rx="12"/>
+      <rect x="982" y="279" width="186" height="102" rx="12"/>
+    </g>
+    <g font-size="18" font-weight="700"><text x="50" y="310">Traceable evidence</text><text x="370" y="310">Recent + retrieved</text><text x="688" y="310">Validity + encoder</text><text x="1000" y="310">Real execution</text></g>
+    <g font-size="15"><text x="50" y="338">Frames, commands, outcomes</text><text x="50" y="362">Only completed interactions</text><text x="370" y="338">Bounded records</text><text x="370" y="362">Match conditions and source</text><text x="688" y="338">Use / downweight / hold</text><text x="688" y="362">No future evidence</text><text x="1000" y="338">Executed prefix</text><text x="1000" y="362">True next observation</text></g>
+    <g fill="none" stroke="#546781" stroke-width="2.5" marker-end="url(#arrow)">
+      <path d="M262 151H352"/><path d="M582 151H670"/><path d="M900 151H982"/>
+      <path d="M1075 197V279"/><path d="M274 330H352"/><path d="M582 330H670"/>
+      <path d="M785 279V197"/><path d="M1075 381V426H153V381"/>
+    </g>
+    <text x="800" y="242" font-size="15">Context</text><text x="391" y="449" font-size="15">Write evidence after execution; read it at a later decision</text>
+    <rect x="352" y="482" width="600" height="82" rx="12" fill="#f8efdc" stroke="#c9b789" stroke-width="2"/>
+    <text x="374" y="512" font-size="18" font-weight="700">Separate learning path: replay → parameter updates</text>
+    <text x="374" y="540" font-size="15">Use decision-time history. Failed actions are not automatically BC targets.</text>
+    <path d="M153 381V523H352" fill="none" stroke="#546781" stroke-width="2" stroke-dasharray="7 6" marker-end="url(#arrow)"/>
+    <text x="32" y="610" font-size="16" fill="#475970">Test whole episodes and local gate states separately. Current pilot has not established a control benefit.</text>
+  </g>
+</svg>

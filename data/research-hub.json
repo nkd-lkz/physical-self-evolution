@@ -1,8 +1,13 @@
 {
-  "updated": "2026-10-04",
+  "updated": "2026-10-06",
   "focus": "以 RLT 为基线，检验已完成的交互经验能否帮助学习并减少纠错。先修复 baseline 学习，再验证经验条件。",
   "question": "新复评：零 context 16/64，固定响应 15/64，reference 19/64。现有记忆未显示控制收益。",
   "featured": [
+    {
+      "path": "research/literature/embodied-memory-2026-10-06.md",
+      "label": "10-06 文献 · 记忆与经验适用范围",
+      "why": "MEM、LT-Mem、VISTA 与 Levine 原作核查；对应现有代码、流程图及小实验顺序。无新增控制结果。"
+    },
     {
       "path": "research/literature/rlt-followups.md",
       "label": "外部文献 · RLT 后续工作",
@@ -21,7 +26,7 @@
       "stage": "当前主线 · 冻结复评完成，转向 baseline 诊断",
       "tag": "当前主线",
       "hypothesis": "已完成的命令—响应记录能否在无辅助成功率不下降时，减少重复试错和外部纠错？",
-      "design": "先分离 reference 到达能力、BC 模仿误差与 Q 引导偏移。保留 64 维 Stage 1B 设计，尚未实现。",
+      "design": "先诊断 baseline。保留 64 维 Stage 1B；拟议增加证据索引与经验适用性检查，比较正确／错误历史和条件变化后的恢复。新模块尚未实现。",
       "control": "有/无记忆 × 有/无固定 expert 纠错；再比较近期历史、attention、固定响应、Stage 1B 与 retain／clear。",
       "gate": "同初始数据、预算、expert 与 gate；同时看无辅助成功率、环境控制步、接管次数和时长。预测更准不代表控制获益。",
       "path": "research/zeva-rlt-implementation-2026-09-26.md",

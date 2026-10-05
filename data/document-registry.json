@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "as_of": "2026-10-04",
+  "as_of": "2026-10-06",
   "current_path": "research/zeva-rlt-implementation-2026-09-26.md",
   "roles": {
     "current": {
@@ -47,7 +47,7 @@
     },
     "research/decision-log.md": {
       "role": "history",
-      "content_date": "2026-10-04",
+      "content_date": "2026-10-06",
       "reviewed_at": "2026-10-04"
     },
     "research/discussions/optional-components.md": {
@@ -107,7 +107,7 @@
     },
     "research/literature/reading-ledger.md": {
       "role": "literature",
-      "content_date": ""
+      "content_date": "2026-10-06"
     },
     "research/literature/reading-notes-2026-09-25.md": {
       "role": "literature",
@@ -244,7 +244,7 @@
     },
     "research/zeva-rlt-implementation-2026-09-26.md": {
       "role": "current",
-      "content_date": "2026-10-04",
+      "content_date": "2026-10-06",
       "reviewed_at": "2026-10-04",
       "summary": "唯一现行方案：已实现与拟议方法分开，64 维 Stage 1B、固定 expert 纠错对照、验收顺序与论文版本差异。"
     },
@@ -368,6 +368,10 @@
       "role": "history",
       "content_date": "2026-10-04",
       "summary": "昨晚训练结束、tmux 清理、四组各 64 回合的冻结复评与下一步诊断。"
+    },
+    "research/literature/embodied-memory-2026-10-06.md": {
+      "role": "literature",
+      "content_date": "2026-10-06"
     }
   }
 }
