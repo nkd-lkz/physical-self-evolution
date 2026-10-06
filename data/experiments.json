@@ -1,6 +1,12 @@
 [
   {
     "date": "2026-10-06",
+    "title": "Levine 的 VLA＋RL、记忆与经验回流专题入库",
+    "path": "research/literature/sergey-levine-vla-rl-2026-10-06.md",
+    "summary": "核查 23 项代表性共同署名工作，展开 MEM、RECAP、HIL-SERL／RLIF、DSRL／FRS／V-GPS、SARL、SVM、ARLI、PEARL 与 RLDG。形成三项待测方案；没有新增训练、成功率或迁移结果。同步阅读账本及首页入口。"
+  },
+  {
+    "date": "2026-10-06",
     "title": "匹配离线学习完成；两条 GPU 评估队列等待资源",
     "path": "research/progress-2026-10-06.md",
     "summary": "CPU 复用正式模型与损失，各完成 2,048 次 critic／actor 更新。BC-only／Q+BC 验证 MSE 0.004667／0.004672；热身权重和采样一致。读取实际存在的 2,048 条数据，原 replay 不变。GPU 被其他作业占用，设置有界后台复评队列；无新增控制成功率。43 项 CPU 测试通过。"

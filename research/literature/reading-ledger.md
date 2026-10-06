@@ -2,7 +2,7 @@
 
 > 建立日期：2026-09-19  
 > 更新日期：2026-10-06
-> 范围：149 项论文/项目，另列 3 项观点；10-06 新增 4 项记忆／交互相关工作及 Levine 访谈。引用候选台账不全部计为已读文献。
+> 范围：160 项论文/项目，另列 3 项观点；10-06 追加 Levine VLA＋RL 专题。阅读深度按条目区分。
 > 原则：**检索到 ≠ 读懂；摘要笔记 ≠ 全文精读。** 所有条目先保留检索笔记，只有完成方法、实验、附录/代码核验后才升级为“精读”。
 
 ## 0. 当前进度
@@ -10,10 +10,10 @@
 | 状态 | 数量 |
 |---|---:|
 | 已精读/已有独立笔记 | 8 |
-| 已阅读/已有专题笔记 | 19 |
-| 已初读/讨论过，待系统精读 | 27 |
-| 待精读 | 95 |
-| **论文/项目总计** | **149** |
+| 已阅读/已有专题笔记 | 24 |
+| 已初读/讨论过，待系统精读 | 25 |
+| 待精读 | 103 |
+| **论文/项目总计** | **160** |
 
 另列 **3 项观点**，不混入论文阅读数量。
 
@@ -27,6 +27,11 @@
 - **待精读**：当前只有检索/摘要级 mini-note；正式写论文前必须继续读正文、实验、附录和代码。
 
 ## 2. 近期阅读顺序
+
+### 10-06 追加：Levine 的 VLA＋RL 与经验回流
+
+[23 项代表性工作专题](sergey-levine-vla-rl-2026-10-06.md)区分记忆、价值／奖励、动作引导、纠正和技能蒸馏。新增 P150–P160；补齐机器索引中缺失的既有 P146–P149 与两条观点。RECAP、ARLI、FRS 追加正文机制核验，升级为专题阅读；不标为代码复现或本地实验结果。
+
 
 ### 10-06：记忆内容、原始证据与经验适用范围
 
@@ -349,6 +354,24 @@ GLOW 此前已有 RSI 专区案例，本次只补齐主知识库入口与实验�
 | P146 | [MEM](https://arxiv.org/abs/2603.03596) | P0 | 原文方法、训练与主要实验边界；未复现 | [统一专题](embodied-memory-2026-10-06.md) |
 | P147 | [LT-Mem](https://arxiv.org/abs/2608.19059) | P0 | 原文方法与消融；奖项核对作者实验室新闻；项目代码仍标 TBD | [统一专题](embodied-memory-2026-10-06.md) |
 | P148 | [VISTA](https://arxiv.org/abs/2610.02200) | P0 | 原文方法、实验协议、消融与局限；未复现 | [统一专题](embodied-memory-2026-10-06.md) |
-| P149 | [Flow Reversal Steering](https://arxiv.org/abs/2606.13675) | P1 | 论文摘要与作者项目说明；完整方法和代码待精读 | [统一专题](embodied-memory-2026-10-06.md) |
+| P149 | [Flow Reversal Steering](https://arxiv.org/abs/2606.13675) | P1 | 追加正文与有限步积分边界核查；作者代码未复现 | [Levine 专题](sergey-levine-vla-rl-2026-10-06.md) |
 
 既有 P083 RECAP 补查相关方法及纠正条件；P098 HIL-SERL 复核作者项目流程，仍不标为完整论文／代码精读。P094 RLPD 保留基础参照。Levine 访谈作为观点来源，不新增论文编号。上述工作不是全部基于 RLT 改进，不能列作 RLT 直接后续。
+
+## 12. 10-06 追加：Levine 定向调研
+
+表中为本次实际阅读等级。原始 125 项表保持历史快照；当前机器总账更新 RECAP、ARLI、FRS 为专题阅读。
+
+| ID | 工作 | 阅读状态 | 入口 |
+|---|---|---|---|
+| P150 | [SVM](https://arxiv.org/abs/2606.23640) | 已阅读/已有专题笔记；未复现 | [专题](sergey-levine-vla-rl-2026-10-06.md) |
+| P151 | [SARL](https://arxiv.org/abs/2606.31958) | 已阅读/已有专题笔记；未复现 | [专题](sergey-levine-vla-rl-2026-10-06.md) |
+| P152 | [RLDG](https://arxiv.org/abs/2412.09858) | 待精读；未复现 | [专题](sergey-levine-vla-rl-2026-10-06.md) |
+| P153 | [Causal Confusion](https://arxiv.org/abs/1905.11979) | 待精读；未复现 | [专题](sergey-levine-vla-rl-2026-10-06.md) |
+| P154 | [RLIF](https://arxiv.org/abs/2311.12996) | 待精读；未复现 | [专题](sergey-levine-vla-rl-2026-10-06.md) |
+| P155 | [SERL](https://arxiv.org/abs/2401.16013) | 待精读；未复现 | [专题](sergey-levine-vla-rl-2026-10-06.md) |
+| P156 | [MT-Opt](https://arxiv.org/abs/2104.08212) | 待精读；未复现 | [专题](sergey-levine-vla-rl-2026-10-06.md) |
+| P157 | [QT-Opt](https://arxiv.org/abs/1806.10293) | 待精读；未复现 | [专题](sergey-levine-vla-rl-2026-10-06.md) |
+| P158 | [V-PTR](https://arxiv.org/abs/2309.13041) | 待精读；未复现 | [专题](sergey-levine-vla-rl-2026-10-06.md) |
+| P159 | [Autonomous Improvement](https://arxiv.org/abs/2407.20635) | 待精读；未复现 | [专题](sergey-levine-vla-rl-2026-10-06.md) |
+| P160 | [π0.7](https://arxiv.org/abs/2604.15483) | 已初读/讨论过，待系统精读；未复现 | [专题](sergey-levine-vla-rl-2026-10-06.md) |

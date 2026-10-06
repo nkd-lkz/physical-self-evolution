@@ -49,6 +49,8 @@ LT-Mem 在多次场景观察间维护物体身份，以变化频率和证据决�
 
 ## Sergey Levine：把记忆与学习闭环接起来
 
+后续展开见 [Levine VLA＋RL 23 项专题](sergey-levine-vla-rl-2026-10-06.md)：MEM 的训练细节、RECAP、SVM、ARLI、RLDG 与三个可执行对照。此处保留原有记忆适用范围分析。
+
 [Levine 的原始访谈](https://www.developing.dev/p/sergey-levine-current-state-of-humanoid)强调多样经验与新环境中的学习能力。这里把访谈作为研究动机，把论文作为机制与实验证据，避免用观点替代验证。
 
 | 阅读对象 | 与当前研究最相关的内容 | 对本项目的约束 |

@@ -4,6 +4,11 @@
   "question": "10-06 离线匹配对照：两组模仿误差接近，尚不能归因控制失败。GPU 闭环排队；记忆有效性仍待验证。",
   "featured": [
     {
+      "path": "research/literature/sergey-levine-vla-rl-2026-10-06.md",
+      "label": "10-06 专题 · Levine 的 VLA＋RL 路线",
+      "why": "23 项代表性工作：MEM 失败—纠正记忆、RECAP、SVM、ARLI、RLDG；三组可实验方案，区分原作与项目假设。"
+    },
+    {
       "path": "research/literature/embodied-memory-2026-10-06.md",
       "label": "10-06 文献 · 记忆与经验适用范围",
       "why": "MEM、LT-Mem、VISTA 与 Levine 原作核查；对应现有代码、流程图及小实验顺序。无新增控制结果。"

@@ -376,6 +376,12 @@
     "research/progress-2026-10-06.md": {
       "role": "history",
       "content_date": "2026-10-06"
+    },
+    "research/literature/sergey-levine-vla-rl-2026-10-06.md": {
+      "role": "literature",
+      "content_date": "2026-10-06",
+      "reviewed_at": "2026-10-06",
+      "summary": "Levine 共同署名的 23 项代表性工作：记忆、价值／奖励、有限探索、人机纠正、技能回流；对应 RLT 的三组待测实验。原论文证据与本地已有负结果分开。"
     }
   }
 }

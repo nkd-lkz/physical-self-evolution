@@ -28,15 +28,15 @@
     }
   },
   "stats": {
-    "project_documents": 84,
-    "reading_ledger": 145,
+    "project_documents": 85,
+    "reading_ledger": 160,
     "read_status_counts": {
       "已精读/已有独立笔记": 8,
-      "已初读/讨论过，待系统精读": 26,
-      "待精读": 95,
-      "已阅读/已有专题笔记": 16
+      "已初读/讨论过，待系统精读": 25,
+      "待精读": 103,
+      "已阅读/已有专题笔记": 24
     },
-    "progress_entries": 60,
+    "progress_entries": 61,
     "progress_days": 16
   },
   "documents": [
@@ -102,14 +102,33 @@
       "role_note": "外部作者结果与资料核查；阅读状态见原条目，不作为本地实验结果。",
       "date": "2026-10-06",
       "reviewed_at": "",
-      "summary": "这份笔记核查三项记忆工作，并把可借鉴的机制接到当前 Zeva–RLT 实验。核查日期：2026-10-06。论文结果属于原作者；后半部分是本项目的待测设计。本次没有新增 GPU 实验。",
+      "summary": "保留可回查的视觉证据；不等于机器人控制验证。",
       "topics": [
         "强化学习",
         "记忆 / 适应"
       ],
-      "status": "已有项目笔记",
-      "source": "",
-      "search": "从记住历史到可靠使用经验：MEM、LT-Mem、VISTA 对 Zeva–RLT 的启发 research/literature/embodied-memory-2026-10-06.md 文献 / 资源调研 这份笔记核查三项记忆工作，并把可借鉴的机制接到当前 Zeva–RLT 实验。核查日期：2026-10-06。论文结果属于原作者；后半部分是本项目的待测设计。本次没有新增 GPU 实验。 先明确要解决的问题 MEM：短期操作细节与长期任务进度分开 LT-Mem：更新记忆前，先判断变化是否可信 VISTA：紧凑摘要之外，保留可回查的视觉证据 Sergey Levine：把记忆与学习闭环接起来 当前代码距离这个方向有多远 拟议方法：保留证据，形成条件，检查适用范围 一条记录先说明“发生了什么” 条件说明“这些经验对这次决策有什么用” Stage 1B 学习什么，Stage 2 验证什么 两张 GPU 的下一轮实验如何排序 对论文叙事的修改 上游与来源状态 "
+      "status": "已阅读/已有专题笔记",
+      "source": "https://arxiv.org/abs/2610.02200",
+      "search": "从记住历史到可靠使用经验：MEM、LT-Mem、VISTA 对 Zeva–RLT 的启发 research/literature/embodied-memory-2026-10-06.md 文献 / 资源调研 保留可回查的视觉证据；不等于机器人控制验证。 先明确要解决的问题 MEM：短期操作细节与长期任务进度分开 LT-Mem：更新记忆前，先判断变化是否可信 VISTA：紧凑摘要之外，保留可回查的视觉证据 Sergey Levine：把记忆与学习闭环接起来 当前代码距离这个方向有多远 拟议方法：保留证据，形成条件，检查适用范围 一条记录先说明“发生了什么” 条件说明“这些经验对这次决策有什么用” Stage 1B 学习什么，Stage 2 验证什么 两张 GPU 的下一轮实验如何排序 对论文叙事的修改 上游与来源状态 "
+    },
+    {
+      "id": "doc:research/literature/sergey-levine-vla-rl-2026-10-06.md",
+      "title": "Sergey Levine 的 VLA＋RL 操作研究：机制、记忆与 RLT 可实验路线",
+      "path": "research/literature/sergey-levine-vla-rl-2026-10-06.md",
+      "kind": "调研与观点",
+      "role": "literature",
+      "role_label": "文献 / 资源调研",
+      "role_note": "外部作者结果与资料核查；阅读状态见原条目，不作为本地实验结果。",
+      "date": "2026-10-06",
+      "reviewed_at": "2026-10-06",
+      "summary": "Levine 共同署名的 23 项代表性工作：记忆、价值／奖励、有限探索、人机纠正、技能回流；对应 RLT 的三组待测实验。原论文证据与本地已有负结果分开。",
+      "topics": [
+        "强化学习",
+        "记忆 / 适应"
+      ],
+      "status": "已初读/讨论过，待系统精读",
+      "source": "https://arxiv.org/abs/2604.15483",
+      "search": "Sergey Levine 的 VLA＋RL 操作研究：机制、记忆与 RLT 可实验路线 research/literature/sergey-levine-vla-rl-2026-10-06.md 文献 / 资源调研 Levine 共同署名的 23 项代表性工作：记忆、价值／奖励、有限探索、人机纠正、技能回流；对应 RLT 的三组待测实验。原论文证据与本地已有负结果分开。 读完应当带走的判断 1. 论文地图：它们分别改变了什么 2. MEM：长短期记忆究竟保存什么 3. RECAP：好坏经验怎样都能用于训练 4. HIL-SERL、SERL 与 RLIF：纠正也是一种接口 5. RLT、DSRL、V-GPS、FRS：探索应发生在哪里 6. SARL：把语言当作可学习的技能接口 7. SVM：从终局标签产生过程奖励 8. ARLI：别把延迟补偿误当物理经验 9. PEARL 与 Causal Confusion：历史不是越多越好 10. RLDG 与 π0.7：把专门技能回流到通用模型 11. 基础工作与“物理直觉”的可检验含义 12. Levine 的观点：原话依据与本项目推论分开 13. 三个可以分别启动的小实验 A. 失败—纠正条件训练：最贴近当前主线 B. RLT＋过程奖励：最快的独立收敛对照 C. 读取经验还是蒸馏经验：多任务之后再做 14. 执行顺序与当前证据 15. 精读顺序、阅读深度与开源边界 "
     },
     {
       "id": "doc:research/literature/reading-ledger.md",
@@ -121,15 +140,14 @@
       "role_note": "外部作者结果与资料核查；阅读状态见原条目，不作为本地实验结果。",
       "date": "2026-10-06",
       "reviewed_at": "",
-      "summary": "建立日期：2026-09-19 更新日期：2026-10-06 范围：149 项论文/项目，另列 3 项观点；10-06 新增 4 项记忆／交互相关工作及 Levine 访谈。引用候选台账不全部计为已读文献。 原则：检索到 ≠ 读懂；摘要笔记 ≠ 全文精读。 所有条目先保留检索笔记，只有完成方法、实验、附录/代码核验后才升级为“精读”。",
+      "summary": "建立日期：2026-09-19 更新日期：2026-10-06 范围：160 项论文/项目，另列 3 项观点；10-06 追加 Levine VLA＋RL 专题。阅读深度按条目区分。 原则：检索到 ≠ 读懂；摘要笔记 ≠ 全文精读。 所有条目先保留检索笔记，只有完成方法、实验、附录/代码核验后才升级为“精读”。",
       "topics": [
         "物理经验 / 接触",
-        "记忆 / 适应",
-        "动作 / 决策"
+        "强化学习"
       ],
       "status": "已有项目笔记",
       "source": "",
-      "search": "Physical Token 文献阅读总账 research/literature/reading-ledger.md 文献 / 资源调研 建立日期：2026-09-19 更新日期：2026-10-06 范围：149 项论文/项目，另列 3 项观点；10-06 新增 4 项记忆／交互相关工作及 Levine 访谈。引用候选台账不全部计为已读文献。 原则：检索到 ≠ 读懂；摘要笔记 ≠ 全文精读。 所有条目先保留检索笔记，只有完成方法、实验、附录/代码核验后才升级为“精读”。 0. 当前进度 1. 状态定义 2. 近期阅读顺序 10-06：记忆内容、原始证据与经验适用范围 10-03：eRLT、RLT 后续关系，以及经验记忆主线更新 09-30：UniMPA 与 F4R，直面 RLT 创新边界 09-26：六篇自进化工作与 Zeva 精读 09-25：GLOW 与 Real2sim2real 09-25：FLARE 等六篇既有论文与 PI 演讲观点 09-22 项目相关增量 09-21 增量 Wave 0 · 防撞优先（09-19 批次） Wave 1 · Physical representation / supervision Wave 2 · Learner / value / action selection Wave 3 · WAM / world-action interface Wave 4 · Execution / recovery / harness 3. 每篇精读必须填满的 10 个问题 4. 原始 125 项目录（09-19 快照） 动作侧表征与最邻近工作 动力学充分表示、历史辨识与表征理论 力触觉、接触与多模态物理监督 显式物理模型、可微约束与安全控制 世界—动作模型与潜空间未来预测 离线／在线RL、价值引导与冻结策略适配 执行时序、失败恢复与非参数自进化 通用动作头、动作tokenizer与跨本体底座 5. 阅读升级规则 5. 2026-09-21 新增专题 6. 2026-09-21 追加：恢复经验与物理判定 7. 09-22 增量：UniIntervene 与 CLAP 8. 09-25 补录：企业系统与观点分开统计 9. 09-25 初读更新与演讲观点 10. 09-30 新增：预测—记忆—动作与失败定向闭环 11. 10-06 新增：记忆内容、证据与适用范围 "
+      "search": "Physical Token 文献阅读总账 research/literature/reading-ledger.md 文献 / 资源调研 建立日期：2026-09-19 更新日期：2026-10-06 范围：160 项论文/项目，另列 3 项观点；10-06 追加 Levine VLA＋RL 专题。阅读深度按条目区分。 原则：检索到 ≠ 读懂；摘要笔记 ≠ 全文精读。 所有条目先保留检索笔记，只有完成方法、实验、附录/代码核验后才升级为“精读”。 0. 当前进度 1. 状态定义 2. 近期阅读顺序 10-06 追加：Levine 的 VLA＋RL 与经验回流 10-06：记忆内容、原始证据与经验适用范围 10-03：eRLT、RLT 后续关系，以及经验记忆主线更新 09-30：UniMPA 与 F4R，直面 RLT 创新边界 09-26：六篇自进化工作与 Zeva 精读 09-25：GLOW 与 Real2sim2real 09-25：FLARE 等六篇既有论文与 PI 演讲观点 09-22 项目相关增量 09-21 增量 Wave 0 · 防撞优先（09-19 批次） Wave 1 · Physical representation / supervision Wave 2 · Learner / value / action selection Wave 3 · WAM / world-action interface Wave 4 · Execution / recovery / harness 3. 每篇精读必须填满的 10 个问题 4. 原始 125 项目录（09-19 快照） 动作侧表征与最邻近工作 动力学充分表示、历史辨识与表征理论 力触觉、接触与多模态物理监督 显式物理模型、可微约束与安全控制 世界—动作模型与潜空间未来预测 离线／在线RL、价值引导与冻结策略适配 执行时序、失败恢复与非参数自进化 通用动作头、动作tokenizer与跨本体底座 5. 阅读升级规则 5. 2026-09-21 新增专题 6. 2026-09-21 追加：恢复经验与物理判定 7. 09-22 增量：UniIntervene 与 CLAP 8. 09-25 补录：企业系统与观点分开统计 9. 09-25 初读更新与演讲观点 10. 09-30 新增：预测—记忆—动作与失败定向闭环 11. 10-06 新增：记忆内容、证据与适用范围 12. 10-06 追加：Levine 定向调研 "
     },
     {
       "id": "doc:research/progress-2026-10-06.md",
@@ -1704,22 +1722,6 @@
       "search": "π0.5: a Vision-Language-Action Model with Open-World Generalization 联合多源数据和层级推理/动作学习，提升开放世界泛化。 当前π0.5底座；不要把原任务语义适应与物理token增益混算。  "
     },
     {
-      "id": "阅读清单:P083",
-      "title": "π*0.6: a VLA That Learns From Experience",
-      "path": null,
-      "kind": "阅读清单",
-      "date": "",
-      "role": "literature",
-      "role_label": "文献 / 资源调研",
-      "role_note": "外部作者结果与资料核查；阅读状态见原条目，不作为本地实验结果。",
-      "reviewed_at": "",
-      "summary": "结合示范、自主经验与纠正，以价值/优势条件化策略进行改进。",
-      "topics": [],
-      "status": "已初读/讨论过，待系统精读",
-      "source": "https://arxiv.org/abs/2511.14759",
-      "search": "π*0.6: a VLA That Learns From Experience 结合示范、自主经验与纠正，以价值/优势条件化策略进行改进。 是下游候选而非天然轻量冻结外挂；不能由别处成功率推断一定比你的RLT稳定。  "
-    },
-    {
       "id": "阅读清单:P036",
       "title": "exUMI: Extensible Robot Teaching System with Action-aware Task-agnostic Tactile Representation",
       "path": null,
@@ -3014,25 +3016,6 @@
       "search": "Learning to Fill the Seam by Vision: Sub-millimeter Peg-in-hole on Unseen Shapes in Real World 面向未见形状的视觉精细插入，研究亚毫米级装配。 说明精密任务要看几何与控制协议，不能直接以任务名称推断接触物理难度。  "
     },
     {
-      "id": "阅读清单:P143",
-      "title": "Learning to Act While Waiting: RL Finetuning of Generalist Robot Policies Under Inference Latency",
-      "path": null,
-      "kind": "阅读清单",
-      "date": "",
-      "role": "literature",
-      "role_label": "文献 / 资源调研",
-      "role_note": "外部作者结果与资料核查；阅读状态见原条目，不作为本地实验结果。",
-      "reviewed_at": "",
-      "summary": "根据已承诺动作与更新观测处理推理延迟，主体采用 DSRL。",
-      "topics": [
-        "强化学习",
-        "动作 / 决策"
-      ],
-      "status": "已初读/讨论过，待系统精读",
-      "source": "https://arxiv.org/abs/2608.23831",
-      "search": "Learning to Act While Waiting: RL Finetuning of Generalist Robot Policies Under Inference Latency 根据已承诺动作与更新观测处理推理延迟，主体采用 DSRL。 异步近邻但不是 SmoothRL/RLT 直接后继；实际执行时序必须对齐。  "
-    },
-    {
       "id": "阅读清单:P063",
       "title": "Learning Preconditions of Hybrid Force-Velocity Controllers for Contact-Rich Manipulation",
       "path": null,
@@ -4015,6 +3998,12 @@
     }
   ],
   "progress": [
+    {
+      "date": "2026-10-06",
+      "title": "Levine 的 VLA＋RL、记忆与经验回流专题入库",
+      "path": "research/literature/sergey-levine-vla-rl-2026-10-06.md",
+      "summary": "核查 23 项代表性共同署名工作，展开 MEM、RECAP、HIL-SERL／RLIF、DSRL／FRS／V-GPS、SARL、SVM、ARLI、PEARL 与 RLDG。形成三项待测方案；没有新增训练、成功率或迁移结果。同步阅读账本及首页入口。"
+    },
     {
       "date": "2026-10-06",
       "title": "匹配离线学习完成；两条 GPU 评估队列等待资源",
