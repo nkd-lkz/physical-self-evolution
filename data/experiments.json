@@ -1,6 +1,12 @@
 [
   {
     "date": "2026-10-06",
+    "title": "匹配离线学习完成；两条 GPU 评估队列等待资源",
+    "path": "research/progress-2026-10-06.md",
+    "summary": "CPU 复用正式模型与损失，各完成 2,048 次 critic／actor 更新。BC-only／Q+BC 验证 MSE 0.004667／0.004672；热身权重和采样一致。读取实际存在的 2,048 条数据，原 replay 不变。GPU 被其他作业占用，设置有界后台复评队列；无新增控制成功率。43 项 CPU 测试通过。"
+  },
+  {
+    "date": "2026-10-06",
     "title": "记忆文献核查与实验设计更新；无新增训练结果",
     "path": "research/literature/embodied-memory-2026-10-06.md",
     "summary": "阅读 MEM、LT-Mem、VISTA 原文，核对 Levine 的 RECAP、HIL-SERL、FRS 相关机制。结合当前按关节位置检索的代码，提出经验适用性与原始证据回查对照。baseline 诊断优先级不变；10-04 成功率保持原值。核查官方 RLinf main 与近期 PR，未合并。"

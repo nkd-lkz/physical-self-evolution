@@ -36,9 +36,17 @@
     {
       "value": "2.44e-5",
       "label": "既有开发集预测 MSE；不是控制或迁移收益"
+    },
+    {
+      "value": "0.004667 / 0.004672",
+      "label": "10-06 BC-only／Q+BC 离线验证 reference MSE；不是成功率"
     }
   ],
   "timeline": [
+    {
+      "title": "10-06 · BC-only／Q+BC 离线对照完成，GPU 复评排队",
+      "body": "固定 2,048 条已保存 transition，按采集版本划分。两组同初始化、同采样，各 2,048 次 critic／actor 更新；验证 reference MSE 为 0.004667／0.004672。两卡被其他作业占用，后台队列等待；当前没有新增控制成功率。"
+    },
     {
       "title": "10-06 · MEM、LT-Mem、VISTA 与 Levine 工作核查",
       "body": "研究重点收敛到交互经验的适用范围：近期细节、长期事件、可回查证据与变化后的降权。原文结果和拟议模块分开；本次无新 GPU 实验，最新控制证据仍为 10-04。RLinf main 仍为 c70606f，#1623 仍开放。"
@@ -107,13 +115,13 @@
   "plan": [
     {
       "priority": "P0",
-      "action": "先定位 baseline 的误差来源",
-      "evidence": "在相同 gate 状态测 actor/reference 动作误差与 Q 排序；区分到达关键阶段失败、模仿误差和 Q 引导偏移。"
+      "action": "等待空闲 GPU，完成四组冻结复评",
+      "evidence": "两条后台队列，等待上限约 10-07 00:03；新 seed 4101–4104，每组 64 回合。比较新 BC-only／Q+BC，reference 与旧 head 作为参照。"
     },
     {
       "priority": "P0",
-      "action": "做同数据、同更新数的 BC-only / Q+BC 诊断",
-      "evidence": "同一零 context 初始化，共享冻结 transition 集，固定评估预算。这是离线诊断；之后仍需在线匹配验收。新测试集预先封存，不用本次 64 回合反复选 checkpoint。"
+      "action": "结合闭环结果定位模仿、Q 引导和 reference 到达问题",
+      "evidence": "离线同预算对照已经完成；两组误差接近，尚不能把 Q 项判为主要瓶颈。当前先保留原系数，不根据中间结果挑 checkpoint。"
     },
     {
       "priority": "P1",

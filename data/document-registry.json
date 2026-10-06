@@ -64,7 +64,7 @@
     },
     "research/experiment-log.md": {
       "role": "evidence",
-      "content_date": "2026-10-04",
+      "content_date": "2026-10-06",
       "reviewed_at": "2026-10-04",
       "summary": "已测指标与原始证据范围；新增单训练 seed 的匹配训练和 256 回合冻结复评，尚无控制、纠错节省或迁移收益。"
     },
@@ -371,6 +371,10 @@
     },
     "research/literature/embodied-memory-2026-10-06.md": {
       "role": "literature",
+      "content_date": "2026-10-06"
+    },
+    "research/progress-2026-10-06.md": {
+      "role": "history",
       "content_date": "2026-10-06"
     }
   }
