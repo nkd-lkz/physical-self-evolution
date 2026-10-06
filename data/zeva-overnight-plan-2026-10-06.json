@@ -1,0 +1,219 @@
+{
+  "as_of": "2026-10-06T18:28:22+08:00",
+  "code_revision": "a1b14a56b004c089a74b8b818fa814886ec5a1b6",
+  "baseline_revision": "7335f2f40ad9f9974fdc5516a5890b169e118455",
+  "scope": "Synthetic linear plant; real simulator tasks queued; no new control success",
+  "gpu_status": "waiting_for_gpu",
+  "wait_deadline": "2026-10-07T18:26:47+08:00",
+  "run_hours_per_gpu": 6,
+  "baseline_runs_planned": 16,
+  "simulator_smoke_and_probe_tasks_planned": 4,
+  "cpu_tests_passed": 51,
+  "synthetic": [
+    {
+      "condition": "A_B_A",
+      "method": "clear",
+      "seeds": 6,
+      "mse": 0.0001525678841668802,
+      "first_four_after_B": 0.000034954590773850214,
+      "first_four_after_return_A": 0.0007619681758418059
+    },
+    {
+      "condition": "A_B_A",
+      "method": "retain",
+      "seeds": 6,
+      "mse": 0.0004394816157097618,
+      "first_four_after_B": 0.0011623023795740057,
+      "first_four_after_return_A": 0.0003886478759037952
+    },
+    {
+      "condition": "A_B_A",
+      "method": "decay",
+      "seeds": 6,
+      "mse": 0.00035815793671645224,
+      "first_four_after_B": 0.0009707612043712288,
+      "first_four_after_return_A": 0.0008490021767405173
+    },
+    {
+      "condition": "A_B_A",
+      "method": "error",
+      "seeds": 6,
+      "mse": 0.0002718733351988097,
+      "first_four_after_B": 0.001089390037426104,
+      "first_four_after_return_A": 0.0006962154099407295
+    },
+    {
+      "condition": "stationary",
+      "method": "clear",
+      "seeds": 6,
+      "mse": 0.0002291582253140708,
+      "first_four_after_B": 0.0007237590713581691,
+      "first_four_after_return_A": 0.0007619681758418059
+    },
+    {
+      "condition": "stationary",
+      "method": "retain",
+      "seeds": 6,
+      "mse": 0.00006463323249287593,
+      "first_four_after_B": 0.0000043928189370490145,
+      "first_four_after_return_A": 0.000004509170783724888
+    },
+    {
+      "condition": "stationary",
+      "method": "decay",
+      "seeds": 6,
+      "mse": 0.00006527119391345575,
+      "first_four_after_B": 0.000004963111147541592,
+      "first_four_after_return_A": 0.000005184778463747837
+    },
+    {
+      "condition": "stationary",
+      "method": "error",
+      "seeds": 6,
+      "mse": 0.00006464375231492643,
+      "first_four_after_B": 0.000004403282180949948,
+      "first_four_after_return_A": 0.000004511293127507088
+    },
+    {
+      "condition": "stationary_noisy",
+      "method": "clear",
+      "seeds": 6,
+      "mse": 0.0004641123377950862,
+      "first_four_after_B": 0.0009510594924601415,
+      "first_four_after_return_A": 0.001218089513713494
+    },
+    {
+      "condition": "stationary_noisy",
+      "method": "retain",
+      "seeds": 6,
+      "mse": 0.00024894017648572725,
+      "first_four_after_B": 0.00015553632814165516,
+      "first_four_after_return_A": 0.00016015123401302844
+    },
+    {
+      "condition": "stationary_noisy",
+      "method": "decay",
+      "seeds": 6,
+      "mse": 0.00024856656818883494,
+      "first_four_after_B": 0.00016737151357422894,
+      "first_four_after_return_A": 0.0001703766465652734
+    },
+    {
+      "condition": "stationary_noisy",
+      "method": "error",
+      "seeds": 6,
+      "mse": 0.00024964061594801024,
+      "first_four_after_B": 0.00015776690027754134,
+      "first_four_after_return_A": 0.00016097309708129615
+    }
+  ],
+  "limitations": [
+    "Prediction error is not task success.",
+    "Error weighting did not outperform retention on return to A.",
+    "New diagnostic module is not wired into the production actor.",
+    "No automatic RL or expert training.",
+    "GPU integration is unverified until smoke completes."
+  ],
+  "upstream": {
+    "checked_at": "2026-10-06T18:19:00+08:00",
+    "main": "c70606f08cdca259b8dec03d4430926b5b8fac9d",
+    "recent_prs": [
+      {
+        "number": 1587,
+        "title": "feat(embodiment): add PhyAI rollout backend",
+        "state": "open",
+        "updated_at": "2026-10-05T11:32:14Z",
+        "merged_at": null,
+        "url": "https://github.com/RLinf/RLinf/pull/1587"
+      },
+      {
+        "number": 1648,
+        "title": "feat(robotics): add Orbbec RGB-D camera support",
+        "state": "open",
+        "updated_at": "2026-10-03T16:11:47Z",
+        "merged_at": null,
+        "url": "https://github.com/RLinf/RLinf/pull/1648"
+      },
+      {
+        "number": 1623,
+        "title": "fix(replay): checkpoint only retained memory trajectories",
+        "state": "open",
+        "updated_at": "2026-10-02T08:56:42Z",
+        "merged_at": null,
+        "url": "https://github.com/RLinf/RLinf/pull/1623"
+      },
+      {
+        "number": 1645,
+        "title": "fix(scheduler): avoid aborts in concurrent group creation",
+        "state": "closed",
+        "updated_at": "2026-10-02T08:56:11Z",
+        "merged_at": "2026-10-02T08:56:10Z",
+        "url": "https://github.com/RLinf/RLinf/pull/1645"
+      },
+      {
+        "number": 1647,
+        "title": "feat(algorithms): add DRPO for reasoning",
+        "state": "open",
+        "updated_at": "2026-10-02T08:13:34Z",
+        "merged_at": null,
+        "url": "https://github.com/RLinf/RLinf/pull/1647"
+      },
+      {
+        "number": 1637,
+        "title": "docs: add lint and test commands to AGENTS.md",
+        "state": "open",
+        "updated_at": "2026-10-02T03:41:08Z",
+        "merged_at": null,
+        "url": "https://github.com/RLinf/RLinf/pull/1637"
+      },
+      {
+        "number": 1646,
+        "title": "fix(config): point is-megatron hf_model_path at rollout.model.model_path",
+        "state": "open",
+        "updated_at": "2026-10-01T14:29:49Z",
+        "merged_at": null,
+        "url": "https://github.com/RLinf/RLinf/pull/1646"
+      },
+      {
+        "number": 1644,
+        "title": "fix(ci): isolate the Ascend uv cache by uid",
+        "state": "open",
+        "updated_at": "2026-10-01T13:35:08Z",
+        "merged_at": null,
+        "url": "https://github.com/RLinf/RLinf/pull/1644"
+      },
+      {
+        "number": 1643,
+        "title": "fix(agent): pin OpenTelemetry for AgentLightning",
+        "state": "closed",
+        "updated_at": "2026-10-01T09:47:11Z",
+        "merged_at": "2026-10-01T09:47:10Z",
+        "url": "https://github.com/RLinf/RLinf/pull/1643"
+      },
+      {
+        "number": 1642,
+        "title": "docs(reward): name the resnet checkpoint to load",
+        "state": "open",
+        "updated_at": "2026-10-01T01:00:22Z",
+        "merged_at": null,
+        "url": "https://github.com/RLinf/RLinf/pull/1642"
+      },
+      {
+        "number": 1641,
+        "title": "fix(reward): fail fast on empty reward splits",
+        "state": "open",
+        "updated_at": "2026-10-01T01:00:20Z",
+        "merged_at": null,
+        "url": "https://github.com/RLinf/RLinf/pull/1641"
+      },
+      {
+        "number": 1640,
+        "title": "docs(eval): note host memory per libero env",
+        "state": "open",
+        "updated_at": "2026-10-01T01:00:17Z",
+        "merged_at": null,
+        "url": "https://github.com/RLinf/RLinf/pull/1640"
+      }
+    ]
+  }
+}

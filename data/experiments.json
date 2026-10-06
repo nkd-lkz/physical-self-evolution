@@ -1,6 +1,12 @@
 [
   {
     "date": "2026-10-06",
+    "title": "夜间经验诊断与可恢复 GPU 队列上线；保留合成负结果",
+    "path": "research/progress-2026-10-06.md",
+    "summary": "a1b14a56 增加匹配当前状态的正确／错误历史探针、可恢复响应降权和有界队列，51 项 CPU 测试通过。两卡等待至 10-07 18:26；先验收固定 7335f2f4 baseline，再运行仿真 smoke 与响应诊断。合成 A→B→A 回到 A 后，降权 MSE 0.000696 高于保留 0.000389；未接正式 actor，无新增控制成功率。"
+  },
+  {
+    "date": "2026-10-06",
     "title": "Levine 的 VLA＋RL、记忆与经验回流专题入库",
     "path": "research/literature/sergey-levine-vla-rl-2026-10-06.md",
     "summary": "核查 23 项代表性共同署名工作，展开 MEM、RECAP、HIL-SERL／RLIF、DSRL／FRS／V-GPS、SARL、SVM、ARLI、PEARL 与 RLDG。形成三项待测方案；没有新增训练、成功率或迁移结果。同步阅读账本及首页入口。"

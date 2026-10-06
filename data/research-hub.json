@@ -1,7 +1,7 @@
 {
   "updated": "2026-10-06",
   "focus": "以 RLT 为基线，检验已完成的交互经验能否帮助学习并减少纠错。先修复 baseline 学习，再验证经验条件。",
-  "question": "10-06 离线匹配对照：两组模仿误差接近，尚不能归因控制失败。GPU 闭环排队；记忆有效性仍待验证。",
+  "question": "10-06 晚间：GPU 等待延长，匹配历史与经验降权诊断工具完成。合成测试的降权未优于保留；控制收益仍未验证。",
   "featured": [
     {
       "path": "research/literature/sergey-levine-vla-rl-2026-10-06.md",
@@ -28,10 +28,10 @@
     {
       "id": "zeva",
       "name": "Zeva–RLT · 学习交互经验并持续读取",
-      "stage": "当前主线 · 离线诊断完成，等待 GPU 闭环",
+      "stage": "当前主线 · 夜间队列等待，新增机制诊断",
       "tag": "当前主线",
       "hypothesis": "已完成的命令—响应记录能否在无辅助成功率不下降时，减少重复试错和外部纠错？",
-      "design": "同缓存的 BC-only／Q+BC 已完成，前 512 步热身权重一致。等待新 seed 冻结复评，再检验历史适用范围。64 维 Stage 1B 尚未实现。",
+      "design": "先验收同预算 BC-only／Q+BC 闭环，再做固定当前状态的历史替换与 A→B→A 响应探针。降权原型未接正式 actor；64 维 Stage 1B 尚未实现。",
       "control": "有/无记忆 × 有/无固定 expert 纠错；再比较近期历史、attention、固定响应、Stage 1B 与 retain／clear。",
       "gate": "同初始数据、预算、expert 与 gate；同时看无辅助成功率、环境控制步、接管次数和时长。预测更准不代表控制获益。",
       "path": "research/zeva-rlt-implementation-2026-09-26.md",
