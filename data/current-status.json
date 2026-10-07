@@ -1,37 +1,37 @@
 {
-  "as_of": "2026-10-06",
+  "as_of": "2026-10-07",
   "metrics": [
     {
-      "value": "16/64 vs 15/64",
-      "label": "第 275 轮冻结复评：零 context / 响应记忆；未见记忆优势",
+      "value": "77% / 74%",
+      "label": "LIBERO 原输入 100 回合：reference／RLT_a；低于作者 500 回合 92%，差距未解释",
       "featured": true
+    },
+    {
+      "value": "6/9 / 5/9",
+      "label": "224 输入开发子集：reference／RLT_a；100 与 500 初态复评在途",
+      "featured": true
+    },
+    {
+      "value": "18/50",
+      "label": "ManiSkill planner400 最终无 expert 评估；辅助训练 327/400 不计自主能力",
+      "featured": true
+    },
+    {
+      "value": "48/50",
+      "label": "planner 可建立插入诊断起点；固定保持命令 0/48 成功，完整任务仍用 50 初态",
+      "featured": true
+    },
+    {
+      "value": "16/64 vs 15/64",
+      "label": "10-04 第 275 轮冻结复评：零 context／响应记忆；未见记忆优势"
     },
     {
       "value": "19/64",
-      "label": "同初态 reference-only；响应模型关闭历史为 18/64",
-      "featured": true
+      "label": "10-04 同初态 reference-only；响应模型关闭历史为 18/64"
     },
     {
       "value": "26/64",
-      "label": "到达 actor 接管阶段的回合；38 回合在 reference 阶段失败",
-      "featured": true
-    },
-    {
-      "value": "256 回合完成",
-      "label": "四组各 64；同一训练 seed；无 expert、无 Stage 1B",
-      "featured": true
-    },
-    {
-      "value": "299 / 309 轮",
-      "label": "昨晚两组完整记录轮数；均在 8 小时预算退出"
-    },
-    {
-      "value": "3/8 vs 3/8",
-      "label": "昨晚最后共同 checkpoint 275 的原周期评估"
-    },
-    {
-      "value": "论文 v2 · 16 页",
-      "label": "10-03 固定英文稿；尚未纳入 10-04 的控制负结果"
+      "label": "10-04 到达 actor 接管阶段的回合；38 回合在 reference 阶段失败"
     },
     {
       "value": "2.44e-5",
@@ -43,6 +43,18 @@
     }
   ],
   "timeline": [
+    {
+      "title": "10-07 · LIBERO 冻结权重复现差距进入配对预处理审计",
+      "body": "原输入 100 回合为 reference 77%、RLT_a 74%；224 输入的 9 个开发初态变为 6/9、5/9。100 初态匹配复评和 500 初态诊断在途；未更新权重，不能归因为算法收益或宣称复现作者 92%。"
+    },
+    {
+      "title": "10-07 · ManiSkill planner 有限纠正与公平评估协议完成",
+      "body": "planner400 最终无 expert 为 18/50；加入有限纠正后交还 learner、真实 tick／更新预算、回合级纠正缓存和完整任务／插入分开评估。48/50 插入起点可建立，三次同缓存 Q＋BC 均弱于 BC-only；闭环公平对照等待 GPU。"
+    },
+    {
+      "title": "10-07 · 两条开发分支已推送",
+      "body": "LIBERO e0086d58、planner 368831cc 已同步到 UPT_dev 远端；46 项 planner 定向测试、223 项扩展回归及 29 项 LIBERO 测试通过。排队不计作实验完成。"
+    },
     {
       "title": "10-06 晚间 · 经验诊断工具完成，等待延长至次日 18:26",
       "body": "51 项 CPU 测试通过。夜间队列先验收 16 个 baseline run，再做匹配历史与 A→B→A 仿真响应探针；不会自动扩展新 RL。合成测试返回 A 后，误差降权 MSE 0.000696，高于保留的 0.000389；保留反例。无新增控制结果。"
@@ -123,8 +135,13 @@
   "plan": [
     {
       "priority": "P0",
-      "action": "等待空闲 GPU，完成四组冻结复评",
-      "evidence": "夜间两条队列接替旧等待器，截止延长至 10-07 18:26，每卡实际运行总预算 6 小时。新 seed 4101–4104，每组 64 回合；原 baseline 代码与权重保持固定。"
+      "action": "完成 LIBERO 100 初态配对与 500 初态 224 输入诊断",
+      "evidence": "冻结公开权重并保持任务、初态、源码、资产与依赖一致；分别报告 reference／RLT_a 的新增成功和丢失成功。只有完整结果可用于判断预处理是否解释部分 77%／74% 与 92% 差距。"
+    },
+    {
+      "priority": "P0",
+      "action": "完成 planner 固定权重与三训练 seed 公平闭环对照",
+      "evidence": "完整任务使用全部 50 初态；插入诊断单列 48/50 起点覆盖率。比较无辅助／有限纠正的真实交互预算、planner 成本和关闭 expert 后成功率，不以辅助训练成功替代 learner 收益。"
     },
     {
       "priority": "P0",

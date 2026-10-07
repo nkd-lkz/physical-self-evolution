@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "as_of": "2026-10-06",
+  "as_of": "2026-10-07",
   "current_path": "research/zeva-rlt-implementation-2026-09-26.md",
   "roles": {
     "current": {
@@ -64,9 +64,9 @@
     },
     "research/experiment-log.md": {
       "role": "evidence",
-      "content_date": "2026-10-06",
-      "reviewed_at": "2026-10-04",
-      "summary": "已测指标与原始证据范围；新增单训练 seed 的匹配训练和 256 回合冻结复评，尚无控制、纠错节省或迁移收益。"
+      "content_date": "2026-10-07",
+      "reviewed_at": "2026-10-07",
+      "summary": "集中查阅已测指标与原始证据范围；新增 LIBERO 冻结权重审计和 ManiSkill planner 有限纠正，并保留 10-04／10-06 负结果；正式控制、纠错节省与迁移收益仍待匹配实验。"
     },
     "research/experiments/rlt-contact-memory/README.md": {
       "role": "history",
@@ -189,6 +189,11 @@
     "research/progress-2026-10-03.md": {
       "role": "history",
       "content_date": "2026-10-03"
+    },
+    "research/progress-2026-10-07.md": {
+      "role": "history",
+      "content_date": "2026-10-07",
+      "reviewed_at": "2026-10-07"
     },
     "research/prototypes/zeva_rlt_memory/README.md": {
       "role": "history",

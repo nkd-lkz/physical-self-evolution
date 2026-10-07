@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-10-06",
+  "as_of": "2026-10-07",
   "current_path": "research/zeva-rlt-implementation-2026-09-26.md",
   "roles": {
     "current": {
@@ -28,7 +28,7 @@
     }
   },
   "stats": {
-    "project_documents": 85,
+    "project_documents": 86,
     "reading_ledger": 160,
     "read_status_counts": {
       "已精读/已有独立笔记": 8,
@@ -36,8 +36,8 @@
       "待精读": 103,
       "已阅读/已有专题笔记": 24
     },
-    "progress_entries": 62,
-    "progress_days": 16
+    "progress_entries": 65,
+    "progress_days": 17
   },
   "documents": [
     {
@@ -48,13 +48,34 @@
       "role": "evidence",
       "role_label": "证据汇总",
       "role_note": "已记录实验及其适用范围；公开摘要与原始数据可用性需逐项核对，不等于独立复现。",
-      "date": "2026-10-06",
-      "reviewed_at": "2026-10-04",
-      "summary": "已测指标与原始证据范围；新增单训练 seed 的匹配训练和 256 回合冻结复评，尚无控制、纠错节省或迁移收益。",
+      "date": "2026-10-07",
+      "reviewed_at": "2026-10-07",
+      "summary": "集中查阅已测指标与原始证据范围；新增 LIBERO 冻结权重审计和 ManiSkill planner 有限纠正，并保留 10-04／10-06 负结果；正式控制、纠错节省与迁移收益仍待匹配实验。",
       "topics": [],
       "status": "已有项目笔记",
       "source": "",
-      "search": "证据与实验总日志 research/experiment-log.md 证据汇总 已测指标与原始证据范围；新增单训练 seed 的匹配训练和 256 回合冻结复评，尚无控制、纠错节省或迁移收益。 已有证据支持到哪里 按原日期保留的记录 2026-10-06 · 离线对照完成，GPU 评估排队 2026-10-04 · 训练核查与冻结复评 2026-10-03 16:42 · Zeva 同容量对照进入双卡训练 2026-10-03 · 论文初稿、证据复核与 baseline 调研 2026-09-30 晚间 · Jev GPU pilot 完成，四条探索线边界更新 2026-09-30 下午 · 99 次预定诊断、12 次追加拟合与 HIL pilot 2026-09-30 · Stage 1 eval20、Stage 2 baseline、FLARE 对照与 Jev 分支 2026-09-28 · ManiSkill RLT baseline、FLARE、Zeva 与 PICO VR 进展 2026-09-22 · 迁移核查与干预讨论整理（无新增GPU运行） 2026-09-22 · train450 Stage1 10k评测摘要补充（不新增独立样本） 事实与来源 解释边界 下一步（待执行） 2026-09-18 · train450 Stage1 10k复测 + B0 Stage2退化诊断 事实 解释 下一步 2026-09-17 · RoboDojo D3/D5 真实验证完成 事实 解释 下一步 2026-09-17 · Stage1 固定20-seed能力曲线 + clean500全量审计 + clean490准备 事实 解释 影响哪个研究假设 下一步最便宜的证伪实验 2026-09-15 · 日报快照：Stage1 运行中 + clean500 + RoboDojo D0–D4【历史快照】 事实 解释 2026-09-15 · Hammer RLT baseline recovery：先恢复可信 B0，再进入 Physical Token 事实 解释 2026-09-14 · 领导方案约束后的科研主线修正 事实 解释 2026-09-12 · RLT Phase 0 关键推进 事实 2026-09-11 · 历史探索：进入 Phase 0 记录模板 日期 · 标题 "
+      "search": "证据与实验总日志 research/experiment-log.md 证据汇总 集中查阅已测指标与原始证据范围；新增 LIBERO 冻结权重审计和 ManiSkill planner 有限纠正，并保留 10-04／10-06 负结果；正式控制、纠错节省与迁移收益仍待匹配实验。 已有证据支持到哪里 按原日期保留的记录 2026-10-07 · LIBERO 成功率审计与 planner 有限纠正 2026-10-06 · 离线对照完成，GPU 评估排队 2026-10-04 · 训练核查与冻结复评 2026-10-03 16:42 · Zeva 同容量对照进入双卡训练 2026-10-03 · 论文初稿、证据复核与 baseline 调研 2026-09-30 晚间 · Jev GPU pilot 完成，四条探索线边界更新 2026-09-30 下午 · 99 次预定诊断、12 次追加拟合与 HIL pilot 2026-09-30 · Stage 1 eval20、Stage 2 baseline、FLARE 对照与 Jev 分支 2026-09-28 · ManiSkill RLT baseline、FLARE、Zeva 与 PICO VR 进展 2026-09-22 · 迁移核查与干预讨论整理（无新增GPU运行） 2026-09-22 · train450 Stage1 10k评测摘要补充（不新增独立样本） 事实与来源 解释边界 下一步（待执行） 2026-09-18 · train450 Stage1 10k复测 + B0 Stage2退化诊断 事实 解释 下一步 2026-09-17 · RoboDojo D3/D5 真实验证完成 事实 解释 下一步 2026-09-17 · Stage1 固定20-seed能力曲线 + clean500全量审计 + clean490准备 事实 解释 影响哪个研究假设 下一步最便宜的证伪实验 2026-09-15 · 日报快照：Stage1 运行中 + clean500 + RoboDojo D0–D4【历史快照】 事实 解释 2026-09-15 · Hammer RLT baseline recovery：先恢复可信 B0，再进入 Physical Token 事实 解释 2026-09-14 · 领导方案约束后的科研主线修正 事实 解释 2026-09-12 · RLT Phase 0 关键推进 事实 2026-09-11 · 历史探索：进入 Phase 0 记录模板 日期 · 标题 "
+    },
+    {
+      "id": "doc:research/progress-2026-10-07.md",
+      "title": "2026-10-07 日报：LIBERO 复现审计与 ManiSkill planner 纠正协议",
+      "path": "research/progress-2026-10-07.md",
+      "kind": "实验进度",
+      "role": "history",
+      "role_label": "历史记录",
+      "role_note": "保留当时的方案、结果或讨论。“当前”“下一步”“运行中”仅指原记录时点。",
+      "date": "2026-10-07",
+      "reviewed_at": "2026-10-07",
+      "summary": "今天围绕“先建立可信仿真 baseline，再验证物理经验是否减少重复错误”推进两条主线：LIBERO 侧冻结 AlphaBrain 公开 reference／RLT_a 权重并锁定源码、资产、任务与初态，确认本机原路径的 100 回合结果为 77%／74%，与作者模型卡的 500 回合 92% 尚未对齐；排查发现公开训练和普通 VLA 评估使用 224×224 图像，而 RLT 评估直接输入 256×256，预先选定的 9 个开发初态改为 224 输入后分别由 4/9、3/9 提升到 6/9、5/9，因此已启动不更新权重的 100 初态匹配复评及后续 ",
+      "topics": [
+        "物理经验 / 接触",
+        "强化学习",
+        "动作 / 决策",
+        "基线 / 工程"
+      ],
+      "status": "已有项目笔记",
+      "source": "",
+      "search": "2026-10-07 日报：LIBERO 复现审计与 ManiSkill planner 纠正协议 research/progress-2026-10-07.md 历史记录 今天围绕“先建立可信仿真 baseline，再验证物理经验是否减少重复错误”推进两条主线：LIBERO 侧冻结 AlphaBrain 公开 reference／RLT_a 权重并锁定源码、资产、任务与初态，确认本机原路径的 100 回合结果为 77%／74%，与作者模型卡的 500 回合 92% 尚未对齐；排查发现公开训练和普通 VLA 评估使用 224×224 图像，而 RLT 评估直接输入 256×256，预先选定的 9 个开发初态改为 224 输入后分别由 4/9、3/9 提升到 6/9、5/9，因此已启动不更新权重的 100 初态匹配复评及后续 500 初态诊断，但当前不能把差异归因于单一预处理，也不能声称 RLT_a 优于 reference。ManiSkill 侧完成有限 planner 接管、纠正后交还 learner、按真实控制 tick／更新数停止、纠正数据分回合封存、BC-only 与 Q＋BC 同数据审计、完整任务与插入子任务分开评估及可追溯源码快照；400 回合 planner-assisted 训练最终关闭 expert 后为 18/50，辅助训练 327/400 不能当作自主成功，三次相同缓存拟合中 BC-only 跟随误差略降而 Q＋BC 均退化，50 个插入候选初态中 48 个可建立合法起点且保持不动 0/48 成功。两条分支分别以 e0086d58 和 368831cc 推送；LIBERO 的 GPU 2 评估正在运行，planner 的 GPU 0/1 队列等待其他任务释放资源，排队状态不计作完成结果。 已完成与在途证据 下一步判据 "
     },
     {
       "id": "doc:research/decision-log.md",
@@ -3998,6 +4019,24 @@
     }
   ],
   "progress": [
+    {
+      "date": "2026-10-07",
+      "title": "LIBERO 公开权重差距进入冻结权重预处理审计",
+      "path": "research/progress-2026-10-07.md",
+      "summary": "原输入 100 回合为 reference 77%、RLT_a 74%，尚未复现作者模型卡的 500 回合 92%。公开训练和普通 VLA 评估使用 224×224，而 RLT 评估直传 256×256；预定 9 初态 pilot 改为 224 后由 4/9、3/9 变为 6/9、5/9。已启动同一 100 初态配对和 500 初态诊断，权重不更新；不能据此宣称单一原因或 RLT_a 优势。"
+    },
+    {
+      "date": "2026-10-07",
+      "title": "ManiSkill planner 有限纠正、交还 learner 与公平预算协议完成",
+      "path": "research/progress-2026-10-07.md",
+      "summary": "planner400 完成 400 回合、102648 个实际控制 tick，最终关闭 expert 后 18/50；辅助训练 327/400 不计自主成功。新增真实 tick／更新数停止、回合级纠正缓存、BC-only／Q＋BC 同数据审计及完整任务／插入分开评估。48/50 插入起点有效，保持命令 0/48 成功；GPU 0/1 公平闭环队列仍在等待。"
+    },
+    {
+      "date": "2026-10-07",
+      "title": "LIBERO 与 planner 开发分支完成测试并推送",
+      "path": "research/progress-2026-10-07.md",
+      "summary": "UPT_dev 的 research/rlt-libero-reproduction 推送 e0086d58，research/rlt-planner-assisted 推送 368831cc。Planner 46 项定向测试和 223 项扩展 CPU 回归通过，LIBERO 29 项通过、2 项硬件测试跳过，中英文文档构建通过。夜间作业采用有限等待和超时，排队状态不冒充完成结果。"
+    },
     {
       "date": "2026-10-06",
       "title": "夜间经验诊断与可恢复 GPU 队列上线；保留合成负结果",

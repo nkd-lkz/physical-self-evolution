@@ -1,7 +1,7 @@
 {
-  "updated": "2026-10-06",
-  "focus": "以 RLT 为基线，检验已完成的交互经验能否帮助学习并减少纠错。先修复 baseline 学习，再验证经验条件。",
-  "question": "10-06 晚间：GPU 等待延长，匹配历史与经验降权诊断工具完成。合成测试的降权未优于保留；控制收益仍未验证。",
+  "updated": "2026-10-07",
+  "focus": "以 RLT 为基线，先完成 LIBERO 公开权重复现审计与 ManiSkill planner 公平对照；保留 10-04 记忆负结果和 10-06 经验适用性诊断，再研究交互经验能否减少纠错。",
+  "question": "现有证据支持响应历史的预测价值，也证明 planner 能提供有限纠正；关闭 expert 后的成功率、交互节省、条件变化恢复和迁移收益仍待匹配实验，合成响应降权反例继续保留。",
   "featured": [
     {
       "path": "research/literature/sergey-levine-vla-rl-2026-10-06.md",
@@ -28,10 +28,10 @@
     {
       "id": "zeva",
       "name": "Zeva–RLT · 学习交互经验并持续读取",
-      "stage": "当前主线 · 夜间队列等待，新增机制诊断",
+      "stage": "当前主线 · baseline、纠正协议与经验适用性验收在途",
       "tag": "当前主线",
       "hypothesis": "已完成的命令—响应记录能否在无辅助成功率不下降时，减少重复试错和外部纠错？",
-      "design": "先验收同预算 BC-only／Q+BC 闭环，再做固定当前状态的历史替换与 A→B→A 响应探针。降权原型未接正式 actor；64 维 Stage 1B 尚未实现。",
+      "design": "先完成 LIBERO 复现审计、planner 有限纠正和同预算 BC-only／Q+BC 闭环；同时保留固定当前状态历史替换与 A→B→A 响应探针。降权原型未接正式 actor；64 维 Stage 1B 尚未实现。",
       "control": "有/无记忆 × 有/无固定 expert 纠错；再比较近期历史、attention、固定响应、Stage 1B 与 retain／clear。",
       "gate": "同初始数据、预算、expert 与 gate；同时看无辅助成功率、环境控制步、接管次数和时长。预测更准不代表控制获益。",
       "path": "research/zeva-rlt-implementation-2026-09-26.md",

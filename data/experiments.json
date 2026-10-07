@@ -1,5 +1,23 @@
 [
   {
+    "date": "2026-10-07",
+    "title": "LIBERO 公开权重差距进入冻结权重预处理审计",
+    "path": "research/progress-2026-10-07.md",
+    "summary": "原输入 100 回合为 reference 77%、RLT_a 74%，尚未复现作者模型卡的 500 回合 92%。公开训练和普通 VLA 评估使用 224×224，而 RLT 评估直传 256×256；预定 9 初态 pilot 改为 224 后由 4/9、3/9 变为 6/9、5/9。已启动同一 100 初态配对和 500 初态诊断，权重不更新；不能据此宣称单一原因或 RLT_a 优势。"
+  },
+  {
+    "date": "2026-10-07",
+    "title": "ManiSkill planner 有限纠正、交还 learner 与公平预算协议完成",
+    "path": "research/progress-2026-10-07.md",
+    "summary": "planner400 完成 400 回合、102648 个实际控制 tick，最终关闭 expert 后 18/50；辅助训练 327/400 不计自主成功。新增真实 tick／更新数停止、回合级纠正缓存、BC-only／Q＋BC 同数据审计及完整任务／插入分开评估。48/50 插入起点有效，保持命令 0/48 成功；GPU 0/1 公平闭环队列仍在等待。"
+  },
+  {
+    "date": "2026-10-07",
+    "title": "LIBERO 与 planner 开发分支完成测试并推送",
+    "path": "research/progress-2026-10-07.md",
+    "summary": "UPT_dev 的 research/rlt-libero-reproduction 推送 e0086d58，research/rlt-planner-assisted 推送 368831cc。Planner 46 项定向测试和 223 项扩展 CPU 回归通过，LIBERO 29 项通过、2 项硬件测试跳过，中英文文档构建通过。夜间作业采用有限等待和超时，排队状态不冒充完成结果。"
+  },
+  {
     "date": "2026-10-06",
     "title": "夜间经验诊断与可恢复 GPU 队列上线；保留合成负结果",
     "path": "research/progress-2026-10-06.md",
