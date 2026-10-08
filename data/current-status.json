@@ -2,6 +2,21 @@
   "as_of": "2026-10-08",
   "metrics": [
     {
+      "value": "17/20 vs 17/20",
+      "label": "10-08 LIBERO task 0：无 reference dropout 的 BC／reference 开发集；通过 BC 门槛，不是 RL 收益",
+      "featured": true
+    },
+    {
+      "value": "32,000 ticks",
+      "label": "10-08 LIBERO BC-only 已完成训练；Q＋BC 在途，配对评估未完成",
+      "featured": true
+    },
+    {
+      "value": "16/50",
+      "label": "10-08 ManiSkill seed1234 无辅助组完整任务评估；planner 对照仍在途",
+      "featured": true
+    },
+    {
       "value": "77% / 74%",
       "label": "LIBERO 原输入 100 回合：reference／RLT_a；低于作者 500 回合 92%，差距未解释",
       "featured": true
@@ -43,6 +58,18 @@
     }
   ],
   "timeline": [
+    {
+      "title": "10-08 19:50 · 三卡仿真继续运行，3060 VR 暂停",
+      "body": "GPU 0 为 planner 三 seed 等更新量对照，GPU 1 为 LIBERO BC-only／Q＋BC，GPU 2 补跑 planner seed1234。已关闭 10 个确认结束或仅监视旧任务的 tmux 会话，保留三条活跃队列；末尾输出、原日志和 checkpoint 保留。VR 尚未获得有效位姿和按键，按用户要求暂停，不计作真人闭环验收。"
+    },
+    {
+      "title": "10-08 · LIBERO BC 门槛通过，首个在线训练组完成",
+      "body": "原 reference dropout 0.5 的 BC 为 14/20，未通过门槛；同 seed、同数据、同 5,000 次更新改为 dropout 0 后达到 17/20，与 reference 逐案例一致，跟随 MSE 0.001302。复用校验后的 warmup，BC-only 已完成 32,000 个真实 tick、7,700 次 critic／3,850 次新增 actor 更新；Q＋BC 正在训练。训练回合成功不当作独立评估，尚无 RL 收益结论。"
+    },
+    {
+      "title": "10-08 · ManiSkill 补跑完成无辅助组，新增等更新量诊断",
+      "body": "seed1234 无辅助组完整任务 16/50，572 次 critic 更新；同 seed planner 组在途。此前固定交互预算下两组更新量差异较大，新增同 GPU 的三 seed、每组 1,024 次 critic 更新对照。修复私有 Ray 集群 worker 端口冲突；完整任务 50 初态与插入诊断 48 个可达起点分开报告。"
+    },
     {
       "title": "10-08 12:37 · LIBERO 学习验收队列已部署，等待 GPU",
       "body": "1c9ee416 已推送。隔离覆盖 MuJoCo 3.3.7 与 Transformers 4.53.2，统一 224 输入、8 tick 动作段和 320 步上限。GPU 0/1 当前被其他用户占用，tmux 有界等待；没有新增训练结果，GPU 2 未使用。38 项 CPU 测试和额外 1 项真实 LIBERO 软件渲染测试通过，中英文文档构建零警告。"
@@ -148,12 +175,12 @@
     {
       "priority": "P0",
       "action": "完成隔离环境的 RLT_a／LIBERO task 0 学习闭环验收",
-      "evidence": "先重建同协议 reference，固定 VLA／encoder，验收 BC 的跟随误差与自主控制。随后同热身 checkpoint、同真实交互预算比较 BC-only／Q＋BC；显式记录 actor／critic 更新和实际执行版本。GPU 等待与 BC 拒绝均作为独立状态保存，不能写作训练完成。"
+      "evidence": "无 reference dropout 的 BC 已通过原门槛，BC-only 达到 32,000 tick，Q＋BC 在途。等待同热身 checkpoint、同预算的配对开发集和独立验证结果；17/20 是 BC 开发验收，不是在线 RL 提升。"
     },
     {
       "priority": "P1",
       "action": "保留 planner 固定权重与三训练 seed 公平闭环对照",
-      "evidence": "完整任务使用全部 50 初态；插入诊断单列 48/50 起点覆盖率。比较无辅助／有限纠正的真实交互预算、planner 成本和关闭 expert 后成功率，不以辅助训练成功替代 learner 收益。"
+      "evidence": "补跑 seed1234 固定 15,000 tick 对照，并在同一 GPU 上另跑三 seed、每组 1,024 次 critic 更新的诊断。完整任务仍用全部 50 初态，插入诊断单列 48/50 起点覆盖率。历史不同 GPU placement 的汇总保持严格拒绝，不放宽校验来拼出三 seed 结论。"
     },
     {
       "priority": "P0",

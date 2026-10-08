@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-10-07",
+  "as_of": "2026-10-08",
   "current_path": "research/zeva-rlt-implementation-2026-09-26.md",
   "roles": {
     "current": {
@@ -36,8 +36,8 @@
       "待精读": 103,
       "已阅读/已有专题笔记": 24
     },
-    "progress_entries": 65,
-    "progress_days": 17
+    "progress_entries": 71,
+    "progress_days": 18
   },
   "documents": [
     {
@@ -4019,6 +4019,52 @@
     }
   ],
   "progress": [
+    {
+      "date": "2026-10-08",
+      "title": "3060 VR 暂停：串流已连接过，输入与跟踪尚未验收",
+      "summary": "RTX 3060 Ubuntu 主机已安装 SteamVR 与 ALVR 20.14.1，PICO 4 Ultra Enterprise 已打开 USB 调试并通过 ADB 安装同版本客户端，曾显示 Streaming／SteamVR Connected；但随后发生 VAAPI 编码与 SteamVR 303／496 错误。已切换 previous 2.16.7，确认 NVIDIA Vulkan 与编码库可见，并备份配置禁用 driver_vrlink。最新 30 次 preflight 仍全部 valid=False、按键为零、坐标为零；此前角色枚举还出现虚拟手部占用右手角色。串流连接不等于有效位姿或遥操作可用，根因未确认，按用户要求暂停排障，保留配置与记录，不宣称修复或真人闭环完成。",
+      "path": "research/experiment-log.md",
+      "topics": [
+        "基线 / 工程"
+      ]
+    },
+    {
+      "date": "2026-10-08",
+      "title": "LIBERO BC 验收通过；BC-only 完成 32,000 tick，Q＋BC 在途",
+      "summary": "Task 0 同 seed／数据／5,000 次 BC 更新，将 reference dropout 从 0.5 改为 0 后，开发集由 14/20 达到 17/20，与 reference 逐案例一致；MSE 0.001302，通过未放宽的原门槛。GPU 1 上 BC-only 已完成 7,700 次 critic 和 3,850 次新增 actor 更新，Q＋BC 从相同 warmup checkpoint 开始。尚无在线 RL 配对评估结论；50 个新生成验证初态不参与扩展决策。39 项定向测试通过、3 项跳过，中英文文档构建零警告。",
+      "path": "research/experiment-log.md",
+      "topics": []
+    },
+    {
+      "date": "2026-10-08",
+      "title": "ManiSkill 补跑无辅助组 16/50；等更新量三 seed 对照启动",
+      "summary": "GPU 2 的 seed1234 无辅助组已完成 15,000 tick 与完整任务 50 回合评估，成功 16/50、critic 更新 572 次；planner 组仍在途。GPU 0 另跑三 seed、每组 1,024 次 critic 更新的同卡对照，检查固定交互预算下更新量不等的影响。私有 Ray worker 改用内核分配端口，两条 launcher 共用显式命令构造；40 项定向测试通过、8 项物理集成测试跳过，文档构建零警告。不能将辅助训练成功率写成自主能力提升。",
+      "path": "research/experiment-log.md",
+      "topics": []
+    },
+    {
+      "date": "2026-10-08",
+      "title": "清理 10 个旧 tmux 会话，保留三条仿真队列",
+      "summary": "核验 pane 状态与子进程，归档窗口末尾输出后关闭已结束任务、空 shell 和旧日志 watch／tail。保留 rlt_libero_train_1008、rlt_planner_continue_1008、rlt_planner_updates_1008；日志与 checkpoint 未删除。三条队列各有 12 小时上限，19:50 快照不是实时监控承诺。",
+      "path": "research/experiment-log.md",
+      "topics": []
+    },
+    {
+      "date": "2026-10-08",
+      "title": "RLT_a／LIBERO 学习验收代码已推送；GPU 队列等待中",
+      "summary": "提交 1c9ee416 新增固定协议采集、BC 热身、同 checkpoint 的 BC-only／Q＋BC 对照、显式停止条件及新生成初态验证。38 项 CPU 回归通过、3 项跳过；额外真实 LIBERO 软件渲染快照恢复测试通过。12:37 快照中 GPU 0/1 被其他用户占用，tmux 正在有界等待，未开始训练；GPU 2 和他人进程未触碰。计划每组 32,000 个真实 tick，首个 seed 达标才扩展三个 seed。",
+      "path": "research/experiment-log.md",
+      "topics": [
+        "强化学习"
+      ]
+    },
+    {
+      "date": "2026-10-08",
+      "title": "旧依赖协议的 500 回合公开权重评估完成",
+      "summary": "224 输入下 reference 为 421/500（84.2%）、RLT_a 为 387/500（77.4%）；配对新增成功 30、丢失成功 64、共同成功 357、共同失败 49。冻结权重，未证明 RLT_a 优势，也未达到作者报告的 92%。该结果保留为旧依赖协议的开发证据；新隔离环境必须重新建立 reference，不把环境变更当作学习收益。",
+      "path": "research/experiment-log.md",
+      "topics": []
+    },
     {
       "date": "2026-10-07",
       "title": "LIBERO 公开权重差距进入冻结权重预处理审计",
