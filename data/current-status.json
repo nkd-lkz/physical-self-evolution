@@ -59,6 +59,10 @@
   ],
   "timeline": [
     {
+      "title": "10-08 20:04 · inspur Zeva 双卡复评实际运行",
+      "body": "本轮已验收 64/256 回合。四组审计后接正确／无／匹配错误历史及接触阶段×刚度组合。接触固定阶段工程 smoke 四条流通过；56 项 CPU 测试通过，代码 baa1f194 已推送。中间结果不支持记忆收益或 physical RSI。"
+    },
+    {
       "title": "10-08 19:50 · 三卡仿真继续运行，3060 VR 暂停",
       "body": "GPU 0 为 planner 三 seed 等更新量对照，GPU 1 为 LIBERO BC-only／Q＋BC，GPU 2 补跑 planner seed1234。已关闭 10 个确认结束或仅监视旧任务的 tmux 会话，保留三条活跃队列；末尾输出、原日志和 checkpoint 保留。VR 尚未获得有效位姿和按键，按用户要求暂停，不计作真人闭环验收。"
     },
@@ -172,6 +176,11 @@
     }
   ],
   "plan": [
+    {
+      "priority": "P0",
+      "action": "inspur：完成冻结复评，再按门槛推进经验诊断",
+      "evidence": "四组 256 回合后审计权重、路由及初态；再做历史替换、A→B→A 和接触组合。失败保留证据并停止；另一服务器 LIBERO 主线保留。"
+    },
     {
       "priority": "P0",
       "action": "完成隔离环境的 RLT_a／LIBERO task 0 学习闭环验收",

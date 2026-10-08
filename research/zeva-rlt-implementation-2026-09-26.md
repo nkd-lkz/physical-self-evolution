@@ -1,8 +1,8 @@
 # 当前方案：让 RLT 读取已完成的交互经验
 
-这份说明回答三个问题：我们改什么，已经测到什么，下一步测什么。**更新于 2026-10-06 晚间。当前还没有证据证明记忆提高了控制成功率。** BC-only／Q+BC 离线诊断已完成；新增历史替换与经验降权诊断工具，GPU 闭环及后续仿真仍在排队。最新控制结果仍为 10-04。文件名保留原日期，旧链接继续可用。
+这份说明回答三个问题：我们改什么，已经测到什么，下一步测什么。**更新于 2026-10-08。当前还没有证据证明记忆提高了控制成功率。** inspur 已实际启动 BC-only／Q+BC／reference／旧零 context 的双卡冻结复评；通过数据与初态审计后，再做历史替换和接触阶段×物理条件的变化诊断。接触工程 smoke 已通过，完整科研结果仍在途。具体运行快照见 [10-08 日报](progress-2026-10-08.md)。下文历史数据保留原日期；文件名不变，旧链接继续可用。
 
-[交互式讲解与结果](../index.html#understand) · [实验总日志](experiment-log.md) · [10-06 baseline 诊断](progress-2026-10-06.md) · [10-06 记忆文献核查](literature/embodied-memory-2026-10-06.md) · [固定论文 v2](papers/interaction-memory-2026-10-03/index.html)
+[交互式讲解与结果](../index.html#understand) · [实验总日志](experiment-log.md) · [10-08 实验与验收](progress-2026-10-08.md) · [10-06 记忆文献核查](literature/embodied-memory-2026-10-06.md) · [固定论文 v2](papers/interaction-memory-2026-10-03/index.html)
 
 <a id="reading-order"></a>
 ## 先用三句话讲清楚

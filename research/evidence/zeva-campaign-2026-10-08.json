@@ -1,0 +1,50 @@
+{
+  "checked_at": "2026-10-08T20:04+08:00",
+  "host": "inspur",
+  "code_revision": "baa1f194375599742acdbb9f287af737041273cb",
+  "baseline_revision": "7335f2f40ad9f9974fdc5516a5890b169e118455",
+  "manifest_sha256": "976b6747cc81c9ecb49a489734de700d000d3f38333e054020b7275f4b5de609",
+  "completed_evaluation_runs": [
+    {
+      "arm": "bc_only",
+      "seed": 4101,
+      "successes": 6,
+      "episodes": 16,
+      "initial_observation_sha256": "78773fd22511e1c9aeb87d280bb57d0ca9f822fc32969dcfa34eab1d9ee2e111",
+      "weights_unchanged": true
+    },
+    {
+      "arm": "bc_only",
+      "seed": 4102,
+      "successes": 2,
+      "episodes": 16,
+      "initial_observation_sha256": "12485934b2685a8fb071dcc1175e2ab21101bc6a42be60167ab057e3af931c2f",
+      "weights_unchanged": true
+    },
+    {
+      "arm": "q_bc",
+      "seed": 4101,
+      "successes": 6,
+      "episodes": 16,
+      "initial_observation_sha256": "78773fd22511e1c9aeb87d280bb57d0ca9f822fc32969dcfa34eab1d9ee2e111",
+      "weights_unchanged": true
+    },
+    {
+      "arm": "q_bc",
+      "seed": 4102,
+      "successes": 3,
+      "episodes": 16,
+      "initial_observation_sha256": "12485934b2685a8fb071dcc1175e2ab21101bc6a42be60167ab057e3af931c2f",
+      "weights_unchanged": true
+    }
+  ],
+  "planned_evaluation_episodes": 256,
+  "cpu_tests_passed": 56,
+  "phase_engineering_smoke": {
+    "seed": 57001,
+    "stages": "fixed",
+    "streams": 4,
+    "all_contact_stages_valid": true
+  },
+  "scope": "Interim frozen evaluations and engineering acceptance; no algorithm efficacy claim."
+}

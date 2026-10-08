@@ -1,6 +1,12 @@
 [
   {
     "date": "2026-10-08",
+    "title": "inspur Zeva：双卡冻结复评重启，接触组合工程验收通过",
+    "path": "research/progress-2026-10-08.md",
+    "summary": "2026-10-08T20:04+08:00 快照：已验收 64/256 回合，四组完整比较仍在途。已修复结果目录验收错误并复用有效数据；56 项 CPU 测试、双语构建通过。阶段固定的四条单 seed 工程流通过，正式阶段组合按依赖排队。提交 baa1f194 已推送；未宣称减少干预或 physical RSI。"
+  },
+  {
+    "date": "2026-10-08",
     "title": "3060 VR 暂停：串流已连接过，输入与跟踪尚未验收",
     "summary": "RTX 3060 Ubuntu 主机已安装 SteamVR 与 ALVR 20.14.1，PICO 4 Ultra Enterprise 已打开 USB 调试并通过 ADB 安装同版本客户端，曾显示 Streaming／SteamVR Connected；但随后发生 VAAPI 编码与 SteamVR 303／496 错误。已切换 previous 2.16.7，确认 NVIDIA Vulkan 与编码库可见，并备份配置禁用 driver_vrlink。最新 30 次 preflight 仍全部 valid=False、按键为零、坐标为零；此前角色枚举还出现虚拟手部占用右手角色。串流连接不等于有效位姿或遥操作可用，根因未确认，按用户要求暂停排障，保留配置与记录，不宣称修复或真人闭环完成。"
   },
