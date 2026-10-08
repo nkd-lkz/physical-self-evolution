@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-10-07",
+  "as_of": "2026-10-08",
   "metrics": [
     {
       "value": "77% / 74%",
@@ -7,8 +7,8 @@
       "featured": true
     },
     {
-      "value": "6/9 / 5/9",
-      "label": "224 输入开发子集：reference／RLT_a；100 与 500 初态复评在途",
+      "value": "84.2% / 77.4%",
+      "label": "旧依赖协议、224 输入、500 回合：reference／RLT_a；不是新环境 reference 或学习收益",
       "featured": true
     },
     {
@@ -43,6 +43,18 @@
     }
   ],
   "timeline": [
+    {
+      "title": "10-08 12:37 · LIBERO 学习验收队列已部署，等待 GPU",
+      "body": "1c9ee416 已推送。隔离覆盖 MuJoCo 3.3.7 与 Transformers 4.53.2，统一 224 输入、8 tick 动作段和 320 步上限。GPU 0/1 当前被其他用户占用，tmux 有界等待；没有新增训练结果，GPU 2 未使用。38 项 CPU 测试和额外 1 项真实 LIBERO 软件渲染测试通过，中英文文档构建零警告。"
+    },
+    {
+      "title": "10-08 · 先验收 BC，再从相同热身权重比较 Q＋BC",
+      "body": "Task 0：30 个公开初态采集，其中 24 个训练、6 个验证跟随误差；另 20 个开发初态验收控制。BC 热身 5,000 次更新通过后，两组各使用 32,000 个真实 tick，包含 settling。首个训练 seed 达到预设开发门槛才扩展 3 seed；50 个新生成初态留到开发决策结束后独立验证。此处是已部署计划，不是通过记录。"
+    },
+    {
+      "title": "10-08 · 旧协议 500 回合评估已完成，收益仍未出现",
+      "body": "冻结公开权重：reference 421/500、RLT_a 387/500；RLT_a 新增成功 30 次、丢失成功 64 次。84.2%／77.4% 保留为旧 MuJoCo 依赖协议结果，不与今天隔离环境直接混比，也未达到作者报告的 92%。"
+    },
     {
       "title": "10-07 · LIBERO 冻结权重复现差距进入配对预处理审计",
       "body": "原输入 100 回合为 reference 77%、RLT_a 74%；224 输入的 9 个开发初态变为 6/9、5/9。100 初态匹配复评和 500 初态诊断在途；未更新权重，不能归因为算法收益或宣称复现作者 92%。"
@@ -135,18 +147,18 @@
   "plan": [
     {
       "priority": "P0",
-      "action": "完成 LIBERO 100 初态配对与 500 初态 224 输入诊断",
-      "evidence": "冻结公开权重并保持任务、初态、源码、资产与依赖一致；分别报告 reference／RLT_a 的新增成功和丢失成功。只有完整结果可用于判断预处理是否解释部分 77%／74% 与 92% 差距。"
+      "action": "完成隔离环境的 RLT_a／LIBERO task 0 学习闭环验收",
+      "evidence": "先重建同协议 reference，固定 VLA／encoder，验收 BC 的跟随误差与自主控制。随后同热身 checkpoint、同真实交互预算比较 BC-only／Q＋BC；显式记录 actor／critic 更新和实际执行版本。GPU 等待与 BC 拒绝均作为独立状态保存，不能写作训练完成。"
     },
     {
-      "priority": "P0",
-      "action": "完成 planner 固定权重与三训练 seed 公平闭环对照",
+      "priority": "P1",
+      "action": "保留 planner 固定权重与三训练 seed 公平闭环对照",
       "evidence": "完整任务使用全部 50 初态；插入诊断单列 48/50 起点覆盖率。比较无辅助／有限纠正的真实交互预算、planner 成本和关闭 expert 后成功率，不以辅助训练成功替代 learner 收益。"
     },
     {
       "priority": "P0",
-      "action": "结合闭环结果定位模仿、Q 引导和 reference 到达问题",
-      "evidence": "离线同预算对照已经完成；两组误差接近，尚不能把 Q 项判为主要瓶颈。当前先保留原系数，不根据中间结果挑 checkpoint。"
+      "action": "严格执行 BC 停止条件和独立验证边界",
+      "evidence": "BC 不能维持 reference 时不启动在线 RL；Q＋BC 在开发集未超过 BC 或未达到 reference 时不扩展训练 seed。新生成的 50 个初态不参与更新或扩展决策。当前只验收 RLT_a，本地同步训练适配器不冒充原版 trainer 或 full-token RLT。"
     },
     {
       "priority": "P1",
