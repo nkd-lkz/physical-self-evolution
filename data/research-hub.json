@@ -1,12 +1,12 @@
 {
   "updated": "2026-10-08",
-  "focus": "先验收统一协议下的 RLT_a／LIBERO 学习闭环：BC 热身、同起点 BC-only／Q＋BC、独立初态验证；通过后再引入经验有效性学习。旧协议 84.2%／77.4% 和既有记忆负结果保留，ManiSkill planner 作为后续纠错对照。 inspur 同时按固定协议复评四组 ManiSkill head，审计后验证历史信息和接触阶段×刚度变化。",
+  "focus": "先验收统一协议下的 RLT_a／LIBERO 学习闭环：BC 热身、同起点 BC-only／Q＋BC、独立初态验证；通过后再引入经验有效性学习。旧协议 84.2%／77.4% 和既有记忆负结果保留，ManiSkill planner 作为后续纠错对照。 inspur 已完成冻结复评与 240 条局部闭环诊断；历史增益求逆未获稳定收益，先定位响应模型失配。",
   "question": "现有证据支持响应历史的预测价值，也证明 planner 能提供有限纠正；关闭 expert 后的成功率、交互节省、条件变化恢复和迁移收益仍待匹配实验，合成响应降权反例继续保留。",
   "featured": [
     {
       "path": "research/progress-2026-10-08.md",
-      "label": "10-08 inspur · Zeva 双卡实验与验收",
-      "why": "实际运行快照、已验收回合、历史探针和接触组合；工程通过与科研收益分开。"
+      "label": "10-08 inspur · 完整结果与控制反例",
+      "why": "四组复评、历史预测信息、240 条新闭环轨迹；为什么暂不将历史增益求逆接入 RLT。"
     },
     {
       "path": "research/literature/sergey-levine-vla-rl-2026-10-06.md",
